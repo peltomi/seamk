@@ -1,1 +1,2333 @@
-test
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algebra & Geometria</title>
+<meta name="description" content="SeAMK · Algebra ja geometria — opas Octave-koodiesimerkein. Harjoitustehtäviä ja ratkaisuja.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root {
+  --bg:           #F4F5FB;
+  --bg-alt:       #ECEDF7;
+  --surface:      #FFFFFF;
+  --surface-2:    #F8F9FE;
+  --border:       #D6D8EC;
+  --text:         #191A2D;
+  --text-muted:   #6C6F8E;
+  --accent:       #4A7CF7;
+  --accent-soft:  #C5D6FE;
+  --accent-dim:   #EDF1FE;
+  --green:        #22C55E;
+  --green-bg:     #F0FDF4;
+  --green-border: #BBF7D0;
+  --green-text:   #14532D;
+  --yellow:       #EAB308;
+  --yellow-bg:    #FEFCE8;
+  --yellow-border:#FDE68A;
+  --yellow-text:  #713F12;
+  --red:          #EF4444;
+  --red-bg:       #FEF2F2;
+  --red-border:   #FECACA;
+  --red-text:     #7F1D1D;
+  --code-bg:      #1A1D2E;
+  --code-text:    #CDD6F4;
+  --code-kw:      #89B4FA;
+  --code-fn:      #F9E2AF;
+  --code-cm:      #585B70;
+  --code-str:     #A6E3A1;
+  --code-num:     #FAB387;
+  --tag-coming:   #8B5CF6;
+  --tag-coming-bg:#F3EFFE;
+  --shadow-sm:    0 1px 4px rgba(74,124,247,.08);
+  --shadow-md:    0 4px 20px rgba(74,124,247,.10);
+  --r:            14px;
+  --r-sm:         8px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:           #0F1019;
+    --bg-alt:       #171825;
+    --surface:      #1A1D2E;
+    --surface-2:    #1E2135;
+    --border:       #2A2D42;
+    --text:         #CDD6F4;
+    --text-muted:   #6C7098;
+    --accent:       #6B96FF;
+    --accent-soft:  #1E2B4D;
+    --accent-dim:   #151B30;
+    --green-bg:     #052010;
+    --green-border: #166534;
+    --green-text:   #86EFAC;
+    --yellow-bg:    #1C1800;
+    --yellow-border:#854D0E;
+    --yellow-text:  #FDE68A;
+    --red-bg:       #1C0505;
+    --red-border:   #7F1D1D;
+    --red-text:     #FECACA;
+    --tag-coming-bg:#1E1530;
+    --shadow-sm:    0 1px 4px rgba(0,0,0,.3);
+    --shadow-md:    0 4px 20px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"] {
+  --bg:           #0F1019;
+  --bg-alt:       #171825;
+  --surface:      #1A1D2E;
+  --surface-2:    #1E2135;
+  --border:       #2A2D42;
+  --text:         #CDD6F4;
+  --text-muted:   #6C7098;
+  --accent:       #6B96FF;
+  --accent-soft:  #1E2B4D;
+  --accent-dim:   #151B30;
+  --green-bg:     #052010;
+  --green-border: #166534;
+  --green-text:   #86EFAC;
+  --yellow-bg:    #1C1800;
+  --yellow-border:#854D0E;
+  --yellow-text:  #FDE68A;
+  --red-bg:       #1C0505;
+  --red-border:   #7F1D1D;
+  --red-text:     #FECACA;
+  --tag-coming-bg:#1E1530;
+  --shadow-sm:    0 1px 4px rgba(0,0,0,.3);
+  --shadow-md:    0 4px 20px rgba(0,0,0,.4);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.72;
+  min-height: 100vh;
+}
+a { color: var(--accent); }
+strong { font-weight: 700; }
+
+/* ═══════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.topbar::-webkit-scrollbar { display: none; }
+.topbar-brand {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: var(--accent);
+  white-space: nowrap;
+  padding: 13px 20px 13px 0;
+  border-right: 1px solid var(--border);
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+.topbar-brand em { color: var(--text-muted); font-style: normal; font-weight: 500; }
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 13px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: .82rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+  flex-shrink: 0;
+}
+.nav-link:hover { color: var(--accent); }
+.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+.nav-link .tag-soon {
+  background: var(--tag-coming-bg);
+  color: var(--tag-coming);
+  font-size: .6rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.topbar-end {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 12px;
+  flex-shrink: 0;
+}
+.btn-theme {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 13px;
+  font-size: .78rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-theme:hover { background: var(--border); }
+
+/* ═══════════════════════════════════════
+   PAGE SHELL
+═══════════════════════════════════════ */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 44px 24px 100px;
+}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero {
+  background: linear-gradient(140deg, #3A69E8 0%, #6B52F0 55%, #9B4FD8 100%);
+  border-radius: 20px;
+  padding: 44px 44px 38px;
+  color: #fff;
+  margin-bottom: 52px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  right: -60px; top: -60px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'Nunito', sans-serif;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .7;
+  margin-bottom: 8px;
+}
+.hero h1 {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 2.3rem;
+  line-height: 1.13;
+  text-wrap: balance;
+  margin-bottom: 12px;
+}
+.hero-desc {
+  font-size: 1.02rem;
+  opacity: .85;
+  max-width: 540px;
+  margin-bottom: 26px;
+  line-height: 1.6;
+}
+.hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.hero-pill {
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 30px;
+  padding: 5px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: .78rem;
+}
+
+/* ═══════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════ */
+.section {
+  margin-bottom: 64px;
+  scroll-margin-top: 58px;
+}
+.section-label {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: .68rem;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.section-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.85rem;
+  line-height: 1.15;
+  text-wrap: balance;
+  margin-bottom: 10px;
+}
+.section-lead {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  max-width: 640px;
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════
+   TOPIC CARD
+═══════════════════════════════════════ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 26px 28px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+}
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-bottom: 14px;
+}
+.card-icon { font-size: 1.8rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+.card-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+.card-sub { font-size: .82rem; color: var(--text-muted); margin-top: 2px; }
+.card p { font-size: .96rem; margin-bottom: 12px; }
+.card p:last-child { margin-bottom: 0; }
+
+/* ═══════════════════════════════════════
+   CODE BLOCK
+═══════════════════════════════════════ */
+.code-block {
+  margin: 16px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #0B0D18;
+}
+.code-bar {
+  background: #131520;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dots { display: flex; gap: 5px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.r { background: #FF5F57; }
+.dot.y { background: #FEBC2E; }
+.dot.g { background: #28C840; }
+.code-name {
+  font-size: .7rem;
+  font-family: 'Courier New', monospace;
+  color: #4A4D68;
+  letter-spacing: .04em;
+  margin-left: 4px;
+}
+.code-file {
+  margin-left: auto;
+  font-size: .66rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  background: rgba(107,150,255,.18);
+  color: #7B9FFF;
+  border-radius: 4px;
+  padding: 1px 7px;
+  letter-spacing: .02em;
+}
+pre {
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-family: 'Courier New', Consolas, 'Lucida Console', monospace;
+  font-size: .86rem;
+  line-height: 1.72;
+  padding: 18px 20px;
+  overflow-x: auto;
+  margin: 0;
+  tab-size: 4;
+}
+.kw  { color: var(--code-kw); }
+.fn  { color: var(--code-fn); }
+.cm  { color: var(--code-cm); font-style: italic; }
+.st  { color: var(--code-str); }
+.nm  { color: var(--code-num); }
+
+/* ═══════════════════════════════════════
+   CALLOUT BOXES
+═══════════════════════════════════════ */
+.box {
+  border-radius: var(--r-sm);
+  padding: 13px 16px;
+  margin: 14px 0;
+  font-size: .93rem;
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  line-height: 1.55;
+}
+.box-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+.box.tip    { background: var(--yellow-bg);  border-left: 4px solid var(--yellow); color: var(--yellow-text); }
+.box.ok     { background: var(--green-bg);   border-left: 4px solid var(--green);  color: var(--green-text); }
+.box.danger { background: var(--red-bg);     border-left: 4px solid var(--red);    color: var(--red-text); }
+.box.info   { background: var(--accent-dim); border-left: 4px solid var(--accent); color: var(--text); }
+.box strong { font-weight: 800; }
+
+/* ═══════════════════════════════════════
+   FORMULA BOX
+═══════════════════════════════════════ */
+.formula {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-family: 'Courier New', monospace;
+  font-size: .93rem;
+}
+.formula .flabel {
+  font-family: 'Nunito', sans-serif;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* ═══════════════════════════════════════
+   REFERENCE TABLE
+═══════════════════════════════════════ */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--r); }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  text-align: left;
+  padding: 9px 14px;
+  background: var(--bg-alt);
+  font-family: 'Nunito', sans-serif;
+  font-size: .73rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+tbody td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: .88rem;
+  vertical-align: top;
+  line-height: 1.5;
+}
+tbody tr:last-child td { border-bottom: none; }
+code {
+  font-family: 'Courier New', Consolas, monospace;
+  font-size: .84em;
+  background: var(--accent-dim);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--accent);
+}
+
+/* ═══════════════════════════════════════
+   STEPS
+═══════════════════════════════════════ */
+.steps { list-style: none; }
+.steps li {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  font-size: .95rem;
+}
+.step-n {
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: .72rem;
+  min-width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* ═══════════════════════════════════════
+   EXERCISE CARDS
+═══════════════════════════════════════ */
+.ex-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 4px;
+}
+@media (max-width: 620px) { .ex-grid { grid-template-columns: 1fr; } }
+
+.ex-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .2s;
+}
+.ex-card:hover { box-shadow: var(--shadow-md); }
+.ex-head {
+  padding: 16px 18px 14px;
+}
+.ex-number {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: .65rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+.ex-question {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  line-height: 1.35;
+  margin-bottom: 8px;
+  text-wrap: balance;
+}
+.ex-given {
+  font-family: 'Courier New', monospace;
+  font-size: .82rem;
+  color: var(--text-muted);
+  background: var(--bg-alt);
+  border-radius: 6px;
+  padding: 7px 10px;
+  line-height: 1.6;
+}
+.ex-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 11px 18px;
+  background: var(--accent-dim);
+  border: none;
+  border-top: 1px solid var(--border);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: .82rem;
+  color: var(--accent);
+  cursor: pointer;
+  text-align: left;
+  transition: background .15s;
+}
+.ex-btn:hover { background: var(--accent-soft); }
+.ex-btn .arrow { transition: transform .2s; margin-left: auto; }
+.ex-btn.open .arrow { transform: rotate(180deg); }
+.ex-solution {
+  display: none;
+  border-top: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.ex-solution.visible { display: block; }
+.ex-solution pre { border-radius: 0; font-size: .79rem; padding: 14px 16px; }
+.ex-solution .ex-ans {
+  padding: 10px 16px 12px;
+  font-size: .85rem;
+  color: var(--green-text);
+  background: var(--green-bg);
+  border-top: 1px solid var(--green-border);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════
+   COMING SOON SECTIONS
+═══════════════════════════════════════ */
+.coming-section {
+  background: var(--surface);
+  border: 2px dashed var(--border);
+  border-radius: var(--r);
+  padding: 32px 28px;
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.coming-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 20px,
+    rgba(74,124,247,.03) 20px,
+    rgba(74,124,247,.03) 40px
+  );
+  pointer-events: none;
+}
+.coming-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--tag-coming-bg);
+  color: var(--tag-coming);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: .65rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+.coming-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.coming-desc {
+  font-size: .92rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.coming-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.coming-topic {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: .78rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════
+   DIVIDER
+═══════════════════════════════════════ */
+hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0 8px;
+  font-size: .82rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 600px) {
+  .topbar-brand { display: none; }
+  .hero { padding: 28px 22px; }
+  .hero h1 { font-size: 1.65rem; }
+  .card { padding: 18px; }
+  .page { padding: 28px 16px 80px; }
+  .section-title { font-size: 1.5rem; }
+  .coming-section { padding: 22px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, .arrow { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav class="topbar" role="navigation">
+  <div class="topbar-brand">🔢 Matikan <em>opas</em></div>
+  <a href="#tenttiopas"     class="nav-link">🎯 Tenttiopas</a>
+  <a href="#octave"         class="nav-link">💻 Octave</a>
+  <a href="#vektorit"       class="nav-link">📋 Vektorit</a>
+  <a href="#plottaus"       class="nav-link">📊 Plottaus</a>
+  <a href="#koukut"         class="nav-link">🪝 Koukut</a>
+  <a href="#muunnokset"     class="nav-link">🔄 Muunnokset</a>
+  <a href="#algebra"        class="nav-link">📐 Algebra</a>
+  <a href="#alg-harj"       class="nav-link">✏️ Alg. harjoitukset</a>
+  <a href="#trig"           class="nav-link">📏 Trigonometria</a>
+  <a href="#trig-harj"      class="nav-link">✏️ Trig. harjoitukset</a>
+  <a href="#analyyttinen"   class="nav-link"><span class="tag-soon">Tulossa</span> Analyytt. geom.</a>
+  <a href="#sinikayrat"     class="nav-link"><span class="tag-soon">Tulossa</span> Sinikäyrät</a>
+  <a href="#eksponentti"    class="nav-link"><span class="tag-soon">Tulossa</span> Eksp. & log.</a>
+  <div class="topbar-end">
+    <button class="btn-theme" onclick="toggleTheme()" aria-label="Vaihda teemaa">🌙</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════ PAGE ═══════════════════ -->
+<main class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">SeAMK · Algebra ja geometria</div>
+    <h1>Matikan selviytymisopas 🧮</h1>
+    <p class="hero-desc">Kaikki kurssilla tarvittava yhdessä paikassa — Octave-koodit valmiina ja harjoitustehtäviä ratkaisuineen. Kokeessa saa käyttää laskukonetta ja materiaalia.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">✅ Laskukone sallittu</span>
+      <span class="hero-pill">✅ Materiaali sallittu</span>
+      <span class="hero-pill">✅ Octave haltuun</span>
+      <span class="hero-pill">💪 Harjoitustehtäviä</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TENTTIOPAS -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="tenttiopas">
+    <div class="section-label">Lue tämä ensin</div>
+    <h2 class="section-title">Tenttiopas</h2>
+    <p class="section-lead">Strategia, kaikkein tärkeimmät komennot ja yleisimmät virheet. Lue ennen kuin avaat Octaven.</p>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🎯</span>
+        <div>
+          <div class="card-title">Strategia: anna Octaven tehdä työ</div>
+          <div class="card-sub">Sinun tehtäväsi on kirjoittaa oikea komento</div>
+        </div>
+      </div>
+      <p>Älä laske käsin jos Octave osaa. Kirjoita koodi → aja → kopioi vastaus. Suurin osa tenttipisteistä tulee oikeasta koodista, ei laskuvirheettömästä paperilaskusta.</p>
+      <div class="box ok">
+        <span class="box-icon">✅</span>
+        <div><strong>Tenttirutiini:</strong> Lue tehtävä → tunnista komento tästä oppaasta → kirjoita <code>clear</code> → kirjoita <code>syms</code> jos tarvitaan → laske → tarkasta.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📋</span>
+        <div>
+          <div class="card-title">Tärkeimmät komennot</div>
+          <div class="card-sub">Ota kuvakaappaus — tämä on sinun muistilappusi</div>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Tilanne</th><th>Komento</th><th>Esimerkki</th></tr></thead>
+          <tbody>
+            <tr><td>Aloita tehtävä</td><td><code>clear</code></td><td>Aina ensimmäisenä!</td></tr>
+            <tr><td>Kirjainmuuttuja</td><td><code>syms x y</code></td><td>Ennen solve:a</td></tr>
+            <tr><td>Ratkaise yhtälö</td><td><code>solve(yht, x)</code></td><td><code>solve(2*x+1==7, x)</code></td></tr>
+            <tr><td>Avaa sulkeet</td><td><code>expand(lauseke)</code></td><td><code>expand((x+2)*(x-3))</code></td></tr>
+            <tr><td>Sievennä</td><td><code>simplify(lauseke)</code></td><td><code>simplify((x^2-4)/(x-2))</code></td></tr>
+            <tr><td>Neliöjuuri</td><td><code>sqrt(luku)</code></td><td><code>sqrt(25)</code> → 5</td></tr>
+            <tr><td>Sin asteilla</td><td><code>sind(kulma)</code></td><td><code>sind(30)</code> → 0.5</td></tr>
+            <tr><td>Cos asteilla</td><td><code>cosd(kulma)</code></td><td><code>cosd(60)</code> → 0.5</td></tr>
+            <tr><td>Tan asteilla</td><td><code>tand(kulma)</code></td><td><code>tand(45)</code> → 1</td></tr>
+            <tr><td>Kulma sinistä</td><td><code>asind(arvo)</code></td><td><code>asind(0.5)</code> → 30</td></tr>
+            <tr><td>Kulma kosinista</td><td><code>acosd(arvo)</code></td><td><code>acosd(0.5)</code> → 60</td></tr>
+            <tr><td>Kulma tangentista</td><td><code>atand(arvo)</code></td><td><code>atand(1)</code> → 45</td></tr>
+            <tr><td>Muunna numeroksi</td><td><code>double(x)</code></td><td>Symbolinen → desim.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">⚠️</span>
+        <div><div class="card-title">4 yleisintä virhettä — muista nämä</div></div>
+      </div>
+      <div class="box danger"><span class="box-icon">🚫</span><div><strong>sin() vs sind():</strong> <code>sin(30)</code> = 0.988 (radiaanit!), <code>sind(30)</code> = 0.5 (asteet). Käytä AINA <code>sind/cosd/tand</code> asteilla.</div></div>
+      <div class="box danger"><span class="box-icon">🚫</span><div><strong>Unohdat syms:</strong> <code>solve(...)</code> ilman <code>syms x</code> → virhe. Aina <code>syms x</code> ensin.</div></div>
+      <div class="box danger"><span class="box-icon">🚫</span><div><strong>Kerto puuttuu:</strong> <code>2x</code> ei toimi → <code>2*x</code>. Octave vaatii kerto-operaattorin aina.</div></div>
+      <div class="box danger"><span class="box-icon">🚫</span><div><strong>= vs ==:</strong> Sijoitus on <code>=</code>, yhtälö on <code>==</code>. Kirjoita <code>solve(2*x+1 == 7, x)</code>.</div></div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- OCTAVE -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="octave">
+    <div class="section-label">Työkalu</div>
+    <h2 class="section-title">Octave-pikakurssi</h2>
+    <p class="section-lead">Kaikki mitä tarvitset Octaven käyttöön. Jos osaat nämä asiat, osaat Octaven tenttiä varten.</p>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🖥️</span><div><div class="card-title">Peruslaskut</div><div class="card-sub">Toimii kuin laskin — kirjoita ja paina Enter</div></div></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">% Peruslaskut</span>
+3 + 5           <span class="cm">% → 8</span>
+10 * 4          <span class="cm">% → 40</span>
+7 / 2           <span class="cm">% → 3.5</span>
+2^<span class="nm">8</span>             <span class="cm">% 2 potenssiin 8 → 256</span>
+<span class="fn">sqrt</span>(<span class="nm">49</span>)        <span class="cm">% neliöjuuri → 7</span>
+pi              <span class="cm">% → 3.14159...</span>
+
+<span class="cm">% Muuttujat</span>
+a = <span class="nm">5</span>
+b = <span class="nm">3</span>
+a + b           <span class="cm">% → 8</span>
+a * b           <span class="cm">% → 15</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔤</span><div><div class="card-title">Symbolinen laskenta (syms)</div><div class="card-sub">Laskeminen kirjaimilla — Octaven supervoima</div></div></div>
+      <p>Normaalisti Octave laskee vain numeroilla. <code>syms</code>-komennon jälkeen se osaa laskea myös kirjaimilla, kuten paperilla.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">% Ilmoita kirjainmuuttujat</span>
+<span class="kw">syms</span> x y
+
+<span class="cm">% Nyt voi laskea kirjaimilla</span>
+<span class="fn">expand</span>((x+<span class="nm">2</span>)*(x+<span class="nm">3</span>))     <span class="cm">% → x^2 + 5*x + 6</span>
+<span class="fn">simplify</span>((x^<span class="nm">2</span>-<span class="nm">4</span>)/(x-<span class="nm">2</span>)) <span class="cm">% → x + 2</span>
+
+<span class="cm">% Yhtälön ratkaisu</span>
+<span class="fn">solve</span>(x + <span class="nm">5</span> == <span class="nm">12</span>, x)    <span class="cm">% → x = 7</span>
+<span class="fn">solve</span>(x^<span class="nm">2</span> == <span class="nm">9</span>, x)       <span class="cm">% → [3, -3]</span>
+
+<span class="cm">% VAIHE: syms → komento → vastaus. Aina näin!</span></pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Muistisääntö:</strong> <code>syms x</code> on kuin "esittely" — kerrot Octavelle kuka x on, ennen kuin pyydät sitä ratkaisemaan tehtävää jossa x esiintyy.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📝</span><div><div class="card-title">Hyvä koodin rakenne</div><div class="card-sub">Kopioi tämä pohja joka kerta</div></div></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">%% Tehtävä 3</span>
+<span class="kw">clear</span>              <span class="cm">% ← AINA ENSIMMÄISENÄ</span>
+
+<span class="cm">% Annetut</span>
+a = <span class="nm">4</span>
+b = <span class="nm">3</span>
+
+<span class="cm">% Lasku</span>
+c = <span class="fn">sqrt</span>(a^<span class="nm">2</span> + b^<span class="nm">2</span>)
+
+<span class="cm">% c = 5  ← vastaus</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- VEKTORIT -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="vektorit">
+    <div class="section-label">Octave-taito 1</div>
+    <h2 class="section-title">Vektorit — Octaven lista-ajattelu</h2>
+    <p class="section-lead">Tämä on se juttu joka erottaa Octaven tavallisesta laskimesta. Tavallinen laskin laskee yhden luvun kerrallaan. Octave laskee sata lukua yhtä aikaa — etkä kirjoita silmukkaa, vain yhden rivin.</p>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📋</span><div>
+        <div class="card-title">Arvolista: alku : askel : loppu</div>
+        <div class="card-sub">Kuin rullamitta — merkitse alku, loppu ja kuinka tiheästi</div>
+      </div></div>
+      <p>Ajattele tätä kuin rullamittaa: sanot mistä mitataan, mihin asti, ja kuinka tiheästi välimerkit ovat. Kurssimateriaaleissa tätä käytettiin joka sivulla — <strong>perusalgebra.m</strong> ja <strong>trigonometria.m</strong> ovat täynnä tätä rakennetta.</p>
+      <div class="formula">
+        <div class="flabel">Syntaksi</div>
+        muuttuja = <strong>alku : askel : loppu</strong><br>
+        <span style="color:var(--text-muted); font-size:.88em">Esim: h = 0 : 0.5 : 3  →  [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]</span>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.17 &amp; s.21</span></div>
+        <pre><span class="cm">% Ajattele: "anna minulle luvut 1, 2, 3, 4, 5"</span>
+x = <span class="nm">1</span>:<span class="nm">5</span>            <span class="cm">% → [1, 2, 3, 4, 5]  (askel on 1 oletuksena)</span>
+
+<span class="cm">% "Anna luvut 0, 0.5, 1.0, 1.5, 2.0"</span>
+x = <span class="nm">0</span>:<span class="nm">0.5</span>:<span class="nm">2</span>        <span class="cm">% → viisi lukua</span>
+
+<span class="cm">% "Anna 100 lukua väliltä 0...10 tasaisin välein"</span>
+x = <span class="nm">0</span>:<span class="nm">10</span>/<span class="nm">100</span>:<span class="nm">10</span>   <span class="cm">% askel = 0.1</span>
+
+<span class="cm">% Kurssista (trigonometria.m rivi 86): korkeus 0...DC</span>
+DC = <span class="fn">sqrt</span>(<span class="nm">5</span>^<span class="nm">2</span> - (<span class="nm">6</span>/<span class="nm">2</span>)^<span class="nm">2</span>)   <span class="cm">% ensin lasketaan DC</span>
+h = <span class="nm">0</span> : DC/<span class="nm">10</span> : DC           <span class="cm">% sitten lista 0...DC kymmenessä askeleessa</span>
+
+<span class="cm">% Kurssista (trigonometria.m rivi 153): kulmat 0...360</span>
+alfa = <span class="nm">0</span>:<span class="nm">0.1</span>:<span class="nm">360</span>
+
+<span class="cm">% Tarkka optimointi: pieni askel = tarkempi tulos</span>
+x = <span class="nm">0.01</span>:<span class="nm">0.001</span>:<span class="nm">20</span>   <span class="cm">% 20 000 pistettä — Octave ei väsy</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔸</span><div>
+        <div class="card-title">Pistematematiikka: piste ennen operaattoria</div>
+        <div class="card-sub">Kun muuttuja on lista, lisää piste: .^ .* ./</div>
+      </div></div>
+      <p>Tässä kompastuvat kaikki ensimmäisellä kerralla. Kun Octavessa on lista lukuja, <em>tavallinen</em> <code>^</code> ei toimi odotetusti — se yrittää tehdä matriisimatematiikkaa. Piste ennen operaattoria tarkoittaa: <strong>"tee tämä jokaiselle luvulle listassa erikseen"</strong>.</p>
+      <p>Helppo muistisääntö: <em>näetkö koodissa listan (alku:askel:loppu)?</em> Jos näet, käytä pistettä. Jos muuttuja on yksi luku, piste ei haittaa mutta ei ole pakollinen.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.19</span></div>
+        <pre><span class="cm">% Yksi luku → tavallinen ^ toimii</span>
+a = <span class="nm">3</span>
+b = a^<span class="nm">2</span>         <span class="cm">% → 9  ✓</span>
+
+<span class="cm">% Lista → PITÄÄ käyttää .^ (piste-hattu)</span>
+h = <span class="nm">0</span>:<span class="nm">0.5</span>:<span class="nm">3</span>     <span class="cm">% tämä on lista: [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]</span>
+tulos = h.^<span class="nm">2</span>    <span class="cm">% → [0, 0.25, 1.0, 2.25, 4.0, 6.25, 9.0]  ✓</span>
+<span class="cm">% tulos = h^2   ← tämä antaisi virheen tai väärän luvun!</span>
+
+<span class="cm">%% Kurssista: trigonometria.m rivit 128-131 (s.19)</span>
+R = <span class="nm">1</span>
+r = <span class="nm">0</span>:R/<span class="nm">1000</span>:R;            <span class="cm">% lista (1001 arvoa)</span>
+H = <span class="nm">2</span>*<span class="fn">sqrt</span>(R^<span class="nm">2</span> - r.^<span class="nm">2</span>);   <span class="cm">% .^2 koska r on lista</span>
+Vlierio = pi*r.^<span class="nm">2</span>.*H;       <span class="cm">% .^2 JA .* koska molemmat listoja</span>
+
+<span class="cm">% Operaattorit listalle:</span>
+<span class="cm">%   .^  potenssi   (r.^2  = jokainen r korotettuna 2:een)</span>
+<span class="cm">%   .*  kertolasku (a.*b  = parilliset alkiot kerrotaan)</span>
+<span class="cm">%   ./  jakolasku  (a./b  = parilliset alkiot jaetaan)</span></pre>
+      </div>
+      <div class="box danger"><span class="box-icon">⚠️</span><div><strong>Varoitus:</strong> Octave ei aina sano virhettä kun unohdat pisteen — se vain antaa väärän vastauksen hiljaa. Jos kuvaajasi näyttää oudolta, tarkista ensin kaikki <code>^</code> ja <code>*</code> muuttujan jälkeen.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🎯</span><div>
+        <div class="card-title">Min ja max — pienin/suurin arvo ja sen sijainti</div>
+        <div class="card-sub">Optimoinnissa käytetty kaikkialla kurssimateriaalissa</div>
+      </div></div>
+      <p>Ajattele näin: laskit lämpötilan joka tunnille koko päiväksi — sait listan 24 lukua. Haluat tietää millä tunnilla oli kuuminta, ja mikä se lämpötila oli. <code>max()</code> antaa molemmat: suurimman luvun <em>ja</em> sen järjestysnumeron listassa. Kurssissa tätä käytettiin löytämään optimikulma tai -korkeus.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.17 &amp; s.23</span></div>
+        <pre><span class="cm">% [arvo, indeksi] = min(lista)</span>
+<span class="cm">% indeksi kertoo MISSÄ KOHDASSA listaa minimi on</span>
+
+<span class="kw">clear</span>
+a=<span class="nm">5</span>; b=<span class="nm">6</span>;
+DC = <span class="fn">sqrt</span>(a^<span class="nm">2</span>-(b/<span class="nm">2</span>)^<span class="nm">2</span>);
+h = <span class="nm">0</span>:DC/<span class="nm">100</span>:DC;           <span class="cm">% lista h-arvoista</span>
+
+MA = <span class="fn">sqrt</span>((b/<span class="nm">2</span>).^<span class="nm">2</span> + h.^<span class="nm">2</span>);
+MB = MA;
+MC = DC - h;
+s  = MA + MB + MC;           <span class="cm">% summa jokaiselle h:n arvolle</span>
+
+[smin, indmin] = <span class="fn">min</span>(s)      <span class="cm">% pienin arvo ja sen indeksi</span>
+hmin = h(indmin)             <span class="cm">% h:n arvo siinä kohdassa</span>
+
+<span class="cm">% Max toimii samoin</span>
+alfa = <span class="nm">0</span>:<span class="nm">0.01</span>:<span class="nm">360</span>;
+V = <span class="nm">1</span>/<span class="nm">3</span>.*pi.*(alfa./<span class="nm">360</span>).^<span class="nm">2</span>.*<span class="fn">sqrt</span>(<span class="nm">1</span>-(alfa./<span class="nm">360</span>).^<span class="nm">2</span>);
+[Vmax, indmax] = <span class="fn">max</span>(V)
+alfamax = alfa(indmax)</pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Ajattelutapa:</strong> Lista on kuin taulukko. <code>min(s)</code> etsii pienimmän luvun. <code>indmin</code> on sen rivinumero. <code>h(indmin)</code> on sama rivinumero h-taulukosta — eli se h:n arvo jolla s on pienin.</div></div>
+    </div>
+
+    <!-- Vektori-harjoitukset -->
+    <div class="card" style="background:var(--surface-2);">
+      <div class="card-header"><span class="card-icon">✏️</span><div>
+        <div class="card-title">Vektori-harjoitukset — kokeile itse</div>
+        <div class="card-sub">Kirjoita Octaveen ja katso mitä tapahtuu</div>
+      </div></div>
+      <div class="ex-grid">
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus V1</div>
+            <div class="ex-question">Luo lista luvuista 0, 5, 10, 15, 20</div>
+            <div class="ex-given">Käytä : -syntaksia</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre>x = <span class="nm">0</span>:<span class="nm">5</span>:<span class="nm">20</span>
+<span class="cm">% → x = [0, 5, 10, 15, 20]</span></pre>
+            <div class="ex-ans">✅ alku=0, askel=5, loppu=20</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus V2</div>
+            <div class="ex-question">Laske luvuille [1, 2, 3, 4, 5] neliö</div>
+            <div class="ex-given">Tulos pitäisi olla [1, 4, 9, 16, 25]</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre>x = <span class="nm">1</span>:<span class="nm">5</span>
+y = x.^<span class="nm">2</span>
+<span class="cm">% → [1, 4, 9, 16, 25]</span>
+<span class="cm">% Huom: .^ eikä ^</span></pre>
+            <div class="ex-ans">✅ Piste ennen ^, koska x on lista</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus V3</div>
+            <div class="ex-question">Millä x-arvolla x²+1 on pienin välillä x = -5...5?</div>
+            <div class="ex-given">Vihje: tee lista, laske kaava, käytä min()</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre>x = -<span class="nm">5</span>:<span class="nm">0.01</span>:<span class="nm">5</span>;
+y = x.^<span class="nm">2</span> + <span class="nm">1</span>;
+[ymin, ind] = <span class="fn">min</span>(y);
+xmin = x(ind)
+<span class="cm">% → xmin ≈ 0  (funktiolla minimi kohdassa x=0)</span></pre>
+            <div class="ex-ans">✅ xmin = 0, ymin = 1</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus V4</div>
+            <div class="ex-question">Laske sind(alfa) kun alfa käy 0°...90° asteen välein</div>
+            <div class="ex-given">Tuloksessa pitäisi olla 91 lukua</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre>alfa = <span class="nm">0</span>:<span class="nm">1</span>:<span class="nm">90</span>;      <span class="cm">% 91 kulmaa</span>
+y = <span class="fn">sind</span>(alfa);      <span class="cm">% sind toimii listalle suoraan</span>
+y(<span class="nm">1</span>)               <span class="cm">% sind(0) = 0</span>
+y(<span class="nm">31</span>)              <span class="cm">% sind(30) = 0.5</span>
+y(<span class="nm">91</span>)              <span class="cm">% sind(90) = 1</span></pre>
+            <div class="ex-ans">✅ sind() toimii suoraan listalle — ei tarvitse pistettä erikseen</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- PLOTTAUS -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="plottaus">
+    <div class="section-label">Octave-taito 2</div>
+    <h2 class="section-title">Plottaus — kuvaajien piirtäminen</h2>
+    <p class="section-lead">Ajattele pisteistä yhdistettyä pisteiden piirtämistä. Teet listan x-arvoista ja listan y-arvoista, annat ne Octavelle, ja se piirtää kuvaajan automaattisesti. Kaikki kurssimateriaalin kuvaajat tehtiin näillä komennoilla.</p>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📊</span><div>
+        <div class="card-title">Perusplot — yksi käyrä</div>
+        <div class="card-sub">plot(vaaka-akseli, pysty-akseli) — pisteet yhdistetään viivaksi</div>
+      </div></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.17</span></div>
+        <pre><span class="kw">clear</span>
+
+<span class="cm">% Luo data</span>
+x = <span class="nm">0</span>:<span class="nm">0.1</span>:<span class="nm">10</span>;
+y = x.^<span class="nm">2</span>;
+
+<span class="cm">% Piirrä</span>
+<span class="fn">plot</span>(x, y)
+
+<span class="cm">% Tyylikatko: 'r' = punainen, 'b' = sininen, 'k' = musta</span>
+<span class="cm">% 'linewidth', 1.5 = viivan paksuus</span>
+<span class="fn">plot</span>(x, y, <span class="st">'r'</span>, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+
+<span class="cm">% Lisää selitteet</span>
+<span class="fn">xlabel</span>(<span class="st">'x-akseli'</span>)          <span class="cm">% vaaka-akselin teksti</span>
+<span class="fn">ylabel</span>(<span class="st">'y-akseli'</span>)          <span class="cm">% pysty-akselin teksti</span>
+<span class="fn">title</span>(<span class="st">'Kuvan otsikko'</span>)      <span class="cm">% otsikko ylös</span>
+<span class="fn">grid</span>                        <span class="cm">% taustaristikko</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📈</span><div>
+        <div class="card-title">Useampi käyrä: hold on / hold off</div>
+        <div class="card-sub">hold on pitää edellisen kuvaajan, hold off lopettaa</div>
+      </div></div>
+      <p>Ilman <code>hold on</code> jokainen uusi <code>plot</code>-komento <em>pyyhkii edellisen pois</em> — kuin piirtäisit uudelle paperille. <code>hold on</code> on kuin sanoisit "älä pyyhkaise, haluan piirtää päälle". Kurssissa tällä lisättiin huomiopiste optimikohtaan.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.19 &amp; s.21</span></div>
+        <pre><span class="kw">clear</span>
+R=<span class="nm">1</span>; r=<span class="nm">0</span>:R/<span class="nm">1000</span>:R;
+
+Vsuhde = <span class="cm">/* ...laskut... */</span>;
+Asuhde = <span class="cm">/* ...laskut... */</span>;
+
+<span class="fn">plot</span>(r./R, Vsuhde, <span class="st">'r'</span>, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)  <span class="cm">% 1. käyrä</span>
+<span class="kw">hold on</span>                                       <span class="cm">% ← pito päälle</span>
+<span class="fn">plot</span>(r./R, Asuhde, <span class="st">'b'</span>, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)  <span class="cm">% 2. käyrä</span>
+<span class="kw">hold off</span>                                      <span class="cm">% ← pito pois</span>
+
+<span class="fn">legend</span>(<span class="st">'Vsuhde'</span>, <span class="st">'Asuhde'</span>, <span class="st">'location'</span>, <span class="st">'northwest'</span>)
+<span class="fn">grid</span>
+
+<span class="cm">% Huomiopiste käyrällä (iso musta piste)</span>
+<span class="fn">plot</span>(hmin, smin, <span class="st">'k.'</span>, <span class="st">'markersize'</span>, <span class="nm">20</span>)
+<span class="cm">%            ↑↑               ↑</span>
+<span class="cm">%        musta piste       pistekoko</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🎨</span><div>
+        <div class="card-title">Värit, merkit ja akselit</div>
+        <div class="card-sub">Kaikki tyyliasetukset yhdessä</div>
+      </div></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Komento</th><th>Mitä tekee</th><th>Esimerkki</th></tr></thead>
+        <tbody>
+          <tr><td><code>'r'</code></td><td>Punainen viiva</td><td><code>plot(x,y,'r')</code></td></tr>
+          <tr><td><code>'b'</code></td><td>Sininen viiva</td><td><code>plot(x,y,'b')</code></td></tr>
+          <tr><td><code>'k'</code></td><td>Musta viiva</td><td><code>plot(x,y,'k')</code></td></tr>
+          <tr><td><code>'k.'</code></td><td>Musta piste</td><td><code>plot(x,y,'k.')</code></td></tr>
+          <tr><td><code>'linewidth', N</code></td><td>Viivan paksuus</td><td><code>plot(x,y,'r','linewidth',1.5)</code></td></tr>
+          <tr><td><code>'markersize', N</code></td><td>Pisteen koko</td><td><code>plot(x,y,'k.','markersize',20)</code></td></tr>
+          <tr><td><code>xlim([a b])</code></td><td>X-akselin rajat</td><td><code>xlim([0, 360])</code></td></tr>
+          <tr><td><code>ylim([a b])</code></td><td>Y-akselin rajat</td><td><code>ylim([0, 1])</code></td></tr>
+          <tr><td><code>xticks(lista)</code></td><td>X-akselin rastit</td><td><code>xticks(0:30:360)</code></td></tr>
+          <tr><td><code>axis equal</code></td><td>Sama mittakaava molemmille akseleille</td><td>Ympyröille tärkeä</td></tr>
+          <tr><td><code>'\alpha'</code></td><td>Kreikkalainen kirjain tekstissä</td><td><code>xlabel('\alpha')</code></td></tr>
+          <tr><td><code>'rotation', 0</code></td><td>Vaakasuora y-akselin teksti</td><td><code>ylabel('V','rotation',0)</code></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔬</span><div>
+        <div class="card-title">Täydellinen esimerkki — optimointiplotit</div>
+        <div class="card-sub">Suoraan kurssimateriaalista: s. 17–18 ja s. 73–74</div>
+      </div></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt; (s.17-18)</span></div>
+        <pre><span class="cm">%% Kolmion polun pituus — missä h minimissä?</span>
+<span class="kw">clear</span>
+a=<span class="nm">5</span>; b=<span class="nm">6</span>;
+DC = <span class="fn">sqrt</span>(a^<span class="nm">2</span>-(b/<span class="nm">2</span>)^<span class="nm">2</span>);
+h  = <span class="nm">0</span>:DC/<span class="nm">100</span>:DC;   <span class="cm">% 101 h-arvoa</span>
+
+MA = <span class="fn">sqrt</span>((b/<span class="nm">2</span>).^<span class="nm">2</span> + h.^<span class="nm">2</span>);
+MB = MA;
+MC = DC - h;
+s  = MA + MB + MC;
+
+[smin, indmin] = <span class="fn">min</span>(s);
+hmin = h(indmin);
+
+<span class="fn">plot</span>(h, s, <span class="st">'r'</span>, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+<span class="kw">hold on</span>
+<span class="fn">plot</span>(hmin, smin, <span class="st">'k.'</span>, <span class="st">'markersize'</span>, <span class="nm">20</span>)
+<span class="kw">hold off</span>
+<span class="fn">xlabel</span>(<span class="st">'korkeus h'</span>)
+<span class="fn">ylabel</span>(<span class="st">'s = MA+MB+MC'</span>)
+<span class="fn">grid</span></pre>
+      </div>
+      <div class="code-block" style="margin-top:12px">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt; (s.73-74)</span></div>
+        <pre><span class="cm">%% Optimaalinen katseluetäisyys</span>
+<span class="kw">clear</span>
+H=<span class="nm">5</span>; h=<span class="nm">2</span>;
+x = <span class="nm">0.01</span>:<span class="nm">0.001</span>:<span class="nm">20</span>;
+alfa = <span class="fn">atand</span>(H./x) - <span class="fn">atand</span>(h./x);
+
+[alfamax, indmax] = <span class="fn">max</span>(alfa);
+xmax = x(indmax);
+
+<span class="fn">plot</span>(x, alfa, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+<span class="kw">hold on</span>
+<span class="fn">plot</span>(xmax, alfamax, <span class="st">'r.'</span>, <span class="st">'markersize'</span>, <span class="nm">20</span>)
+<span class="kw">hold off</span>
+<span class="fn">grid</span>
+<span class="fn">xlabel</span>(<span class="st">'x'</span>)
+<span class="fn">ylabel</span>(<span class="st">'\alpha'</span>, <span class="st">'rotation'</span>, <span class="nm">0</span>)</pre>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- KOUKUT -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="koukut">
+    <div class="section-label">Octave-taito 3</div>
+    <h2 class="section-title">Koukut ja niksit</h2>
+    <p class="section-lead">Nämä ovat kurssimateriaalin toistuvat rakenteet — tunnista nämä ja osaat lukea mitä tahansa .m-tiedostoa.</p>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔁</span><div>
+        <div class="card-title">While-looppi — numeerinen ratkaisu kun solve ei toimi</div>
+        <div class="card-sub">Kurssimateriaalissa käytetty kun symbolinen ratkaisu on mahdoton</div>
+      </div></div>
+      <p>Ajattele ämpäriä jonka täytät vesihanan alla. Lisäät vettä hiukan kerrallaan ja tarkistat onko se täynnä. <code>while</code>-looppi tekee saman asian: lisää pienen askelen, laske tulos, tarkista onko se tarpeeksi suuri — ja toista kunnes on. Kurssissa tarvittiin kun <code>solve</code> ei osannut ratkaista yhtälöä symbolisesti.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.63-64</span></div>
+        <pre><span class="cm">%% Halutaan: Vneste = 30, mikä h tarvitaan?</span>
+<span class="cm">%% (solve ei osaa — käytetään while-looppia)</span>
+<span class="kw">clear</span>
+r=<span class="nm">2</span>; R=<span class="nm">3</span>; H=<span class="nm">4</span>; V=<span class="nm">30</span>;
+
+h      = <span class="nm">0</span>;       <span class="cm">% aloitetaan nollasta</span>
+dh     = <span class="nm">0.00001</span>; <span class="cm">% askeleen koko (pienempi = tarkempi)</span>
+Vneste = <span class="nm">0</span>;       <span class="cm">% alustetaan</span>
+
+<span class="kw">while</span> Vneste &lt; V                   <span class="cm">% jatka kunnes ylitetty</span>
+    h      = h + dh;
+    x      = h/H*(R-r);
+    s      = r + x;
+    Vneste = <span class="nm">1</span>/<span class="nm">3</span>*pi*(s^<span class="nm">2</span>+s*r+r^<span class="nm">2</span>)*h;
+<span class="kw">end</span>
+
+h       <span class="cm">% ← tulos: h jolla Vneste ≈ 30</span>
+Vneste  <span class="cm">% ← tarkistus: pitää olla lähellä 30</span></pre>
+      </div>
+      <div class="code-block" style="margin-top:12px">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.77-78</span></div>
+        <pre><span class="cm">%% Vsuhde = 0.30 → mikä h?</span>
+<span class="kw">clear</span>
+r=<span class="nm">1</span>; s=<span class="nm">0.3</span>;
+h=<span class="nm">0</span>; dh=<span class="nm">0.00001</span>; Vsuhde=<span class="nm">0</span>;
+
+<span class="kw">while</span> Vsuhde &lt; s
+    h      = h + dh;
+    alfa   = <span class="nm">2</span>*<span class="fn">acos</span>((r-h)/r);
+    Vsuhde = <span class="nm">1</span>/(<span class="nm">2</span>*pi)*(alfa-<span class="fn">sin</span>(alfa));
+<span class="kw">end</span>
+h
+Vsuhde</pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>While-looppi mallina:</strong> (1) Alusta muuttujat nollaan. (2) Kirjoita <code>while tulos &lt; haluttu</code>. (3) Lisää askelta: <code>muuttuja = muuttuja + dh</code>. (4) Laske uusi tulos. (5) <code>end</code>. Pienennä <code>dh</code> jos haluat tarkemman tuloksen.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔢</span><div>
+        <div class="card-title">Symbolinen → numeerinen: double()</div>
+        <div class="card-sub">solve antaa kirjainvastausta — double muuttaa numeroksi</div>
+      </div></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="kw">syms</span> x
+x = <span class="fn">solve</span>(x^<span class="nm">2</span>-<span class="nm">2</span>==<span class="nm">0</span>, x)
+<span class="cm">% → x = [2^(1/2), -2^(1/2)]   (symboli, ei numero)</span>
+
+x = <span class="fn">double</span>(x)
+<span class="cm">% → x = [1.4142, -1.4142]      (numero ✓)</span>
+
+<span class="cm">% Useampi muuttuja kerralla</span>
+<span class="kw">syms</span> x y
+[x,y] = <span class="fn">solve</span>(...);
+x = <span class="fn">double</span>(x)
+y = <span class="fn">double</span>(y)</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">✅</span><div>
+        <div class="card-title">Tarkistus — aina kannattaa tehdä</div>
+        <div class="card-sub">Sijoita saatu vastaus takaisin lähtöyhtälöön</div>
+      </div></div>
+      <p>Kurssimateriaalissa jokainen esimerkki päättyi tarkistukseen. Tentissä tarkistus voi pelastaa pisteitä — ja vie vain 2 riviä.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">%% Ratkaistu: r = R*e/(E-e)</span>
+<span class="cm">%% Alkuperäinen yhtälö oli: E/e = (R+r)/r</span>
+E=<span class="nm">6.3</span>; e=<span class="nm">1.5</span>; R=<span class="nm">3.7</span>;
+r = (R*e)/(E-e);
+
+<span class="cm">% Tarkistus: pitää antaa sama luku</span>
+E/e        <span class="cm">% → 4.2</span>
+(R+r)/r    <span class="cm">% → 4.2  ✓ sama!</span>
+
+<span class="cm">% Trigonometrian tarkistus: kulmien summa</span>
+alfa+beta+gamma   <span class="cm">% → 180  ✓</span>
+
+<span class="cm">% Yhtälöryhmän tarkistus: sijoita takaisin</span>
+<span class="cm">% Jos 3x+2y=13 → tarkista:</span>
+<span class="nm">3</span>*x + <span class="nm">2</span>*y   <span class="cm">% → 13  ✓</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">➕</span><div>
+        <div class="card-title">syms ... positive — rajoita muuttujien arvoja</div>
+        <div class="card-sub">Kerro Octavelle että muuttuja on positiivinen</div>
+      </div></div>
+      <p>Kun ratkaiset geometrisia suureita (pituus, säde, korkeus), ne ovat aina positiivisia. Lisäämällä <code>positive</code> Octave ei anna negatiivisia ratkaisuja ja lausekkeet yksinkertaistuvat.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">% Ilman positive: voi antaa ±-ratkaisuja</span>
+<span class="kw">syms</span> R h L
+<span class="fn">solve</span>((R+h)^<span class="nm">2</span> == R^<span class="nm">2</span>+L^<span class="nm">2</span>, L)
+<span class="cm">% → [-h^(1/2)*(2*R+h)^(1/2),  h^(1/2)*(2*R+h)^(1/2)]</span>
+
+<span class="cm">% Positive: antaa vain järkevän vastauksen</span>
+<span class="kw">syms</span> R h L <span class="kw">positive</span>
+<span class="fn">solve</span>((R+h)^<span class="nm">2</span> == R^<span class="nm">2</span>+L^<span class="nm">2</span>, L)
+<span class="cm">% → h^(1/2)*(2*R+h)^(1/2)   ← siisti! ✓</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📏</span><div>
+        <div class="card-title">Radiaani ↔ aste muunnos</div>
+        <div class="card-sub">Tarvitaan kun sekä plot() että laskut vaativat eri yksikköä</div>
+      </div></div>
+      <div class="formula">
+        <div class="flabel">Muunnoskaavat</div>
+        radiaanit = asteet × π/180<br>
+        asteet = radiaanit × 180/π
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">% Asteet → radiaanit</span>
+kulma_rad = <span class="nm">30</span> * pi/<span class="nm">180</span>    <span class="cm">% → 0.5236</span>
+
+<span class="cm">% Radiaanit → asteet</span>
+kulma_ast = pi/<span class="nm">4</span> * <span class="nm">180</span>/pi  <span class="cm">% → 45</span>
+
+<span class="cm">% Kun käytät plot():a ja kulma on radiaaneissa:</span>
+alfa = <span class="nm">0</span>:<span class="nm">0.01</span>:<span class="nm">2</span>*pi;          <span class="cm">% rad</span>
+y = <span class="fn">sin</span>(alfa);               <span class="cm">% sin() radiaaneilla</span>
+<span class="fn">plot</span>(alfa*<span class="nm">180</span>/pi, y)         <span class="cm">% x-akseli asteina</span>
+<span class="fn">xlabel</span>(<span class="st">'kulma (astetta)'</span>)
+
+<span class="cm">% Helpompi: käytä aina sind/cosd → ei tarvitse muuntaa</span>
+alfa = <span class="nm">0</span>:<span class="nm">1</span>:<span class="nm">360</span>;             <span class="cm">% suoraan asteet</span>
+y = <span class="fn">sind</span>(alfa);
+<span class="fn">plot</span>(alfa, y)</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🧮</span><div>
+        <div class="card-title">Täydellinen esimerkkikaava kurssilta — kaikkea yhdessä</div>
+        <div class="card-sub">s. 21–24: kartiovaipan optimikulma</div>
+      </div></div>
+      <p>Tämä on kurssimateriaalin ehkä hienoin esimerkki — kaikki tekniikat käytössä samaan aikaan.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.23-24</span></div>
+        <pre><span class="cm">%% Missä kulmassa kartion tilavuus on suurin?</span>
+<span class="kw">clear</span>
+
+alfa = <span class="nm">0</span>:<span class="nm">0.01</span>:<span class="nm">360</span>;          <span class="cm">% ① lista kulmista</span>
+r = alfa ./ <span class="nm">360</span>;             <span class="cm">% ② pistelaskenta: r jokaiselle alfalle</span>
+h = <span class="fn">sqrt</span>(<span class="nm">1</span> - (alfa./<span class="nm">360</span>).^<span class="nm">2</span>); <span class="cm">% ② .^2 koska lista</span>
+V = <span class="nm">1</span>/<span class="nm">3</span> .* pi .* r.^<span class="nm">2</span> .* h;  <span class="cm">% ② tilavuus jokaiselle</span>
+
+[Vmax, indmax] = <span class="fn">max</span>(V);     <span class="cm">% ③ suurin ja sen indeksi</span>
+alfamax = alfa(indmax);       <span class="cm">% ③ sitä vastaava kulma</span>
+
+<span class="fn">plot</span>(alfa, V, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)  <span class="cm">% ④ piirrä</span>
+<span class="kw">hold on</span>
+<span class="fn">plot</span>(alfamax, Vmax, <span class="st">'r.'</span>, <span class="st">'markersize'</span>, <span class="nm">25</span>)
+<span class="kw">hold off</span>
+<span class="fn">grid</span>
+<span class="fn">xlim</span>([<span class="nm">0</span>, <span class="nm">360</span>]); <span class="fn">xticks</span>(<span class="nm">0</span>:<span class="nm">30</span>:<span class="nm">360</span>);
+<span class="fn">xlabel</span>(<span class="st">'\alpha'</span>); <span class="fn">ylabel</span>(<span class="st">'V'</span>, <span class="st">'rotation'</span>, <span class="nm">0</span>)
+
+rmax = alfamax/<span class="nm">360</span>           <span class="cm">% optimisäde</span>
+hmax = <span class="fn">sqrt</span>(<span class="nm">1</span>-(alfamax/<span class="nm">360</span>)^<span class="nm">2</span>)  <span class="cm">% optimikorkeus</span></pre>
+      </div>
+      <div class="box ok"><span class="box-icon">🎓</span><div><strong>Rakenne tiivistetysti:</strong> ① Tee lista → ② Laske joka pisteessä (.^ .*) → ③ Etsi optimi (min/max) → ④ Piirrä ja merkitse. Tämä toistuu kurssin joka optimointitehtävässä.</div></div>
+    </div>
+
+    <!-- Plottaus-harjoitukset -->
+    <div class="card" style="background:var(--surface-2);">
+      <div class="card-header"><span class="card-icon">✏️</span><div>
+        <div class="card-title">Plottaus-harjoitukset</div>
+        <div class="card-sub">Aja koodi Octavessa — kuvaaja avautuu uuteen ikkunaan</div>
+      </div></div>
+      <div class="ex-grid">
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus P1</div>
+            <div class="ex-question">Piirrä paraabeli y = x²</div>
+            <div class="ex-given">x välillä −5...5, punainen viiva, grid päälle</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>
+x = -<span class="nm">5</span>:<span class="nm">0.1</span>:<span class="nm">5</span>;
+y = x.^<span class="nm">2</span>;
+<span class="fn">plot</span>(x, y, <span class="st">'r'</span>, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+<span class="fn">xlabel</span>(<span class="st">'x'</span>)
+<span class="fn">ylabel</span>(<span class="st">'y'</span>)
+<span class="fn">title</span>(<span class="st">'Paraabeli y = x^2'</span>)
+<span class="fn">grid</span></pre>
+            <div class="ex-ans">✅ Kuvaajan pitäisi näyttää U-muotoiselta</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus P2</div>
+            <div class="ex-question">Piirrä sind ja cosd samaan kuvaan</div>
+            <div class="ex-given">Kulma 0°...360°, sind punainen, cosd sininen, legend</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>
+alfa = <span class="nm">0</span>:<span class="nm">1</span>:<span class="nm">360</span>;
+<span class="fn">plot</span>(alfa, <span class="fn">sind</span>(alfa), <span class="st">'r'</span>, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+<span class="kw">hold on</span>
+<span class="fn">plot</span>(alfa, <span class="fn">cosd</span>(alfa), <span class="st">'b'</span>, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+<span class="kw">hold off</span>
+<span class="fn">legend</span>(<span class="st">'sin'</span>, <span class="st">'cos'</span>)
+<span class="fn">xlabel</span>(<span class="st">'kulma \alpha (astetta)'</span>)
+<span class="fn">grid</span>
+<span class="fn">xlim</span>([<span class="nm">0</span>, <span class="nm">360</span>])
+<span class="fn">xticks</span>(<span class="nm">0</span>:<span class="nm">45</span>:<span class="nm">360</span>)</pre>
+            <div class="ex-ans">✅ Sinikäyrä ja kosinikäyrä, siirtyneet 90° toisiinsa nähden</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus P3</div>
+            <div class="ex-question">Merkitse maksimi punaisella pisteellä</div>
+            <div class="ex-given">y = sind(alfa) välillä 0°...360°, merkitse huippu</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>
+alfa = <span class="nm">0</span>:<span class="nm">0.1</span>:<span class="nm">360</span>;
+y = <span class="fn">sind</span>(alfa);
+[ymax, ind] = <span class="fn">max</span>(y);
+alfamax = alfa(ind);
+
+<span class="fn">plot</span>(alfa, y, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+<span class="kw">hold on</span>
+<span class="fn">plot</span>(alfamax, ymax, <span class="st">'r.'</span>, <span class="st">'markersize'</span>, <span class="nm">20</span>)
+<span class="kw">hold off</span>
+<span class="fn">grid</span>
+<span class="fn">xlabel</span>(<span class="st">'\alpha'</span>)</pre>
+            <div class="ex-ans">✅ Piste ilmestyy kohtaan (90°, 1)</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus P4</div>
+            <div class="ex-question">Missä etäisyydellä seinästä maalaus näkyy parhaiten?</div>
+            <div class="ex-given">Maalauksen yläreuna H=5m, alareuna h=2m, etäisyys x=0.01…20m<br>Laske kulma: atand(H/x) − atand(h/x)</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="cm">% Suoraan trigonometria.m s.73-74!</span>
+<span class="kw">clear</span>
+H=<span class="nm">5</span>; h=<span class="nm">2</span>;
+x = <span class="nm">0.01</span>:<span class="nm">0.001</span>:<span class="nm">20</span>;
+alfa = <span class="fn">atand</span>(H./x) - <span class="fn">atand</span>(h./x);
+[alfamax, ind] = <span class="fn">max</span>(alfa);
+xmax = x(ind);
+
+<span class="fn">plot</span>(x, alfa, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+<span class="kw">hold on</span>
+<span class="fn">plot</span>(xmax, alfamax, <span class="st">'r.'</span>, <span class="st">'markersize'</span>, <span class="nm">20</span>)
+<span class="kw">hold off</span>
+<span class="fn">grid</span>
+<span class="fn">xlabel</span>(<span class="st">'etäisyys x (m)'</span>)
+<span class="fn">ylabel</span>(<span class="st">'\alpha (astetta)'</span>)</pre>
+            <div class="ex-ans">✅ Optimietäisyys: xmax ≈ 3.16 m</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Koukku-harjoitukset -->
+    <div class="card" style="background:var(--surface-2);">
+      <div class="card-header"><span class="card-icon">✏️</span><div>
+        <div class="card-title">Koukku-harjoitukset — while-looppi ja numeerinen ratkaisu</div>
+        <div class="card-sub">Harjoittele ennen kuin kohtaat tehtävän tentissä</div>
+      </div></div>
+      <div class="ex-grid">
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus K1</div>
+            <div class="ex-question">Millä h:n arvolla h³ ylittää 100?</div>
+            <div class="ex-given">Käytä while-looppia, askel dh = 0.001</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>
+h  = <span class="nm">0</span>;
+dh = <span class="nm">0.001</span>;
+<span class="kw">while</span> h^<span class="nm">3</span> &lt; <span class="nm">100</span>
+    h = h + dh;
+<span class="kw">end</span>
+h           <span class="cm">% → ≈ 4.642</span>
+h^<span class="nm">3</span>         <span class="cm">% tarkistus → ≈ 100 ✓</span></pre>
+            <div class="ex-ans">✅ h ≈ 4.642 (= ∛100)</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus K2</div>
+            <div class="ex-question">Sylinterisäiliö: millä korkeudella tilavuus on 30 yksikköä?</div>
+            <div class="ex-given">Säde r = 2, laske h kun V = π·r²·h = 30</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>
+r=<span class="nm">2</span>; V_tavoite=<span class="nm">30</span>;
+h=<span class="nm">0</span>; dh=<span class="nm">0.0001</span>; V=<span class="nm">0</span>;
+<span class="kw">while</span> V &lt; V_tavoite
+    h = h + dh;
+    V = pi * r^<span class="nm">2</span> * h;
+<span class="kw">end</span>
+h        <span class="cm">% → ≈ 2.387</span>
+V        <span class="cm">% tarkistus → ≈ 30 ✓</span>
+<span class="cm">% Tarkista myös: pi*r^2*h = 30 → h = 30/(pi*4)</span></pre>
+            <div class="ex-ans">✅ h ≈ 2.387. Tarkistus: π·4·2.387 ≈ 30 ✓</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus K3</div>
+            <div class="ex-question">Muunna symbolinen vastaus numeroksi</div>
+            <div class="ex-given">Ratkaise 3x² − 12 = 0 symbolisesti, sitten double()</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+x = <span class="fn">solve</span>(<span class="nm">3</span>*x^<span class="nm">2</span> - <span class="nm">12</span> == <span class="nm">0</span>, x)
+<span class="cm">% → [2, -2]  (symbolinen muoto)</span>
+
+x = <span class="fn">double</span>(x)
+<span class="cm">% → [2.0, -2.0]  (numero) ✓</span>
+
+<span class="cm">% Tarkistus:</span>
+<span class="nm">3</span>.*x.^<span class="nm">2</span> - <span class="nm">12</span>   <span class="cm">% → [0, 0] ✓</span></pre>
+            <div class="ex-ans">✅ x = ±2. Huom: tarkistuksessa käytetään .^ koska x on lista!</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus K4</div>
+            <div class="ex-question">Tarkista yhtälöryhmän ratkaisu sijoittamalla takaisin</div>
+            <div class="ex-given">2x + 3y = 13 ja x − 2y = −4. Ratkaise ja tarkista.</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>; <span class="kw">syms</span> x y
+[x,y] = <span class="fn">solve</span>(<span class="nm">2</span>*x+<span class="nm">3</span>*y==<span class="nm">13</span>, x-<span class="nm">2</span>*y==-<span class="nm">4</span>, x, y)
+x = <span class="fn">double</span>(x)   <span class="cm">% → 2</span>
+y = <span class="fn">double</span>(y)   <span class="cm">% → 3</span>
+
+<span class="cm">% Tarkistus — sijoita takaisin:</span>
+<span class="nm">2</span>*x + <span class="nm">3</span>*y     <span class="cm">% → 13 ✓</span>
+x - <span class="nm">2</span>*y       <span class="cm">% → -4 ✓</span></pre>
+            <div class="ex-ans">✅ x=2, y=3. Tarkistus: 2·2+3·3=13 ✓ ja 2−2·3=−4 ✓</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- MUUNNOSTAULUKOT -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="muunnokset">
+    <div class="section-label">Aputaulukot</div>
+    <h2 class="section-title">Muunnostaulukot ja vakioarvot</h2>
+    <p class="section-lead">Nämä kannattaa pitää auki tenttiin. Radiaanit, tärkeimmät kulma-arvot ja Octaven vakiot.</p>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔄</span><div>
+        <div class="card-title">Mitä radiaanit ovat?</div>
+        <div class="card-sub">Toinen tapa mitata kulmia — kuin km vs. maili</div>
+      </div></div>
+      <p>Asteet (°) ovat tuttu tapa: ympyrässä on 360°. Radiaanit ovat toinen yksikkö samalle asialle — ympyrässä on 2π radiaania (noin 6.28). Miksi radiaaneja on olemassa? Koska niillä monet matematiikan kaavat yksinkertaistuvat huomattavasti. Kurssimateriaaleissa näet molempia.</p>
+      <p><strong>Käytännön sääntö Octavessa:</strong> käytä <code>sind/cosd/tand</code> → ei tarvitse koskaan muuntaa. Jos koodia on valmiina radiaaneilla, muunnoskaavat alla.</p>
+      <div class="formula">
+        <div class="flabel">Muunnoskaavat</div>
+        radiaanit = asteet × π / 180<br>
+        asteet = radiaanit × 180 / π<br><br>
+        <span style="color:var(--text-muted);font-size:.88em">Octavessa: <code>rad = aste * pi/180</code> &nbsp;|&nbsp; <code>aste = rad * 180/pi</code></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📐</span><div>
+        <div class="card-title">Tärkeimmät kulmat — ulkoa tai taulukosta</div>
+        <div class="card-sub">Näitä tulee vastaan joka tentissä</div>
+      </div></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Asteet</th><th>Radiaanit</th><th>sin</th><th>cos</th><th>tan</th></tr></thead>
+        <tbody>
+          <tr><td><strong>0°</strong></td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+          <tr><td><strong>30°</strong></td><td>π/6 ≈ 0.524</td><td>1/2 = <strong>0.5</strong></td><td>√3/2 ≈ 0.866</td><td>1/√3 ≈ 0.577</td></tr>
+          <tr><td><strong>45°</strong></td><td>π/4 ≈ 0.785</td><td>√2/2 ≈ 0.707</td><td>√2/2 ≈ 0.707</td><td><strong>1</strong></td></tr>
+          <tr><td><strong>60°</strong></td><td>π/3 ≈ 1.047</td><td>√3/2 ≈ 0.866</td><td>1/2 = <strong>0.5</strong></td><td>√3 ≈ 1.732</td></tr>
+          <tr><td><strong>90°</strong></td><td>π/2 ≈ 1.571</td><td><strong>1</strong></td><td>0</td><td>— (ei ole)</td></tr>
+          <tr><td><strong>120°</strong></td><td>2π/3 ≈ 2.094</td><td>√3/2 ≈ 0.866</td><td>−0.5</td><td>−√3 ≈ −1.732</td></tr>
+          <tr><td><strong>180°</strong></td><td>π ≈ 3.14159</td><td>0</td><td>−1</td><td>0</td></tr>
+          <tr><td><strong>270°</strong></td><td>3π/2 ≈ 4.712</td><td>−1</td><td>0</td><td>— (ei ole)</td></tr>
+          <tr><td><strong>360°</strong></td><td>2π ≈ 6.283</td><td>0</td><td>1</td><td>0</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Muistotapa:</strong> sin(30°) = 0.5 eli "puolet ykkösestä". cos(60°) = 0.5 eli sama asia peilikuvana. tan(45°) = 1 koska 45° kulmassa vastakkainen = viereinen.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔢</span><div>
+        <div class="card-title">Octaven vakiot ja hyödylliset funktiot</div>
+        <div class="card-sub">Kaikki valmiina — ei tarvitse kirjoittaa numeroita käsin</div>
+      </div></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Octave</th><th>Arvo</th><th>Mitä on</th></tr></thead>
+        <tbody>
+          <tr><td><code>pi</code></td><td>3.14159265…</td><td>Ympyrän kehä / halkaisija</td></tr>
+          <tr><td><code>e</code> tai <code>exp(1)</code></td><td>2.71828…</td><td>Neperin luku (eksponenttifunktion kanta)</td></tr>
+          <tr><td><code>Inf</code></td><td>∞</td><td>Ääretön (esim. tan(90°))</td></tr>
+          <tr><td><code>NaN</code></td><td>ei numero</td><td>"Not a Number" — jokin meni pieleen</td></tr>
+          <tr><td><code>sqrt(x)</code></td><td>√x</td><td>Neliöjuuri</td></tr>
+          <tr><td><code>abs(x)</code></td><td>|x|</td><td>Itseisarvo (negatiivisesta positiivinen)</td></tr>
+          <tr><td><code>floor(x)</code></td><td>⌊x⌋</td><td>Pyöristys alaspäin</td></tr>
+          <tr><td><code>ceil(x)</code></td><td>⌈x⌉</td><td>Pyöristys ylöspäin</td></tr>
+          <tr><td><code>round(x)</code></td><td>lähinnä</td><td>Normaali pyöristys</td></tr>
+          <tr><td><code>mod(x, n)</code></td><td>jakojäännös</td><td>mod(10,3) = 1</td></tr>
+          <tr><td><code>length(v)</code></td><td>kokonaisluku</td><td>Kuinka monta alkiota listassa</td></tr>
+          <tr><td><code>sum(v)</code></td><td>summa</td><td>Listan kaikkien lukujen summa</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔁</span><div>
+        <div class="card-title">Yleisimmät muunnostaulukot kurssilta</div>
+        <div class="card-sub">Kopioi nämä suoraan omiin muistiinpanoihisi</div>
+      </div></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt; — muunnoskoodi</span></div>
+        <pre><span class="cm">%% Kulman muunnokset</span>
+aste = <span class="nm">45</span>;
+rad  = aste * pi/<span class="nm">180</span>    <span class="cm">% → 0.7854</span>
+aste2 = rad * <span class="nm">180</span>/pi    <span class="cm">% → 45 (takaisin)</span>
+
+<span class="cm">%% Pituusyksiköt (Octave ei tiedä yksikköjä — sinä tiedät)</span>
+<span class="cm">% 1 m = 100 cm = 1000 mm</span>
+<span class="cm">% Kirjoita aina kommenttiin mikä yksikkö on käytössä!</span>
+
+<span class="cm">%% Tärkeät π-murtoluvut valmiina</span>
+pi/<span class="nm">6</span>   <span class="cm">% → 0.5236  = 30°</span>
+pi/<span class="nm">4</span>   <span class="cm">% → 0.7854  = 45°</span>
+pi/<span class="nm">3</span>   <span class="cm">% → 1.0472  = 60°</span>
+pi/<span class="nm">2</span>   <span class="cm">% → 1.5708  = 90°</span>
+pi      <span class="cm">% → 3.1416  = 180°</span>
+<span class="nm">2</span>*pi    <span class="cm">% → 6.2832  = 360°</span>
+
+<span class="cm">%% Laskutoimitukset taulukkona (tarkistus)</span>
+aste_lista = [<span class="nm">0</span>, <span class="nm">30</span>, <span class="nm">45</span>, <span class="nm">60</span>, <span class="nm">90</span>];
+<span class="fn">sind</span>(aste_lista)   <span class="cm">% → [0, 0.5, 0.707, 0.866, 1]</span>
+<span class="fn">cosd</span>(aste_lista)   <span class="cm">% → [1, 0.866, 0.707, 0.5, 0]</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- ALGEBRA TEORIA -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="algebra">
+    <div class="section-label">Osa 1</div>
+    <h2 class="section-title">Perusalgebra</h2>
+    <p class="section-lead">Lausekkeiden sieventäminen, yhtälöiden ratkaiseminen ja yhtälöryhmät. Kaikki ratkeavat Octavella.</p>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🧩</span><div><div class="card-title">Sulkujen avaaminen ja sieventäminen</div><div class="card-sub">expand() avaa, simplify() sieventää, factor() tekijöi</div></div></div>
+      <p>Ajattele lauseketta kuin origamia: <code>expand</code> levittää sen auki, <code>simplify</code> taittelee sen siistiksi. <strong>Sieventäminen</strong> tarkoittaa yksinkertaistamista — sama asia lyhyemmässä muodossa.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">perusalgebra.m · s.9 &amp; s.14</span></div>
+        <pre><span class="kw">clear</span>
+<span class="kw">syms</span> x
+
+<span class="fn">expand</span>((<span class="nm">2</span>*x+<span class="nm">3</span>)*(<span class="nm">4</span>-<span class="nm">5</span>*x))     <span class="cm">% → -10x² - 7x + 12</span>
+<span class="fn">simplify</span>(<span class="nm">2</span>*x*y^<span class="nm">2</span>+<span class="nm">4</span>*x^<span class="nm">2</span>*y)  <span class="cm">% → 2xy(y + 2x)</span>
+<span class="fn">factor</span>(<span class="nm">9</span>*x^<span class="nm">4</span>-<span class="nm">4</span>)              <span class="cm">% → (3x²-2)(3x²+2)</span>
+
+<span class="cm">% Murtolausekkeet</span>
+<span class="fn">simplify</span>(<span class="nm">2</span>*x*y/(x^<span class="nm">2</span>+x*y))   <span class="cm">% → 2y/(x+y)</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔍</span><div><div class="card-title">Yhtälön ratkaiseminen</div><div class="card-sub">solve(yhtälö, muuttuja) — kaksi yhtäsuuruusmerkkiä!</div></div></div>
+      <p>Yhtälö on kuin vaaka: vasemmalla ja oikealla puolella pitää olla sama paino. <code>solve</code> selvittää millä x:n arvolla vaaka on tasapainossa. Muista aina <strong>kaksi yhtäsuuruusmerkkiä</strong> yhtälössä.</p>
+      <div class="formula">
+        <div class="flabel">Kaava</div>
+        solve(<strong>vasen == oikea</strong>, x)
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">perusalgebra.m · s.43 &amp; s.45</span></div>
+        <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+
+<span class="cm">% Perus: ratkaistaan x yhtälöstä (2x-1)/(x+4) = 3</span>
+<span class="fn">solve</span>((<span class="nm">2</span>*x-<span class="nm">1</span>)/(x+<span class="nm">4</span>) == <span class="nm">3</span>, x)   <span class="cm">% → x = 13</span>
+
+<span class="cm">% Kirjaimilla: ratkaistaan r, kun E/e = (R+r)/r</span>
+<span class="kw">syms</span> E e R r
+r = <span class="fn">solve</span>(E/e == (R+r)/r, r)      <span class="cm">% → r = R*e/(E-e)</span>
+
+<span class="cm">% Tarkistus numeroin</span>
+<span class="kw">clear</span>
+E=<span class="nm">6.3</span>; e=<span class="nm">1.5</span>; R=<span class="nm">3.7</span>;
+r = (R*e)/(E-e)
+E/e           <span class="cm">% pitää olla sama kuin →</span>
+(R+r)/r       <span class="cm">% ← tämä</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📈</span><div><div class="card-title">Toisen asteen yhtälö ax² + bx + c = 0</div><div class="card-sub">Kaksi ratkaisua mahdollinen</div></div></div>
+      <div class="formula">
+        <div class="flabel">Diskriminanttikaava</div>
+        x = (−b ± √(b²−4ac)) / (2a)
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+
+<span class="cm">% Helpoin tapa: suoraan solve:lla</span>
+x = <span class="fn">solve</span>(<span class="nm">3</span>*x^<span class="nm">2</span> + <span class="nm">2</span>*x - <span class="nm">1</span> == <span class="nm">0</span>, x)
+x(<span class="nm">1</span>)   <span class="cm">% → ensimmäinen ratkaisu</span>
+x(<span class="nm">2</span>)   <span class="cm">% → toinen ratkaisu</span>
+
+<span class="cm">% Tai diskriminantilla</span>
+<span class="kw">clear</span>
+a=<span class="nm">3</span>; b=<span class="nm">2</span>; c=<span class="nm">-1</span>;
+D = b^<span class="nm">2</span> - <span class="nm">4</span>*a*c
+x1 = (-b - <span class="fn">sqrt</span>(D)) / (<span class="nm">2</span>*a)
+x2 = (-b + <span class="fn">sqrt</span>(D)) / (<span class="nm">2</span>*a)</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">⚖️</span><div><div class="card-title">Yhtälöryhmä — monta tuntematonta</div><div class="card-sub">[x,y] = solve(yht1, yht2, x, y)</div></div></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="kw">clear</span>; <span class="kw">syms</span> x y
+
+<span class="cm">% 2x + 5y = 1  ja  x + 3y = 2</span>
+[x, y] = <span class="fn">solve</span>(<span class="nm">2</span>*x+<span class="nm">5</span>*y==<span class="nm">1</span>, x+<span class="nm">3</span>*y==<span class="nm">2</span>, x, y)
+x = <span class="fn">double</span>(x)
+y = <span class="fn">double</span>(y)
+
+<span class="cm">% Kolme tuntematonta</span>
+<span class="kw">syms</span> I1 I2 I3
+[I1,I2,I3] = <span class="fn">solve</span>(yht1, yht2, yht3, I1, I2, I3)</pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Rakenne:</strong> Luettele ratkaistovat muuttujat aina lopussa: <code>solve(yht1, yht2, x, y)</code></div></div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- ALGEBRA HARJOITUKSET -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="alg-harj">
+    <div class="section-label">Osa 1 · Harjoitukset</div>
+    <h2 class="section-title">Algebra — harjoitustehtävät</h2>
+    <p class="section-lead">Ratkaise ensin itse, sitten tarkista. Kaikki ratkeavat Octavella.</p>
+
+    <div class="ex-grid">
+
+      <!-- H1 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus A1</div>
+          <div class="ex-question">Avaa sulkeet ja sievennä</div>
+          <div class="ex-given">(3x − 2)(2x + 5)</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+<span class="fn">expand</span>((<span class="nm">3</span>*x - <span class="nm">2</span>)*(<span class="nm">2</span>*x + <span class="nm">5</span>))</pre>
+          <div class="ex-ans">✅ Vastaus: 6x² + 11x − 10</div>
+        </div>
+      </div>
+
+      <!-- H2 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus A2</div>
+          <div class="ex-question">Sievennä murtolauseke</div>
+          <div class="ex-given">(x² − 16) / (x − 4)</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+<span class="fn">simplify</span>((x^<span class="nm">2</span> - <span class="nm">16</span>)/(x - <span class="nm">4</span>))</pre>
+          <div class="ex-ans">✅ Vastaus: x + 4</div>
+        </div>
+      </div>
+
+      <!-- H3 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus A3</div>
+          <div class="ex-question">Ratkaise x</div>
+          <div class="ex-given">(4x − 1) / (x + 3) = 2</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+<span class="fn">solve</span>((<span class="nm">4</span>*x - <span class="nm">1</span>)/(x + <span class="nm">3</span>) == <span class="nm">2</span>, x)</pre>
+          <div class="ex-ans">✅ Vastaus: x = 7</div>
+        </div>
+      </div>
+
+      <!-- H4 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus A4</div>
+          <div class="ex-question">Toisen asteen yhtälö</div>
+          <div class="ex-given">2x² − 7x + 3 = 0</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+x = <span class="fn">solve</span>(<span class="nm">2</span>*x^<span class="nm">2</span> - <span class="nm">7</span>*x + <span class="nm">3</span> == <span class="nm">0</span>, x)
+x(<span class="nm">1</span>)   <span class="cm">% → 3</span>
+x(<span class="nm">2</span>)   <span class="cm">% → 1/2</span></pre>
+          <div class="ex-ans">✅ Vastaus: x = 3 tai x = 1/2 = 0.5</div>
+        </div>
+      </div>
+
+      <!-- H5 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus A5</div>
+          <div class="ex-question">Yhtälöryhmä</div>
+          <div class="ex-given">3x + 2y = 13<br>x − 2y = −4</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x y
+[x,y] = <span class="fn">solve</span>(<span class="nm">3</span>*x+<span class="nm">2</span>*y==<span class="nm">13</span>, x-<span class="nm">2</span>*y==-<span class="nm">4</span>, x, y)
+x = <span class="fn">double</span>(x)   <span class="cm">% → 2.25</span>
+y = <span class="fn">double</span>(y)   <span class="cm">% → 2.875</span></pre>
+          <div class="ex-ans">✅ Vastaus: x = 2.25, y = 2.875</div>
+        </div>
+      </div>
+
+      <!-- H6 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus A6</div>
+          <div class="ex-question">Ratkaise r kirjainkaavasta</div>
+          <div class="ex-given">v = a₁·t₁ + a₂·(t₂ − t₁)<br>Ratkaise t₁</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+<span class="kw">syms</span> v a1 a2 t1 t2
+t1 = <span class="fn">solve</span>(v == a1*t1 + a2*(t2-t1), t1)
+<span class="cm">% → t1 = (v - a2*t2)/(a1 - a2)</span>
+
+<span class="cm">% Tarkastus numeroin:</span>
+v=<span class="nm">8.3</span>; a1=<span class="nm">0.4</span>; a2=<span class="nm">6.2</span>; t2=<span class="nm">9.8</span>;
+t1=(a2*t2-v)/(a2-a1)
+a1*t1 + a2*(t2-t1)   <span class="cm">% = v?</span></pre>
+          <div class="ex-ans">✅ Vastaus: t₁ = (v − a₂t₂) / (a₁ − a₂)</div>
+        </div>
+      </div>
+
+      <!-- H7 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus A7</div>
+          <div class="ex-question">Tekijöihinjako</div>
+          <div class="ex-given">Tekijöi lauseke: 4x² − 9</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+<span class="fn">factor</span>(<span class="nm">4</span>*x^<span class="nm">2</span> - <span class="nm">9</span>)</pre>
+          <div class="ex-ans">✅ Vastaus: (2x − 3)(2x + 3)</div>
+        </div>
+      </div>
+
+      <!-- H8 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus A8</div>
+          <div class="ex-question">Sievennä murtolauseke</div>
+          <div class="ex-given">R − R² / (R + H)</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+<span class="kw">syms</span> R H
+<span class="fn">simplify</span>(R - R^<span class="nm">2</span>/(R + H))</pre>
+          <div class="ex-ans">✅ Vastaus: R·H / (R + H)</div>
+        </div>
+      </div>
+
+    </div><!-- /ex-grid -->
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TRIGONOMETRIA TEORIA -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="trig">
+    <div class="section-label">Osa 2</div>
+    <h2 class="section-title">Trigonometria</h2>
+    <p class="section-lead">Kolmiot, kulmat ja pituudet. Sinilause, kosinilause ja Octaven trig-funktiot.</p>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📐</span><div><div class="card-title">Perusfunktiot suorakulmaisessa kolmiossa</div><div class="card-sub">sin, cos, tan — selitys esimerkin kautta</div></div></div>
+      <p>Kuvittele nojatikkaat seinää vasten. Tikkaiden pituus on <em>hypotenuusa</em>. Seinän korkeus johon ne ylettyy on <em>vastakkainen sivu</em>. Lattialla oleva matka seinään on <em>viereinen sivu</em>. Kulma α on tikkaiden ja lattian välinen kulma.</p>
+      <p>sin kertoo: "kuinka suuri osa tikkaiden pituudesta on pystysuoraa?". cos kertoo: "kuinka suuri osa on vaakasuoraa?". tan kertoo: "kuinka paljon nousee yhdellä vaakametrillä?"</p>
+      <div class="formula">
+        <div class="flabel">Kaavat — laita lapulle!</div>
+        sin(α) = vastakkainen / hypotenuusa<br>
+        cos(α) = viereinen / hypotenuusa<br>
+        tan(α) = vastakkainen / viereinen<br><br>
+        <span style="color:var(--text-muted);font-size:.88em">Muistisääntö: SOH-CAH-TOA (Sin=Opp/Hyp, Cos=Adj/Hyp, Tan=Opp/Adj)</span>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.29-30</span></div>
+        <pre><span class="cm">% Aste-versiot — käytä AINA tentissä</span>
+<span class="fn">sind</span>(<span class="nm">30</span>)    <span class="cm">% → 0.5</span>
+<span class="fn">cosd</span>(<span class="nm">60</span>)    <span class="cm">% → 0.5</span>
+<span class="fn">tand</span>(<span class="nm">45</span>)    <span class="cm">% → 1.0</span>
+
+<span class="cm">% Käänteisfunktiot: selvitä kulma</span>
+<span class="fn">asind</span>(<span class="nm">0.5</span>)  <span class="cm">% → 30°</span>
+<span class="fn">acosd</span>(<span class="nm">0.5</span>)  <span class="cm">% → 60°</span>
+<span class="fn">atand</span>(<span class="nm">1</span>)    <span class="cm">% → 45°</span>
+
+<span class="cm">% Pythagoraan lause</span>
+a=<span class="nm">3</span>; b=<span class="nm">4</span>;
+c = <span class="fn">sqrt</span>(a^<span class="nm">2</span> + b^<span class="nm">2</span>)  <span class="cm">% → 5</span></pre>
+      </div>
+      <div class="box danger"><span class="box-icon">⚠️</span><div><strong>Kriittinen ero:</strong> <code>sin(30)</code> = 0.988 (radiaanit!), <code>sind(30)</code> = 0.5 (asteet). Käytä d-versiota!</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔺</span><div><div class="card-title">Kosinilause — kun kolmiossa ei ole suoraa kulmaa</div><div class="card-sub">Tunnet 2 sivua + kulman → laske 3. sivu. Tai kaikki sivut → laske kulmat.</div></div></div>
+      <p>Pythagoraan lause toimii vain suorakulmaisessa kolmiossa. Kosinilause toimii <em>kaikilla</em> kolmioilla. Jos kolmiossa on suora kulma, kosinilause antaa saman tuloksen kuin Pythagoraan lause — joten se on turvallinen valinta aina.</p>
+      <div class="formula">
+        <div class="flabel">Kosinilause — laita lapulle!</div>
+        c² = a² + b² − 2ab·cos(γ)  ← kun tunnet 2 sivua ja niiden välisen kulman<br>
+        cos(α) = (b²+c²−a²) / (2bc)  ← kun tunnet kaikki 3 sivua, haluat kulman
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.101-104</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Sivun laskeminen (tunnetaan a, b, gamma)</span>
+a=<span class="nm">4.3</span>; b=<span class="nm">6.2</span>; gamma=<span class="nm">25</span>;
+c = <span class="fn">sqrt</span>(a^<span class="nm">2</span> + b^<span class="nm">2</span> - <span class="nm">2</span>*a*b*<span class="fn">cosd</span>(gamma))
+
+<span class="cm">% Kulmien laskeminen (tunnetaan kaikki sivut)</span>
+<span class="kw">clear</span>
+a=<span class="nm">2.7</span>; b=<span class="nm">3.3</span>; c=<span class="nm">1.4</span>;
+alfa  = <span class="fn">acosd</span>((b^<span class="nm">2</span>+c^<span class="nm">2</span>-a^<span class="nm">2</span>)/(<span class="nm">2</span>*b*c))
+beta  = <span class="fn">acosd</span>((a^<span class="nm">2</span>+c^<span class="nm">2</span>-b^<span class="nm">2</span>)/(<span class="nm">2</span>*a*c))
+gamma = <span class="fn">acosd</span>((a^<span class="nm">2</span>+b^<span class="nm">2</span>-c^<span class="nm">2</span>)/(<span class="nm">2</span>*a*b))
+alfa+beta+gamma   <span class="cm">% ← pitää olla 180!</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📏</span><div><div class="card-title">Sinilause — sivut ja vastakkaiset kulmat</div><div class="card-sub">Tunnet yhden sivun ja kaksi kulmaa → saat kaikki sivut</div></div></div>
+      <p>Sinilauseessa joka sivu on suhteessa sitä vastapäätä olevaan kulmaan. Jos tiedät yhden sivun ja sen vastakkaisen kulman, voit laskea kaikki muut sivut — kunhan tiedät myös niiden vastakkaiset kulmat. Kolmion kulmien summa on aina 180°, joten kolmaskin kulma selviää helposti.</p>
+      <div class="formula">
+        <div class="flabel">Sinilause</div>
+        a/sin(α) = b/sin(β) = c/sin(γ)<br>
+        <span style="color:var(--text-muted);font-size:.88em">→ b = sin(β) · a / sin(α)</span>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.111-112</span></div>
+        <pre><span class="kw">clear</span>
+a=<span class="nm">8.6</span>; alfa=<span class="nm">54</span>; beta=<span class="nm">97</span>; gamma=<span class="nm">29</span>;
+
+b = <span class="fn">sind</span>(beta)  * a / <span class="fn">sind</span>(alfa)
+c = <span class="fn">sind</span>(gamma) * a / <span class="fn">sind</span>(alfa)
+
+alfa+beta+gamma   <span class="cm">% → 180 ✓</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🏗️</span><div><div class="card-title">Geometriset ongelmat — strategia</div><div class="card-sub">Pisteestä, korkeudesta, etäisyydestä</div></div></div>
+      <ul class="steps">
+        <li><span class="step-n">1</span> Piirrä kuvio ja merkitse tunnetut arvot</li>
+        <li><span class="step-n">2</span> Tunnista oikeat kolmiot kuviossa</li>
+        <li><span class="step-n">3</span> Ratkaise askel kerrallaan — jokainen uusi tieto auttaa seuraavaan</li>
+        <li><span class="step-n">4</span> Tarkasta: kulmien summa = 180, tai sijoita takaisin</li>
+      </ul>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Korkeus kahdelta pisteltä: kulmat alfa ja beta,</span>
+<span class="cm">% pisteiden väli L metrillä. Mikä on korkeus H?</span>
+<span class="kw">syms</span> H x
+L=<span class="nm">2</span>; a=<span class="nm">30</span>; b=<span class="nm">50</span>;   <span class="cm">% kulmat asteina</span>
+[H,x] = <span class="fn">solve</span>(H/x == <span class="fn">tand</span>(b), H/(L+x) == <span class="fn">tand</span>(a), H, x)
+H = <span class="fn">double</span>(H)</pre>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TRIGONOMETRIA HARJOITUKSET -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="trig-harj">
+    <div class="section-label">Osa 2 · Harjoitukset</div>
+    <h2 class="section-title">Trigonometria — harjoitustehtävät</h2>
+    <p class="section-lead">Ratkaise ensin itse, sitten tarkista Octavella.</p>
+
+    <div class="ex-grid">
+
+      <!-- T1 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus T1</div>
+          <div class="ex-question">Laske hypotenuusa</div>
+          <div class="ex-given">Suorakulmainen kolmio<br>Kateetit: a = 5, b = 12</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">5</span>; b=<span class="nm">12</span>;
+c = <span class="fn">sqrt</span>(a^<span class="nm">2</span> + b^<span class="nm">2</span>)
+<span class="cm">% → c = 13</span></pre>
+          <div class="ex-ans">✅ Vastaus: c = 13</div>
+        </div>
+      </div>
+
+      <!-- T2 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus T2</div>
+          <div class="ex-question">Kosinilause — laske sivu c</div>
+          <div class="ex-given">a = 7, b = 5, γ = 40°</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">7</span>; b=<span class="nm">5</span>; gamma=<span class="nm">40</span>;
+c = <span class="fn">sqrt</span>(a^<span class="nm">2</span>+b^<span class="nm">2</span>-<span class="nm">2</span>*a*b*<span class="fn">cosd</span>(gamma))
+<span class="cm">% → c ≈ 4.51</span></pre>
+          <div class="ex-ans">✅ Vastaus: c ≈ 4.51</div>
+        </div>
+      </div>
+
+      <!-- T3 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus T3</div>
+          <div class="ex-question">Sinilause — laske sivut b ja c</div>
+          <div class="ex-given">a = 10, α = 35°, β = 80°<br>γ = 180 − 35 − 80 = 65°</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">10</span>; alfa=<span class="nm">35</span>; beta=<span class="nm">80</span>; gamma=<span class="nm">65</span>;
+b = <span class="fn">sind</span>(beta)*a/<span class="fn">sind</span>(alfa)
+c = <span class="fn">sind</span>(gamma)*a/<span class="fn">sind</span>(alfa)
+<span class="cm">% b ≈ 17.16, c ≈ 15.77</span></pre>
+          <div class="ex-ans">✅ Vastaus: b ≈ 17.16, c ≈ 15.77</div>
+        </div>
+      </div>
+
+      <!-- T4 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus T4</div>
+          <div class="ex-question">Laske kaikki kulmat</div>
+          <div class="ex-given">Kolmion sivut: a = 6, b = 8, c = 10</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">6</span>; b=<span class="nm">8</span>; c=<span class="nm">10</span>;
+alfa  = <span class="fn">acosd</span>((b^<span class="nm">2</span>+c^<span class="nm">2</span>-a^<span class="nm">2</span>)/(<span class="nm">2</span>*b*c))
+beta  = <span class="fn">acosd</span>((a^<span class="nm">2</span>+c^<span class="nm">2</span>-b^<span class="nm">2</span>)/(<span class="nm">2</span>*a*c))
+gamma = <span class="fn">acosd</span>((a^<span class="nm">2</span>+b^<span class="nm">2</span>-c^<span class="nm">2</span>)/(<span class="nm">2</span>*a*b))
+<span class="cm">% α=36.87°, β=53.13°, γ=90°</span></pre>
+          <div class="ex-ans">✅ Vastaus: α≈36.9°, β≈53.1°, γ=90° — suorakulmainen kolmio!</div>
+        </div>
+      </div>
+
+      <!-- T5 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus T5</div>
+          <div class="ex-question">Kulman laskeminen sivuista</div>
+          <div class="ex-given">Suorakulmainen kolmio<br>Vastakkainen = 4, viereinen = 7<br>Laske kulma α</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+vastakkainen = <span class="nm">4</span>;
+viereinen    = <span class="nm">7</span>;
+alfa = <span class="fn">atand</span>(vastakkainen / viereinen)
+<span class="cm">% → alfa ≈ 29.74°</span></pre>
+          <div class="ex-ans">✅ Vastaus: α ≈ 29.7°</div>
+        </div>
+      </div>
+
+      <!-- T6 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus T6</div>
+          <div class="ex-question">Maston korkeus</div>
+          <div class="ex-given">Maston juurelta 20 m päästä katselukulma 50°. Katselupisteen korkeus 1.7 m.<br>Mikä on maston korkeus?</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+etaisyys = <span class="nm">20</span>;
+kulma    = <span class="nm">50</span>;   <span class="cm">% astetta</span>
+silmakorkeaus = <span class="nm">1.7</span>;
+
+korkeus = etaisyys * <span class="fn">tand</span>(kulma) + silmakorkeaus
+<span class="cm">% → korkeus ≈ 25.54 m</span></pre>
+          <div class="ex-ans">✅ Vastaus: ≈ 25.5 m</div>
+        </div>
+      </div>
+
+      <!-- T7 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus T7</div>
+          <div class="ex-question">Kaksi katselupistettä</div>
+          <div class="ex-given">Tornin korkeus H. Pisteestä A kulma 30°, pisteestä B (15 m kauempaa) kulma 20°. Laske H.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+<span class="kw">syms</span> H x
+L=<span class="nm">15</span>; a=<span class="nm">20</span>; b=<span class="nm">30</span>;
+[H,x] = <span class="fn">solve</span>(H/x==<span class="fn">tand</span>(b), H/(L+x)==<span class="fn">tand</span>(a), H,x)
+H = <span class="fn">double</span>(H)
+<span class="cm">% → H ≈ 11.22 m</span></pre>
+          <div class="ex-ans">✅ Vastaus: H ≈ 11.2 m</div>
+        </div>
+      </div>
+
+      <!-- T8 -->
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus T8</div>
+          <div class="ex-question">Kolmion pinta-ala</div>
+          <div class="ex-given">Sivut a = 8, b = 6, kulma γ = 55° (sivujen välissä). Laske pinta-ala.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">
+          💡 Näytä ratkaisu <span class="arrow">▼</span>
+        </button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">8</span>; b=<span class="nm">6</span>; gamma=<span class="nm">55</span>;
+<span class="cm">% A = (1/2)*a*b*sin(gamma)</span>
+A = <span class="nm">0.5</span> * a * b * <span class="fn">sind</span>(gamma)
+<span class="cm">% → A ≈ 19.66</span></pre>
+          <div class="ex-ans">✅ Vastaus: A ≈ 19.7 neliöyksikköä</div>
+        </div>
+      </div>
+
+    </div><!-- /ex-grid -->
+
+    <div class="box ok" style="margin-top:12px;">
+      <span class="box-icon">🎉</span>
+      <div><strong>Hyvä työ!</strong> Jos ratkaisit useimmat oikein, olet valmis tenttiin. Muista: saat käyttää tätä materiaalia kokeessa.</div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TULOSSA: ANALYYTTINEN GEOMETRIA -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="analyyttinen">
+    <div class="section-label">Osa 3 · Tulossa</div>
+    <h2 class="section-title">Analyyttinen geometria</h2>
+    <p class="section-lead">Pisteet, suorat, ympyrät ja koonit koordinaatistossa. Tälle sivulle tulee oppimateriaali ja harjoitustehtävät.</p>
+
+    <div class="coming-section">
+      <div class="coming-badge">📅 Tulossa pian</div>
+      <div class="coming-title">Tämä osio lisätään seuraavalla kerralla</div>
+      <div class="coming-desc">Analyyttinen geometria käsittelee muotoja koordinaatistossa — pisteitä, suoria, ympyröitä ja paraboloita. Octavella piirtäminen helpottaa kaikkea.</div>
+      <div class="coming-topics">
+        <span class="coming-topic">📍 Pisteiden etäisyys</span>
+        <span class="coming-topic">📈 Suoran yhtälö</span>
+        <span class="coming-topic">⭕ Ympyrän yhtälö</span>
+        <span class="coming-topic">🔵 Ellipsi ja paraabeli</span>
+        <span class="coming-topic">📐 Suorien leikkaus</span>
+        <span class="coming-topic">📏 Etäisyys pisteestä suoralle</span>
+        <span class="coming-topic">💻 Octave: plot()</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TULOSSA: SINIKÄYRÄT JA KOMPLEKSILUVUT -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="sinikayrat">
+    <div class="section-label">Osa 4 · Tulossa</div>
+    <h2 class="section-title">Sinikäyrät ja kompleksiluvut</h2>
+    <p class="section-lead">Aaltoliike, vaihesiirrot ja imaginaariluvut. Erityisen tärkeä sähkötekniikassa.</p>
+
+    <div class="coming-section">
+      <div class="coming-badge">📅 Tulossa pian</div>
+      <div class="coming-title">Tämä osio lisätään seuraavalla kerralla</div>
+      <div class="coming-desc">Sinikäyrät kuvaavat aaltoliikettä: amplitudi, taajuus, kulmanopeus ja vaihe. Kompleksiluvut laajentavat lukuakselin tasoksi — välttämätön taito signaalikäsittelyssä.</div>
+      <div class="coming-topics">
+        <span class="coming-topic">〰️ Amplitudi ja taajuus</span>
+        <span class="coming-topic">🔄 Vaihesiirto</span>
+        <span class="coming-topic">📊 Octave: sinikäyrän piirtäminen</span>
+        <span class="coming-topic">𝑖 Imaginaariyksikkö</span>
+        <span class="coming-topic">📍 Kompleksitaso</span>
+        <span class="coming-topic">🔃 Napamuoto</span>
+        <span class="coming-topic">✖️ Kompleksilukujen laskut</span>
+        <span class="coming-topic">💻 Octave: abs(), angle()</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TULOSSA: EKSPONENTTI JA LOGARITMI -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="eksponentti">
+    <div class="section-label">Osa 5 · Tulossa</div>
+    <h2 class="section-title">Eksponentti- ja logaritmifunktiot</h2>
+    <p class="section-lead">Kasvu, vaimeneminen, pH, desibelit — eksponentti ja logaritmi ovat kaikkialla tekniikassa.</p>
+
+    <div class="coming-section">
+      <div class="coming-badge">📅 Tulossa pian</div>
+      <div class="coming-title">Tämä osio lisätään seuraavalla kerralla</div>
+      <div class="coming-desc">Eksponenttifunktio kuvaa nopeaa kasvua tai vaimenemista. Logaritmi on sen käänteisfunktio ja välttämätön työkalu desibelien, pH-arvojen ja signaalivaimennuksen laskemisessa.</div>
+      <div class="coming-topics">
+        <span class="coming-topic">📈 Eksponenttifunktio eˣ</span>
+        <span class="coming-topic">📉 Vaimeneminen</span>
+        <span class="coming-topic">🔢 Luonnollinen logaritmi ln</span>
+        <span class="coming-topic">🔟 Kymmenkantainen log₁₀</span>
+        <span class="coming-topic">🔊 Desibelit</span>
+        <span class="coming-topic">⚗️ pH-laskut</span>
+        <span class="coming-topic">⏱️ Aikakasvio</span>
+        <span class="coming-topic">💻 Octave: exp(), log(), log10()</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>SeAMK · Algebra ja geometria · Matikan selviytymisopas</p>
+    <p style="margin-top:4px; opacity:.6;">Octave-koodit perustuvat kurssimateriaaliin · Päivitetään kurssin edetessä</p>
+  </footer>
+
+</main><!-- /page -->
+
+<script>
+// ── Harjoitustehtävät ──
+function toggleEx(btn) {
+  const sol = btn.nextElementSibling;
+  const isOpen = sol.classList.contains('visible');
+  sol.classList.toggle('visible', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.innerHTML = isOpen
+    ? '💡 Näytä ratkaisu <span class="arrow">▼</span>'
+    : '🙈 Piilota ratkaisu <span class="arrow">▼</span>';
+}
+
+// ── Teema ──
+function toggleTheme() {
+  const r = document.documentElement;
+  const cur = r.getAttribute('data-theme');
+  if (cur === 'dark') r.setAttribute('data-theme', 'light');
+  else if (cur === 'light') r.removeAttribute('data-theme');
+  else r.setAttribute('data-theme', 'dark');
+  try { localStorage.setItem('theme', r.getAttribute('data-theme') || 'system'); } catch(e){}
+}
+// Palauta tallennettu teema
+try {
+  const saved = localStorage.getItem('theme');
+  if (saved && saved !== 'system') document.documentElement.setAttribute('data-theme', saved);
+} catch(e){}
+
+// ── Aktiivinen nav-linkki ──
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('.section[id]');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, { rootMargin: '-10% 0px -65% 0px' });
+sections.forEach(s => io.observe(s));
+</script>
+</body>
+</html>
