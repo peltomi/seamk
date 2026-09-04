@@ -671,6 +671,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
 <nav class="topbar" role="navigation">
   <div class="topbar-brand">🔢 Matikan <em>opas</em></div>
   <a href="#tenttiopas"     class="nav-link">🎯 Tenttiopas</a>
+  <a href="#mallinnus"      class="nav-link">🔧 Yhtälöt tekstistä</a>
   <a href="#octave"         class="nav-link">💻 Octave</a>
   <a href="#vektorit"       class="nav-link">📋 Vektorit</a>
   <a href="#plottaus"       class="nav-link">📊 Plottaus</a>
@@ -695,7 +696,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
   <div class="hero">
     <div class="hero-eyebrow">SeAMK · Algebra ja geometria</div>
     <h1>Matikan selviytymisopas 🧮</h1>
-    <p class="hero-desc">Kaikki kurssilla tarvittava yhdessä paikassa — Octave-koodit valmiina ja harjoitustehtäviä ratkaisuineen. Kokeessa saa käyttää laskukonetta ja materiaalia.</p>
+    <p class="hero-desc">Kaikki kurssilla tarvittava yhdessä paikassa, Octave-koodit valmiina ja harjoitustehtäviä ratkaisuineen. Kokeessa saa käyttää laskukonetta ja materiaalia.</p>
     <div class="hero-pills">
       <span class="hero-pill">✅ Laskukone sallittu</span>
       <span class="hero-pill">✅ Materiaali sallittu</span>
@@ -766,6 +767,290 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
       <div class="box danger"><span class="box-icon">🚫</span><div><strong>Unohdat syms:</strong> <code>solve(...)</code> ilman <code>syms x</code> → virhe. Aina <code>syms x</code> ensin.</div></div>
       <div class="box danger"><span class="box-icon">🚫</span><div><strong>Kerto puuttuu:</strong> <code>2x</code> ei toimi → <code>2*x</code>. Octave vaatii kerto-operaattorin aina.</div></div>
       <div class="box danger"><span class="box-icon">🚫</span><div><strong>= vs ==:</strong> Sijoitus on <code>=</code>, yhtälö on <code>==</code>. Kirjoita <code>solve(2*x+1 == 7, x)</code>.</div></div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- MALLINNUS -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="mallinnus">
+    <div class="section-label">Ennen Octavea</div>
+    <h2 class="section-title">Yhtälöt tekstistä — ongelmanratkaisun logiikka</h2>
+    <p class="section-lead">Tämä on se vaihe jonka kaikki unohtavat opettaa. Ennen kuin kirjoitat yhtään koodia, sinun täytyy muuttaa tekstitehtävä matematiikaksi. Tässä se resepti.</p>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🗺️</span><div>
+        <div class="card-title">Kuusivaiheinen resepti — aina sama järjestys</div>
+        <div class="card-sub">Kun seuraat tätä, mikä tahansa tekstitehtävä ratkeaa</div>
+      </div></div>
+      <ul class="steps">
+        <li><span class="step-n">1</span><div><strong>Lue tehtävä kahdesti.</strong> Ensimmäisellä kerralla hahmota kokonaisuus. Toisella kerralla alleviivaa luvut ja nimeä mikä on mitäkin.</div></li>
+        <li><span class="step-n">2</span><div><strong>Listaa mitä tiedetään.</strong> Kirjoita paperille: "annettu: a = 5, b = 3, kulma = 40°". Älä luota muistiin.</div></li>
+        <li><span class="step-n">3</span><div><strong>Päätä mitä haetaan.</strong> Anna tuntemattomalle nimi: "haetaan: korkeus H" tai "haetaan: aika t". Tämä tulee Octavessa <code>syms H</code>:ksi.</div></li>
+        <li><span class="step-n">4</span><div><strong>Piirrä kuva.</strong> Geometriassa ja trigonometriassa AINA. Merkitse tunnetut arvot kuvaan. Kuvasta näkee yleensä minkä kolmion sisällä ollaan.</div></li>
+        <li><span class="step-n">5</span><div><strong>Kirjoita yhteys sanoin, sitten kaavaksi.</strong> "Korkeus jaettuna etäisyydellä on tangentti kulmasta" → H/x = tan(α). Tämä on se yhtälö jonka solve ratkaisee.</div></li>
+        <li><span class="step-n">6</span><div><strong>Ratkaise Octavella ja tarkista.</strong> Onko vastaus järkevä? Ei voi olla negatiivinen etäisyys. Sijoita takaisin yhtälöön.</div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">⏱️</span><div>
+        <div class="card-title">Esimerkki 1: Nopeustehtävä</div>
+        <div class="card-sub">perusalgebra.m · s.47 — "Kahden vaiheen nopeus"</div>
+      </div></div>
+      <p><strong>Tehtävä tekstinä:</strong> "Auto kiihdyttää ensin tasolla a₁ ajan t₁, sitten tasolla a₂ loppuajan (t₂ − t₁). Lopullinen nopeus on v. Laske t₁."</p>
+      <div class="tbl-wrap" style="margin:14px 0"><table>
+        <thead><tr><th>Vaihe</th><th>Ajatus</th><th>Paperilla</th></tr></thead>
+        <tbody>
+          <tr><td>Tiedetään</td><td>Molemmat kiihtyvyydet ja kokonaisaika</td><td>a₁, a₂, t₂, v annettu</td></tr>
+          <tr><td>Haetaan</td><td>Milloin vaihdetaan tasoa</td><td>t₁ = ?</td></tr>
+          <tr><td>Yhteys</td><td>Nopeus = kiihtyvyys × aika, kertynyt molemmista vaiheista</td><td>v = a₁·t₁ + a₂·(t₂ − t₁)</td></tr>
+          <tr><td>Octave</td><td>Ratkaistaan t₁</td><td><code>solve(v == a1*t1 + a2*(t2-t1), t1)</code></td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">perusalgebra.m · s.47</span></div>
+        <pre><span class="kw">clear</span>
+<span class="kw">syms</span> v a1 a2 t1 t2
+<span class="cm">% Yhtälö suoraan sanallisesta kuvauksesta:</span>
+<span class="cm">% "lopullinen nopeus = kiihd1 × aika1 + kiihd2 × (kokonaisaika - aika1)"</span>
+t1 = <span class="fn">solve</span>(v == a1*t1 + a2*(t2-t1), t1)
+<span class="cm">% → t1 = (v - a2*t2)/(a1 - a2)</span>
+
+<span class="cm">% Tarkistus numeroin:</span>
+v=<span class="nm">8.3</span>; a1=<span class="nm">0.4</span>; a2=<span class="nm">6.2</span>; t2=<span class="nm">9.8</span>;
+t1 = (a2*t2-v)/(a2-a1)
+a1*t1 + a2*(t2-t1)   <span class="cm">% → 8.3  ✓ sama kuin v</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🥛</span><div>
+        <div class="card-title">Esimerkki 2: Sekoitustehtävä</div>
+        <div class="card-sub">perusalgebra.m · s.69 — "Metalliseos"</div>
+      </div></div>
+      <p><strong>Tehtävä tekstinä:</strong> "Sekoitetaan kolmea metallia: kultaa (1.00 €/g), hopeaa (1.26 €/g) ja pronssia (0.79 €/g). Halutaan 200 g seosta jonka hinta on 201 €. Kullan ja hopean suhde on 1:1.11. Kuinka paljon kutakin?"</p>
+      <div class="tbl-wrap" style="margin:14px 0"><table>
+        <thead><tr><th>Vaihe</th><th>Ajatus</th><th>Paperilla</th></tr></thead>
+        <tbody>
+          <tr><td>Tiedetään</td><td>Kolmen metallin hinnat, kokonaispaino ja -hinta</td><td>rv=1.00, rg=1.26, re=0.79, V=200, M=201</td></tr>
+          <tr><td>Haetaan</td><td>Kullan (x) ja hopean (y) määrä, pronssI on loppu</td><td>x = ?, y = ?</td></tr>
+          <tr><td>Yhteys 1</td><td>Kultaa ja hopeaa yhteensä: hinta per gramma = 1.11</td><td>rv·x + rg·y = 1.11·(x+y)</td></tr>
+          <tr><td>Yhteys 2</td><td>Kokonaishinta: kulta + hopea + pronssi = 201</td><td>rv·x + rg·y + re·(200−x−y) = 201</td></tr>
+          <tr><td>Octave</td><td>Kaksi tuntematonta, kaksi yhtälöä</td><td><code>solve(yht1, yht2, x, y)</code></td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">perusalgebra.m · s.69</span></div>
+        <pre><span class="kw">clear</span>; <span class="kw">syms</span> x y
+rv=<span class="nm">1.00</span>; rg=<span class="nm">1.26</span>; re=<span class="nm">0.79</span>; rvg=<span class="nm">1.11</span>; V=<span class="nm">200</span>; M=<span class="nm">201</span>;
+
+<span class="cm">% Yhtälö 1: kullan+hopean hintasuhde</span>
+yht1 = rv*x + rg*y == rvg*(x+y);
+
+<span class="cm">% Yhtälö 2: kokonaishinta</span>
+yht2 = rv*x + rg*y + re*(V-x-y) == M;
+
+[x, y] = <span class="fn">solve</span>(yht1, yht2, x, y)
+x = <span class="fn">double</span>(x)   <span class="cm">% kultaa (g)</span>
+y = <span class="fn">double</span>(y)   <span class="cm">% hopeaa (g)</span>
+V-x-y         <span class="cm">% pronssia (g)</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🏔️</span><div>
+        <div class="card-title">Esimerkki 3: Geometrinen korkeus</div>
+        <div class="card-sub">trigonometria.m · s.39-40 — "Korkeus kahdesta pisteestä"</div>
+      </div></div>
+      <p><strong>Tehtävä tekstinä:</strong> "Tornin juurelta mitattu kulma on β = 20°. L = 3 metriä kauempaa mitattu kulma on α + β = 50°. Laske tornin korkeus h."</p>
+      <p><strong>Piirretään kuva:</strong> Torni on pystysuora. Pisteestä A katsotaan kulmassa β, pisteestä B (joka on L metriä lähempänä) katsotaan jyrkemmässä kulmassa.</p>
+      <div class="tbl-wrap" style="margin:14px 0"><table>
+        <thead><tr><th>Vaihe</th><th>Ajatus</th><th>Paperilla</th></tr></thead>
+        <tbody>
+          <tr><td>Piirrä</td><td>Kaksi suorakulmaista kolmiota vierekkäin, yhteinen korkeus h</td><td>✏️ kuvio paperille</td></tr>
+          <tr><td>Kolmio 1</td><td>Lähempi piste B: tan(β) = h/x</td><td>h = x · tan(β)</td></tr>
+          <tr><td>Kolmio 2</td><td>Kaukaisempi piste A: tan(α) = h/(x+L)</td><td>h = (x+L) · tan(α)</td></tr>
+          <tr><td>Ratkaisu</td><td>Kaksi yhtälöä, kaksi tuntematonta: h ja x</td><td><code>solve(..., H, x)</code></td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.39-40 &amp; s.51-52</span></div>
+        <pre><span class="kw">clear</span>
+h=<span class="nm">3</span>; alfa=<span class="nm">30</span>; beta=<span class="nm">20</span>;
+
+<span class="cm">% Kolmiosta 1: tan(beta) = h/x → x = h/tan(beta)</span>
+x = h*<span class="fn">tand</span>(beta)
+
+<span class="cm">% Kolmiosta 2: pituus L</span>
+L = h*<span class="fn">tand</span>(alfa+beta) - x
+
+<span class="cm">%% Yleinen ratkaisu: kun h on tuntematon</span>
+<span class="kw">syms</span> H x L a b
+[H, x] = <span class="fn">solve</span>(H/x == <span class="fn">tand</span>(b), H/(L+x) == <span class="fn">tand</span>(a), H, x)
+<span class="cm">% H = L·tan(a)·tan(b) / (tan(b) - tan(a))</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔧</span><div>
+        <div class="card-title">Esimerkki 4: Työtahtitehtävä</div>
+        <div class="card-sub">perusalgebra.m · s.49 — "Kaksi konetta yhdessä"</div>
+      </div></div>
+      <p><strong>Tehtävä tekstinä:</strong> "Kone A tekee työn yksin 80 tunnissa. Yhdessä koneet tekevät sen 48 tunnissa. Kuinka kauan kone B tekee sen yksin?"</p>
+      <div class="tbl-wrap" style="margin:14px 0"><table>
+        <thead><tr><th>Vaihe</th><th>Ajatus</th><th>Paperilla</th></tr></thead>
+        <tbody>
+          <tr><td>Avainajatus</td><td>Tunnissa tehty osuus on 1/aika. Osuudet lasketaan yhteen.</td><td>—</td></tr>
+          <tr><td>Yhtälö</td><td>A:n osuus + B:n osuus = yhdessä tehty osuus</td><td>1/tA + 1/tB = 1/tAB</td></tr>
+          <tr><td>Haetaan</td><td>tB kun tA=80 ja tAB=48</td><td>tB = ?</td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">perusalgebra.m · s.49</span></div>
+        <pre><span class="kw">clear</span>
+<span class="kw">syms</span> tA tB tAB
+<span class="cm">% Yhtälö: 1/tA + 1/tB = 1/tAB</span>
+tB = <span class="fn">solve</span>(<span class="nm">1</span>/tA + <span class="nm">1</span>/tB == <span class="nm">1</span>/tAB, tB)
+tB = <span class="fn">simplify</span>(tB)
+<span class="cm">% → tB = tA*tAB / (tA - tAB)</span>
+
+<span class="cm">% Numeroin:</span>
+tA=<span class="nm">80</span>; tAB=<span class="nm">48</span>;
+tB = tA*tAB/(tA-tAB)   <span class="cm">% → 120 tuntia</span>
+
+<span class="cm">% Tarkistus:</span>
+<span class="nm">1</span>/tA + <span class="nm">1</span>/tB    <span class="cm">% → 0.0208...</span>
+<span class="nm">1</span>/tAB          <span class="cm">% → 0.0208...  ✓ sama!</span></pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Työtahtitehtävän kaava:</strong> 1/yhdessä = 1/A + 1/B. Tämä pätee pumppuihin, putkiin, koneisiin, työtekijöihin — aina kun nopeudet (ei ajat) laskettaan yhteen.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📝</span><div>
+        <div class="card-title">Yleisten tilanteiden kaavat — tunnista tyyppi</div>
+        <div class="card-sub">Kun tunnistat tilanteen, tiedät kaavan</div>
+      </div></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Tilanne tekstissä</th><th>Avainsanat</th><th>Kaava</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Nopeus ja matka</strong></td><td>"liikkuu", "kulkee", "nopeus km/h"</td><td>matka = nopeus × aika<br><code>s = v * t</code></td></tr>
+          <tr><td><strong>Kahden vaiheen nopeus</strong></td><td>"kiihdyttää", "sitten", "loppunopeus"</td><td>v = a₁t₁ + a₂(t₂−t₁)<br><code>perusalgebra.m s.47</code></td></tr>
+          <tr><td><strong>Työtahti yhdessä</strong></td><td>"yhdessä", "kone A ja B", "tunnissa"</td><td>1/yhdessä = 1/A + 1/B<br><code>perusalgebra.m s.49</code></td></tr>
+          <tr><td><strong>Sekoitustehtävä</strong></td><td>"sekoitetaan", "pitoisuus", "seos"</td><td>määrä₁·pit₁ + määrä₂·pit₂ = loppu·pitloppu<br><code>perusalgebra.m s.69</code></td></tr>
+          <tr><td><strong>Korkeus kulmasta</strong></td><td>"kulma", "katsotaan ylös", "torni"</td><td>h = etäisyys × tan(kulma)<br><code>trigonometria.m s.39</code></td></tr>
+          <tr><td><strong>Korkeus kahdesta pisteestä</strong></td><td>"kahdesta suunnasta", "kaksi kulmaa"</td><td>solve(H/x==tand(b), H/(L+x)==tand(a))<br><code>trigonometria.m s.51</code></td></tr>
+          <tr><td><strong>Kolmion sivu</strong></td><td>"kolmion sivut", "kulma välissä"</td><td>kosinilause: c²=a²+b²−2ab·cos(γ)<br><code>trigonometria.m s.101</code></td></tr>
+          <tr><td><strong>Kolmion kulma</strong></td><td>"kolmion kulmat", "sivut tunnetaan"</td><td>cos(α)=(b²+c²−a²)/(2bc)<br><code>trigonometria.m s.103</code></td></tr>
+          <tr><td><strong>Virtapiiri</strong></td><td>"resistanssi", "virta", "jännite"</td><td>Kirchhoffin lait → yhtälöryhmä<br><code>perusalgebra.m s.75</code></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card" style="background:var(--surface-2);">
+      <div class="card-header"><span class="card-icon">✏️</span><div>
+        <div class="card-title">Mallinnusharjoitukset — muodosta yhtälö ensin</div>
+        <div class="card-sub">Kirjoita yhtälö paperille ENNEN kuin avaat Octaven</div>
+      </div></div>
+      <div class="ex-grid">
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus M1</div>
+            <div class="ex-question">Muodosta yhtälö ja ratkaise</div>
+            <div class="ex-given">Pumppu A tyhjentää altaan 6 tunnissa. Pumppu B tekee sen 10 tunnissa. Kuinka kauan kestää yhdessä?</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="cm">% Ajatus: tunnissa tehty osuus lasketaan yhteen</span>
+<span class="cm">% 1/A + 1/B = 1/yhdessä</span>
+<span class="cm">% 1/6 + 1/10 = 1/t_yhdessä</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> t
+t = <span class="fn">solve</span>(<span class="nm">1</span>/<span class="nm">6</span> + <span class="nm">1</span>/<span class="nm">10</span> == <span class="nm">1</span>/t, t)
+t = <span class="fn">double</span>(t)   <span class="cm">% → 3.75 tuntia</span>
+
+<span class="cm">% Tarkistus:</span>
+<span class="nm">1</span>/<span class="nm">6</span> + <span class="nm">1</span>/<span class="nm">10</span>   <span class="cm">% → 0.2667</span>
+<span class="nm">1</span>/<span class="nm">3.75</span>       <span class="cm">% → 0.2667  ✓</span></pre>
+            <div class="ex-ans">✅ Yhdessä: 3 h 45 min. Yhtälö: 1/6 + 1/10 = 1/t</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus M2</div>
+            <div class="ex-question">Muodosta yhtälö ja ratkaise</div>
+            <div class="ex-given">Auto ajaa 80 km matkan. Ensin 40 km nopeus 60 km/h, sitten 40 km nopeus 120 km/h. Mikä on keskinopeus?</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="cm">% Ajatus: keskinopeus = kokonaismatka / kokonaisaika</span>
+<span class="cm">% Aika 1: 40/60 = 0.667 h</span>
+<span class="cm">% Aika 2: 40/120 = 0.333 h</span>
+<span class="kw">clear</span>
+s1=<span class="nm">40</span>; v1=<span class="nm">60</span>;
+s2=<span class="nm">40</span>; v2=<span class="nm">120</span>;
+t1 = s1/v1
+t2 = s2/v2
+kokonaismatka = s1 + s2
+kokonaisaika  = t1 + t2
+keskinopeus   = kokonaismatka / kokonaisaika
+<span class="cm">% → 80 km/h  (harmoninen, ei aritmeettinen!)</span></pre>
+            <div class="ex-ans">✅ Keskinopeus = 80 km/h. Ei ole (60+120)/2 = 90!</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus M3</div>
+            <div class="ex-question">Muodosta geometrinen yhtälö</div>
+            <div class="ex-given">Tikkaat nojaa seinään. Tikkaat ovat 5 m pitkät ja niiden alapää on 2 m seinästä. Kuinka korkealle ylettyy?</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="cm">% Piirrä: suorakulmainen kolmio</span>
+<span class="cm">% hypotenuusa = tikkaat = 5</span>
+<span class="cm">% viereinen  = etäisyys seinästä = 2</span>
+<span class="cm">% vastakkainen = korkeus = ?</span>
+<span class="cm">%</span>
+<span class="cm">% Pythagoras: h² + 2² = 5²  →  h = sqrt(25-4)</span>
+<span class="kw">clear</span>
+tikkaat = <span class="nm">5</span>;
+etaisyys = <span class="nm">2</span>;
+korkeus = <span class="fn">sqrt</span>(tikkaat^<span class="nm">2</span> - etaisyys^<span class="nm">2</span>)
+<span class="cm">% → 4.583 m</span>
+
+<span class="cm">% Myös kulma maahan:</span>
+kulma = <span class="fn">acosd</span>(etaisyys/tikkaat)
+<span class="cm">% → 66.4°</span></pre>
+            <div class="ex-ans">✅ Korkeus ≈ 4.58 m. Yhtälö: h = √(5²−2²)</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Harjoitus M4</div>
+            <div class="ex-question">Muodosta yhtälö kirjainkaavaksi</div>
+            <div class="ex-given">Akku: jännite E, sisäinen resistanssi r, ulkoinen R. Virta i = E/(R+r). Ratkaise r kun E=12 V, R=10 Ω, i=1.1 A.</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="cm">% Yhtälö suoraan tekstistä: i = E/(R+r)</span>
+<span class="cm">% Haetaan: r</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> r
+E=<span class="nm">12</span>; R=<span class="nm">10</span>; i=<span class="nm">1.1</span>;
+r = <span class="fn">solve</span>(i == E/(R+r), r)
+r = <span class="fn">double</span>(r)   <span class="cm">% → 0.909 Ω</span>
+
+<span class="cm">% Tarkistus:</span>
+E/(R+r)   <span class="cm">% → 1.1 A  ✓</span></pre>
+            <div class="ex-ans">✅ r ≈ 0.91 Ω. Yhtälö suoraan tekstistä: i = E/(R+r)</div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
