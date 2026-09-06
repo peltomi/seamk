@@ -677,7 +677,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
   <a href="#plottaus"       class="nav-link">📊 Plottaus</a>
   <a href="#koukut"         class="nav-link">🪝 Koukut</a>
   <a href="#muunnokset"     class="nav-link">🔄 Muunnokset</a>
-  <a href="#algebra"        class="nav-link">📐 Algebra</a>
+  <a href="#algebra"        class="nav-link">📐 Algebra &amp; murtolausekkeet</a>
   <a href="#alg-harj"       class="nav-link">✏️ Alg. harjoitukset</a>
   <a href="#trig"           class="nav-link">📏 Trigonometria</a>
   <a href="#trig-harj"      class="nav-link">✏️ Trig. harjoitukset</a>
@@ -696,7 +696,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
   <div class="hero">
     <div class="hero-eyebrow">SeAMK · Algebra ja geometria</div>
     <h1>Matikan selviytymisopas 🧮</h1>
-    <p class="hero-desc">Kaikki kurssilla tarvittava yhdessä paikassa, Octave-koodit valmiina ja harjoitustehtäviä ratkaisuineen. Kokeessa saa käyttää laskukonetta ja materiaalia.</p>
+    <p class="hero-desc">Kaikki kurssilla tarvittava yhdessä paikassa — selkeät selitykset, Octave-koodit valmiina ja harjoitustehtäviä ratkaisuineen. Kokeessa saa käyttää laskukonetta ja materiaalia.</p>
     <div class="hero-pills">
       <span class="hero-pill">✅ Laskukone sallittu</span>
       <span class="hero-pill">✅ Materiaali sallittu</span>
@@ -1064,6 +1064,24 @@ E/(R+r)   <span class="cm">% → 1.1 A  ✓</span></pre>
     <h2 class="section-title">Octave-pikakurssi</h2>
     <p class="section-lead">Kaikki mitä tarvitset Octaven käyttöön. Jos osaat nämä asiat, osaat Octaven tenttiä varten.</p>
 
+    <div class="box warn" style="margin-bottom:20px"><span class="box-icon">🚨</span><div><strong>PAKOLLINEN ALOITUSRUTIINI — tee tämä AINA ennen kirjainlaskuja!</strong><br>
+    Octavessa kirjainlaskut (syms, simplify, expand, solve, factor) vaativat erillisen paketin. Se ei lataudu itsestään.<br><br>
+    <strong>Kirjoita komentoriville ensimmäisenä:</strong><br>
+    <code style="display:block;margin:8px 0;padding:8px;background:rgba(0,0,0,.18);border-radius:6px;font-size:1rem">pkg load symbolic</code>
+    Odota hetki — näet tekstiä "Python communication link active". Sen jälkeen voit käyttää syms-komentoa.<br><br>
+    ❌ <strong>Ei tarvitse tehdä joka kerta</strong> saman istunnon aikana — vain kun avaat Octaven uudelleen.</div></div>
+
+    <div class="box warn" style="margin-bottom:20px"><span class="box-icon">⚠️</span><div><strong>KOLME SYNTAKSIVIRHETTÄ joita kaikki tekevät:</strong><br><br>
+    <strong>1. Kertomerkki puuttuu</strong><br>
+    ❌ <code>3a^2b</code> — Octave ei ymmärrä tätä<br>
+    ✅ <code>3*a^2*b</code> — kertomerkki * aina kirjainten ja lukujen väliin<br><br>
+    <strong>2. simplify/expand ilman sulkuja</strong><br>
+    ❌ <code>simplify 3*a+a</code> — antaa virheen<br>
+    ✅ <code>simplify(3*a+a)</code> — lauseke aina sulkujen sisään<br><br>
+    <strong>3. syms unohtuu</strong><br>
+    ❌ Suoraan <code>expand(a+b)</code> ilman syms-komentoa<br>
+    ✅ Ensin <code>syms a b</code>, sitten <code>expand(a+b)</code></div></div>
+
     <div class="card">
       <div class="card-header"><span class="card-icon">🖥️</span><div><div class="card-title">Peruslaskut</div><div class="card-sub">Toimii kuin laskin — kirjoita ja paina Enter</div></div></div>
       <div class="code-block">
@@ -1089,18 +1107,22 @@ a * b           <span class="cm">% → 15</span></pre>
       <p>Normaalisti Octave laskee vain numeroilla. <code>syms</code>-komennon jälkeen se osaa laskea myös kirjaimilla, kuten paperilla.</p>
       <div class="code-block">
         <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
-        <pre><span class="cm">% Ilmoita kirjainmuuttujat</span>
-<span class="kw">syms</span> x y
+        <pre><span class="cm">%% ── ALOITUSRUTIINI (kerran per Octave-istunto) ──</span>
+pkg load symbolic     <span class="cm">% ← PAKOLLINEN! Odota "Python link active"</span>
 
-<span class="cm">% Nyt voi laskea kirjaimilla</span>
-<span class="fn">expand</span>((x+<span class="nm">2</span>)*(x+<span class="nm">3</span>))     <span class="cm">% → x^2 + 5*x + 6</span>
-<span class="fn">simplify</span>((x^<span class="nm">2</span>-<span class="nm">4</span>)/(x-<span class="nm">2</span>)) <span class="cm">% → x + 2</span>
+<span class="cm">%% ── Sitten vasta kirjainlaskut ──</span>
+<span class="kw">clear</span>
+<span class="kw">syms</span> x y             <span class="cm">% ilmoita kirjainmuuttujat</span>
+
+<span class="cm">% Huom: kertomerkki * aina kirjainten väliin!</span>
+<span class="fn">expand</span>((x+<span class="nm">2</span>)*(x+<span class="nm">3</span>))       <span class="cm">% → x^2 + 5*x + 6</span>
+<span class="fn">simplify</span>((x^<span class="nm">2</span>-<span class="nm">4</span>)/(x-<span class="nm">2</span>))   <span class="cm">% → x + 2</span>
 
 <span class="cm">% Yhtälön ratkaisu</span>
-<span class="fn">solve</span>(x + <span class="nm">5</span> == <span class="nm">12</span>, x)    <span class="cm">% → x = 7</span>
-<span class="fn">solve</span>(x^<span class="nm">2</span> == <span class="nm">9</span>, x)       <span class="cm">% → [3, -3]</span>
+<span class="fn">solve</span>(x + <span class="nm">5</span> == <span class="nm">12</span>, x)      <span class="cm">% → x = 7</span>
+<span class="fn">solve</span>(x^<span class="nm">2</span> == <span class="nm">9</span>, x)         <span class="cm">% → [3, -3]</span>
 
-<span class="cm">% VAIHE: syms → komento → vastaus. Aina näin!</span></pre>
+<span class="cm">% JÄRJESTYS: pkg load → clear → syms → lauseke</span></pre>
       </div>
       <div class="box tip"><span class="box-icon">💡</span><div><strong>Muistisääntö:</strong> <code>syms x</code> on kuin "esittely" — kerrot Octavelle kuka x on, ennen kuin pyydät sitä ratkaisemaan tehtävää jossa x esiintyy.</div></div>
     </div>
@@ -2036,6 +2058,181 @@ y = <span class="fn">double</span>(y)
       </div>
       <div class="box tip"><span class="box-icon">💡</span><div><strong>Rakenne:</strong> Luettele ratkaistovat muuttujat aina lopussa: <code>solve(yht1, yht2, x, y)</code></div></div>
     </div>
+
+    <!-- ── MURTOLAUSEKKEET ── -->
+    <div class="card" style="margin-top:0">
+      <div class="card-header"><span class="card-icon">➗</span><div>
+        <div class="card-title">Murtolausekkeiden supistaminen — suuri salaisuus</div>
+        <div class="card-sub">Koko idea yhdessä lauseessa: kirjoita lauseke simplify():n sisään ja Octave tekee työn</div>
+      </div></div>
+      <p><strong>Mitä supistaminen tarkoittaa?</strong> Osoittajassa ja nimittäjässä on sama tekijä, joka häviää. Esimerkiksi (a+b)/((a+b)(a-b)) = 1/(a-b) koska (a+b) on molemmissa.</p>
+      <p>Käsin pitäisi ensin tekijöidä, sitten yliviivatella. Octavella: kirjoita koko murtolauseke <code>simplify()</code>:n sisään — se tekee kaiken.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">perusalgebra.m · s.24, s.28, s.32, s.33</span></div>
+        <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> r R H a b s v1 v2 L
+
+<span class="cm">% Tehtävä 7: (12r-4)/(3r-1)</span>
+<span class="fn">simplify</span>((<span class="nm">12</span>*r-<span class="nm">4</span>)/(<span class="nm">3</span>*r-<span class="nm">1</span>))        <span class="cm">% → 4   (4(3r-1) / (3r-1))</span>
+
+<span class="cm">% Tehtävä 8: (R²+RH)/(R+H)</span>
+<span class="fn">simplify</span>((R^<span class="nm">2</span>+R*H)/(R+H))           <span class="cm">% → R</span>
+
+<span class="cm">% Tehtävä 9: (a+b)/(a²-b²)</span>
+<span class="fn">simplify</span>((a+b)/(a^<span class="nm">2</span>-b^<span class="nm">2</span>))          <span class="cm">% → 1/(a-b)  [a²-b²=(a+b)(a-b)]</span>
+
+<span class="cm">% Tehtävä 10: (a+b)/(a²+b²)  — EI supistu!</span>
+<span class="fn">simplify</span>((a+b)/(a^<span class="nm">2</span>+b^<span class="nm">2</span>))          <span class="cm">% → (a+b)/(a²+b²)  jää samaksi</span>
+
+<span class="cm">% Tehtävä 11: (r²-2r)/(r²-4)</span>
+<span class="fn">simplify</span>((r^<span class="nm">2</span>-<span class="nm">2</span>*r)/(r^<span class="nm">2</span>-<span class="nm">4</span>))       <span class="cm">% → r/(r+2)</span>
+
+<span class="cm">% Tehtävä 12: (ab-3b)/(a²-6a+9)</span>
+<span class="fn">simplify</span>((a*b-<span class="nm">3</span>*b)/(a^<span class="nm">2</span>-<span class="nm">6</span>*a+<span class="nm">9</span>)) <span class="cm">% → b/(a-3)</span></pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Miksi tehtävä 10 ei supistu?</strong> a²+b² ei tekijöidy reaaliluvuilla (osoittajassa on +, nimittäjässä myös +, ei yhteistä tekijää). Octave kertoo tämän pitämällä lausekkeen samana.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔗</span><div>
+        <div class="card-title">Murtojen yhdistäminen yhdeksi murtolausekkeeksi</div>
+        <div class="card-sub">Tehtävät 13–20: expand() + simplify() yhdessä</div>
+      </div></div>
+      <p>Kun tehtävä pyytää "kirjoita yhdellä jakoviivalla", pitää murtolausekkeet ensin yhteissaattaa samaan nimittäjään. Octave tekee tämän automaattisesti — kirjoita koko lauseke sellaisenaan.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre>pkg load symbolic
+<span class="kw">clear</span>; <span class="kw">syms</span> R H h s a b m n v1 v2 L x R1 R2
+
+<span class="cm">% Tehtävä 13: 1 − R/(R+H)</span>
+<span class="fn">simplify</span>(<span class="nm">1</span> - R/(R+H))                   <span class="cm">% → H/(R+H)</span>
+
+<span class="cm">% Tehtävä 14: ((H+h)/2)² − ((H-h)/2)²</span>
+<span class="fn">simplify</span>(((H+h)/<span class="nm">2</span>)^<span class="nm">2</span> - ((H-h)/<span class="nm">2</span>)^<span class="nm">2</span>) <span class="cm">% → H*h</span>
+
+<span class="cm">% Tehtävä 15: a/(a+b) + b/(a-b)</span>
+<span class="fn">simplify</span>(a/(a+b) + b/(a-b))             <span class="cm">% → (a²-a*b+2*a*b)/(a²-b²)</span>
+
+<span class="cm">% Tehtävä 16: m*(n-m)/(m+n) + m</span>
+<span class="fn">simplify</span>(m*(n-m)/(m+n) + m)              <span class="cm">% → 2*m*n/(m+n)</span>
+
+<span class="cm">% Tehtävä 17: 1/(1/R1 + 1/R2)  [rinnakkaisresistanssi!]</span>
+<span class="fn">simplify</span>(<span class="nm">1</span>/(<span class="nm">1</span>/R1 + <span class="nm">1</span>/R2))               <span class="cm">% → R1*R2/(R1+R2)</span>
+
+<span class="cm">% Tehtävä 18: (1 + 1/(s+1)) / (1 + s/(s+1))</span>
+<span class="fn">simplify</span>((<span class="nm">1</span> + <span class="nm">1</span>/(s+<span class="nm">1</span>)) / (<span class="nm">1</span> + s/(s+<span class="nm">1</span>)))  <span class="cm">% → (s+2)/(2*s+1)</span>
+
+<span class="cm">% Tehtävä 19: (1-x)/(1+sqrt(x))</span>
+<span class="fn">simplify</span>((<span class="nm">1</span>-x)/(<span class="nm">1</span>+<span class="fn">sqrt</span>(x)))             <span class="cm">% → 1-sqrt(x)  [1-x=(1-√x)(1+√x)]</span>
+
+<span class="cm">% Tehtävä 20: sqrt(R*r)/(sqrt(R*r)+R) − sqrt(R*r)/(sqrt(R*r)+r)</span>
+<span class="kw">syms</span> R r positive
+<span class="fn">simplify</span>(<span class="fn">sqrt</span>(R*r)/(<span class="fn">sqrt</span>(R*r)+R) - <span class="fn">sqrt</span>(R*r)/(<span class="fn">sqrt</span>(R*r)+r))  <span class="cm">% → (r-R)/(r+R)</span></pre>
+      </div>
+      <div class="box warn"><span class="box-icon">⚠️</span><div><strong>Tehtävässä 19 ja 20:</strong> Käytä <code>syms R r positive</code> neliöjuuritehtävissä — muuten Octave ei osaa yksinkertaistaa koska se ei tiedä onko luku positiivinen vai negatiivinen.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔵</span><div>
+        <div class="card-title">Geometrinen tehtävä 3 — sinisen ympyrän säde</div>
+        <div class="card-sub">Kaksi suurta ympyrää (r₁, r₂) sivuavat toisiaan, pieni sininen ympyrä (r) mahtuu väliin</div>
+      </div></div>
+      <p><strong>Miten yhtälö muodostuu:</strong> Kaikki kolme ympyrää seisovat tasolla. Ympyröiden keskipisteet ovat korkeudella r₁, r₂ ja r. Kun kaksi ympyrää sivuaa toisiaan ulkopuolelta, niiden keskipisteiden etäisyys = summa säteistä.</p>
+      <p>Vaakasuora etäisyys keskipisteiden välillä Pythagoraan lauseella: jos etäisyys on r₁+r₂ ja korkeusero r₁−r₂, niin vaakaosuus = √((r₁+r₂)²−(r₁−r₂)²) = 2√(r₁r₂).</p>
+      <p>Yhtälö: kokonaisetäisyys d täytyy olla sama mitattuna kummastakin suunnasta:</p>
+      <div class="formula"><div class="flabel">Yhtälö kuvasta</div>d = 2√(r₁·r) + 2√(r₂·r)&nbsp;&nbsp;JA&nbsp;&nbsp;d = 2√(r₁·r₂)</div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">trigonometria.m · s.9-10 (samankaltainen)</span></div>
+        <pre>pkg load symbolic
+<span class="kw">clear</span>; <span class="kw">syms</span> r r1 r2 positive
+
+<span class="cm">% Yhtälö: d molemmista kuvista on sama</span>
+r_kaava = <span class="fn">solve</span>(<span class="fn">sqrt</span>(r1*r2) == <span class="fn">sqrt</span>(r1*r) + <span class="fn">sqrt</span>(r2*r), r)
+<span class="fn">simplify</span>(r_kaava)
+<span class="cm">% → r = r1*r2 / (sqrt(r1)+sqrt(r2))²</span>
+
+<span class="cm">% Numeroin: r1=2, r2=3</span>
+r1=<span class="nm">2</span>; r2=<span class="nm">3</span>;
+r = r1*r2 / (<span class="fn">sqrt</span>(r1)+<span class="fn">sqrt</span>(r2))^<span class="nm">2</span>
+<span class="cm">% → 0.606 ≈ 0.61  ✓</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📦</span><div>
+        <div class="card-title">Geometrinen tehtävä 4 — viistoseinäinen säiliö</div>
+        <div class="card-sub">Pohja + 4 viistoa trapetsimaista seinää, koska säiliö on leveämpi ylhäältä</div>
+      </div></div>
+      <p><strong>Rakenne:</strong> Pohja on suorakaide (c×d). Neljä seinää ovat trapetseja — leveämpiä ylhäältä (a,b) kuin alhaalta (c,d). Koska seinät viistottavat ulospäin, niiden korkeus ei ole h vaan <em>vinokorkeus</em> (slantkorkeus).</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Osa</th><th>Kaava</th><th>Selitys</th></tr></thead>
+        <tbody>
+          <tr><td>Pohja</td><td>c × d</td><td>suorakaide</td></tr>
+          <tr><td>Pitkät seinät (×2)</td><td>(a+c)/2 × √(h²+((b−d)/2)²)</td><td>trapetsin ala × vinokorkeus</td></tr>
+          <tr><td>Lyhyet seinät (×2)</td><td>(b+d)/2 × √(h²+((a−c)/2)²)</td><td>trapetsin ala × vinokorkeus</td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="kw">clear</span>
+a=<span class="nm">7</span>; b=<span class="nm">4</span>; c=<span class="nm">5</span>; d=<span class="nm">3</span>; h=<span class="nm">4</span>;
+
+<span class="cm">% Pohja</span>
+A_pohja = c*d
+
+<span class="cm">% Vinokorkeuden laskenta: seinä viistottaa ulospäin</span>
+<span class="cm">% Pitkät seinät: leveys muuttuu b→d, vinokorkeus sivusuunnassa</span>
+vino_pitka = <span class="fn">sqrt</span>(h^<span class="nm">2</span> + ((b-d)/<span class="nm">2</span>)^<span class="nm">2</span>)
+<span class="cm">% Lyhyet seinät: pituus muuttuu a→c, vinokorkeus päätysuunnassa</span>
+vino_lyhyt = <span class="fn">sqrt</span>(h^<span class="nm">2</span> + ((a-c)/<span class="nm">2</span>)^<span class="nm">2</span>)
+
+<span class="cm">% 2 pitkää seinää + 2 lyhyttä seinää (trapetsin ala = (ylä+ala)/2 × korkeus)</span>
+A_pitkat = <span class="nm">2</span> * (a+c)/<span class="nm">2</span> * vino_pitka
+A_lyhyet = <span class="nm">2</span> * (b+d)/<span class="nm">2</span> * vino_lyhyt
+
+A = A_pohja + A_pitkat + A_lyhyet   <span class="cm">% → 92.24  ✓</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔴</span><div>
+        <div class="card-title">Geometrinen tehtävä 5 — pallo + sylinterit</div>
+        <div class="card-sub">Sylinteri menee pallon läpi, molemmin puolin törröttää</div>
+      </div></div>
+      <p><strong>Rakenne:</strong> Sylinteri (säde r, kokonaispituus k) läpäisee pallon (säde R) keskeltä. Pallo "nielaisi" sylinterin sisään menevän osan, sylinterin päät törröttävät ulos.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Osa</th><th>Kaava</th><th>Huom</th></tr></thead>
+        <tbody>
+          <tr><td>h = "sisääntulokorkeus"</td><td>√(R²−r²)</td><td>missä sylinteri leikkaa pallon</td></tr>
+          <tr><td>Pallon näkyvä pinta</td><td>4π·R·h</td><td>pallosta näkyy vain "vyöhyke"</td></tr>
+          <tr><td>Sylinterin sivupinta (ulkona)</td><td>2π·r·(k−2h)</td><td>vain pallosta ulkona oleva osa</td></tr>
+          <tr><td>Sylinterin kannet (×2)</td><td>2·π·r²</td><td>päädyt</td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="kw">clear</span>
+R=<span class="nm">5</span>; r=<span class="nm">2.5</span>; k=<span class="nm">20</span>;
+
+<span class="cm">% Missä sylinteri leikkaa pallon (Pythagoras)</span>
+h = <span class="fn">sqrt</span>(R^<span class="nm">2</span> - r^<span class="nm">2</span>)         <span class="cm">% → 4.33</span>
+h_kappa = R - h               <span class="cm">% pallokapin korkeus = 0.67</span>
+
+<span class="cm">%% PINTA-ALA</span>
+A_pallo  = <span class="nm">4</span>*pi*R*h           <span class="cm">% pallon näkyvä vyöhyke</span>
+A_sivut  = <span class="nm">2</span>*pi*r*(k - <span class="nm">2</span>*h)  <span class="cm">% sylinterin ulkopuoli</span>
+A_kannet = <span class="nm">2</span>*pi*r^<span class="nm">2</span>           <span class="cm">% kaksi päätyympyrää</span>
+A = A_pallo + A_sivut + A_kannet  <span class="cm">% → 489.5  ✓</span>
+
+<span class="cm">%% TILAVUUS</span>
+V_pallo = <span class="nm">4</span>/<span class="nm">3</span>*pi*R^<span class="nm">3</span>
+V_kappa = pi*h_kappa^<span class="nm">2</span>*(<span class="nm">3</span>*R - h_kappa)/<span class="nm">3</span>  <span class="cm">% kaavan pallokappa</span>
+V_syl   = pi*r^<span class="nm">2</span>*(k - <span class="nm">2</span>*h)  <span class="cm">% ulkona törröttävä sylinteri</span>
+V = V_pallo - <span class="nm">2</span>*V_kappa + V_syl  <span class="cm">% → 732.8  ✓</span></pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Pallokappa-kaava:</strong> V_kappa = π·h²·(3R−h)/3 — tämä on standardikaava kaistalle joka leikataan pallon pinnasta. Löytyy myös kaavakokoelmista.</div></div>
+    </div>
+
   </section>
 
   <hr>
@@ -2197,6 +2394,178 @@ a1*t1 + a2*(t2-t1)   <span class="cm">% = v?</span></pre>
           <div class="ex-ans">✅ Vastaus: R·H / (R + H)</div>
         </div>
       </div>
+
+    </div><!-- /ex-grid -->
+
+    <!-- ── KURSSIMATERIAALIN KOTITEHTÄVÄT ── -->
+    <div class="card" style="margin-top:28px;background:var(--surface-2)">
+      <div class="card-header"><span class="card-icon">📋</span><div>
+        <div class="card-title">Kurssimateriaalin kotitehtävät — Sulkujen poisto ja sieventäminen</div>
+        <div class="card-sub">Muista: pkg load symbolic → clear → syms → lauseke sulkuihin!</div>
+      </div></div>
+      <div class="box warn" style="margin-bottom:16px"><span class="box-icon">💡</span><div><strong>Ennen jokaista tehtävää:</strong> <code>pkg load symbolic</code> (kerran per istunto), sitten <code>clear</code> ja <code>syms</code>-kirjaimet</div></div>
+      <div class="ex-grid">
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Tehtävä 1</div>
+            <div class="ex-question">Poista sulut ja sievennä</div>
+            <div class="ex-given">−(3a²b + b²a) − (−a²b − ab²)</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="cm">% Muista: kertomerkki * aina kirjainten väliin!</span>
+pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> a b
+<span class="fn">expand</span>(-(3*a^<span class="nm">2</span>*b + b^<span class="nm">2</span>*a) - (-a^<span class="nm">2</span>*b - a*b^<span class="nm">2</span>))
+<span class="cm">% expand avaa sulkeet, simplify sieventää</span>
+<span class="fn">simplify</span>(-(3*a^<span class="nm">2</span>*b + b^<span class="nm">2</span>*a) - (-a^<span class="nm">2</span>*b - a*b^<span class="nm">2</span>))</pre>
+            <div class="ex-ans">✅ Vastaus: −2a²b  (termit häviävät: −3a²b + a²b = −2a²b, ja −ab² + ab² = 0)</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Tehtävä 2</div>
+            <div class="ex-question">Poista sulut ja sievennä</div>
+            <div class="ex-given">a²b − (5ab² − (ab² − (a²b − 2ab²)))</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>; <span class="kw">syms</span> a b
+<span class="fn">expand</span>(a^<span class="nm">2</span>*b - (<span class="nm">5</span>*a*b^<span class="nm">2</span> - (a*b^<span class="nm">2</span> - (a^<span class="nm">2</span>*b - <span class="nm">2</span>*a*b^<span class="nm">2</span>))))
+<span class="fn">simplify</span>(a^<span class="nm">2</span>*b - (<span class="nm">5</span>*a*b^<span class="nm">2</span> - (a*b^<span class="nm">2</span> - (a^<span class="nm">2</span>*b - <span class="nm">2</span>*a*b^<span class="nm">2</span>))))</pre>
+            <div class="ex-ans">✅ Vastaus: −6ab²  (Octave laskee sisäkkäiset sulut oikeassa järjestyksessä)</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Tehtävä 3</div>
+            <div class="ex-question">Avaa sulkeet ja sievennä</div>
+            <div class="ex-given">3n(7m − 6) − 2m(3n + 1)</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>; <span class="kw">syms</span> n m
+<span class="fn">expand</span>(<span class="nm">3</span>*n*(<span class="nm">7</span>*m - <span class="nm">6</span>) - <span class="nm">2</span>*m*(<span class="nm">3</span>*n + <span class="nm">1</span>))</pre>
+            <div class="ex-ans">✅ Vastaus: 21mn − 18n − 6mn − 2m = 15mn − 18n − 2m</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Tehtävä 4</div>
+            <div class="ex-question">Kerro auki (FOIL)</div>
+            <div class="ex-given">(2t − 1)(3t − 2)</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>; <span class="kw">syms</span> t
+<span class="fn">expand</span>((<span class="nm">2</span>*t - <span class="nm">1</span>)*(<span class="nm">3</span>*t - <span class="nm">2</span>))</pre>
+            <div class="ex-ans">✅ Vastaus: 6t² − 7t + 2</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Tehtävä 5</div>
+            <div class="ex-question">Kuutiopotenssit ja sieventäminen</div>
+            <div class="ex-given">(−2pq²)³ + (3p²q)³ − (−5pq²p²q⁴ + 20p³p³q³)</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>; <span class="kw">syms</span> p q
+<span class="fn">expand</span>((-<span class="nm">2</span>*p*q^<span class="nm">2</span>)^<span class="nm">3</span> + (<span class="nm">3</span>*p^<span class="nm">2</span>*q)^<span class="nm">3</span> - (-<span class="nm">5</span>*p*q^<span class="nm">2</span>*p^<span class="nm">2</span>*q^<span class="nm">4</span> + <span class="nm">20</span>*p^<span class="nm">3</span>*p^<span class="nm">3</span>*q^<span class="nm">3</span>))
+<span class="fn">simplify</span>((-<span class="nm">2</span>*p*q^<span class="nm">2</span>)^<span class="nm">3</span> + (<span class="nm">3</span>*p^<span class="nm">2</span>*q)^<span class="nm">3</span> - (-<span class="nm">5</span>*p*q^<span class="nm">2</span>*p^<span class="nm">2</span>*q^<span class="nm">4</span> + <span class="nm">20</span>*p^<span class="nm">3</span>*p^<span class="nm">3</span>*q^<span class="nm">3</span>))</pre>
+            <div class="ex-ans">✅ Anna Octaven laskea — potenssilait hoituvat expand:illa</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Tehtävä 6</div>
+            <div class="ex-question">Binomikaava — kolmas potenssi</div>
+            <div class="ex-given">(a + b)³</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="kw">clear</span>; <span class="kw">syms</span> a b
+<span class="fn">expand</span>((a + b)^<span class="nm">3</span>)</pre>
+            <div class="ex-ans">✅ Vastaus: a³ + 3a²b + 3ab² + b³</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Geometriatehtävät kuvasta -->
+      <h3 style="margin:28px 0 12px;font-size:1.1rem">Geometriatehtävät kuvasta</h3>
+      <div class="ex-grid">
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Tehtävä 1a</div>
+            <div class="ex-question">Keppi seinää vasten — Δy pituuksien L, x ja Δx avulla</div>
+            <div class="ex-given">Keppi nojaa seinään. Pituus L, alapää etäisyydellä x. Alapää liikkuu Δx oikealle. Kuinka paljon yläpää laskee (Δy)?</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="cm">% Ajatus: Pythagoras molemmissa asennoissa</span>
+<span class="cm">% Alkutilanne: yläpää h = sqrt(L² - x²)</span>
+<span class="cm">% Lopputilanne: yläpää h2 = sqrt(L² - (x+Δx)²)</span>
+<span class="cm">% Δy = h - h2 (lasku)</span>
+<span class="kw">clear</span>
+L=<span class="nm">6</span>; x=<span class="nm">2</span>; dx=<span class="nm">1</span>;
+h  = <span class="fn">sqrt</span>(L^<span class="nm">2</span> - x^<span class="nm">2</span>)
+h2 = <span class="fn">sqrt</span>(L^<span class="nm">2</span> - (x+dx)^<span class="nm">2</span>)
+dy = h - h2   <span class="cm">% → 0.46  ✓</span></pre>
+            <div class="ex-ans">✅ Vastaus: Δy = √(L²−x²) − √(L²−(x+Δx)²) = 0.46 kun L=6, x=2, Δx=1</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Tehtävä 1b</div>
+            <div class="ex-question">Keppi seinää vasten — Δx pituuksien L, x ja Δy avulla</div>
+            <div class="ex-given">Sama keppi. Yläpää laskee Δy. Kuinka paljon alapää liikkuu oikealle (Δx)?</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="cm">% Ratkaistaan Δx: sqrt(L²-(x+Δx)²) = sqrt(L²-x²) - Δy</span>
+<span class="cm">% → (x+Δx)² = L² - (sqrt(L²-x²) - Δy)²</span>
+<span class="cm">% → Δx = sqrt(L² - (sqrt(L²-x²) - Δy)²) - x</span>
+<span class="kw">clear</span>
+L=<span class="nm">6</span>; x=<span class="nm">2</span>; dy=<span class="nm">1</span>;
+h = <span class="fn">sqrt</span>(L^<span class="nm">2</span> - x^<span class="nm">2</span>)         <span class="cm">% alkukorkeus</span>
+dx = <span class="fn">sqrt</span>(L^<span class="nm">2</span> - (h-dy)^<span class="nm">2</span>) - x  <span class="cm">% → 1.78  ✓</span></pre>
+            <div class="ex-ans">✅ Vastaus: Δx = √(L²−(√(L²−x²)−Δy)²) − x = 1.78 kun L=6, x=2, Δy=1</div>
+          </div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-head">
+            <div class="ex-number">Tehtävä 2</div>
+            <div class="ex-question">Ympyrän säde R pituuksien h ja L avulla</div>
+            <div class="ex-given">Ympyrässä: h on lyhyt pystyviiva keskipisteestä kehälle, L on vaakaviiva kehälle. Laske R. Ohje: Pythagoras → yhtälö R:lle.</div>
+          </div>
+          <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+          <div class="ex-solution">
+            <pre><span class="cm">% Pythagoras: R² = (R-h)² + L²</span>
+<span class="cm">% Avaa: R² = R² - 2Rh + h² + L²</span>
+<span class="cm">% Sievennä: 0 = -2Rh + h² + L²</span>
+<span class="cm">% Ratkaisu: R = (h² + L²) / (2h)</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> R h L positive
+R_kaava = <span class="fn">solve</span>((R+h)^<span class="nm">2</span> == R^<span class="nm">2</span> + L^<span class="nm">2</span>, R)
+
+<span class="cm">% Tarkistus numeroin:</span>
+h=<span class="nm">1.7</span>; L=<span class="nm">6.3</span>;
+R = (h^<span class="nm">2</span> + L^<span class="nm">2</span>) / (<span class="nm">2</span>*h)   <span class="cm">% → 3.77  ✓</span></pre>
+            <div class="ex-ans">✅ Vastaus: R = (h² + L²) / (2h) = 3.77 kun h=1.7, L=6.3</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
     </div><!-- /ex-grid -->
   </section>
