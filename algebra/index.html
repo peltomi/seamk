@@ -689,6 +689,11 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
   </div>
 </nav>
 
+<!-- ═══════ PKG MUISTUTUS ═══════ -->
+<div id="pkg-bar" style="background:#b45309;color:#fff;text-align:center;padding:7px 16px;font-size:.88rem;font-family:monospace;position:sticky;top:48px;z-index:99;letter-spacing:.01em">
+  🚨 <strong>KIRJAINLASKUISSA AINA ENSIN:</strong>&nbsp;&nbsp;<code style="background:rgba(0,0,0,.3);padding:2px 10px;border-radius:4px;font-size:.95em">pkg load symbolic</code>&nbsp;&nbsp;→ odota "Python link active" → sitten clear ja syms
+</div>
+
 <!-- ═══════════════════ PAGE ═══════════════════ -->
 <main class="page">
 
@@ -844,7 +849,8 @@ a1*t1 + a2*(t2-t1)   <span class="cm">% → 8.3  ✓ sama kuin v</span></pre>
       </table></div>
       <div class="code-block">
         <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">perusalgebra.m · s.69</span></div>
-        <pre><span class="kw">clear</span>; <span class="kw">syms</span> x y
+        <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x y
 rv=<span class="nm">1.00</span>; rg=<span class="nm">1.26</span>; re=<span class="nm">0.79</span>; rvg=<span class="nm">1.11</span>; V=<span class="nm">200</span>; M=<span class="nm">201</span>;
 
 <span class="cm">% Yhtälö 1: kullan+hopean hintasuhde</span>
@@ -1535,7 +1541,8 @@ Vsuhde</pre>
       </div></div>
       <div class="code-block">
         <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
-        <pre><span class="kw">syms</span> x
+        <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x
 x = <span class="fn">solve</span>(x^<span class="nm">2</span>-<span class="nm">2</span>==<span class="nm">0</span>, x)
 <span class="cm">% → x = [2^(1/2), -2^(1/2)]   (symboli, ei numero)</span>
 
@@ -1823,7 +1830,8 @@ V        <span class="cm">% tarkistus → ≈ 30 ✓</span>
           </div>
           <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
           <div class="ex-solution">
-            <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+            <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x
 x = <span class="fn">solve</span>(<span class="nm">3</span>*x^<span class="nm">2</span> - <span class="nm">12</span> == <span class="nm">0</span>, x)
 <span class="cm">% → [2, -2]  (symbolinen muoto)</span>
 
@@ -1844,7 +1852,8 @@ x = <span class="fn">double</span>(x)
           </div>
           <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
           <div class="ex-solution">
-            <pre><span class="kw">clear</span>; <span class="kw">syms</span> x y
+            <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x y
 [x,y] = <span class="fn">solve</span>(<span class="nm">2</span>*x+<span class="nm">3</span>*y==<span class="nm">13</span>, x-<span class="nm">2</span>*y==-<span class="nm">4</span>, x, y)
 x = <span class="fn">double</span>(x)   <span class="cm">% → 2</span>
 y = <span class="fn">double</span>(y)   <span class="cm">% → 3</span>
@@ -1999,7 +2008,8 @@ aste_lista = [<span class="nm">0</span>, <span class="nm">30</span>, <span class
       </div>
       <div class="code-block">
         <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">perusalgebra.m · s.43 &amp; s.45</span></div>
-        <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+        <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x
 
 <span class="cm">% Perus: ratkaistaan x yhtälöstä (2x-1)/(x+4) = 3</span>
 <span class="fn">solve</span>((<span class="nm">2</span>*x-<span class="nm">1</span>)/(x+<span class="nm">4</span>) == <span class="nm">3</span>, x)   <span class="cm">% → x = 13</span>
@@ -2025,7 +2035,8 @@ E/e           <span class="cm">% pitää olla sama kuin →</span>
       </div>
       <div class="code-block">
         <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
-        <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+        <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x
 
 <span class="cm">% Helpoin tapa: suoraan solve:lla</span>
 x = <span class="fn">solve</span>(<span class="nm">3</span>*x^<span class="nm">2</span> + <span class="nm">2</span>*x - <span class="nm">1</span> == <span class="nm">0</span>, x)
@@ -2045,7 +2056,8 @@ x2 = (-b + <span class="fn">sqrt</span>(D)) / (<span class="nm">2</span>*a)</pre
       <div class="card-header"><span class="card-icon">⚖️</span><div><div class="card-title">Yhtälöryhmä — monta tuntematonta</div><div class="card-sub">[x,y] = solve(yht1, yht2, x, y)</div></div></div>
       <div class="code-block">
         <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
-        <pre><span class="kw">clear</span>; <span class="kw">syms</span> x y
+        <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x y
 
 <span class="cm">% 2x + 5y = 1  ja  x + 3y = 2</span>
 [x, y] = <span class="fn">solve</span>(<span class="nm">2</span>*x+<span class="nm">5</span>*y==<span class="nm">1</span>, x+<span class="nm">3</span>*y==<span class="nm">2</span>, x, y)
@@ -2258,7 +2270,8 @@ V = V_pallo - <span class="nm">2</span>*V_kappa + V_syl  <span class="cm">% → 
           💡 Näytä ratkaisu <span class="arrow">▼</span>
         </button>
         <div class="ex-solution">
-          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+          <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x
 <span class="fn">expand</span>((<span class="nm">3</span>*x - <span class="nm">2</span>)*(<span class="nm">2</span>*x + <span class="nm">5</span>))</pre>
           <div class="ex-ans">✅ Vastaus: 6x² + 11x − 10</div>
         </div>
@@ -2275,7 +2288,8 @@ V = V_pallo - <span class="nm">2</span>*V_kappa + V_syl  <span class="cm">% → 
           💡 Näytä ratkaisu <span class="arrow">▼</span>
         </button>
         <div class="ex-solution">
-          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+          <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x
 <span class="fn">simplify</span>((x^<span class="nm">2</span> - <span class="nm">16</span>)/(x - <span class="nm">4</span>))</pre>
           <div class="ex-ans">✅ Vastaus: x + 4</div>
         </div>
@@ -2292,7 +2306,8 @@ V = V_pallo - <span class="nm">2</span>*V_kappa + V_syl  <span class="cm">% → 
           💡 Näytä ratkaisu <span class="arrow">▼</span>
         </button>
         <div class="ex-solution">
-          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+          <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x
 <span class="fn">solve</span>((<span class="nm">4</span>*x - <span class="nm">1</span>)/(x + <span class="nm">3</span>) == <span class="nm">2</span>, x)</pre>
           <div class="ex-ans">✅ Vastaus: x = 7</div>
         </div>
@@ -2309,7 +2324,8 @@ V = V_pallo - <span class="nm">2</span>*V_kappa + V_syl  <span class="cm">% → 
           💡 Näytä ratkaisu <span class="arrow">▼</span>
         </button>
         <div class="ex-solution">
-          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+          <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x
 x = <span class="fn">solve</span>(<span class="nm">2</span>*x^<span class="nm">2</span> - <span class="nm">7</span>*x + <span class="nm">3</span> == <span class="nm">0</span>, x)
 x(<span class="nm">1</span>)   <span class="cm">% → 3</span>
 x(<span class="nm">2</span>)   <span class="cm">% → 1/2</span></pre>
@@ -2328,7 +2344,8 @@ x(<span class="nm">2</span>)   <span class="cm">% → 1/2</span></pre>
           💡 Näytä ratkaisu <span class="arrow">▼</span>
         </button>
         <div class="ex-solution">
-          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x y
+          <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x y
 [x,y] = <span class="fn">solve</span>(<span class="nm">3</span>*x+<span class="nm">2</span>*y==<span class="nm">13</span>, x-<span class="nm">2</span>*y==-<span class="nm">4</span>, x, y)
 x = <span class="fn">double</span>(x)   <span class="cm">% → 2.25</span>
 y = <span class="fn">double</span>(y)   <span class="cm">% → 2.875</span></pre>
@@ -2371,7 +2388,8 @@ a1*t1 + a2*(t2-t1)   <span class="cm">% = v?</span></pre>
           💡 Näytä ratkaisu <span class="arrow">▼</span>
         </button>
         <div class="ex-solution">
-          <pre><span class="kw">clear</span>; <span class="kw">syms</span> x
+          <pre>pkg load symbolic   <span class="cm">% kerran per istunto</span>
+<span class="kw">clear</span>; <span class="kw">syms</span> x
 <span class="fn">factor</span>(<span class="nm">4</span>*x^<span class="nm">2</span> - <span class="nm">9</span>)</pre>
           <div class="ex-ans">✅ Vastaus: (2x − 3)(2x + 3)</div>
         </div>
