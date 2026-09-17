@@ -1,3 +1,4 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -124,30 +125,70 @@ strong { font-weight: 700; }
   border-bottom: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
   display: flex;
-  align-items: center;
-  padding: 0 24px;
+  align-items: stretch;
+  padding: 0 20px;
   gap: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
+  height: 48px;
 }
-.topbar::-webkit-scrollbar { display: none; }
 .topbar-brand {
   font-family: 'Nunito', sans-serif;
   font-weight: 900;
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--accent);
   white-space: nowrap;
-  padding: 13px 20px 13px 0;
+  display: flex;
+  align-items: center;
+  padding: 0 18px 0 0;
+  margin-right: 8px;
   border-right: 1px solid var(--border);
-  margin-right: 6px;
+  flex-shrink: 0;
+  gap: 7px;
+}
+.topbar-brand em { color: var(--text-muted); font-style: normal; font-weight: 500; font-size: .9rem; }
+
+/* ── dropdown items ── */
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: stretch;
   flex-shrink: 0;
 }
-.topbar-brand em { color: var(--text-muted); font-style: normal; font-weight: 500; }
+.nav-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 13px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: .82rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transition: color .15s, border-color .15s;
+  letter-spacing: .01em;
+}
+.nav-trigger:hover, .nav-item:hover .nav-trigger { color: var(--accent); }
+.nav-item.active > .nav-trigger { color: var(--accent); border-bottom-color: var(--accent); }
+.nav-trigger .chev {
+  font-size: .6rem;
+  opacity: .55;
+  transition: transform .2s;
+  display: inline-block;
+}
+.nav-item:hover .chev { transform: rotate(180deg); }
+
+/* direct link (no dropdown) */
 .nav-link {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 13px 14px;
+  padding: 0 13px;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   font-size: .82rem;
@@ -160,7 +201,47 @@ strong { font-weight: 700; }
 }
 .nav-link:hover { color: var(--accent); }
 .nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
-.nav-link .tag-soon {
+
+/* dropdown panel */
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  min-width: 210px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+  box-shadow: 0 8px 24px rgba(74,124,247,.13);
+  padding: 6px 0;
+  z-index: 300;
+}
+.nav-item:hover .nav-dropdown { display: block; }
+.nav-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: .82rem;
+  color: var(--text);
+  text-decoration: none;
+  transition: background .12s, color .12s;
+}
+.nav-dropdown a:hover { background: var(--accent-dim); color: var(--accent); }
+.nav-dropdown .drop-section {
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 10px 16px 3px;
+  pointer-events: none;
+}
+.nav-dropdown hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+
+.nav-link .tag-soon, .nav-trigger .tag-soon, .nav-dropdown a .tag-soon {
   background: var(--tag-coming-bg);
   color: var(--tag-coming);
   font-size: .6rem;
@@ -653,6 +734,10 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
 ═══════════════════════════════════════ */
 @media (max-width: 600px) {
   .topbar-brand { display: none; }
+  .topbar { padding: 0 8px; overflow-x: auto; scrollbar-width: none; }
+  .topbar::-webkit-scrollbar { display: none; }
+  .nav-trigger, .nav-link { padding: 0 10px; font-size: .78rem; }
+  .nav-dropdown { min-width: 175px; }
   .hero { padding: 28px 22px; }
   .hero h1 { font-size: 1.65rem; }
   .card { padding: 18px; }
@@ -669,21 +754,64 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
 
 <!-- ═══════════════════ NAV ═══════════════════ -->
 <nav class="topbar" role="navigation">
-  <div class="topbar-brand">🔢 Matikan <em>opas</em></div>
-  <a href="#tenttiopas"     class="nav-link">🎯 Tenttiopas</a>
-  <a href="#mallinnus"      class="nav-link">🔧 Yhtälöt tekstistä</a>
-  <a href="#octave"         class="nav-link">💻 Octave</a>
-  <a href="#vektorit"       class="nav-link">📋 Vektorit</a>
-  <a href="#plottaus"       class="nav-link">📊 Plottaus</a>
-  <a href="#koukut"         class="nav-link">🪝 Koukut</a>
-  <a href="#muunnokset"     class="nav-link">🔄 Muunnokset</a>
-  <a href="#algebra"        class="nav-link">📐 Algebra &amp; murtolausekkeet</a>
-  <a href="#alg-harj"       class="nav-link">✏️ Alg. harjoitukset</a>
-  <a href="#trig"           class="nav-link">📏 Trigonometria</a>
-  <a href="#trig-harj"      class="nav-link">✏️ Trig. harjoitukset</a>
-  <a href="#analyyttinen"   class="nav-link"><span class="tag-soon">Tulossa</span> Analyytt. geom.</a>
-  <a href="#sinikayrat"     class="nav-link"><span class="tag-soon">Tulossa</span> Sinikäyrät</a>
-  <a href="#eksponentti"    class="nav-link"><span class="tag-soon">Tulossa</span> Eksp. & log.</a>
+  <div class="topbar-brand">🔢 <em>Matikan opas</em></div>
+
+  <!-- Yleistä -->
+  <div class="nav-item">
+    <button class="nav-trigger">Yleistä <span class="chev">▾</span></button>
+    <div class="nav-dropdown">
+      <div class="drop-section">Aloitus</div>
+      <a href="#tenttiopas">🎯 Tenttiopas</a>
+      <a href="#mallinnus">🔧 Yhtälöt tekstistä</a>
+    </div>
+  </div>
+
+  <!-- Octave -->
+  <div class="nav-item">
+    <button class="nav-trigger">💻 Octave <span class="chev">▾</span></button>
+    <div class="nav-dropdown">
+      <div class="drop-section">Octave-perusteet</div>
+      <a href="#octave">💻 Perusteet</a>
+      <a href="#vektorit">📋 Vektorit</a>
+      <a href="#plottaus">📊 Plottaus</a>
+      <a href="#koukut">🪝 Koukut</a>
+      <a href="#muunnokset">🔄 Muunnokset</a>
+    </div>
+  </div>
+
+  <!-- Algebra -->
+  <div class="nav-item">
+    <button class="nav-trigger">📐 Algebra <span class="chev">▾</span></button>
+    <div class="nav-dropdown">
+      <div class="drop-section">Algebra</div>
+      <a href="#algebra">📐 Teoria</a>
+      <a href="#alg-harj">✏️ Harjoitukset</a>
+    </div>
+  </div>
+
+  <!-- Trigonometria -->
+  <div class="nav-item">
+    <button class="nav-trigger">📏 Trigonometria <span class="chev">▾</span></button>
+    <div class="nav-dropdown">
+      <div class="drop-section">Trigonometria</div>
+      <a href="#trig">📏 Teoria</a>
+      <a href="#trig-harj">✏️ Harjoitukset</a>
+    </div>
+  </div>
+
+  <!-- Analyyttinen geometria -->
+  <a href="#analyyttinen" class="nav-link">📍 Analyyttinen geometria</a>
+
+  <!-- Tulossa -->
+  <div class="nav-item">
+    <button class="nav-trigger"><span class="tag-soon">Tulossa</span> <span class="chev">▾</span></button>
+    <div class="nav-dropdown">
+      <div class="drop-section">Seuraavaksi</div>
+      <a href="#sinikayrat"><span class="tag-soon">Tulossa</span> Sinikäyrät</a>
+      <a href="#eksponentti"><span class="tag-soon">Tulossa</span> Eksp. &amp; log.</a>
+    </div>
+  </div>
+
   <div class="topbar-end">
     <button class="btn-theme" onclick="toggleTheme()" aria-label="Vaihda teemaa">🌙</button>
   </div>
@@ -2879,26 +3007,1140 @@ A = <span class="nm">0.5</span> * a * b * <span class="fn">sind</span>(gamma)
   <hr>
 
   <!-- ═══════════════════════════════════════ -->
-  <!-- TULOSSA: ANALYYTTINEN GEOMETRIA -->
+  <!-- ANALYYTTINEN GEOMETRIA -->
   <!-- ═══════════════════════════════════════ -->
   <section class="section" id="analyyttinen">
-    <div class="section-label">Osa 3 · Tulossa</div>
+    <div class="section-label">Osa 3</div>
     <h2 class="section-title">Analyyttinen geometria</h2>
-    <p class="section-lead">Pisteet, suorat, ympyrät ja koonit koordinaatistossa. Tälle sivulle tulee oppimateriaali ja harjoitustehtävät.</p>
+    <p class="section-lead">Pisteet, suorat, ympyrät, parabolat, ellipsit ja hyperbelit koordinaatistossa. Tässä osiossa Octave laskee numeerisesti — <code>pkg load symbolic</code> ei yleensä tarvita. Käytä <code>clear</code> tehtävän alussa.</p>
 
-    <div class="coming-section">
-      <div class="coming-badge">📅 Tulossa pian</div>
-      <div class="coming-title">Tämä osio lisätään seuraavalla kerralla</div>
-      <div class="coming-desc">Analyyttinen geometria käsittelee muotoja koordinaatistossa — pisteitä, suoria, ympyröitä ja paraboloita. Octavella piirtäminen helpottaa kaikkea.</div>
-      <div class="coming-topics">
-        <span class="coming-topic">📍 Pisteiden etäisyys</span>
-        <span class="coming-topic">📈 Suoran yhtälö</span>
-        <span class="coming-topic">⭕ Ympyrän yhtälö</span>
-        <span class="coming-topic">🔵 Ellipsi ja paraabeli</span>
-        <span class="coming-topic">📐 Suorien leikkaus</span>
-        <span class="coming-topic">📏 Etäisyys pisteestä suoralle</span>
-        <span class="coming-topic">💻 Octave: plot()</span>
+    <div class="box info" style="margin-bottom:24px">
+      <span class="box-icon">📌</span>
+      <div><strong>Osion rakenne:</strong> Napakoordinaatit → Suorat → Optimointi → Paraabeli → Heittoliike → Ympyrä → Ellipsi → Hyperbeli → Paikannus. Kaikissa on teoria, kaava ja Octave-koodi.</div>
+    </div>
+
+    <!-- ─── NAPAKOORDINAATIT ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🧭</span>
+        <div>
+          <div class="card-title">Napakoordinaatit — etäisyys ja suuntakulma</div>
+          <div class="card-sub">analyyttinen_geometria_osa1.m · s.13–14</div>
+        </div>
       </div>
+      <p>Kartesisessa koordinaatistossa piste ilmaistaan parilla (x, y). Napakoordinaatistossa sama piste ilmaistaan etäisyydellä origosta (<strong>r</strong>) ja suuntakulmalla (<strong>θ</strong>). Molempia tarvitaan kurssilla — napakoordinaatit ovat erityisen hyödyllisiä ympyröissä, kiertoliikkeessä ja paikannuksessa.</p>
+      <div class="formula">
+        <div class="flabel">Muunnokset</div>
+        <strong>Kartesiset → Napa:</strong><br>
+        &nbsp;&nbsp;r = √(x² + y²)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← etäisyys origosta<br>
+        &nbsp;&nbsp;θ = atan2d(y, x)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← suuntakulma asteina (AINA atan2d!)<br><br>
+        <strong>Napa → Kartesiset:</strong><br>
+        &nbsp;&nbsp;x = r · cos(θ)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← x-koordinaatti<br>
+        &nbsp;&nbsp;y = r · sin(θ)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← y-koordinaatti
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa1.m · s.13–14</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">%% Kartesiset → Napakoordinaatit</span>
+Px = -<span class="nm">3</span>; Py = <span class="nm">2</span>;
+r  = <span class="fn">sqrt</span>(Px^<span class="nm">2</span> + Py^<span class="nm">2</span>)    <span class="cm">% → r ≈ 3.606</span>
+th = <span class="fn">atan2d</span>(Py, Px)          <span class="cm">% → th ≈ 146.3°  (2. kvadrantti)</span>
+
+<span class="cm">%% Napakoordinaatit → Kartesiset</span>
+r2=<span class="nm">4</span>; th2=-<span class="nm">30</span>;
+x = r2*<span class="fn">cosd</span>(th2)   <span class="cm">% → x ≈ 3.464</span>
+y = r2*<span class="fn">sind</span>(th2)   <span class="cm">% → y = -2</span>
+
+<span class="cm">%% Piirrä piste koordinaatistoon</span>
+<span class="fn">plot</span>([-r,r],[<span class="nm">0</span>,<span class="nm">0</span>],<span class="st">'k'</span>)   <span class="cm">% x-akseli</span>
+hold on
+<span class="fn">plot</span>([<span class="nm">0</span>,<span class="nm">0</span>],[-r,r],<span class="st">'k'</span>)   <span class="cm">% y-akseli</span>
+<span class="fn">plot</span>([<span class="nm">0</span>,Px],[<span class="nm">0</span>,Py],<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)   <span class="cm">% jana OP</span>
+<span class="fn">plot</span>(Px,Py,<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+hold off; <span class="fn">grid</span>; axis equal
+<span class="fn">title</span>([<span class="st">'r = '</span>,<span class="fn">num2str</span>(r),<span class="st">', \theta = '</span>,<span class="fn">num2str</span>(th),<span class="st">'^o'</span>])</pre>
+      </div>
+      <div class="box danger"><span class="box-icon">🚫</span><div><strong>Käytä aina atan2d, älä atand!</strong> <code>atand(y/x)</code> ei tiedä missä kvadrantissa piste on. Piste (−3, −4) antaa saman tuloksen kuin (3, 4) — aivan väärä suunta! <code>atan2d(y, x)</code> ottaa merkit huomioon ja antaa oikean kulman −180°…+180°.</div></div>
+    </div>
+
+    <!-- ─── PISTEIDEN ETÄISYYS JA PAINOPISTE ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📍</span>
+        <div>
+          <div class="card-title">Pisteiden etäisyys ja kolmion painopiste</div>
+          <div class="card-sub">analyyttinen_geometria_osa1.m · s.9–10</div>
+        </div>
+      </div>
+      <p>Kahden pisteen etäisyys on Pythagoraan lause. Kolmion <strong>painopiste</strong> (mediaanien leikkauspiste) on yksinkertainen: kaikkien pisteiden koordinaattien keskiarvo.</p>
+      <div class="formula">
+        <div class="flabel">Kaavat</div>
+        Etäisyys AB = √((x₂−x₁)² + (y₂−y₁)²)<br><br>
+        Kolmion painopiste P:<br>
+        &nbsp;&nbsp;Px = (Ax + Bx + Cx) / 3<br>
+        &nbsp;&nbsp;Py = (Ay + By + Cy) / 3<br><br>
+        Painopiste jakaa jokaisen mediaanin suhteessa 2:1 huipusta
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa1.m · s.9–10</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Kolmion pisteet</span>
+Ax=<span class="nm">1</span>; Ay=<span class="nm">1</span>;
+Bx=<span class="nm">6</span>; By=<span class="nm">2</span>;
+Cx=<span class="nm">4</span>; Cy=<span class="nm">5</span>;
+
+<span class="cm">% Painopiste</span>
+Px = (<span class="nm">1</span>/<span class="nm">3</span>)*(Ax+Bx+Cx)   <span class="cm">% → Px ≈ 3.67</span>
+Py = (<span class="nm">1</span>/<span class="nm">3</span>)*(Ay+By+Cy)   <span class="cm">% → Py ≈ 2.67</span>
+
+<span class="cm">% Sivujen keskipisteet (mediaanin päätepisteitä)</span>
+Dx = (<span class="nm">1</span>/<span class="nm">2</span>)*(Bx+Cx);   Dy = (<span class="nm">1</span>/<span class="nm">2</span>)*(By+Cy);
+
+<span class="cm">% Tarkistus: AP = 2/3 * AD</span>
+AP = <span class="fn">sqrt</span>((Px-Ax)^<span class="nm">2</span>+(Py-Ay)^<span class="nm">2</span>)
+AD = <span class="fn">sqrt</span>((Dx-Ax)^<span class="nm">2</span>+(Dy-Ay)^<span class="nm">2</span>)
+<span class="nm">2</span>/<span class="nm">3</span>*AD   <span class="cm">% → sama kuin AP ✓</span>
+
+<span class="cm">% Kuva</span>
+<span class="fn">plot</span>([Ax,Bx,Cx,Ax],[Ay,By,Cy,Ay],<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+hold on
+<span class="fn">plot</span>([Ax,Dx],[Ay,Dy],<span class="st">'r'</span>)
+<span class="fn">plot</span>(Px,Py,<span class="st">'k.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+hold off; <span class="fn">grid</span>; axis equal</pre>
+      </div>
+    </div>
+
+    <!-- ─── SUORAN YHTÄLÖ ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📈</span>
+        <div>
+          <div class="card-title">Suoran yhtälö y = kx + b kahden pisteen kautta</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.11–12</div>
+        </div>
+      </div>
+      <p>Suora on täysin määritelty kahdella pisteellä. Ensin lasketaan <strong>kulmakerroin k</strong> (kuinka jyrkästi nousee), sitten <strong>b</strong> (missä suora leikkaa y-akselin).</p>
+      <div class="formula">
+        <div class="flabel">Kaavat</div>
+        k = (y₂ − y₁) / (x₂ − x₁)&nbsp;&nbsp;&nbsp;← kulmakerroin<br>
+        b = −k · x₁ + y₁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← y-leikkauspiste<br>
+        y = k · x + b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← suoran yhtälö<br><br>
+        k &gt; 0 → nouseva, k &lt; 0 → laskeva, k = 0 → vaakasuora
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.11–12</span></div>
+        <pre><span class="kw">clear</span>
+x1=-<span class="nm">2</span>; y1=<span class="nm">3</span>;
+x2=<span class="nm">4</span>;  y2=<span class="nm">1</span>;
+
+k = (y2-y1)/(x2-x1)    <span class="cm">% → k ≈ -0.333</span>
+b = -k*x1 + y1          <span class="cm">% → b ≈ 2.333</span>
+<span class="cm">% Tarkistus:</span>
+k*x1+b   <span class="cm">% → 3 = y1 ✓</span>
+k*x2+b   <span class="cm">% → 1 = y2 ✓</span>
+
+<span class="cm">% Piirrä suora (laajempi kuin pisteiden väli)</span>
+xv = x1-<span class="nm">2</span>; xo = x2+<span class="nm">2</span>;
+<span class="fn">plot</span>([xv,xo],[k*xv+b,k*xo+b],<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)
+hold on
+<span class="fn">plot</span>([x1,x2],[y1,y2],<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+hold off; <span class="fn">grid</span>
+<span class="fn">title</span>([<span class="st">'k = '</span>,<span class="fn">num2str</span>(k),<span class="st">', b = '</span>,<span class="fn">num2str</span>(b)])</pre>
+      </div>
+    </div>
+
+    <!-- ─── LINEAARINEN INTERPOLOINTI ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📊</span>
+        <div>
+          <div class="card-title">Lineaarinen interpolointi — arvo pisteiden väliltä</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.19–20</div>
+        </div>
+      </div>
+      <p>Sinulla on kaksi mitattua arvoa eri kohdissa, ja haluat arvan niiden väliltä. Tämä on sama asia kuin suoran yhtälö — käytä kaavaa <code>y0 = k·(x0−x1) + y1</code> ilman b:tä.</p>
+      <div class="formula">
+        <div class="flabel">Interpolointikaava</div>
+        k = (y₂ − y₁) / (x₂ − x₁)<br>
+        y₀ = k · (x₀ − x₁) + y₁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← arvo kohdassa x₀
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.19–20</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Mitattu: kohdassa x=2 arvo on 3, kohdassa x=5 arvo on 8</span>
+x1=<span class="nm">2</span>; y1=<span class="nm">3</span>;
+x2=<span class="nm">5</span>; y2=<span class="nm">8</span>;
+x0=<span class="nm">4</span>;   <span class="cm">% ← haettu kohta</span>
+
+k  = (y2-y1)/(x2-x1)   <span class="cm">% → k ≈ 1.667</span>
+y0 = k*(x0-x1)+y1       <span class="cm">% → y0 ≈ 6.333</span>
+
+<span class="cm">% Piirrä havainnollistus</span>
+<span class="fn">plot</span>([x1,x2],[y1,y2],<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+hold on
+<span class="fn">plot</span>([x1,x2],[y1,y2],<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+<span class="fn">plot</span>(x0,y0,<span class="st">'g.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+<span class="fn">plot</span>([x0,x0],[<span class="nm">0</span>,y0],<span class="st">'g--'</span>)   <span class="cm">% pystyjana</span>
+hold off; <span class="fn">grid</span>
+<span class="fn">title</span>([<span class="st">'x_0 = '</span>,<span class="fn">num2str</span>(x0),<span class="st">', y_0 = '</span>,<span class="fn">num2str</span>(y0)])</pre>
+      </div>
+    </div>
+
+    <!-- ─── SUORIEN LEIKKAUSPISTE ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">✂️</span>
+        <div>
+          <div class="card-title">Suorien leikkauspiste (y = kx + b muoto)</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.21</div>
+        </div>
+      </div>
+      <p>Kaksi suoraa y = kx + b ja y = mx + c leikkaavat kohdassa jossa ne ovat yhtä suuria. Asetetaan yhtälöt yhtä suuriksi ja ratkaistaan x.</p>
+      <div class="formula">
+        <div class="flabel">Leikkauspistekaava</div>
+        x = (c − b) / (k − m)&nbsp;&nbsp;← leikkauspisteen x<br>
+        y = k · x + b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← leikkauspisteen y<br><br>
+        Jos k = m → suorat ovat yhdensuuntaisia, ei leikkauspistettä!
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.21</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Suora 1: y = 3x + 1</span>
+k=<span class="nm">3</span>; b=<span class="nm">1</span>;
+<span class="cm">% Suora 2: y = -2x + 2</span>
+m=-<span class="nm">2</span>; c=<span class="nm">2</span>;
+
+x = (c-b)/(k-m)   <span class="cm">% → x = 0.2</span>
+y = k*x+b          <span class="cm">% → y = 1.6</span>
+
+<span class="cm">% Tarkistus suora 2:</span>
+m*x+c   <span class="cm">% → 1.6 ✓ sama</span>
+
+<span class="cm">% Kuva</span>
+xv=x-<span class="nm">2</span>; xo=x+<span class="nm">2</span>;
+<span class="fn">plot</span>([xv,xo],[k*xv+b,k*xo+b],<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+hold on
+<span class="fn">plot</span>([xv,xo],[m*xv+c,m*xo+c],<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">plot</span>(x,y,<span class="st">'k.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+hold off; <span class="fn">grid</span>
+legend(<span class="st">'y=kx+b'</span>,<span class="st">'y=mx+c'</span>)</pre>
+      </div>
+    </div>
+
+    <!-- ─── SUORIEN LEIKKAUSPISTE SUUNTAKULMILLA ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🎯</span>
+        <div>
+          <div class="card-title">Suorien leikkauspiste suuntakulmilla (yleinen tapa)</div>
+          <div class="card-sub">analyyttinen_geometria_osa1.m · s.25</div>
+        </div>
+      </div>
+      <p>Kurssimateriaaleissa suorat kuvataan usein pisteenä + suuntakulmana: "suora kulkee pisteen A kautta suuntaan θ". Leikkauspiste löytyy ratkaisemalla parameteriyhtälöt.</p>
+      <div class="formula">
+        <div class="flabel">Suunta-kulmamuotoinen suora</div>
+        Piste A = (Ax, Ay), suuntakulma θ<br>
+        Piste B = (Bx, By), suuntakulma δ<br><br>
+        Matriisimuoto: [cos θ, −cos δ; sin θ, −sin δ] · [r; t] = [Bx−Ax; By−Ay]<br>
+        r = leikkauspisteen etäisyys A:sta suuntaan θ<br>
+        Leikkauspiste: Px = Ax + r·cos(θ), Py = Ay + r·sin(θ)
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa1.m · s.25</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Suora 1: lähtee A:sta suuntaan theta</span>
+Ax=<span class="nm">3</span>; Ay=<span class="nm">2</span>; theta=-<span class="nm">130</span>;
+<span class="cm">% Suora 2: lähtee B:stä suuntaan delta</span>
+Bx=<span class="nm">3</span>; By=<span class="nm">1</span>; delta=<span class="nm">40</span>;
+
+a=<span class="fn">cosd</span>(theta); b=-<span class="fn">cosd</span>(delta);
+c=<span class="fn">sind</span>(theta); d=-<span class="fn">sind</span>(delta);
+e=Bx-Ax;        f=By-Ay;
+
+r = (d*e-b*f)/(a*d-b*c)
+t = (a*f-c*e)/(a*d-b*c)
+
+Px = Ax+r*<span class="fn">cosd</span>(theta)   <span class="cm">% leikkauspisteen x</span>
+Py = Ay+r*<span class="fn">sind</span>(theta)   <span class="cm">% leikkauspisteen y</span>
+
+<span class="cm">% Tarkistus</span>
+Bx+t*<span class="fn">cosd</span>(delta)   <span class="cm">% → sama kuin Px ✓</span>
+By+t*<span class="fn">sind</span>(delta)   <span class="cm">% → sama kuin Py ✓</span></pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Milloin käytetään suuntakulmia?</strong> Kun tehtävässä annetaan "kulmasta θ havaittu kohde" tai kinematiikassa varren suunta. y=kx+b on helpompi kun pisteet ovat suoraan annettuja.</div></div>
+    </div>
+
+    <!-- ─── OPTIMOINTI: MIN / MAX ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🔍</span>
+        <div>
+          <div class="card-title">Optimointi — minimi ja maksimi vektoreista</div>
+          <div class="card-sub">analyyttinen_geometria_osa1.m · s.3–6</div>
+        </div>
+      </div>
+      <p>Octavessa optimointi on helppoa: laske funktion arvo tuhannessa eri pisteessä vektorina, hae min tai max, ja ota indeksi — indeksistä löydät optimaalisen muuttujan arvon.</p>
+      <div class="formula">
+        <div class="flabel">Optimointirakenne</div>
+        h = alku : askel : loppu;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← testataan kaikki arvot<br>
+        s = laske_funktio(h);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← funktion arvot vektorina<br>
+        [smin, indmin] = min(s);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← pienin arvo ja sen indeksi<br>
+        hmin = h(indmin);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← optimaalinen h-arvo
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa1.m · s.3–4</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">%% Kolmion ABC sisäpiste P joka minimoi MA+MB+MC</span>
+<span class="cm">% A=(-b/2,0), B=(b/2,0), C=(0,DC)</span>
+a=<span class="nm">5</span>; b=<span class="nm">6</span>;
+DC = <span class="fn">sqrt</span>(a^<span class="nm">2</span>-(b/<span class="nm">2</span>)^<span class="nm">2</span>);   <span class="cm">% kolmion korkeus</span>
+h = <span class="nm">0</span>:DC/<span class="nm">1000</span>:DC;           <span class="cm">% P liikkuu y-akselilla</span>
+
+<span class="cm">% Jokaisen h-arvon etäisyydet A:han, B:hen ja C:hen</span>
+MA = <span class="fn">sqrt</span>(h.^<span class="nm">2</span> + (b/<span class="nm">2</span>).^<span class="nm">2</span>);
+MB = MA;
+MC = DC - h;
+s  = MA + MB + MC;   <span class="cm">% yhteispituus</span>
+
+[smin, indmin] = <span class="fn">min</span>(s)   <span class="cm">% minimi ja sen indeksi</span>
+hmin = h(indmin)           <span class="cm">% optimaalinen korkeus</span>
+
+<span class="fn">plot</span>(h,s,<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)
+hold on
+<span class="fn">plot</span>(hmin,smin,<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+hold off; <span class="fn">grid</span></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa1.m · s.5–6</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">%% Keppi kulmassa: lyhin keppi piste (a,b) kautta</span>
+<span class="cm">% keppi kulkee x-seinän ja y-seinän välillä</span>
+a=<span class="nm">1</span>; b=<span class="nm">2</span>;
+alfa = <span class="nm">10</span>:<span class="nm">0.01</span>:<span class="nm">80</span>;   <span class="cm">% kulma asteina</span>
+AB = b./<span class="fn">sind</span>(alfa) + a./<span class="fn">cosd</span>(alfa);   <span class="cm">% kepin pituus</span>
+
+[ABmin, indmin] = <span class="fn">min</span>(AB)
+alfamin = alfa(indmin)   <span class="cm">% → optimikulma</span>
+
+<span class="fn">plot</span>(alfa, AB, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+hold on
+<span class="fn">plot</span>(alfamin, ABmin, <span class="st">'r.'</span>, <span class="st">'markersize'</span>, <span class="nm">20</span>)
+hold off; <span class="fn">grid</span></pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Optimointirakenne muistissa:</strong> 1) tee arvoalue, 2) laske funktio vektorioperaatioilla (piste-operaattorit!), 3) <code>min()</code> tai <code>max()</code> indeksillä, 4) ota arvo indeksillä.</div></div>
+    </div>
+
+    <!-- ─── PARAABELI ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🪃</span>
+        <div>
+          <div class="card-title">Paraabeli y = ax² + bx + c</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.25–33</div>
+        </div>
+      </div>
+      <p>Paraabeli on se kaari jonka pallo tekee ilmassa — heittoliikkeen rata. Kertoimet a, b, c määräävät muodon: a &lt; 0 → suuaukko alas (heitto), a &gt; 0 → suuaukko ylös (torni). <strong>Kriittinen Octave-taito:</strong> vektoreille käytetään <code>.^</code>, ei <code>^</code>!</p>
+      <div class="formula">
+        <div class="flabel">Huipun kaavat</div>
+        x₀ = −b / (2a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← huipun x<br>
+        y₀ = a·x₀² + b·x₀ + c&nbsp;&nbsp;← huipun y (korkein tai matalin kohta)<br><br>
+        Diskriminantti: D = b² − 4ac<br>
+        &nbsp;&nbsp;D &gt; 0 → leikkaa x-akselin kahdessa kohdassa<br>
+        &nbsp;&nbsp;D = 0 → sivuaa x-akselia<br>
+        &nbsp;&nbsp;D &lt; 0 → ei leikkaa x-akselia
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.25</span></div>
+        <pre><span class="kw">clear</span>
+a=-<span class="nm">1.5</span>; b=<span class="nm">1</span>; c=-<span class="nm">30</span>;
+
+<span class="cm">% Huippu</span>
+x0 = -b/(<span class="nm">2</span>*a)             <span class="cm">% → x0 ≈ 0.333</span>
+y0 = a*x0^<span class="nm">2</span> + b*x0 + c    <span class="cm">% → y0 ≈ -29.83</span>
+
+<span class="cm">% Piirrä (huom: x on vektori → tarvitaan .^)</span>
+L = <span class="nm">3</span>;
+x = (x0-L):(L/<span class="nm">1000</span>):(x0+L);
+y = a*x.^<span class="nm">2</span> + b*x + c;    <span class="cm">% .^ pakollinen!</span>
+<span class="fn">plot</span>(x, y, <span class="st">'b'</span>, <span class="st">'linewidth'</span>, <span class="nm">2</span>)
+hold on
+<span class="fn">plot</span>(x0, y0, <span class="st">'r.'</span>, <span class="st">'markersize'</span>, <span class="nm">20</span>)
+hold off; <span class="fn">grid</span></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.31 — kolmen pisteen paraabeli</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Kolme pistettä, joiden kautta paraabeli kulkee</span>
+x1=-<span class="nm">1</span>; y1=<span class="nm">2</span>;
+x2=<span class="nm">1</span>;  y2=<span class="nm">0</span>;
+x3=<span class="nm">2</span>;  y3=<span class="nm">4</span>;
+
+<span class="cm">% Ratkaistaan a,b,c: yhtälöryhmä (x^2,x,1)*(a,b,c)^T = y</span>
+A = x1^<span class="nm">2</span>-x2^<span class="nm">2</span>; B = x1-x2; C = x1^<span class="nm">2</span>-x3^<span class="nm">2</span>;
+D = x1-x3;     E = y1-y2; F = y1-y3;
+a = (D*E-B*F)/(A*D-B*C)
+b = (A*F-C*E)/(A*D-B*C)
+c = y1-a*x1^<span class="nm">2</span>-b*x1
+
+xp = (<span class="fn">min</span>([x1,x2,x3])-<span class="nm">1</span>):(( <span class="fn">max</span>([x1,x2,x3])-<span class="fn">min</span>([x1,x2,x3])+<span class="nm">2</span>)/<span class="nm">100</span>):(<span class="fn">max</span>([x1,x2,x3])+<span class="nm">1</span>);
+yp = a*xp.^<span class="nm">2</span> + b*xp + c;
+<span class="fn">plot</span>(xp, yp, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+hold on; <span class="fn">plot</span>([x1,x2,x3],[y1,y2,y3],<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>); hold off; <span class="fn">grid</span></pre>
+      </div>
+    </div>
+
+    <!-- ─── PARAABELIN JA SUORAN LEIKKAUSPISTEET ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">⚡</span>
+        <div>
+          <div class="card-title">Paraabelin ja suoran leikkauspisteet</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.33</div>
+        </div>
+      </div>
+      <p>Kun suora y = kx + p leikkaa paraabelia y = ax² + bx + c, sijoitetaan ne yhtä suuriksi. Ratkaistaan x toisen asteen yhtälöstä diskriminantin avulla.</p>
+      <div class="formula">
+        <div class="flabel">Leikkauskaavat</div>
+        Sijoitetaan: kx + p = ax² + bx + c<br>
+        → ax² + (b−k)x + (c−p) = 0<br>
+        D = (b−k)² − 4a(c−p)<br>
+        x₁,₂ = [−(b−k) ± √D] / (2a)<br>
+        D &lt; 0 → ei leikkauspistettä
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.33</span></div>
+        <pre><span class="kw">clear</span>
+k=<span class="nm">1</span>; p=-<span class="nm">4</span>;     <span class="cm">% suora y = x - 4</span>
+a=<span class="nm">0.5</span>; b=-<span class="nm">2</span>; c=<span class="nm">2</span>;  <span class="cm">% paraabeli y = 0.5x² - 2x + 2</span>
+
+D = (b-k)^<span class="nm">2</span> - <span class="nm">4</span>*a*(c-p)
+
+<span class="kw">if</span> D >= <span class="nm">0</span>
+  x1 = (-(b-k) - <span class="fn">sqrt</span>(D)) / (<span class="nm">2</span>*a)
+  y1 = k*x1 + p
+  x2 = (-(b-k) + <span class="fn">sqrt</span>(D)) / (<span class="nm">2</span>*a)
+  y2 = k*x2 + p
+<span class="kw">else</span>
+  disp(<span class="st">'Ei leikkauspistettä'</span>)
+<span class="kw">end</span></pre>
+      </div>
+    </div>
+
+    <!-- ─── POLTTOPISTE ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🔦</span>
+        <div>
+          <div class="card-title">Polttopiste ja heijastusominaisuus</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.35</div>
+        </div>
+      </div>
+      <p>Paraabelilla y = ax² (huippu origossa) on polttopiste y-akselilla. Kaikki y-akselin suuntaiset säteet heijastuvat täsmälleen polttopisteeseen — satelliittiantenni ja parabolinen peili hyödyntävät tätä.</p>
+      <div class="formula">
+        <div class="flabel">Polttopiste ja tangentti</div>
+        Polttopiste: F = (0, 1/(4a))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← koordinaatisto origossa<br>
+        Tangentin kulmakerroin pisteessä x₀: k = 2a · x₀<br>
+        (Tangentin kulmakerroin saadaan derivoimalla y = ax²)
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.35</span></div>
+        <pre><span class="kw">clear</span>
+a = <span class="nm">0.5</span>;   <span class="cm">% y = 0.5*x²</span>
+L = <span class="nm">2</span>;
+x = -L:L/<span class="nm">100</span>:L;
+y = a*x.^<span class="nm">2</span>;
+
+Fx = <span class="nm">0</span>;
+Fy = <span class="nm">1</span>/(<span class="nm">4</span>*a)   <span class="cm">% → Fy = 0.5</span>
+
+<span class="cm">% Heijastuspiste (xt, yt) ja tangentin kulmakerroin</span>
+xt = <span class="nm">1.5</span>;
+yt = a*xt^<span class="nm">2</span>;
+k  = <span class="nm">2</span>*a*xt   <span class="cm">% tangentin kulmakerroin</span>
+
+<span class="fn">plot</span>(x, y, <span class="st">'linewidth'</span>, <span class="nm">2</span>)
+hold on
+<span class="fn">plot</span>([xt,xt,Fx],[yt+<span class="nm">2</span>,yt,Fy],<span class="st">'g'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)  <span class="cm">% säde</span>
+<span class="fn">plot</span>([xt-<span class="nm">1</span>,xt+<span class="nm">1</span>],[yt-k,yt+k],<span class="st">'k'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)  <span class="cm">% tangentti</span>
+<span class="fn">plot</span>(Fx, Fy, <span class="st">'r.'</span>, <span class="st">'markersize'</span>, <span class="nm">20</span>)
+hold off; axis equal; <span class="fn">grid</span></pre>
+      </div>
+    </div>
+
+    <!-- ─── HEITTOLIIKE ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🚀</span>
+        <div>
+          <div class="card-title">Heittoliike — paraabeli fysiikan sovelluksena</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.43–53</div>
+        </div>
+      </div>
+      <p>Heittoliike on suora sovellus paraabelista. Ammutaan alkunopeudella v₀ kulmassa α lähtökorkeudelta h. Ratata voidaan a) vaakasuora kantama, b) huippukorkeus, c) selvittää v₀ tai α kun kantama tiedetään.</p>
+      <div class="formula">
+        <div class="flabel">Heittoliikkeen paraabeli</div>
+        a = −g / (2·v₀²·cos²(α))&nbsp;&nbsp;&nbsp;← (g ≈ 9.81)<br>
+        b = tan(α)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← lähtökulman tangentti<br>
+        c = h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← lähtökorkeus<br>
+        Kantama (y=0): xmax = (−b − √(b²−4ac)) / (2a)<br>
+        Optimilähtökulma (max kantama): α* = atan(v₀/√(v₀²+2gh))
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.43</span></div>
+        <pre><span class="kw">clear</span>
+h=<span class="nm">2</span>; v0=<span class="nm">10</span>; alfa=<span class="nm">30</span>; g=<span class="nm">9.81</span>;
+
+a = -g/(<span class="nm">2</span>*v0^<span class="nm">2</span>*<span class="fn">cosd</span>(alfa)^<span class="nm">2</span>)
+b = <span class="fn">tand</span>(alfa)
+c = h;
+
+<span class="cm">% Kantama (y=0): diskriminantti</span>
+xmax = (-b-<span class="fn">sqrt</span>(b^<span class="nm">2</span>-<span class="nm">4</span>*a*c))/(<span class="nm">2</span>*a)   <span class="cm">% → xmax ≈ 10.5 m</span>
+<span class="cm">% Huippu</span>
+x0 = -b/(<span class="nm">2</span>*a)                          <span class="cm">% huipun x</span>
+y0 = a*x0^<span class="nm">2</span>+b*x0+c                     <span class="cm">% huipun korkeus</span>
+
+x = <span class="nm">0</span>:xmax/<span class="nm">100</span>:xmax;
+y = a*x.^<span class="nm">2</span>+b*x+c;
+<span class="fn">plot</span>(x, y, <span class="st">'linewidth'</span>, <span class="nm">1.5</span>)
+hold on; <span class="fn">plot</span>(x0,y0,<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>); hold off
+<span class="fn">grid</span>; axis equal; xlabel(<span class="st">'x (m)'</span>); ylabel(<span class="st">'y (m)'</span>)</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.51 — ratkaistaan v0 kaavalla</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">%% Kun tiedetään kantama xmax, haetaan v0</span>
+h=<span class="nm">2</span>; alfa=<span class="nm">40</span>; xmax=<span class="nm">6</span>; g=<span class="nm">9.81</span>;
+v0 = <span class="fn">sqrt</span>(g*xmax^<span class="nm">2</span>/(<span class="nm">2</span>*<span class="fn">cosd</span>(alfa)^<span class="nm">2</span>*(<span class="fn">tand</span>(alfa)*xmax+h)))
+
+<span class="cm">%% Haetaan optimilähtökulma (osa2 s.53)</span>
+v0=<span class="nm">10</span>; h=<span class="nm">2</span>; g=<span class="nm">9.81</span>;
+alfa_max = <span class="fn">atand</span>(v0/<span class="fn">sqrt</span>(v0^<span class="nm">2</span>+<span class="nm">2</span>*g*h))   <span class="cm">% → optimikulma</span>
+xmax_max = v0/g*<span class="fn">sqrt</span>(v0^<span class="nm">2</span>+<span class="nm">2</span>*g*h)          <span class="cm">% → maksimikantama</span></pre>
+      </div>
+    </div>
+
+    <!-- ─── YMPYRÄ ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">⭕</span>
+        <div>
+          <div class="card-title">Ympyrä koordinaatistossa — piirtäminen ja kaari</div>
+          <div class="card-sub">analyyttinen_geometria_osa1.m · s.35–41</div>
+        </div>
+      </div>
+      <p>Ympyrää ei voi piirtää suoraan y = f(x) muodossa (ei ole funktio). Octavessa käytetään <strong>parametrimuotoa</strong>: kiertokulma θ kulkee 0°→360° ja pisteet lasketaan cos/sin-funktion avulla.</p>
+      <div class="formula">
+        <div class="flabel">Ympyrän parametrimuoto</div>
+        th = 0 : 1 : 360&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← kiertokulma asteina<br>
+        Qx = Px + r · cosd(th)&nbsp;&nbsp;&nbsp;&nbsp;← ympyrän x-pisteet<br>
+        Qy = Py + r · sind(th)&nbsp;&nbsp;&nbsp;&nbsp;← ympyrän y-pisteet<br>
+        (Px, Py) = keskipiste, r = säde<br><br>
+        Kaari (osaväliltä ka→kl):<br>
+        thk = ka : (kl−ka)/100 : kl
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa1.m · s.35</span></div>
+        <pre><span class="kw">clear</span>
+Px=<span class="nm">1</span>; Py=<span class="nm">2</span>; r=<span class="nm">4</span>;   <span class="cm">% keskipiste ja säde</span>
+th = <span class="nm">0</span>:<span class="nm">1</span>:<span class="nm">360</span>;
+Qx = Px + r*<span class="fn">cosd</span>(th);
+Qy = Py + r*<span class="fn">sind</span>(th);
+
+<span class="cm">% Kaari 20°→50°</span>
+ka=<span class="nm">20</span>; kl=<span class="nm">50</span>;
+thk = ka:(kl-ka)/<span class="nm">100</span>:kl;
+Qkx = Px + r*<span class="fn">cosd</span>(thk);
+Qky = Py + r*<span class="fn">sind</span>(thk);
+
+<span class="fn">plot</span>(Qx, Qy, <span class="st">'b'</span>, <span class="st">'linewidth'</span>, <span class="nm">2</span>)
+hold on
+<span class="fn">plot</span>(Px, Py, <span class="st">'b.'</span>, <span class="st">'markersize'</span>, <span class="nm">20</span>)
+<span class="fn">plot</span>(Qkx, Qky, <span class="st">'r'</span>, <span class="st">'linewidth'</span>, <span class="nm">3</span>)   <span class="cm">% kaari punaisella</span>
+hold off; <span class="fn">grid</span>; axis equal</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa1.m · s.41 — kolmen pisteen ympyrä</span></div>
+        <pre><span class="kw">clear</span>
+Ax=<span class="nm">1</span>; Ay=<span class="nm">1</span>; Bx=<span class="nm">5</span>; By=<span class="nm">2</span>; Cx=<span class="nm">4</span>; Cy=<span class="nm">4</span>;
+
+<span class="cm">% AB:n keskinormaali</span>
+Fx=(Ax+Bx)/<span class="nm">2</span>; Fy=(Ay+By)/<span class="nm">2</span>;   <span class="cm">% AB:n keskipiste</span>
+theta = <span class="fn">atan2d</span>(By-Ay,Bx-Ax)+<span class="nm">90</span>;  <span class="cm">% keskinormaalin suuntakulma</span>
+
+<span class="cm">% AC:n keskinormaali</span>
+Ex=(Ax+Cx)/<span class="nm">2</span>; Ey=(Ay+Cy)/<span class="nm">2</span>;
+delta = <span class="fn">atan2d</span>(Cy-Ay,Cx-Ax)+<span class="nm">90</span>;
+
+<span class="cm">% Keskinormaalien leikkauspiste = ympyrän keskipiste</span>
+a=<span class="fn">cosd</span>(theta); b=-<span class="fn">cosd</span>(delta);
+c=<span class="fn">sind</span>(theta); d=-<span class="fn">sind</span>(delta);
+e=Ex-Fx; f=Ey-Fy;
+r_par=(d*e-b*f)/(a*d-b*c);
+Px=Fx+r_par*<span class="fn">cosd</span>(theta)
+Py=Fy+r_par*<span class="fn">sind</span>(theta)
+r=<span class="fn">sqrt</span>((Px-Ax)^<span class="nm">2</span>+(Py-Ay)^<span class="nm">2</span>)  <span class="cm">% ympyrän säde</span></pre>
+      </div>
+    </div>
+
+    <!-- ─── YMPYRÄN JA SUORAN LEIKKAUSPISTEET ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🎯</span>
+        <div>
+          <div class="card-title">Ympyrän ja suoran leikkauspisteet</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.61</div>
+        </div>
+      </div>
+      <p>Sijoitetaan suoran yhtälö y = kx + b ympyrän yhtälöön (x−x₀)² + (y−y₀)² = r². Syntyy toisen asteen yhtälö — ratkaistaan diskriminantilla.</p>
+      <div class="formula">
+        <div class="flabel">Leikkauskertoimet</div>
+        A = k² + 1<br>
+        B = 2bk − 2ky₀ − 2x₀<br>
+        C = b² − 2by₀ + x₀² + y₀² − r²<br>
+        D = B² − 4AC<br>
+        x₁,₂ = (−B ± √D) / (2A),&nbsp;&nbsp;y₁,₂ = k·x₁,₂ + b
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.61</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Ympyrä: keskipiste (x0,y0), säde r</span>
+x0=<span class="nm">5</span>; y0=<span class="nm">7</span>; r=<span class="nm">5</span>;
+<span class="cm">% Suora: y = kx + b</span>
+k=<span class="nm">0.5</span>; b=<span class="nm">11</span>;
+
+A = k^<span class="nm">2</span>+<span class="nm">1</span>;
+B = <span class="nm">2</span>*b*k-<span class="nm">2</span>*k*y0-<span class="nm">2</span>*x0;
+C = b^<span class="nm">2</span>-<span class="nm">2</span>*b*y0+x0^<span class="nm">2</span>+y0^<span class="nm">2</span>-r^<span class="nm">2</span>;
+D = B^<span class="nm">2</span>-<span class="nm">4</span>*A*C;
+
+<span class="kw">if</span> D >= <span class="nm">0</span>
+  x1=(-B-<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*A); y1=k*x1+b
+  x2=(-B+<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*A); y2=k*x2+b
+<span class="kw">end</span>
+
+<span class="cm">% Piirrä</span>
+t=<span class="nm">0</span>:<span class="nm">360</span>;
+<span class="fn">plot</span>(x0+r*<span class="fn">cosd</span>(t),y0+r*<span class="fn">sind</span>(t),<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)
+hold on
+xv=x0-r-<span class="nm">1</span>; xo2=x0+r+<span class="nm">1</span>;
+<span class="fn">plot</span>([xv,xo2],[k*xv+b,k*xo2+b],<span class="st">'k'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)
+<span class="kw">if</span> D>=<span class="nm">0</span>; <span class="fn">plot</span>([x1,x2],[y1,y2],<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>); <span class="kw">end</span>
+hold off; axis equal; <span class="fn">grid</span></pre>
+      </div>
+    </div>
+
+    <!-- ─── PAIKANNUS YMPYRÖILLÄ ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📡</span>
+        <div>
+          <div class="card-title">Paikannus kolmella ympyrällä (GPS-periaate)</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.63</div>
+        </div>
+      </div>
+      <p>GPS-paikannuksessa kolme asemaa mittaavat etäisyydet r₁, r₂, r₃ kohteeseen. Jokainen antaa ympyrän — kolmen ympyrän leikkauspiste on sijainti. Käytännössä: vähennetään parierotusten avulla suorat yhtälöt.</p>
+      <div class="formula">
+        <div class="flabel">Paikannusyhtälöt</div>
+        Asemien vähennysmenetelmä (P3 referenssiksi):<br>
+        2(x₃−x₁)·x + 2(y₃−y₁)·y = x₃²−x₁²+y₃²−y₁²+r₁²−r₃²<br>
+        2(x₃−x₂)·x + 2(y₃−y₂)·y = x₃²−x₂²+y₃²−y₂²+r₂²−r₃²<br>
+        → lineaarinen 2×2-yhtälöryhmä → Cramerin sääntö
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.63</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Tukiasemat</span>
+x1=<span class="nm">0</span>; y1=<span class="nm">0</span>;
+x2=<span class="nm">6</span>; y2=-<span class="nm">2</span>;
+x3=<span class="nm">3</span>; y3=<span class="nm">3</span>;
+<span class="cm">% Mitatut etäisyydet (+ mittausvirhe)</span>
+r1=<span class="fn">sqrt</span>((<span class="nm">3</span>-x1)^<span class="nm">2</span>+(<span class="nm">1</span>-y1)^<span class="nm">2</span>)+<span class="nm">0.3</span>;
+r2=<span class="fn">sqrt</span>((<span class="nm">3</span>-x2)^<span class="nm">2</span>+(<span class="nm">1</span>-y2)^<span class="nm">2</span>)-<span class="nm">0.4</span>;
+r3=<span class="fn">sqrt</span>((<span class="nm">3</span>-x3)^<span class="nm">2</span>+(<span class="nm">1</span>-y3)^<span class="nm">2</span>)-<span class="nm">0.2</span>;
+
+<span class="cm">% Vähennysmenetelmä → lineaarinen yhtälöryhmä ax+by=e, cx+dy=f</span>
+a=<span class="nm">2</span>*(x3-x1); b=<span class="nm">2</span>*(y3-y1); e=x3^<span class="nm">2</span>-x1^<span class="nm">2</span>+y3^<span class="nm">2</span>-y1^<span class="nm">2</span>+r1^<span class="nm">2</span>-r3^<span class="nm">2</span>;
+c=<span class="nm">2</span>*(x3-x2); d=<span class="nm">2</span>*(y3-y2); f=x3^<span class="nm">2</span>-x2^<span class="nm">2</span>+y3^<span class="nm">2</span>-y2^<span class="nm">2</span>+r2^<span class="nm">2</span>-r3^<span class="nm">2</span>;
+x=(d*e-b*f)/(a*d-b*c)   <span class="cm">% → x ≈ 3 (arvio sijainnille)</span>
+y=(a*f-c*e)/(a*d-b*c)   <span class="cm">% → y ≈ 1</span></pre>
+      </div>
+    </div>
+
+    <!-- ─── ELLIPSI ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🥚</span>
+        <div>
+          <div class="card-title">Ellipsi — litistetty ympyrä</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.73–77</div>
+        </div>
+      </div>
+      <p>Ellipsillä on kaksi puoliakselia: <strong>a</strong> (vaaka, iso) ja <strong>b</strong> (pysty, pieni). Polttopisteet ovat x-akselilla kohdassa ±c. <strong>Ellipsin laki:</strong> jokaisen pisteen P etäisyyksien summa molemmista polttopisteistä on vakio 2a — tämä on miten se erottuu ympyrästä ja hyperbelista!</p>
+      <div class="formula">
+        <div class="flabel">Ellipsin kaavat</div>
+        Parametrimuoto: x = a·cosd(t), y = b·sind(t), t = 0…360°<br>
+        Polttopisteetäisyys: c = √(a² − b²)&nbsp;&nbsp;&nbsp;(a &gt; b)<br>
+        Polttopisteet: F1=(−c, 0) ja F2=(+c, 0)<br>
+        Ellipsin laki: |PF1| + |PF2| = 2a kaikille pisteille P<br><br>
+        Tangentti pisteessä (x₀, y₀): k = −b²·x₀ / (a²·y₀)
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.73–77</span></div>
+        <pre><span class="kw">clear</span>
+a=<span class="nm">3</span>; b=<span class="nm">2</span>;
+c = <span class="fn">sqrt</span>(a^<span class="nm">2</span>-b^<span class="nm">2</span>)   <span class="cm">% → c ≈ 2.236</span>
+F1x=-c; F2x=c;
+
+t = <span class="nm">0</span>:<span class="nm">1</span>:<span class="nm">360</span>;
+x = a*<span class="fn">cosd</span>(t);
+y = b*<span class="fn">sind</span>(t);
+
+<span class="fn">plot</span>(x,y,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+hold on
+<span class="fn">plot</span>([F1x,F2x],[<span class="nm">0</span>,<span class="nm">0</span>],<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+<span class="fn">plot</span>([-(a+<span class="nm">1</span>),a+<span class="nm">1</span>],[<span class="nm">0</span>,<span class="nm">0</span>],<span class="st">'k'</span>)
+<span class="fn">plot</span>([<span class="nm">0</span>,<span class="nm">0</span>],[-(a+<span class="nm">1</span>),a+<span class="nm">1</span>],<span class="st">'k'</span>)
+hold off; <span class="fn">grid</span>; axis equal
+
+<span class="cm">%% Tangentti pisteessä P (osa2 s.75)</span>
+n=<span class="nm">71</span>; x0=x(n); y0=y(n);
+kt = -x0*y0/(a^<span class="nm">2</span>-x0^<span class="nm">2</span>)   <span class="cm">% tangentin kulmakerroin</span>
+
+<span class="cm">%% Tarkistus: PF1 + PF2 = 2a</span>
+Px=x(<span class="nm">50</span>); Py=y(<span class="nm">50</span>);
+PF1=<span class="fn">sqrt</span>((Px-F1x)^<span class="nm">2</span>+Py^<span class="nm">2</span>);
+PF2=<span class="fn">sqrt</span>((Px-F2x)^<span class="nm">2</span>+Py^<span class="nm">2</span>);
+PF1+PF2   <span class="cm">% → 6 = 2*a  ✓</span></pre>
+      </div>
+    </div>
+
+    <!-- ─── HYPERBELI ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">〰️</span>
+        <div>
+          <div class="card-title">Hyperbeli — kaksi haaraa</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.83–101</div>
+        </div>
+      </div>
+      <p>Hyperbeli koostuu kahdesta erillisestä haarasta. Se muistuttaa ellipsiä mutta nyt polttopisteiden <strong>erotus</strong> on vakio (ellipsissä oli summa). Piirretään hyperbolisilla funktioilla cosh ja sinh.</p>
+      <div class="formula">
+        <div class="flabel">Hyperbelikaavat</div>
+        x = a·cosh(t), y = b·sinh(t), t = −2…2 (oikea haara)<br>
+        Vasen haara: x = −a·cosh(t)<br>
+        c = √(a² + b²)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← huom: PLUS, ei miinus!<br>
+        Polttopisteet: F1=(−c, 0), F2=(+c, 0)<br>
+        Hyperbelin laki: |PF1| − |PF2| = 2a (vakio)<br>
+        Asymptootit: y = ±(b/a)·x
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.83</span></div>
+        <pre><span class="kw">clear</span>
+a=<span class="nm">3</span>; b=<span class="nm">2</span>;
+c = <span class="fn">sqrt</span>(a^<span class="nm">2</span>+b^<span class="nm">2</span>)   <span class="cm">% → c ≈ 3.606 (huom: +!)</span>
+F1x=-c; F2x=c;
+
+t = -<span class="nm">2</span>:<span class="nm">0.01</span>:<span class="nm">2</span>;
+xr = a*<span class="fn">cosh</span>(t);   <span class="cm">% oikea haara</span>
+xl = -a*<span class="fn">cosh</span>(t);   <span class="cm">% vasen haara</span>
+y  = b*<span class="fn">sinh</span>(t);
+
+r = <span class="fn">max</span>(xr);
+<span class="fn">plot</span>(xr, y, <span class="st">'b'</span>, <span class="st">'linewidth'</span>, <span class="nm">2</span>)
+hold on
+<span class="fn">plot</span>(xl, y, <span class="st">'b'</span>, <span class="st">'linewidth'</span>, <span class="nm">2</span>)
+<span class="fn">plot</span>([F1x,F2x],[<span class="nm">0</span>,<span class="nm">0</span>],<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+<span class="fn">plot</span>([-r,r],[-b/a*r,b/a*r],<span class="st">'c'</span>)   <span class="cm">% asymptootti y=+(b/a)x</span>
+<span class="fn">plot</span>([-r,r],[b/a*r,-b/a*r],<span class="st">'c'</span>)   <span class="cm">% asymptootti y=-(b/a)x</span>
+hold off; axis equal; <span class="fn">grid</span></pre>
+      </div>
+      <div class="box info"><span class="box-icon">ℹ️</span><div><strong>Ellipsi vs. hyperbeli — ero:</strong> Ellipsissä c = √(a² − b²) ja PF1+PF2=2a (summa vakio). Hyperbelissä c = √(a² + b²) ja PF1−PF2=2a (erotus vakio). Muista: ellipsissä miinus, hyperbelissä plus c:n laskemisessa!</div></div>
+    </div>
+
+    <!-- ─── HYPERBOLISET FUNKTIOT ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📐</span>
+        <div>
+          <div class="card-title">Hyperboliset funktiot: cosh, sinh, acosh, asinh</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.87</div>
+        </div>
+      </div>
+      <p>Hyperboliset funktiot ovat sukulaisia trigonometrisille funktioille, mutta ne liittyvät hyperboliin ympyrän sijaan. Tarvitset niitä hyperbelin piirtämiseen. Käänteisfunktiot <code>acosh</code> ja <code>asinh</code> toimivat kuten asin/acos.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Funktio</th><th>Kaava</th><th>Octave</th><th>Huomio</th></tr></thead>
+          <tbody>
+            <tr><td><strong>cosh(t)</strong></td><td>(eᵗ + e⁻ᵗ) / 2</td><td><code>cosh(t)</code></td><td>Aina ≥ 1, symmetrinen</td></tr>
+            <tr><td><strong>sinh(t)</strong></td><td>(eᵗ − e⁻ᵗ) / 2</td><td><code>sinh(t)</code></td><td>Pariton, kulkee origon kautta</td></tr>
+            <tr><td><strong>acosh(c)</strong></td><td>ln(c + √(c²−1))</td><td><code>acosh(c)</code></td><td>c ≥ 1 pakollinen</td></tr>
+            <tr><td><strong>asinh(s)</strong></td><td>ln(s + √(s²+1))</td><td><code>asinh(s)</code></td><td>Kaikille s toimii</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.87</span></div>
+        <pre><span class="kw">clear</span>
+t = -<span class="nm">3</span>:<span class="nm">0.01</span>:<span class="nm">3</span>;
+
+<span class="cm">% Piirrä cosh ja sinh</span>
+figure(<span class="nm">1</span>)
+subplot(<span class="nm">121</span>)
+<span class="fn">plot</span>(t,<span class="fn">cosh</span>(t),<span class="st">'linewidth'</span>,<span class="nm">1.5</span>); <span class="fn">grid</span>; xlabel(<span class="st">'t'</span>); ylabel(<span class="st">'cosh(t)'</span>)
+subplot(<span class="nm">122</span>)
+<span class="fn">plot</span>(t,<span class="fn">sinh</span>(t),<span class="st">'linewidth'</span>,<span class="nm">1.5</span>); <span class="fn">grid</span>; xlabel(<span class="st">'t'</span>); ylabel(<span class="st">'sinh(t)'</span>)
+
+<span class="cm">% Käänteisfunktiot</span>
+<span class="fn">cosh</span>(<span class="nm">2</span>)                 <span class="cm">% → 3.762</span>
+<span class="fn">acosh</span>(<span class="nm">3.762</span>)            <span class="cm">% → 2 ✓</span>
+<span class="fn">sinh</span>(-<span class="nm">1.5</span>)              <span class="cm">% → -2.129</span>
+<span class="fn">asinh</span>(-<span class="nm">2.129</span>)           <span class="cm">% → -1.5 ✓</span>
+
+<span class="cm">% Tärkeä identiteetti:</span>
+<span class="fn">cosh</span>(t).^<span class="nm">2</span> - <span class="fn">sinh</span>(t).^<span class="nm">2</span>  <span class="cm">% → kaikki 1 (vrt. sin²+cos²=1)</span></pre>
+      </div>
+    </div>
+
+    <!-- ─── PAIKANNUS HYPERBELILLÄ ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🛰️</span>
+        <div>
+          <div class="card-title">Paikannus hyperbelillä — TDOA-menetelmä</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.101–103</div>
+        </div>
+      </div>
+      <p>TDOA (Time Difference Of Arrival): Kohde lähettää signaalin. Kaksi asemaa mittaavat <strong>saapumisaikojen eron</strong> → ero·äänennopeus = etäisyyksien erotus d = PF1 − PF2. Tämä on hyperbelin määritelmä! Kahden hyperbelin leikkauspiste on sijainti.</p>
+      <div class="formula">
+        <div class="flabel">Paikannusmenettely</div>
+        Mitataan d₁₂ = PF1 − PF2 ja d₁₃ = PF1 − PF3<br>
+        Kumpikin tuottaa yhden hyperbelihaaran<br>
+        → Haetaan kahden hyperbelin leikkauspiste<br><br>
+        Puoliakselit: a = |d|/2, b = √((L/2)² − a²)<br>
+        (L = polttopisteiden välinen etäisyys)
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.101</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Etäisyyksien erotus (d>0: P lähempänä F2)</span>
+L=<span class="nm">10</span>; d=<span class="nm">5</span>;   <span class="cm">% F1F2=10, PF1-PF2=5</span>
+a = <span class="fn">abs</span>(d)/<span class="nm">2</span>
+b = <span class="fn">sqrt</span>((L/<span class="nm">2</span>)^<span class="nm">2</span>-a^<span class="nm">2</span>)
+
+t=-<span class="nm">2</span>:<span class="nm">0.01</span>:<span class="nm">2</span>;
+x0=((<span class="nm">-L</span>/<span class="nm">2</span>)+(L/<span class="nm">2</span>))/<span class="nm">2</span>;   <span class="cm">% polttopisteiden keskipiste</span>
+<span class="kw">if</span> d&gt;<span class="nm">0</span>
+  xa=x0+a*<span class="fn">cosh</span>(t);  <span class="cm">% oikea haara (PF2 pienempi)</span>
+<span class="kw">else</span>
+  xa=x0-a*<span class="fn">cosh</span>(t);  <span class="cm">% vasen haara</span>
+<span class="kw">end</span>
+y=b*<span class="fn">sinh</span>(t);
+<span class="fn">plot</span>(xa,y,<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>); <span class="fn">grid</span>; axis equal</pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Muistisääntö:</strong> GPS käyttää ympyröitä (etäisyys tunnettu). TDOA käyttää hyperbeleitä (etäisyyksien <em>ero</em> tunnettu). Kolme ympyrää tai kaksi hyperbeliä → yksi leikkauspiste = sijainti.</div></div>
+    </div>
+    <!-- ─── HARJOITUSTEHTÄVÄT ─── -->
+    <hr style="margin:36px 0">
+    <div class="section-label">Harjoitustehtävät</div>
+    <h3 style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.4rem;margin-bottom:8px">Analyyttisen geometrian harjoitukset</h3>
+    <p style="color:var(--text-muted);font-size:.95rem;margin-bottom:22px">Ratkaise ensin paperilla, sitten tarkista Octavella.</p>
+
+    <div class="ex-grid">
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG1</div>
+          <div class="ex-question">Suoran yhtälö kahden pisteen kautta</div>
+          <div class="ex-given">Pisteet A(1, 4) ja B(5, 12).<br>Laske suoran yhtälö y = kx + b.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+x1=<span class="nm">1</span>; y1=<span class="nm">4</span>;
+x2=<span class="nm">5</span>; y2=<span class="nm">12</span>;
+k = (y2-y1)/(x2-x1)   <span class="cm">% → k = 2</span>
+b = -k*x1 + y1         <span class="cm">% → b = 2</span>
+<span class="cm">% y = 2x + 2</span>
+
+<span class="cm">% Tarkistus:</span>
+k*<span class="nm">1</span>+b   <span class="cm">% → 4  (piste A) ✓</span>
+k*<span class="nm">5</span>+b   <span class="cm">% → 12 (piste B) ✓</span></pre>
+          <div class="ex-ans">✅ y = 2x + 2 (k=2, b=2)</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG2</div>
+          <div class="ex-question">Suorien leikkauspiste</div>
+          <div class="ex-given">Suora 1: y = 3x − 2<br>Suora 2: y = −x + 6<br>Missä ne leikkaavat?</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+k1=<span class="nm">3</span>; b1=-<span class="nm">2</span>;
+k2=-<span class="nm">1</span>; b2=<span class="nm">6</span>;
+x = (b2-b1)/(k1-k2)   <span class="cm">% → x = 2</span>
+y = k1*x + b1          <span class="cm">% → y = 4</span>
+<span class="cm">% Leikkauspiste (2, 4)</span>
+
+<span class="cm">% Tarkistus:</span>
+k2*<span class="nm">2</span>+b2   <span class="cm">% → 4  ✓ sama</span></pre>
+          <div class="ex-ans">✅ Leikkauspiste (2, 4)</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG3</div>
+          <div class="ex-question">Paraabelin huippu</div>
+          <div class="ex-given">Paraabeli y = 2x² − 8x + 5.<br>Missä on huippu?</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">2</span>; b=-<span class="nm">8</span>; c=<span class="nm">5</span>;
+x0 = -b/(<span class="nm">2</span>*a)              <span class="cm">% → x0 = 2</span>
+y0 = a*x0^<span class="nm">2</span> + b*x0 + c     <span class="cm">% → y0 = -3</span>
+<span class="cm">% Huippu (2, -3)</span>
+
+<span class="cm">% Piirrä</span>
+x = -<span class="nm">1</span>:<span class="nm">0.05</span>:<span class="nm">5</span>;
+y = a*x.^<span class="nm">2</span> + b*x + c;
+<span class="fn">plot</span>(x, y, <span class="st">'b-'</span>, x0, y0, <span class="st">'r*'</span>, <span class="st">'MarkerSize'</span>, <span class="nm">10</span>)
+<span class="fn">grid</span> on</pre>
+          <div class="ex-ans">✅ Huippu (2, −3). Paraabeli aukeaa ylöspäin (a&gt;0).</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG4</div>
+          <div class="ex-question">Napakoordinaatit</div>
+          <div class="ex-given">Piste P = (−3, −4).<br>Muunna napakoordinaateiksi (r, θ).</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+Px=-<span class="nm">3</span>; Py=-<span class="nm">4</span>;
+r  = <span class="fn">sqrt</span>(Px^<span class="nm">2</span> + Py^<span class="nm">2</span>)    <span class="cm">% → r = 5</span>
+th = <span class="fn">atan2d</span>(Py, Px)         <span class="cm">% → th ≈ -126.9° (3. kvadrantti)</span>
+
+<span class="cm">% Takaisinmuunnos (tarkistus)</span>
+Px2 = r*<span class="fn">cosd</span>(th)  <span class="cm">% → -3  ✓</span>
+Py2 = r*<span class="fn">sind</span>(th)  <span class="cm">% → -4  ✓</span></pre>
+          <div class="ex-ans">✅ r = 5, θ ≈ −126.9° (tai 233.1°). Käytä atan2d!</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG5</div>
+          <div class="ex-question">Ympyrän ja suoran leikkauspisteet</div>
+          <div class="ex-given">Ympyrä: keskipiste (0,0), säde 5.<br>Suora: y = x + 1.<br>Leikkauspisteet?</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+Px=<span class="nm">0</span>; Py=<span class="nm">0</span>; r=<span class="nm">5</span>; k=<span class="nm">1</span>; b=<span class="nm">1</span>;
+A = <span class="nm">1</span>+k^<span class="nm">2</span>;
+B = <span class="nm">2</span>*k*b - <span class="nm">2</span>*Px - <span class="nm">2</span>*k*Py;
+C = Px^<span class="nm">2</span>+Py^<span class="nm">2</span>+b^<span class="nm">2</span>-<span class="nm">2</span>*b*Py-r^<span class="nm">2</span>;
+D = B^<span class="nm">2</span>-<span class="nm">4</span>*A*C;
+x1 = (-B+<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*A)   <span class="cm">% → x1 ≈ 2.12</span>
+x2 = (-B-<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*A)   <span class="cm">% → x2 ≈ -2.62 (tarkemmin: -2.62)</span>
+y1 = k*x1+b
+y2 = k*x2+b</pre>
+          <div class="ex-ans">✅ Leikkauspisteet: (2.12, 3.12) ja (−2.62, −1.62)</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG6</div>
+          <div class="ex-question">Heittoliike — kantama</div>
+          <div class="ex-given">Ammutaan v₀ = 20 m/s, kulma α = 35°, lähtökorkeus h = 0.<br>Laske kantama ja huippukorkeus.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+v0=<span class="nm">20</span>; alfa=<span class="nm">35</span>; h=<span class="nm">0</span>; g=<span class="nm">9.81</span>;
+a = -g/(<span class="nm">2</span>*v0^<span class="nm">2</span>*<span class="fn">cosd</span>(alfa)^<span class="nm">2</span>)
+b = <span class="fn">tand</span>(alfa)
+c = h;
+D = b^<span class="nm">2</span>-<span class="nm">4</span>*a*c;
+xmax = (-b-<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*a)   <span class="cm">% → kantama ≈ 39.5 m</span>
+x0   = -b/(<span class="nm">2</span>*a)
+ymax = a*x0^<span class="nm">2</span>+b*x0+c          <span class="cm">% → huippu ≈ 6.7 m</span></pre>
+          <div class="ex-ans">✅ Kantama ≈ 39.5 m, huippukorkeus ≈ 6.7 m</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG7</div>
+          <div class="ex-question">Ellipsin polttopisteet</div>
+          <div class="ex-given">Ellipsi: a = 6, b = 4.<br>Laske polttopisteiden sijainnit ja tarkista laki |PF1|+|PF2| = 2a.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">6</span>; b=<span class="nm">4</span>;
+c = <span class="fn">sqrt</span>(a^<span class="nm">2</span>-b^<span class="nm">2</span>)    <span class="cm">% → c ≈ 4.47</span>
+F1x=-c; F2x=c;
+<span class="cm">% Tarkistus pisteen P=(a,0)=(6,0) avulla</span>
+Px=a; Py=<span class="nm">0</span>;
+PF1 = <span class="fn">sqrt</span>((Px-F1x)^<span class="nm">2</span>+Py^<span class="nm">2</span>)   <span class="cm">% → 10.47</span>
+PF2 = <span class="fn">sqrt</span>((Px-F2x)^<span class="nm">2</span>+Py^<span class="nm">2</span>)   <span class="cm">% → 1.53</span>
+PF1+PF2   <span class="cm">% → 12 = 2*a  ✓</span></pre>
+          <div class="ex-ans">✅ F1=(−4.47, 0), F2=(4.47, 0). Summa = 12 = 2a.</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG8</div>
+          <div class="ex-question">Interpolointi lämpötaulukolle</div>
+          <div class="ex-given">Mitattu: 5°C → 18, ja 25°C → 74.<br>Laske interpoloitu arvo 14°C kohdalla.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+x1=<span class="nm">5</span>;  y1=<span class="nm">18</span>;
+x2=<span class="nm">25</span>; y2=<span class="nm">74</span>;
+k = (y2-y1)/(x2-x1)    <span class="cm">% → k = 2.8</span>
+b = -k*x1 + y1          <span class="cm">% → b = 4</span>
+xq = <span class="nm">14</span>;
+yq = k*xq + b            <span class="cm">% → yq = 43.2</span></pre>
+          <div class="ex-ans">✅ Arvo 14°C kohdalla ≈ 43.2</div>
+        </div>
+      </div>
+
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG9</div>
+          <div class="ex-question">Kolmion painopiste ja mediaani</div>
+          <div class="ex-given">Kolmio ABC: A=(0,0), B=(6,0), C=(3,6).<br>Laske painopiste P ja tarkista että AP = 2/3·AD.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+Ax=<span class="nm">0</span>; Ay=<span class="nm">0</span>; Bx=<span class="nm">6</span>; By=<span class="nm">0</span>; Cx=<span class="nm">3</span>; Cy=<span class="nm">6</span>;
+Px = (<span class="nm">1</span>/<span class="nm">3</span>)*(Ax+Bx+Cx)   <span class="cm">% → 3</span>
+Py = (<span class="nm">1</span>/<span class="nm">3</span>)*(Ay+By+Cy)   <span class="cm">% → 2</span>
+<span class="cm">% Mediaani A→D (D=BC:n keskipiste)</span>
+Dx=(<span class="nm">1</span>/<span class="nm">2</span>)*(Bx+Cx); Dy=(<span class="nm">1</span>/<span class="nm">2</span>)*(By+Cy);
+AP = <span class="fn">sqrt</span>((Px-Ax)^<span class="nm">2</span>+(Py-Ay)^<span class="nm">2</span>)
+AD = <span class="fn">sqrt</span>((Dx-Ax)^<span class="nm">2</span>+(Dy-Ay)^<span class="nm">2</span>)
+<span class="nm">2</span>/<span class="nm">3</span>*AD   <span class="cm">% → sama kuin AP ✓</span></pre>
+          <div class="ex-ans">✅ Painopiste P=(3, 2). Mediaanilaki: AP = 2/3·AD.</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG10</div>
+          <div class="ex-question">Keppi kulmassa — optimointi</div>
+          <div class="ex-given">Keppi kulkee x-seinän (a=2 m) ja y-seinän (b=1 m) välillä kulmassa.<br>Millä kulmalla keppi on lyhyin? Mikä on pituus?</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">2</span>; b=<span class="nm">1</span>;
+alfa = <span class="nm">5</span>:<span class="nm">0.01</span>:<span class="nm">85</span>;
+AB = b./<span class="fn">sind</span>(alfa) + a./<span class="fn">cosd</span>(alfa);
+[ABmin, ind] = <span class="fn">min</span>(AB)
+alfamin = alfa(ind)   <span class="cm">% → ~41.4°</span>
+<span class="fn">plot</span>(alfa, AB, <span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+hold on; <span class="fn">plot</span>(alfamin,ABmin,<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>); hold off; <span class="fn">grid</span></pre>
+          <div class="ex-ans">✅ Optimikulma ≈ 41.4°, lyhin keppi ≈ 4.16 m.</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG11</div>
+          <div class="ex-question">Kolmen pisteen paraabeli</div>
+          <div class="ex-given">Pisteet: (0, 5), (2, 1), (4, 5).<br>Laske paraabelin kertoimet a, b, c.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+x1=<span class="nm">0</span>; y1=<span class="nm">5</span>; x2=<span class="nm">2</span>; y2=<span class="nm">1</span>; x3=<span class="nm">4</span>; y3=<span class="nm">5</span>;
+A=x1^<span class="nm">2</span>-x2^<span class="nm">2</span>; B=x1-x2; C=x1^<span class="nm">2</span>-x3^<span class="nm">2</span>;
+D=x1-x3;     E=y1-y2; F=y1-y3;
+a=(D*E-B*F)/(A*D-B*C)   <span class="cm">% → a = 1</span>
+b=(A*F-C*E)/(A*D-B*C)   <span class="cm">% → b = -4</span>
+c=y1-a*x1^<span class="nm">2</span>-b*x1        <span class="cm">% → c = 5</span>
+<span class="cm">% y = x² − 4x + 5, huippu x=2, y=1</span></pre>
+          <div class="ex-ans">✅ a=1, b=−4, c=5. Yhtälö: y = x² − 4x + 5. Huippu (2, 1).</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG12</div>
+          <div class="ex-question">Heittoliike — ratkaistaan lähtönopeus</div>
+          <div class="ex-given">Pallo heitetään kulmassa α=45° korkeudelta h=0 ja se kantaa xmax=30 m.<br>Mikä oli lähtönopeus v₀?</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+alfa=<span class="nm">45</span>; h=<span class="nm">0</span>; xmax=<span class="nm">30</span>; g=<span class="nm">9.81</span>;
+v0 = <span class="fn">sqrt</span>(g*xmax^<span class="nm">2</span>/(<span class="nm">2</span>*<span class="fn">cosd</span>(alfa)^<span class="nm">2</span>*(<span class="fn">tand</span>(alfa)*xmax+h)))
+<span class="cm">% → v0 ≈ 17.16 m/s</span>
+
+<span class="cm">% Tarkistus: syötä v0 ja laske kantama</span>
+a=-g/(<span class="nm">2</span>*v0^<span class="nm">2</span>*<span class="fn">cosd</span>(alfa)^<span class="nm">2</span>); b=<span class="fn">tand</span>(alfa); c=h;
+(-b-<span class="fn">sqrt</span>(b^<span class="nm">2</span>-<span class="nm">4</span>*a*c))/(<span class="nm">2</span>*a)   <span class="cm">% → 30 ✓</span></pre>
+          <div class="ex-ans">✅ v₀ ≈ 17.2 m/s.</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG13</div>
+          <div class="ex-question">Hyperbelin polttopisteet</div>
+          <div class="ex-given">Hyperbeli: a=4, b=3.<br>Laske polttopisteiden sijainnit ja tarkista hyperbelin laki.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">4</span>; b=<span class="nm">3</span>;
+c = <span class="fn">sqrt</span>(a^<span class="nm">2</span>+b^<span class="nm">2</span>)   <span class="cm">% → c = 5  (huom: +!)</span>
+F1x=-c; F2x=c;
+<span class="cm">% Tarkistus: piste P=(a,0) oikeassa haarassa</span>
+Px=a; Py=<span class="nm">0</span>;
+PF1=<span class="fn">sqrt</span>((Px-F1x)^<span class="nm">2</span>+Py^<span class="nm">2</span>)   <span class="cm">% → 9</span>
+PF2=<span class="fn">sqrt</span>((Px-F2x)^<span class="nm">2</span>+Py^<span class="nm">2</span>)   <span class="cm">% → 1</span>
+PF1-PF2   <span class="cm">% → 8 = 2*a  ✓</span></pre>
+          <div class="ex-ans">✅ F1=(−5,0), F2=(5,0). Erotus = 8 = 2a. Muista: hyperbelissä c=√(a²+b²)!</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG14</div>
+          <div class="ex-question">GPS-paikannus kolmella ympyrällä</div>
+          <div class="ex-given">Tukiasemat: T1=(0,0), T2=(10,0), T3=(5,8).<br>Mitatut etäisyydet: r1=6, r2=7, r3=5.<br>Arvioi kohteen sijainti.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+x1=<span class="nm">0</span>; y1=<span class="nm">0</span>; x2=<span class="nm">10</span>; y2=<span class="nm">0</span>; x3=<span class="nm">5</span>; y3=<span class="nm">8</span>;
+r1=<span class="nm">6</span>; r2=<span class="nm">7</span>; r3=<span class="nm">5</span>;
+a=<span class="nm">2</span>*(x3-x1); b=<span class="nm">2</span>*(y3-y1);
+e=x3^<span class="nm">2</span>-x1^<span class="nm">2</span>+y3^<span class="nm">2</span>-y1^<span class="nm">2</span>+r1^<span class="nm">2</span>-r3^<span class="nm">2</span>;
+c=<span class="nm">2</span>*(x3-x2); d=<span class="nm">2</span>*(y3-y2);
+f=x3^<span class="nm">2</span>-x2^<span class="nm">2</span>+y3^<span class="nm">2</span>-y2^<span class="nm">2</span>+r2^<span class="nm">2</span>-r3^<span class="nm">2</span>;
+x=(d*e-b*f)/(a*d-b*c)
+y=(a*f-c*e)/(a*d-b*c)</pre>
+          <div class="ex-ans">✅ Sijainti ≈ (3.4, 4.9). (Mittausvirheiden takia ei täsmää täydellisesti.)</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -2987,19 +4229,32 @@ try {
   if (saved && saved !== 'system') document.documentElement.setAttribute('data-theme', saved);
 } catch(e){}
 
-// ── Aktiivinen nav-linkki ──
-const navLinks = document.querySelectorAll('.nav-link');
+// ── Aktiivinen nav ──
 const sections = document.querySelectorAll('.section[id]');
+const sectionToNavItem = {
+  tenttiopas: 0, mallinnus: 0,
+  octave: 1, vektorit: 1, plottaus: 1, koukut: 1, muunnokset: 1,
+  algebra: 2, 'alg-harj': 2,
+  trig: 3, 'trig-harj': 3,
+  analyyttinen: -1,
+  sinikayrat: 4, eksponentti: 4
+};
+const navItems = document.querySelectorAll('.nav-item');
+const directLink = document.querySelector('.nav-link[href="#analyyttinen"]');
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(l => {
-        l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
-      });
-    }
+    if (!e.isIntersecting) return;
+    const id = e.target.id;
+    navItems.forEach(n => n.classList.remove('active'));
+    if (directLink) directLink.classList.remove('active');
+    const idx = sectionToNavItem[id];
+    if (idx === -1) { if (directLink) directLink.classList.add('active'); }
+    else if (idx !== undefined && navItems[idx]) navItems[idx].classList.add('active');
   });
 }, { rootMargin: '-10% 0px -65% 0px' });
 sections.forEach(s => io.observe(s));
 </script>
 </body>
 </html>
+
+</body></html>
