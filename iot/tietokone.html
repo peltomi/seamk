@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tietokonetekniikka – rakenne, kokoaminen ja ylläpito</title>
+<style>
+:root{--bg:#fffdf8;--fg:#232733;--mute:#626b7a;--card:#fff;--line:#e6e2d8;--code:#f1efe8}
+@media (prefers-color-scheme:dark){:root{--bg:#15171d;--fg:#eceef3;--mute:#a0a8b6;--card:#1d2028;--line:#2e333f;--code:#262a34}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.7 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#ff6b6b,#ffb347 35%,#4cd964 65%,#3aa0ff);color:#fff;padding:48px 20px 40px;text-align:center}
+header h1{margin:0 0 8px;font-size:2.4rem;text-shadow:0 2px 6px rgba(0,0,0,.25)}
+header p{margin:0 auto;max-width:760px;font-size:1.15rem;text-shadow:0 1px 4px rgba(0,0,0,.25)}
+.menu{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:900px;margin:-20px auto 0;padding:0 12px}
+.menu a{background:var(--card);border:2px solid var(--c);color:var(--fg);padding:6px 14px;border-radius:999px;text-decoration:none;font-size:.9rem;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.menu a:hover{background:var(--c);color:#fff}
+main{max-width:820px;margin:0 auto;padding:12px 18px 80px}
+section{--c:#3aa0ff;--t:#e6f2ff;margin:44px 0;border-radius:18px;background:var(--card);border:2px solid var(--c);overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.07)}
+@media (prefers-color-scheme:dark){section{--t:#1f2a3a}}
+section>h2{margin:0;padding:14px 20px;background:var(--c);color:#fff;font-size:1.5rem}
+section>div{padding:6px 22px 22px}
+h3{color:var(--c);margin:1.6em 0 .2em}
+.s1{--c:#ff6b6b;--t:#ffecec}.s2{--c:#ff9f1c;--t:#fff3e0}.s3{--c:#2fb344;--t:#e6f8ea}.s4{--c:#14a8a8;--t:#e0f6f6}.s5{--c:#8e5cf0;--t:#f0e9fe}.s6{--c:#e8489b;--t:#fde8f3}.s7{--c:#3a7bd5;--t:#e6eefb}.s8{--c:#6b7280;--t:#eceef1}.s9{--c:#e8590c;--t:#fdeadd}.s10{--c:#d6a100;--t:#fff7d6}
+@media (prefers-color-scheme:dark){.s1{--t:#3a2124}.s2{--t:#3a2e1c}.s3{--t:#1d3324}.s4{--t:#1a3333}.s5{--t:#2b2342}.s6{--t:#3a2030}.s7{--t:#1f2a40}.s8{--t:#2a2d33}.s9{--t:#3a2618}.s10{--t:#38310f}}
+.box,.ex{background:var(--t);border-left:6px solid var(--c);border-radius:12px;padding:10px 16px;margin:1em 0}
+.warn{background:#ffe3e3;border-left:6px solid #e03131;color:#3a1010;border-radius:12px;padding:10px 16px;margin:1em 0}
+.warn code{color:#3a1010}
+table{border-collapse:collapse;margin:1em 0;display:block;overflow-x:auto;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 12px;text-align:left;vertical-align:top}
+th{background:var(--c);color:#fff}
+code{background:var(--code);padding:1px 6px;border-radius:5px;font-size:.9em}
+pre{background:var(--code);padding:12px 14px;border-radius:10px;overflow-x:auto;font-size:.88rem;line-height:1.45}
+pre code{padding:0;background:none}
+.f{background:var(--t);border:2px dashed var(--c);border-radius:12px;padding:10px 16px;margin:1em 0;font-size:1.05rem;font-weight:700;text-align:center;overflow-x:auto;white-space:pre}
+details{margin:.8em 0}
+summary{cursor:pointer;font-weight:700;color:var(--c)}
+.meta{color:var(--mute);font-size:.9rem}
+.lvl{display:inline-block;font-size:.72rem;padding:1px 10px;border-radius:999px;border:1px solid #fff;color:#fff;margin-left:8px;vertical-align:middle;font-weight:600}
+.task{border:2px solid var(--line);border-left:6px solid var(--c);border-radius:12px;padding:4px 16px;margin:1em 0}
+.task .pts{float:right;color:var(--mute);font-size:.85rem}
+svg{max-width:100%;height:auto}
+svg text{fill:var(--fg)}
+footer{max-width:820px;margin:0 auto;padding:0 18px 60px;color:var(--mute);font-size:.95rem;text-align:center}
+footer a{color:inherit;margin:0 8px}
+@media print{.menu,footer{display:none}details>*{display:block}section{box-shadow:none}}
+</style>
+</head>
+<body id="top">
+<header>
+<h1>Tietokonetekniikka</h1>
+<p>Täydentää IoT-oppaita: tietokoneen rakenne, kokoaminen, käyttöjärjestelmän asennus sekä käyttöönotto ja ylläpito.</p>
+</header>
+<nav class="menu">
+<a style="--c:#111827" href="index.html">← Etusivu</a>
+<a style="--c:#ff6b6b" href="#s0">0. Arviointi ja kokonaiskuva</a>
+<a style="--c:#ff9f1c" href="#s1">1. Tietokoneen rakenne ja toimintaperiaate</a>
+<a style="--c:#2fb344" href="#s2">2. Prosessori</a>
+<a style="--c:#14a8a8" href="#s3">3. Muistit ja tallennus</a>
+<a style="--c:#8e5cf0" href="#s4">4. Emolevy, väylät, näytönohjaus ja oheislaitteet</a>
+<a style="--c:#e8489b" href="#s5">5. Tietokoneen kokoaminen</a>
+<a style="--c:#3a7bd5" href="#s6">6. Käyttöjärjestelmän ja sovellusten asennus</a>
+<a style="--c:#6b7280" href="#s7">7. Käyttöönotto ja ylläpito</a>
+<a style="--c:#e8590c" href="#s8">8. Vianetsintä</a>
+<a style="--c:#d6a100" href="#s9">9. Tehtäviä</a>
+</nav>
+<main>
+
+<section class="s1" id="s0"><h2>0. Arviointi ja kokonaiskuva</h2><div><p>Opintosuunnitelman mukaan kurssiin kuuluu myös tietokoneen rakenne ja toimintaperiaate (prosessori, muistit, näytönohjaus, oheislaitteet) sekä tietokoneen kokoaminen, käyttöjärjestelmän ja sovellusten asennus sekä käyttöönotto ja ylläpito. Arviointikriteerit voi tiivistää näin:</p>
+<table>
+<tr><th>Arvosana</th><th>Digitaalitekniikka, elektroniikka</th><th>Tietokone</th><th>IoT ja sulautetut</th></tr>
+<tr><td><strong>1</strong></td><td>Boolen algebra, lukujärjestelmämuunnokset, perusasiat, mittalaitteiden käyttö</td><td>osaa koota tietokoneen osista ja asentaa käyttöjärjestelmän ja sovellukset</td><td>tietää IoT-järjestelmän osat, toteuttaa ohjatusti yksinkertaisen sulautetun järjestelmän</td></tr>
+<tr><td><strong>3</strong></td><td>lisäksi yksinkertaiset elektroniikan kytkennät</td><td>lisäksi käyttöönotto- ja ylläpitotehtävät</td><td>sulautettu järjestelmä mittaa erilaisilla antureilla</td></tr>
+<tr><td><strong>5</strong></td><td>asiat hyvin, mittalaitteiden käyttö hallussa</td><td>käyttöönotto ja ylläpito erinomaisesti</td><td>toteuttaa pienen sulautetun järjestelmän, joka mittaa erilaisilla antureilla</td></tr></table>
+<p>Arvosanoissa 1 ja 3 sulautettu järjestelmä toteutetaan <em>ohjatusti</em>, arvosanassa 5 pienenä kokonaisuutena. Kokeessa tai harjoitustyössä erottava tekijä on siis, tekeekö asioita ohjeen mukaan vai ymmärtääkö ne ja osaa soveltaa niitä.</p>
+<div class="warn"><strong>Huomio aikataulusta:</strong> annetussa kurssiaikataulussa ei ole erillistä tietokoneen kokoamisen päivää. Kysy opettajalta, miten tämä osa-alue arvioidaan (esim. etätehtävä, Linux-virtuaalikoneen asennus tai erillinen harjoitus).</div></div></section>
+
+<section class="s2" id="s1"><h2>1. Tietokoneen rakenne ja toimintaperiaate</h2><div><p>Lähes kaikki tietokoneet (PC, älypuhelin, Raspberry Pi) noudattavat <strong>von Neumannin arkkitehtuuria</strong>: ohjelma ja data ovat samassa muistissa, ja prosessori hakee ne sieltä.</p>
+<svg viewBox="0 0 760 270" role="img" aria-label="Tietokoneen perusrakenne" font-size="14" font-family="system-ui,sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8a93a0"/></marker></defs>
+<g text-anchor="middle">
+<rect x="30" y="30" width="200" height="140" rx="10" fill="#2563c9" fill-opacity=".14" stroke="#2563c9" stroke-width="2"/><text x="130" y="56" font-weight="700">Prosessori (CPU)</text><text x="130" y="86">Ohjausyksikkö</text><text x="130" y="108">ALU (laskenta)</text><text x="130" y="130">Rekisterit, välimuisti</text>
+<rect x="300" y="30" width="170" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="385" y="66">Keskusmuisti (RAM)</text>
+<rect x="300" y="110" width="170" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="385" y="146">Tallennus (SSD/HDD)</text>
+<rect x="540" y="30" width="190" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="635" y="66">Näytönohjain (GPU)</text>
+<rect x="540" y="110" width="190" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="635" y="146">Oheislaitteet (USB, verkko)</text>
+<rect x="30" y="200" width="700" height="44" rx="10" fill="#8a93a0" fill-opacity=".18" stroke="#8a93a0" stroke-width="1.5"/><text x="380" y="228" font-weight="600">Väylät ja emolevy (data, osoite, ohjaus)</text>
+</g>
+<g stroke="#8a93a0" stroke-width="1.5" fill="none"><path d="M232 60H298" marker-end="url(#ar)" marker-start="url(#ar)"/><path d="M130 172V198"/><path d="M385 92V198"/><path d="M385 172V198"/><path d="M635 92V198"/><path d="M635 172V198"/></g>
+</svg>
+<h3>Suoritussykli</h3>
+<p>Prosessori toistaa loputtomiin kolme vaihetta (<strong>fetch–decode–execute</strong>):</p>
+<ol>
+<li><strong>Nouto (fetch):</strong> ohjelmalaskuri (PC-rekisteri) kertoo seuraavan käskyn osoitteen, ja käsky haetaan muistista.</li>
+<li><strong>Tulkinta (decode):</strong> ohjausyksikkö selvittää, mitä käsky tarkoittaa (esim. "lisää nämä kaksi lukua").</li>
+<li><strong>Suoritus (execute):</strong> ALU laskee tai data siirretään, tulos tallennetaan, ohjelmalaskuri etenee.</li>
+</ol>
+<h3>Binääri kohtaa laitteiston</h3>
+<p>Muistin osoite, käsky ja data ovat kaikki bittejä. 32-bittinen osoite voi osoittaa 2³² tavua = 4 GiB muistia; 64-bittinen osoite käytännössä rajoittamattomasti. Yksiköt: 1 kB = 1000 B (SI), 1 KiB = 1024 B; 1 GiB = 1024 MiB. Valmistajat ilmoittavat levyn koon 1000-potensseina (1 TB = 10¹² B), joten Windows näyttää 1 TB:n levyn noin 931 GiB:nä.</p></div></section>
+
+<section class="s3" id="s2"><h2>2. Prosessori</h2><div><table>
+<tr><th>Osa</th><th>Tehtävä</th></tr>
+<tr><td><strong>ALU</strong></td><td>aritmetiikka ja logiikka (yhteen- ja vähennyslasku, AND, OR, vertailu) eli osion 3 portit isossa mittakaavassa</td></tr>
+<tr><td><strong>Ohjausyksikkö</strong></td><td>ohjaa käskyjen kulkua</td></tr>
+<tr><td><strong>Rekisterit</strong></td><td>erittäin nopeat muistipaikat prosessorin sisällä</td></tr>
+<tr><td><strong>Välimuisti</strong> (L1, L2, L3)</td><td>nopea muisti, jossa on usein tarvittavaa dataa; L1 on pienin ja nopein</td></tr>
+<tr><td><strong>Ytimet</strong></td><td>jokainen ydin on oma prosessori; useampi ydin tekee useita asioita yhtä aikaa</td></tr>
+<tr><td><strong>Kellotaajuus</strong></td><td>kuinka monta kellojaksoa sekunnissa, esim. 4 GHz = 4 miljardia</td></tr></table>
+<ul>
+<li><strong>Suorituskyky</strong> ei riipu vain GHz:stä: ytimien määrä, välimuisti, arkkitehtuuri ja käskyjä kellojaksoa kohti vaikuttavat yhtä paljon.</li>
+<li><strong>Säikeet (hyper-threading, SMT):</strong> yksi fyysinen ydin esiintyy kahtena loogisena ytimenä.</li>
+<li><strong>Käskykanta:</strong> x86-64 (Intel, AMD, PC) ja ARM (puhelimet, Raspberry Pi, Apple Silicon). ARM kuluttaa vähemmän virtaa. ESP32 käyttää omaa Xtensa-arkkitehtuuriaan.</li>
+<li><strong>TDP</strong> kertoo suoritinta jäähdytettäessä tarvittavan lämpötehon (W).</li>
+<li><strong>Liitäntä (socket):</strong> prosessorin ja emolevyn on sovittava yhteen (esim. LGA1700, AM5).</li>
+<li><strong>Integroitu grafiikka:</strong> osassa prosessoreita on grafiikkaohjain valmiina.</li>
+</ul>
+<h3>Mikro-ohjain vs prosessori</h3>
+<table>
+<tr><th></th><th>PC:n prosessori</th><th>Mikro-ohjain (ESP32)</th></tr>
+<tr><td>Muisti, oheislaitteet</td><td>erilliset piirit</td><td>samassa piirissä</td></tr>
+<tr><td>Käyttöjärjestelmä</td><td>Windows, Linux jne.</td><td>ei, tai pieni reaaliaikajärjestelmä</td></tr>
+<tr><td>Teho, virrankulutus</td><td>kymmeniä–satoja wattia</td><td>milliwatteja–alle watti</td></tr>
+<tr><td>Käyttö</td><td>yleiskäyttö</td><td>yksi tehtävä</td></tr></table></div></section>
+
+<section class="s4" id="s3"><h2>3. Muistit ja tallennus</h2><div><h3>Muistihierarkia</h3>
+<table>
+<tr><th>Taso</th><th>Nopeus</th><th>Koko</th><th>Haihtuva?</th></tr>
+<tr><td>Rekisterit</td><td>nopein</td><td>satoja tavuja</td><td>kyllä</td></tr>
+<tr><td>Välimuisti L1–L3</td><td>erittäin nopea</td><td>kymmeniä kt–kymmeniä Mt</td><td>kyllä</td></tr>
+<tr><td>Keskusmuisti (RAM)</td><td>nopea</td><td>Gt</td><td>kyllä</td></tr>
+<tr><td>SSD</td><td>kohtalainen</td><td>satoja Gt–Tt</td><td>ei</td></tr>
+<tr><td>HDD</td><td>hidas</td><td>Tt</td><td>ei</td></tr></table>
+<p><strong>Haihtuva</strong> muisti menettää sisältönsä, kun virta katkaistaan. Mitä lähempänä prosessoria, sitä nopeampi, pienempi ja kalliimpi muisti on.</p>
+<h3>RAM</h3>
+<ul>
+<li>DRAM: yksi bitti on kondensaattori + transistori, joka pitää virkistää jatkuvasti.</li>
+<li>Sukupolvet DDR4 ja DDR5 eivät ole keskenään yhteensopivia (eri lovi moduulissa).</li>
+<li><strong>Kaksikanavatila (dual channel):</strong> kaksi moduulia oikeissa paikoissa kaksinkertaistaa väylän leveyden ja nopeuttaa.</li>
+<li>Kellotaajuus (MT/s) ja viive (CL) vaikuttavat nopeuteen.</li>
+<li><strong>ROM / flash:</strong> haihtumaton, mikro-ohjaimen ohjelma on flash-muistissa. PC:n BIOS/UEFI on emolevyn flashissa.</li>
+</ul>
+<h3>Tallennus</h3>
+<table>
+<tr><th>Tyyppi</th><th>Liitäntä</th><th>Nopeus (suuntaa antava)</th><th>Huomioita</th></tr>
+<tr><td>HDD</td><td>SATA</td><td>noin 100–200 MB/s</td><td>pyörivät levyt, edullinen, herkkä iskuille</td></tr>
+<tr><td>SATA SSD</td><td>SATA</td><td>noin 550 MB/s</td><td>ei liikkuvia osia</td></tr>
+<tr><td>NVMe SSD</td><td>M.2 (PCIe)</td><td>3000–7000+ MB/s</td><td>nopein, pieni, suoraan emolevyyn</td></tr></table>
+<p><strong>RAID</strong> yhdistää levyjä: RAID 0 (jako, nopeampi, ei suojaa, yksi levy rikki = kaikki menetetty), RAID 1 (peilaus, kaksi samaa kopiota), RAID 5 (jako + pariteetti, kestää yhden levyn vian). RAID ei korvaa varmuuskopiota.</p>
+<h3>Tiedostojärjestelmät</h3>
+<table>
+<tr><th>Järjestelmä</th><th>Käyttö</th></tr>
+<tr><td>NTFS</td><td>Windows</td></tr>
+<tr><td>ext4</td><td>Linux</td></tr>
+<tr><td>FAT32 / exFAT</td><td>USB-tikut, muistikortit (FAT32 sallii enintään 4 GB tiedoston)</td></tr>
+<tr><td>APFS</td><td>macOS</td></tr></table></div></section>
+
+<section class="s5" id="s4"><h2>4. Emolevy, väylät, näytönohjaus ja oheislaitteet</h2><div><h3>Emolevy</h3>
+<p>Emolevy yhdistää kaikki osat. Tärkeimmät osat:</p>
+<ul>
+<li><strong>Prosessorikanta</strong> (socket) ja <strong>piirisarja</strong> (chipset), joka määrää liitäntöjen määrän.</li>
+<li><strong>RAM-paikat</strong> (DIMM), yleensä 2 tai 4.</li>
+<li><strong>PCIe-paikat:</strong> näytönohjain (x16), muut laajennuskortit. <strong>M.2:</strong> NVMe-levyille. <strong>SATA-portit:</strong> HDD ja SSD.</li>
+<li><strong>BIOS/UEFI</strong> -piiri ja CMOS-paristo (CR2032) kellolle ja asetuksille.</li>
+<li><strong>Virtaliittimet:</strong> 24-pin ATX-pääliitin ja 8-pin (4+4) prosessorille.</li>
+<li><strong>Etupaneeliliittimet:</strong> virtapainike, reset, LEDit, USB, ääni.</li>
+<li><strong>Takapaneelin portit:</strong> USB, verkko, ääni, videolähdöt.</li>
+</ul>
+<p><strong>Kokoluokat:</strong> ATX (täysikokoinen), micro-ATX, mini-ITX. Emolevyn on sovittava kotelon tukiin.</p>
+<h3>Väylät</h3>
+<table>
+<tr><th>Väylä</th><th>Käyttö</th></tr>
+<tr><td>PCIe</td><td>näytönohjain, NVMe, laajennuskortit (x1, x4, x16 = kaistat)</td></tr>
+<tr><td>SATA</td><td>HDD ja SSD</td></tr>
+<tr><td>USB</td><td>oheislaitteet; USB 2.0 480 Mb/s, 3.x 5–20 Gb/s</td></tr>
+<tr><td>Ethernet, Wi-Fi</td><td>verkko</td></tr>
+<tr><td>HDMI, DisplayPort</td><td>näyttö</td></tr></table>
+<h3>Näytönohjain (GPU)</h3>
+<p>GPU on rinnakkaislaskentaan erikoistunut prosessori, jossa on tuhansia pieniä ytimiä. Se piirtää kuvan ja nopeuttaa grafiikkaa, videota ja laskentaa (tekoäly). <strong>Erillinen (dedicated)</strong> näytönohjain on oma kortti PCIe-paikassa omalla VRAM-muistillaan ja jäähdytyksellään. <strong>Integroitu</strong> grafiikka on prosessorin sisällä ja käyttää jaettua RAM-muistia. Näyttö kytketään näytönohjaimen, ei emolevyn, porttiin, jos erillinen ohjain on asennettu.</p>
+<h3>Virtalähde (PSU) ja jäähdytys</h3>
+<ul>
+<li><strong>Teho (W)</strong> mitoitetaan osien yhteisvirrankulutuksen mukaan, ja varaa reilusti (noin 20–30 %).</li>
+<li><strong>80 PLUS</strong> -sertifikaatti kertoo hyötysuhteen (Bronze, Gold, Platinum…).</li>
+<li><strong>Liittimet:</strong> 24-pin emolevylle, 8-pin (4+4) prosessorille, PCIe-liittimet näytönohjaimelle, SATA-virrat levyille.</li>
+<li><strong>Jäähdytys:</strong> prosessorijäähdytin ja <strong>lämpötahna</strong> (siirtää lämpöä prosessorin ja jäähdyttimen välillä), kotelotuulettimet ilmavirtaa varten (etu/ala sisään, taka/ylä ulos).</li>
+</ul>
+<h3>Oheislaitteet</h3>
+<p>Syöttö: näppäimistö, hiiri, kamera, mikrofoni. Tulostus: näyttö, kaiuttimet, tulostin. Tallennus ja verkko. Ohjain (<strong>ajuri</strong>, driver) on ohjelma, jonka avulla käyttöjärjestelmä puhuu laitteelle.</p></div></section>
+
+<section class="s6" id="s5"><h2>5. Tietokoneen kokoaminen</h2><div><div class="warn"><strong>Turvallisuus:</strong> irrota virtajohto aina ennen työtä. Pura staattinen sähkö koskettamalla maadoitettua metalliosaa (tai käytä ESD-rannehihnaa). Älä pakota osia: oikein päin ne menevät paikalleen kevyellä painalluksella.</div>
+<h3>Valmistelu</h3>
+<ol>
+<li>Tarkista yhteensopivuus: <strong>prosessori ↔ emolevyn kanta ja piirisarja</strong>, <strong>RAM-tyyppi</strong> (DDR4/DDR5), <strong>näytönohjaimen koko kotelossa</strong>, <strong>virtalähteen teho ja liittimet</strong>, <strong>jäähdyttimen korkeus</strong> ja <strong>emolevyn kokoluokka</strong>.</li>
+<li>Työtila: tasainen, valoisa pöytä, ruuvimeisseli (PH2), siteitä johdoille, ohje emolevyn manuaalissa.</li>
+</ol>
+<h3>Vaiheet</h3>
+<ol>
+<li><strong>Prosessori emolevyyn:</strong> avaa kanta, kohdista kolmio (kulmamerkki) ja aseta prosessori paikalleen ilman painamista, sulje salpa.</li>
+<li><strong>RAM:</strong> paina moduulit paikalleen (naksahdus) ohjeen mukaisiin paikkoihin (usein A2 ja B2 kaksikanavatilaa varten).</li>
+<li><strong>M.2-SSD:</strong> aseta kulmassa paikkaan ja kiinnitä ruuvilla.</li>
+<li><strong>Jäähdytin:</strong> ohut tahnakerros (herneen kokoinen) prosessorin päälle, jäähdytin kiinni ristikkäisessä järjestyksessä, ja tuulettimen johto CPU_FAN-liittimeen.</li>
+<li><strong>Emolevy koteloon:</strong> asenna tuet (standoffit) ja ruuvaa emolevy kiinni. Takapaneelin I/O-suojus ensin.</li>
+<li><strong>Virtalähde koteloon</strong> ja johdot: 24-pin emolevylle, 8-pin prosessorille (EPS), SATA-virrat levyille, PCIe-virta näytönohjaimelle.</li>
+<li><strong>Näytönohjain:</strong> PCIe x16 -paikkaan, kiinnitä ruuvilla, kytke PCIe-virtajohto.</li>
+<li><strong>Etupaneeli:</strong> virtapainike, LEDit ja USB-liittimet emolevyn ohjeen mukaan.</li>
+<li><strong>Johdonhallinta:</strong> kiinnitä johdot siteillä, jotta ilmavirta ei tukkeudu.</li>
+<li><strong>Ensimmäinen käynnistys:</strong> kytke näyttö (näytönohjaimeen), näppäimistö ja virta. Katso, että kone käynnistyy ja näyttää BIOS/UEFI-näkymän.</li>
+</ol>
+<h3>POST ja BIOS/UEFI</h3>
+<p><strong>POST (Power-On Self Test)</strong> tarkistaa laitteiston käynnistyksessä. Jos kone ei käynnisty, emolevyn LEDit tai äänimerkit kertovat vikaosan (CPU, RAM, GPU, boot-laite). UEFI-asetuksista (yleensä Del tai F2) tarkistetaan: näkyvätkö prosessori, RAM-määrä ja levyt, ja asetetaan käynnistysjärjestys. <strong>Secure Boot</strong> ja <strong>TPM</strong> vaikuttavat Windows 11:n ja joidenkin Linux-jakeluiden asennukseen.</p>
+<details><summary>Tarkistuslista ensimmäiseen käynnistykseen</summary>
+<ul>
+<li>24-pin ja 8-pin kytketty ja kunnolla kiinni?</li>
+<li>RAM naksahtanut paikalleen?</li>
+<li>Näyttökaapeli näytönohjaimeen (ei emolevyyn)?</li>
+<li>Virtalähteen takana oleva kytkin päällä?</li>
+<li>Etupaneelin virtajohdot oikeissa nastoissa?</li>
+<li>Prosessorin tuulettimen johto kiinni?</li></ul></details></div></section>
+
+<section class="s7" id="s6"><h2>6. Käyttöjärjestelmän ja sovellusten asennus</h2><div><h3>Käyttöjärjestelmän tehtävät</h3>
+<p>Käyttöjärjestelmä (OS) hallinnoi laitteistoa ja ohjelmia: <strong>prosessien ajoitus</strong>, <strong>muistinhallinta</strong>, <strong>tiedostojärjestelmä</strong>, <strong>laiteajurit</strong> ja <strong>käyttöliittymä</strong> sekä käyttäjät ja oikeudet. Ydin (kernel) on käyttöjärjestelmän keskeinen osa.</p>
+<h3>Asennusvaiheet (Linux, esim. Ubuntu)</h3>
+<ol>
+<li><strong>Lataa ISO-kuva</strong> ja tarkista sen tarkistussumma (<code>sha256sum</code>) valmistajan ilmoittamaa vasten.</li>
+<li><strong>Tee asennustikku:</strong> kirjoita ISO USB-tikulle (Rufus, balenaEtcher tai <code>dd</code>). Tikun sisältö poistuu.</li>
+<li><strong>Käynnistä tikulta:</strong> avaa boot-valikko (usein F12, F8 tai Esc) tai muuta käynnistysjärjestys UEFI:ssa.</li>
+<li><strong>Kokeile ja asenna:</strong> valitse kieli, näppäimistö, verkko ja asennustapa.</li>
+<li><strong>Osiointi:</strong> asennusohjelma voi tehdä sen automaattisesti. Manuaalisesti tarvitset UEFI-koneessa: <strong>EFI-osio</strong> (noin 512 MB, FAT32), <strong>juuriosio</strong> <code>/</code> (ext4) ja valinnaisesti <code>/home</code> ja <strong>swap</strong> (vaihtomuisti).</li>
+<li><strong>Käyttäjä ja salasana</strong> luodaan.</li>
+<li><strong>Uudelleenkäynnistys:</strong> poista tikku ja kirjaudu sisään.</li>
+</ol>
+<p><strong>Windows</strong> asennetaan pääosin samoin: ISO tai Media Creation Tool, käynnistys tikulta, osioiden valinta, tuotteen aktivointi ja asennuksen jälkeen ajurit. Virtuaalikoneessa asennus tehdään ISO-kuvasta suoraan (ei USB-tikkua).</p>
+<h3>Asennuksen jälkeen</h3>
+<pre><code>sudo apt update &amp;&amp; sudo apt upgrade     # päivitykset
+sudo apt install build-essential git vim htop
+sudo ubuntu-drivers autoinstall            # laiteajurit (esim. näytönohjain)</code></pre>
+<h3>Sovellusten asennus</h3>
+<table>
+<tr><th>Tapa</th><th>Esimerkki</th><th>Huomioita</th></tr>
+<tr><td>Paketinhallinta</td><td><code>sudo apt install nano</code></td><td>luotettava, päivittyy muun järjestelmän mukana</td></tr>
+<tr><td>Snap / Flatpak</td><td><code>sudo snap install code --classic</code></td><td>sisältää riippuvuudet mukanaan</td></tr>
+<tr><td>.deb-paketti</td><td><code>sudo dpkg -i paketti.deb</code></td><td>riippuvuudet käsin: <code>sudo apt -f install</code></td></tr>
+<tr><td>Windows</td><td>asennusohjelma (.exe, .msi) tai <code>winget install ohjelma</code></td><td>lataa vain luotetuista lähteistä</td></tr>
+<tr><td>Lähdekoodista</td><td><code>./configure &amp;&amp; make &amp;&amp; sudo make install</code></td><td>viimeinen vaihtoehto</td></tr></table>
+<div class="warn"><strong>Turvallisuus:</strong> lataa ohjelmat virallisesta lähteestä ja tarkista tarkistussumma. Älä aja tuntemattomia skriptejä <code>sudo</code>:lla.</div></div></section>
+
+<section class="s8" id="s7"><h2>7. Käyttöönotto ja ylläpito</h2><div><h3>Käyttöönoton tarkistuslista</h3>
+<ol>
+<li><strong>Päivitykset:</strong> käyttöjärjestelmä ja ajurit ajan tasalle.</li>
+<li><strong>Käyttäjät:</strong> oma tavallinen käyttäjä (ei jatkuvasti ylläpitäjänä), vahva salasana, tarvittaessa muut käyttäjät ja ryhmät.</li>
+<li><strong>Verkko:</strong> kiinteä tai Wi-Fi, IP-osoite (DHCP tai kiinteä), nimi.</li>
+<li><strong>Tietoturva:</strong> palomuuri (<code>sudo ufw enable</code>), tarpeettomat palvelut pois, SSH vain tarvittaessa.</li>
+<li><strong>Varmuuskopio:</strong> sovittu ja testattu.</li>
+<li><strong>Ohjelmat:</strong> tarvittavat sovellukset asennettu ja testattu.</li>
+<li><strong>Dokumentointi:</strong> kirjoita ylös laitetiedot, IP-osoite, käyttäjät, ohjelmat ja asetukset.</li>
+</ol>
+<h3>Ylläpitotehtävät</h3>
+<table>
+<tr><th>Tehtävä</th><th>Tapa</th><th>Kuinka usein</th></tr>
+<tr><td>Päivitykset</td><td><code>sudo apt update &amp;&amp; sudo apt upgrade</code></td><td>viikoittain</td></tr>
+<tr><td>Varmuuskopiointi</td><td><code>rsync -av --delete ~/data /media/varmuus/</code> tai Windowsin Tiedostohistoria</td><td>päivittäin tai viikoittain</td></tr>
+<tr><td>Levytila</td><td><code>df -h</code>, <code>du -sh *</code></td><td>kuukausittain</td></tr>
+<tr><td>Levyn kunto</td><td><code>sudo smartctl -a /dev/sda</code> (SMART)</td><td>kuukausittain</td></tr>
+<tr><td>Lämpötilat ja kuormitus</td><td><code>htop</code>, <code>sensors</code></td><td>ongelmatilanteissa</td></tr>
+<tr><td>Lokit</td><td><code>journalctl -p err -b</code>, <code>/var/log/</code></td><td>virheissä</td></tr>
+<tr><td>Puhdistus</td><td>paineilma, pöly pois jäähdyttimistä ja suodattimista</td><td>puolen vuoden välein</td></tr>
+<tr><td>Käyttäjien hallinta</td><td><code>adduser</code>, <code>usermod</code>, <code>passwd</code></td><td>tarpeen mukaan</td></tr></table>
+<h3>Varmuuskopioinnin 3-2-1-sääntö</h3>
+<p><strong>3</strong> kopiota datasta, <strong>2</strong> eri tallennustyyppiä, <strong>1</strong> kopio eri paikassa (pilvi tai toinen rakennus). RAID ei ole varmuuskopio, koska poistettu tiedosto häviää kaikilta levyiltä. Testaa palautus säännöllisesti, sillä kopio, jota ei ole testattu, ei ole varma.</p>
+<h3>Tietoturvan perusasiat</h3>
+<ul>
+<li>Vahvat ja uniikit salasanat (salasanamanageri), kaksivaiheinen tunnistus.</li>
+<li>Palomuuri päällä, päivitykset käytössä.</li>
+<li>Vähimmäisoikeudet: ei päivittäistä työskentelyä ylläpitäjänä.</li>
+<li>Levyn salaus (LUKS, BitLocker) kannettaville.</li>
+<li>Epäilyttävien liitteiden ja linkkien välttäminen.</li>
+</ul></div></section>
+
+<section class="s9" id="s8"><h2>8. Vianetsintä</h2><div><p><strong>Menetelmä:</strong> (1) selvitä, mitä oikeasti tapahtuu (virheilmoitus, äänimerkit, LEDit), (2) muista, mikä muuttui viimeksi, (3) eristä vika vaihtamalla yksi asia kerrallaan, (4) testaa, (5) kirjaa ratkaisu ylös.</p>
+<table>
+<tr><th>Oire</th><th>Tarkista</th></tr>
+<tr><td>Ei mitään tapahdu, kun painaa virtaa</td><td>virtajohto, PSU:n kytkin, 24-pin ja etupaneelin virtakytkimen liittimet</td></tr>
+<tr><td>Tuulettimet pyörivät, ei kuvaa</td><td>RAM kunnolla paikallaan (kokeile yhtä moduulia kerrallaan), näyttökaapeli oikeaan porttiin, näytönohjaimen virta, 8-pin prosessorin virta</td></tr>
+<tr><td>Äänimerkkejä tai virhe-LEDejä</td><td>emolevyn manuaalin virhekoodit (CPU, RAM, VGA, BOOT)</td></tr>
+<tr><td>"No boot device"</td><td>käynnistysjärjestys UEFI:ssa, onko levy näkyvissä, osiot ja EFI-osio</td></tr>
+<tr><td>Kone ylikuumenee ja sammuu</td><td>jäähdytin kiinni ja tahna, tuulettimet pyörivät, pöly, ilmavirtaus kotelossa</td></tr>
+<tr><td>Kone hidas</td><td><code>htop</code> (mikä kuluttaa), levytila, RAM riittääkö, levyn kunto (SMART), haittaohjelmat</td></tr>
+<tr><td>Satunnaiset kaatumiset</td><td>RAM-testi (memtest86+), lämpötilat, ajurit, virtalähde</td></tr>
+<tr><td>Ei verkkoyhteyttä</td><td>johto/Wi-Fi, <code>ip a</code>, <code>ping 8.8.8.8</code> (IP toimii?), <code>ping google.com</code> (DNS toimii?)</td></tr>
+<tr><td>Ohjelma ei asennu</td><td>levytila, <code>sudo apt update</code>, riippuvuudet, oikeudet</td></tr></table></div></section>
+
+<section class="s10" id="s9"><h2>9. Tehtäviä</h2><div><div class="box"><strong>1.</strong> Selitä fetch–decode–execute-sykli omin sanoin. Mikä rooli on ohjelmalaskurilla?</div>
+<details><summary>Vastaus</summary><p>Prosessori hakee käskyn muistista osoitteesta, jonka ohjelmalaskuri antaa, ohjausyksikkö tulkitsee sen ja ALU tai datasiirto suorittaa sen. Sitten ohjelmalaskuri päivittyy seuraavan käskyn osoitteeseen (tai hyppykäskyssä uuteen kohtaan).</p></details>
+<div class="box"><strong>2.</strong> Järjestä nopeimmasta hitaimpaan: HDD, rekisteri, RAM, NVMe SSD, L2-välimuisti. Mitkä ovat haihtuvia?</div>
+<details><summary>Vastaus</summary><p>Rekisteri, L2-välimuisti, RAM, NVMe SSD, HDD. Haihtuvia ovat rekisteri, välimuisti ja RAM.</p></details>
+<div class="box"><strong>3.</strong> 1 TB:n levy näkyy Windowsissa 931 GB:nä. Miksi?</div>
+<details><summary>Vastaus</summary><p>Valmistaja laskee 1 TB = 10¹² tavua, Windows ilmoittaa binäärimuunnoksella (GiB): 10¹² / 2³⁰ ≈ 931. Levyssä ei ole puutetta.</p></details>
+<div class="box"><strong>4.</strong> Mitä tarkoittaa kaksikanavatila ja miten se saadaan käyttöön?</div>
+<details><summary>Vastaus</summary><p>Kaksi RAM-moduulia käyttää kahta rinnakkaista väylää, jolloin tiedonsiirtokapasiteetti kaksinkertaistuu. Moduulit asennetaan emolevyn ohjeen mukaisiin vaihtoehtoisiin paikkoihin (usein A2 ja B2) ja samaa tyyppiä.</p></details>
+<div class="box"><strong>5.</strong> Rakennat koneen: Intel LGA1700, DDR5-muisti, näytönohjain, 500 W:n PSU. Mitä pitää tarkistaa ennen ostoa?</div>
+<details><summary>Vastaus</summary><p>Emolevyn kanta LGA1700 ja piirisarja tukee prosessoria, emolevy on DDR5-tyyppinen, näytönohjain mahtuu koteloon, PSU:n teho riittää (prosessori + GPU + varaa) ja siinä on tarvittavat liittimet (24-pin, 8-pin CPU, PCIe), jäähdytin sopii kantaan ja koteloon.</p></details>
+<div class="box"><strong>6.</strong> Tietokone käynnistyy mutta ei näytä kuvaa. Listaa kolme asiaa, jotka tarkistat.</div>
+<details><summary>Vastaus</summary><p>Näyttökaapeli oikeaan porttiin (näytönohjaimen, ei emolevyn), RAM kunnolla paikallaan, näytönohjaimen ja prosessorin lisävirtajohdot, ja kokeile myös toista näyttöä tai kaapelia.</p></details>
+<div class="box"><strong>7.</strong> Mitä eroa on <code>apt update</code> ja <code>apt upgrade</code> -komennoilla? Miksi RAID ei korvaa varmuuskopiota?</div>
+<details><summary>Vastaus</summary><p>Update hakee päivitetyn pakettiluettelon, upgrade asentaa uudet versiot. RAID suojaa levyn rikkoutumiselta, mutta ei suojaa poistamiselta, virukselta tai tulipalolta, koska virheelliset muutokset menevät kaikille levyille.</p></details>
+<div class="box"><strong>8.</strong> Kirjoita työvaiheet, joilla asennat Ubuntun tyhjään koneeseen USB-tikulta.</div>
+<details><summary>Vastaus</summary><p>Lataa ISO ja tarkista tarkistussumma; tee asennustikku (Rufus/Etcher/dd); käynnistä tikulta (F12 tai vastaava); valitse kieli, verkko ja osiointi (EFI + juuri + swap); luo käyttäjä; poista tikku ja käynnistä uudelleen; päivitä (<code>apt update &amp;&amp; apt upgrade</code>) ja asenna ajurit sekä ohjelmat.</p></details></div></section>
+
+</main>
+<footer><a href="index.html">← Etusivu</a><a href="#top">↑ Ylös</a></footer>
+</body>
+</html>
