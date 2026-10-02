@@ -800,7 +800,16 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
   </div>
 
   <!-- Analyyttinen geometria -->
-  <a href="#analyyttinen" class="nav-link">📍 Analyyttinen geometria</a>
+  <div class="nav-item">
+    <button class="nav-trigger">📍 An.geometria <span class="chev">▾</span></button>
+    <div class="nav-dropdown">
+      <div class="drop-section">Teoria</div>
+      <a href="#analyyttinen">📐 Kaikki teoria</a>
+      <hr>
+      <div class="drop-section">Harjoitukset</div>
+      <a href="#analyyttinen">AG1–AG20</a>
+    </div>
+  </div>
 
   <!-- Tulossa -->
   <div class="nav-item">
@@ -3840,6 +3849,338 @@ y=b*<span class="fn">sinh</span>(t);
       </div>
       <div class="box tip"><span class="box-icon">💡</span><div><strong>Muistisääntö:</strong> GPS käyttää ympyröitä (etäisyys tunnettu). TDOA käyttää hyperbeleitä (etäisyyksien <em>ero</em> tunnettu). Kolme ympyrää tai kaksi hyperbeliä → yksi leikkauspiste = sijainti.</div></div>
     </div>
+
+    <!-- ─── HEITTOLIIKE: KAKSI KULMAA ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🎯</span>
+        <div>
+          <div class="card-title">Heittoliike: kaksi kulmaa samalle kantamalle</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.366–400</div>
+        </div>
+      </div>
+      <p>Sama kantama voidaan saavuttaa <strong>kahdella eri lähtökulmalla</strong>: matalalla (loiva kaari) tai korkealla (jyrkkä kaari). Tämä on klassinen fysiikan tulos — esim. tykki ampuu samaan paikkaan kulmilla 30° ja 60°. Ratkaistaan ne neliöyhtälöllä jonka muuttuja on <code>tan(α)</code>.</p>
+      <div class="formula">
+        <div class="flabel">Kaksi kulmaa, kaava</div>
+        Kiinnitetään xmax, haetaan α:<br>
+        A = −g·xmax² / (2v₀²)<br>
+        B = xmax<br>
+        C = h − g·xmax² / (2v₀²)<br>
+        D = B² − 4AC<br>
+        tan(α₁,₂) = (−B ± √D) / (2A)<br>
+        α₁,₂ = atand(tan(α₁,₂))
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.366–400</span></div>
+        <pre><span class="kw">clear</span>
+h=<span class="nm">2</span>; v0=<span class="nm">10</span>; g=<span class="nm">9.81</span>;
+xmax=<span class="nm">10</span>;   <span class="cm">% halutulle kantamalle</span>
+
+A = -g*xmax^<span class="nm">2</span>/(<span class="nm">2</span>*v0^<span class="nm">2</span>)
+B = xmax
+C = h - g*xmax^<span class="nm">2</span>/(<span class="nm">2</span>*v0^<span class="nm">2</span>)
+D = B^<span class="nm">2</span>-<span class="nm">4</span>*A*C
+
+alfa1 = <span class="fn">atand</span>((-B-<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*A))   <span class="cm">% → matala kulma</span>
+alfa2 = <span class="fn">atand</span>((-B+<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*A))   <span class="cm">% → jyrkkä kulma</span>
+
+x = <span class="nm">0</span>:xmax/<span class="nm">100</span>:xmax;
+
+<span class="cm">% Rata 1 (matala)</span>
+a1=-g/(<span class="nm">2</span>*v0^<span class="nm">2</span>*<span class="fn">cosd</span>(alfa1)^<span class="nm">2</span>); b1=<span class="fn">tand</span>(alfa1);
+y1 = a1*x.^<span class="nm">2</span>+b1*x+h;
+<span class="cm">% Rata 2 (jyrkkä)</span>
+a2=-g/(<span class="nm">2</span>*v0^<span class="nm">2</span>*<span class="fn">cosd</span>(alfa2)^<span class="nm">2</span>); b2=<span class="fn">tand</span>(alfa2);
+y2 = a2*x.^<span class="nm">2</span>+b2*x+h;
+
+<span class="fn">plot</span>(x,y1,<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+hold on
+<span class="fn">plot</span>(x,y2,<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">plot</span>([<span class="nm">0</span>,xmax],[<span class="nm">0</span>,<span class="nm">0</span>],<span class="st">'k'</span>)
+hold off; axis equal; <span class="fn">grid</span>
+legend([<span class="st">'\alpha_1 = '</span>,<span class="fn">num2str</span>(alfa1),<span class="st">'^o'</span>],[<span class="st">'\alpha_2 = '</span>,<span class="fn">num2str</span>(alfa2),<span class="st">'^o'</span>])</pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Muistisääntö:</strong> α₁ + α₂ ≈ 90° kun h = 0. Esim. 30° ja 60° antavat saman kantaman. Tämä on tykistön klassinen optimointitulos.</div></div>
+    </div>
+
+    <!-- ─── PARAABELIN KIERTO / FOR-SILMUKKA ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">⭐</span>
+        <div>
+          <div class="card-title">Paraabelin kierto napakoordinaateilla — for-silmukka</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.39</div>
+        </div>
+      </div>
+      <p>Tässä yhdistyy useita aiheita: paraabeli, napakoordinaatit ja <strong>for-silmukka</strong>. Piirretään 7-sakarainen tähti: yksi paraabeli piirretään, sitten sama käyrä kierretään 6 kertaa 360°/7 asteen välein. Kierto onnistuu muuntamalla pisteet napakoordinaateiksi (r, θ) ja lisäämällä θ:aan kiertokulma.</p>
+      <div class="formula">
+        <div class="flabel">Kiertomenetelmä</div>
+        1. Laske pisteiden napakoordinaatit: r = √(x² + y²), θ = atan2d(y, x)<br>
+        2. Kierrä: θ_uusi = θ + kiertokulma<br>
+        3. Muunna takaisin: x_uusi = r·cosd(θ_uusi), y_uusi = r·sind(θ_uusi)<br><br>
+        For-silmukka: <code>for k = 1:6</code> → toistaa 6 kertaa
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.39</span></div>
+        <pre><span class="kw">clear</span>
+<span class="cm">%% 7-sakarainen tähti paraabelista + kierrosta</span>
+alfa = <span class="nm">90</span>-<span class="nm">360</span>/<span class="nm">7</span>;   <span class="cm">% sakaran kärjen kulma</span>
+R=<span class="nm">1</span>; r=<span class="nm">1</span>/<span class="nm">2</span>*<span class="fn">sind</span>(alfa)*R;
+a = <span class="fn">tand</span>(alfa)/(<span class="nm">2</span>*R*<span class="fn">cosd</span>(alfa));   <span class="cm">% paraabelin a-kerroin</span>
+
+<span class="cm">% Paraabeli (yksi sakara)</span>
+xp = -R*<span class="fn">cosd</span>(alfa) : R*<span class="fn">cosd</span>(alfa)/<span class="nm">100</span> : R*<span class="fn">cosd</span>(alfa);
+yp = a*xp.^<span class="nm">2</span> + r;
+
+<span class="cm">% Napakoordinaatit</span>
+rp  = <span class="fn">sqrt</span>(xp.^<span class="nm">2</span> + yp.^<span class="nm">2</span>);
+thp = <span class="fn">atan2d</span>(yp, xp);
+
+<span class="cm">% Piirrä ympyrät</span>
+th = <span class="nm">0</span>:<span class="nm">360</span>;
+<span class="fn">plot</span>(r*<span class="fn">cosd</span>(th),r*<span class="fn">sind</span>(th),<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)
+hold on
+<span class="fn">plot</span>(R*<span class="fn">cosd</span>(th),R*<span class="fn">sind</span>(th),<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)
+
+<span class="cm">% Piirrä kaikki 7 sakaraa for-silmukalla</span>
+<span class="kw">for</span> k = <span class="nm">0</span>:<span class="nm">6</span>
+  xpk = rp.*<span class="fn">cosd</span>(thp + k*<span class="nm">360</span>/<span class="nm">7</span>);   <span class="cm">% kierretty x</span>
+  ypk = rp.*<span class="fn">sind</span>(thp + k*<span class="nm">360</span>/<span class="nm">7</span>);   <span class="cm">% kierretty y</span>
+  <span class="fn">plot</span>(xpk, ypk, <span class="st">'k'</span>, <span class="st">'linewidth'</span>, <span class="nm">2</span>)
+<span class="kw">end</span>
+hold off; axis equal; axis square; <span class="fn">grid</span>
+
+<span class="cm">%% Sama tekniikka: kierrä mikä tahansa käyrä mielivaltaisen kulman verran</span>
+<span class="cm">% r  = sqrt(x.^2 + y.^2);</span>
+<span class="cm">% th = atan2d(y, x);</span>
+<span class="cm">% xk = r.*cosd(th + kiertokulma);</span>
+<span class="cm">% yk = r.*sind(th + kiertokulma);</span></pre>
+      </div>
+      <div class="box info"><span class="box-icon">ℹ️</span><div><strong>For-silmukan rakenne Octavessa:</strong> <code>for k = alku:loppu</code> — muuttuja k saa kaikki arvot alusta loppuun. Sisällä lasketaan kaikki k:sta riippuvat asiat. <code>end</code> lopettaa silmukan.</div></div>
+    </div>
+
+    <!-- ─── KAHDELLA HYPERBELILLÄ PAIKANNUS ─── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📡</span>
+        <div>
+          <div class="card-title">Paikannus kahdella hyperbelillä — täysi algoritmi</div>
+          <div class="card-sub">analyyttinen_geometria_osa2.m · s.103–104</div>
+        </div>
+      </div>
+      <p>Kolme asemaa F1, F2, F3 antavat kaksi etäisyyserotusta d₁₂ = PF1−PF2 ja d₁₃ = PF1−PF3. Kumpikin erotus on yksi hyperbeli. Niiden leikkauspiste on kohteen sijainti. Ratkaistaan algebrallisesti: linearisointi → neliöyhtälö R:lle → koordinaatit.</p>
+      <div class="formula">
+        <div class="flabel">Algoritmi</div>
+        Yhtälöpari: a·x + b·y = e₁·R + e₂ ja c·x + d·y = f₁·R + f₂<br>
+        → x = α·R + β, y = γ·R + δ (Cramerin sääntö)<br>
+        Sijoitetaan ympyrään R² = x² + y²:<br>
+        (α²+γ²−1)·R² + 2(αβ+γδ)·R + (β²+δ²) = 0<br>
+        → kaksi ratkaisua R → kaksi sijaintiehdokasta
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">analyyttinen_geometria_osa2.m · s.103</span></div>
+        <pre><span class="kw">clear</span>
+x1=<span class="nm">0</span>; y1=<span class="nm">0</span>; x2=<span class="nm">6</span>; y2=<span class="nm">0</span>; x3=<span class="nm">4</span>; y3=<span class="nm">4</span>;
+d12=<span class="nm">4</span>; d13=<span class="nm">3</span>;   <span class="cm">% PF1-PF2 ja PF1-PF3</span>
+
+a=<span class="nm">2</span>*x2; b=<span class="nm">2</span>*y2; c=<span class="nm">2</span>*x3; d=<span class="nm">2</span>*y3;
+e1=<span class="nm">2</span>*d12; e2=x2^<span class="nm">2</span>+y2^<span class="nm">2</span>-d12^<span class="nm">2</span>;
+f1=<span class="nm">2</span>*d13; f2=x3^<span class="nm">2</span>+y3^<span class="nm">2</span>-d13^<span class="nm">2</span>;
+
+alfa=(d*e1-b*f1)/(a*d-b*c); beta=(d*e2-b*f2)/(a*d-b*c);
+gamma=(a*f1-c*e1)/(a*d-b*c); delta=(a*f2-c*e2)/(a*d-b*c);
+
+A=alfa^<span class="nm">2</span>+gamma^<span class="nm">2</span>-<span class="nm">1</span>;
+B=<span class="nm">2</span>*(alfa*beta+gamma*delta);
+C=beta^<span class="nm">2</span>+delta^<span class="nm">2</span>;
+D=B^<span class="nm">2</span>-<span class="nm">4</span>*A*C;
+
+Rp=(-B+<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*A);
+Rm=(-B-<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*A);
+xp=alfa*Rp+beta; yp=gamma*Rp+delta;
+xm=alfa*Rm+beta; ym=gamma*Rm+delta;
+
+<span class="cm">% Tarkistus: kumpi on oikea?</span>
+<span class="fn">sqrt</span>((x1-xp)^<span class="nm">2</span>+(y1-yp)^<span class="nm">2</span>) - <span class="fn">sqrt</span>((x2-xp)^<span class="nm">2</span>+(y2-yp)^<span class="nm">2</span>)
+d12   <span class="cm">% → pitää täsmätä</span></pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Kaksi ratkaisua:</strong> Neliöyhtälö antaa kaksi sijaintiehdokasta. Tarkista kumpi täyttää d₁₂- ja d₁₃-ehdot. Yleensä vain toinen on fyysisesti mahdollinen (esim. negatiivinen R hylätään).</div></div>
+    </div>
+
+
+    <!-- ─── LISÄKORTIT ─── -->
+
+    <!-- Bilineaarinen interpolointi -->
+    <div class="theory-card">
+      <div class="card-header">
+        <div class="card-icon">🔲</div>
+        <div class="card-title">Bilineaarinen interpolointi (2D)</div>
+      </div>
+      <p>Tavallinen lineaarinen interpolointi toimii yhdellä muuttujalla. Bilineaarinen interpolointi laajentaa tämän kaksiulotteiseen tasoon: annetaan neljä pistettä ruudun kulmissa ja interpoloidaan mielivaltaisessa pisteessä.</p>
+      <p>Annetaan neljä kulmapistettä (x1,y1), (x2,y1), (x1,y2), (x2,y2) arvoineen f₁₁, f₂₁, f₁₂, f₂₂. Interpolointipiste (x0,y0).</p>
+      <div class="code-block">
+        <div class="flabel">Bilineaarinen interpolointi 2D</div>
+        <pre><span class="cm">% Neljä kulmapistettä</span>
+x1=<span class="nm">0</span>; x2=<span class="nm">4</span>;
+y1=<span class="nm">0</span>; y2=<span class="nm">3</span>;
+<span class="cm">% Arvot kulmissa: f(x1,y1), f(x2,y1), f(x1,y2), f(x2,y2)</span>
+f11=<span class="nm">1</span>; f21=<span class="nm">3</span>; f12=<span class="nm">2</span>; f22=<span class="nm">5</span>;
+<span class="cm">% Interpolointipiste</span>
+x0=<span class="nm">2</span>; y0=<span class="nm">1</span>;
+<span class="cm">% Ensin interpolointi x-suunnassa (kaksi riviä)</span>
+fa = f11 + (f21-f11)/(x2-x1)*(x0-x1);  <span class="cm">% alarivi y=y1</span>
+fb = f12 + (f22-f12)/(x2-x1)*(x0-x1);  <span class="cm">% yläraivi y=y2</span>
+<span class="cm">% Sitten interpolointi y-suunnassa</span>
+f0 = fa + (fb-fa)/(y2-y1)*(y0-y1)
+<span class="cm">% → f0 = 2.333...</span></pre>
+      </div>
+      <div class="box info"><span class="box-icon">📝</span><div><strong>Järjestys ei väliä:</strong> Voi myös ensin interpoloida y-suunnassa ja sitten x-suunnassa — tulos on sama.</div></div>
+    </div>
+
+    <!-- Tangentit pisteestä paraabelille -->
+    <div class="theory-card">
+      <div class="card-header">
+        <div class="card-icon">📐</div>
+        <div class="card-title">Tangentit pisteestä paraabelille</div>
+      </div>
+      <p>Annettu piste P = (x₀, y₀) ei välttämättä ole paraabelilla. Etsitään ne suorat, jotka kulkevat pisteen P kautta ja sivuavat paraabelia y = ax² + bx + c (ts. leikkaavat täsmälleen yhdessä pisteessä).</p>
+      <p><strong>Ehto:</strong> Kun suora y = kx + p sijoitetaan paraabeliin, diskriminantti D = 0 antaa tangenttisuorat.</p>
+      <div class="code-block">
+        <div class="flabel">Tangentit pisteestä paraabelille (D=0 -ehto)</div>
+        <pre><span class="kw">clear</span>
+<span class="cm">% Paraabeli y = a*x^2 + b*x + c</span>
+a=<span class="nm">1</span>; b=<span class="nm">0</span>; c=<span class="nm">0</span>;  <span class="cm">% y = x^2</span>
+<span class="cm">% Ulkopiste P</span>
+x0=<span class="nm">2</span>; y0=<span class="nm">-1</span>;
+<span class="cm">% Suora y = k*x + p, joka kulkee P:n kautta: p = y0 - k*x0</span>
+<span class="cm">% Sijoitetaan: a*x^2 + (b-k)*x + (c-p) = 0</span>
+<span class="cm">% D = (b-k)^2 - 4*a*(c-p) = 0</span>
+<span class="cm">% Substitointi p = y0 - k*x0:</span>
+<span class="cm">% (b-k)^2 - 4a*(c - y0 + k*x0) = 0</span>
+<span class="cm">% Laajennetaan → toisen asteen yhtälö k:ssa</span>
+A = x0^<span class="nm">2</span> - a;
+B = -<span class="nm">2</span>*x0*y0 + b*x0 - <span class="nm">2</span>*a*c + b^<span class="nm">2</span>/<span class="nm">2</span>;  <span class="cm">% huom: ratkaistaan symbolisesti</span>
+<span class="cm">% Yleinen Octave-ratkaisu:</span>
+syms k
+p_sym = y0 - k*x0;
+eq = (b-k)^<span class="nm">2</span> - <span class="nm">4</span>*a*(c - p_sym);  <span class="cm">% = 0</span>
+k_vals = <span class="fn">solve</span>(eq == <span class="nm">0</span>, k)
+p1 = y0 - k_vals(<span class="nm">1</span>)*x0
+p2 = y0 - k_vals(<span class="nm">2</span>)*x0
+<span class="cm">% Tangentit: y = k1*x + p1  ja  y = k2*x + p2</span></pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Miksi D = 0?</strong> Tavallisesti suora leikkaa paraabelin kahdessa pisteessä (D &gt; 0). Tangentti sivuaa paraabelia — leikkauspiste on kaksinkertainen (D = 0). Jos D &lt; 0, suora ei leikkaa lainkaan.</div></div>
+    </div>
+
+    <!-- Ellipsin heijastusominaisuus ja tangentti -->
+    <div class="theory-card">
+      <div class="card-header">
+        <div class="card-icon">🪞</div>
+        <div class="card-title">Ellipsin heijastusominaisuus ja tangentti</div>
+      </div>
+      <p>Ellipsillä on erityinen heijastusominaisuus: polttopisteestä F₁ lähtenyt säde heijastuu ellipsin pinnasta täsmälleen toiseen polttopisteeseen F₂. Tämä on elliptisten peilisalien ja litotripsialaitteiden (munuaiskivet) perusta.</p>
+      <p><strong>Tangentti ellipsin pisteessä (x₀, y₀):</strong> kulmakerroin k = −(b²x₀)/(a²y₀)</p>
+      <div class="code-block">
+        <div class="flabel">Ellipsin tangentti pisteessä P</div>
+        <pre><span class="kw">clear</span>
+a=<span class="nm">3</span>; b=<span class="nm">2</span>;
+F1x=-<span class="fn">sqrt</span>(a^<span class="nm">2</span>-b^<span class="nm">2</span>); F2x=<span class="fn">sqrt</span>(a^<span class="nm">2</span>-b^<span class="nm">2</span>);  <span class="cm">% polttopisteet</span>
+<span class="cm">% Parametrinen ellipsi</span>
+t=<span class="nm">0</span>:<span class="nm">1</span>:<span class="nm">360</span>;
+x=a*<span class="fn">cosd</span>(t); y=b*<span class="fn">sind</span>(t);
+<span class="cm">% Valitaan piste n (indeksi)</span>
+n=<span class="nm">71</span>;
+x0=x(n); y0=y(n);
+<span class="cm">% Tangentin kulmakerroin</span>
+k=-b^<span class="nm">2</span>*x0/(a^<span class="nm">2</span>*y0)
+L=<span class="nm">2</span>;
+xv=x0-L; yv=y0-k*L;
+xo=x0+L; yo=y0+k*L;
+<span class="fn">plot</span>(x,y,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="kw">hold on</span>
+<span class="fn">plot</span>([F1x,x0,F2x],[<span class="nm">0</span>,y0,<span class="nm">0</span>],<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.3</span>)  <span class="cm">% säteet</span>
+<span class="fn">plot</span>([xv,xo],[yv,yo],<span class="st">'k'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.3</span>)       <span class="cm">% tangentti</span>
+<span class="fn">plot</span>([F1x,F2x],[<span class="nm">0</span>,<span class="nm">0</span>],<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)       <span class="cm">% polttopisteet</span>
+<span class="fn">plot</span>(x0,y0,<span class="st">'b.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)               <span class="cm">% piste P</span>
+<span class="kw">hold off</span>; <span class="fn">axis</span> <span class="st">equal</span>; <span class="fn">grid</span></pre>
+      </div>
+      <div class="box formula"><span class="box-icon">📐</span><div>Tangentin kulmakerroin: <strong>k = −b²x₀ / (a²y₀)</strong><br>Sama kaava pätee hyperbelillekin, mutta merkki muuttuu: k = b²x₀ / (a²y₀ − b²x₀)·(−1)</div></div>
+    </div>
+
+    <!-- Ellipsin ja suoran leikkauspisteet -->
+    <div class="theory-card">
+      <div class="card-header">
+        <div class="card-icon">✂️</div>
+        <div class="card-title">Ellipsin ja suoran leikkauspisteet</div>
+      </div>
+      <p>Ellipsin x²/a² + y²/b² = 1 ja suoran y = kx + p leikkauspisteet löytyvät sijoittamalla suora ellipsin yhtälöön. Syntyy toisen asteen yhtälö, josta lasketaan leikkauspisteiden x-koordinaatit.</p>
+      <div class="code-block">
+        <div class="flabel">Ellipsin ja suoran leikkauspisteet</div>
+        <pre><span class="kw">clear</span>
+a=<span class="nm">3</span>; b=<span class="nm">2</span>;  <span class="cm">% ellipsin puoliakselit</span>
+k=<span class="nm">0.5</span>; p=<span class="nm">1</span>;  <span class="cm">% suora y = kx + p</span>
+<span class="cm">% Sijoitetaan y = kx+p → x^2/a^2 + (kx+p)^2/b^2 = 1</span>
+<span class="cm">% (b^2 + a^2*k^2)*x^2 + 2*a^2*k*p*x + a^2*p^2 - a^2*b^2 = 0</span>
+A = b^<span class="nm">2</span> + a^<span class="nm">2</span>*k^<span class="nm">2</span>;
+B = <span class="nm">2</span>*a^<span class="nm">2</span>*k*p;
+C = a^<span class="nm">2</span>*p^<span class="nm">2</span> - a^<span class="nm">2</span>*b^<span class="nm">2</span>;
+D = B^<span class="nm">2</span> - <span class="nm">4</span>*A*C
+<span class="kw">if</span> D &gt;= <span class="nm">0</span>
+  x1 = (-B - <span class="fn">sqrt</span>(D))/(2*A); y1 = k*x1+p;
+  x2 = (-B + <span class="fn">sqrt</span>(D))/(2*A); y2 = k*x2+p;
+  [x1,y1; x2,y2]  <span class="cm">% leikkauspisteet</span>
+<span class="kw">end</span>
+<span class="cm">% Kuvaaja:</span>
+t=<span class="nm">0</span>:<span class="nm">360</span>;
+<span class="fn">plot</span>(a*<span class="fn">cosd</span>(t),b*<span class="fn">sind</span>(t),<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>); <span class="kw">hold on</span>
+xv=x1-<span class="nm">2</span>; xo=x2+<span class="nm">2</span>;
+<span class="fn">plot</span>([xv,xo],[k*xv+p,k*xo+p],<span class="st">'k'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">plot</span>([x1,x2],[y1,y2],<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+<span class="kw">hold off</span>; <span class="fn">axis</span> <span class="st">equal</span>; <span class="fn">grid</span></pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div>D &gt; 0: kaksi leikkauspistettä. D = 0: suora on ellipsin tangentti. D &lt; 0: suora ei leikkaa ellipsiä.</div></div>
+    </div>
+
+    <!-- Hyperbelin heijastusominaisuus -->
+    <div class="theory-card">
+      <div class="card-header">
+        <div class="card-icon">🔭</div>
+        <div class="card-title">Hyperbelin heijastusominaisuus</div>
+      </div>
+      <p>Hyperbelillä on vastaava heijastusominaisuus kuin ellipsillä: kohti toista polttopistettä suunnattu säde heijastuu näennäisesti toisesta polttopisteestä. Käytetään Cassegrain-kaukoputkissa (parabolinen pääpeili + hyperbolinen apupeili).</p>
+      <p><strong>Tangentti hyperbelin pisteessä (x₀, y₀):</strong> kulmakerroin k = −(b²x₀)/(a²y₀)×(−1) = b²x₀/(a²y₀)·... (sama kaava kuin ellipsillä, vain merkki muuttuu b²→−b²)</p>
+      <div class="code-block">
+        <div class="flabel">Hyperbelin tangentti ja heijastusominaisuus</div>
+        <pre><span class="kw">clear</span>
+a=<span class="nm">3</span>; b=<span class="nm">2</span>;
+F1x=-<span class="fn">sqrt</span>(a^<span class="nm">2</span>+b^<span class="nm">2</span>); F2x=<span class="fn">sqrt</span>(a^<span class="nm">2</span>+b^<span class="nm">2</span>);  <span class="cm">% polttopisteet</span>
+<span class="cm">% Oikea haara parametrimuodossa</span>
+t=-<span class="nm">2</span>:<span class="nm">0.01</span>:<span class="nm">2</span>;
+x=a*<span class="fn">cosh</span>(t); y=b*<span class="fn">sinh</span>(t);
+<span class="cm">% Valitaan piste indeksin k avulla</span>
+n=<span class="nm">100</span>;
+x0=x(n); y0=y(n);
+<span class="cm">% Tangentin kulmakerroin hyperbelille</span>
+k_tan = b^<span class="nm">2</span>*x0/(a^<span class="nm">2</span>*y0)  <span class="cm">% ellipsillä olisi -b^2*x0/(a^2*y0)</span>
+L=<span class="nm">3</span>;
+xv=x0-L; yv=y0-k_tan*L;
+xo=x0+L; yo=y0+k_tan*L;
+<span class="fn">plot</span>(x,y,<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>); <span class="kw">hold on</span>
+<span class="fn">plot</span>(-x,y,<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)     <span class="cm">% vasen haara</span>
+<span class="fn">plot</span>([F1x,x0,F2x],[<span class="nm">0</span>,y0,<span class="nm">0</span>],<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)  <span class="cm">% säteet</span>
+<span class="fn">plot</span>([xv,xo],[yv,yo],<span class="st">'k'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)          <span class="cm">% tangentti</span>
+<span class="fn">plot</span>([F1x,F2x],[<span class="nm">0</span>,<span class="nm">0</span>],<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+<span class="kw">hold off</span>; <span class="fn">axis</span> <span class="st">equal</span>; <span class="fn">grid</span>; <span class="fn">title</span>(<span class="st">'Hyperbelin tangentti ja säteet'</span>)</pre>
+      </div>
+      <div class="box formula"><span class="box-icon">📐</span><div>
+        Ellipsi: k = −b²x₀/(a²y₀)<br>
+        Hyperbeli: k = b²x₀/(a²y₀)<br>
+        (Merkki vaihtuu, koska hyperbelissä b²-termi on negatiivinen)
+      </div></div>
+    </div>
+
+    <!-- Harjoitustehtävät AG17-AG20 -->
+
     <!-- ─── HARJOITUSTEHTÄVÄT ─── -->
     <hr style="margin:36px 0">
     <div class="section-label">Harjoitustehtävät</div>
@@ -4141,7 +4482,159 @@ y=(a*f-c*e)/(a*d-b*c)</pre>
         </div>
       </div>
 
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG15</div>
+          <div class="ex-question">Heittoliike: kaksi kulmaa samalle kantamalle</div>
+          <div class="ex-given">v₀ = 15 m/s, h = 0, halutulle kantamalle xmax = 18 m.<br>Laske molemmat lähtökulmat α₁ ja α₂.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+h=<span class="nm">0</span>; v0=<span class="nm">15</span>; xmax=<span class="nm">18</span>; g=<span class="nm">9.81</span>;
+A=-g*xmax^<span class="nm">2</span>/(<span class="nm">2</span>*v0^<span class="nm">2</span>)
+B=xmax
+C=h-g*xmax^<span class="nm">2</span>/(<span class="nm">2</span>*v0^<span class="nm">2</span>)
+D=B^<span class="nm">2</span>-<span class="nm">4</span>*A*C
+alfa1=<span class="fn">atand</span>((-B-<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*A))   <span class="cm">% → matala ≈ 27.7°</span>
+alfa2=<span class="fn">atand</span>((-B+<span class="fn">sqrt</span>(D))/(<span class="nm">2</span>*A))   <span class="cm">% → jyrkkä ≈ 62.3°</span>
+<span class="cm">% Tarkistus: alfa1+alfa2 ≈ 90 kun h=0</span>
+alfa1+alfa2</pre>
+          <div class="ex-ans">✅ α₁ ≈ 27.7°, α₂ ≈ 62.3°. Huom: summa ≈ 90° kun h = 0.</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG16</div>
+          <div class="ex-question">Käyrän kierto for-silmukalla</div>
+          <div class="ex-given">Piirrä 5-sakarainen tähti: laske ensin yksi paraabeli, sitten kierrä sitä 4 kertaa 72°:n välein (360°/5).<br>Käytä napakoordinaattimuunnosta.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+<span class="cm">% 5-sakarainen tähti</span>
+alfa = <span class="nm">90</span>-<span class="nm">360</span>/<span class="nm">5</span>;   <span class="cm">% = 18°</span>
+R=<span class="nm">1</span>; r=<span class="nm">1</span>/<span class="nm">2</span>*<span class="fn">sind</span>(alfa)*R;
+a = <span class="fn">tand</span>(alfa)/(<span class="nm">2</span>*R*<span class="fn">cosd</span>(alfa));
+
+xp=-R*<span class="fn">cosd</span>(alfa):R*<span class="fn">cosd</span>(alfa)/<span class="nm">100</span>:R*<span class="fn">cosd</span>(alfa);
+yp=a*xp.^<span class="nm">2</span>+r;
+
+rp  = <span class="fn">sqrt</span>(xp.^<span class="nm">2</span>+yp.^<span class="nm">2</span>);
+thp = <span class="fn">atan2d</span>(yp,xp);
+
+th=<span class="nm">0</span>:<span class="nm">360</span>;
+<span class="fn">plot</span>(R*<span class="fn">cosd</span>(th),R*<span class="fn">sind</span>(th),<span class="st">'b'</span>)
+hold on
+<span class="kw">for</span> k=<span class="nm">0</span>:<span class="nm">4</span>
+  xpk=rp.*<span class="fn">cosd</span>(thp+k*<span class="nm">360</span>/<span class="nm">5</span>);
+  ypk=rp.*<span class="fn">sind</span>(thp+k*<span class="nm">360</span>/<span class="nm">5</span>);
+  <span class="fn">plot</span>(xpk,ypk,<span class="st">'k'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>)
+<span class="kw">end</span>
+hold off; axis equal; axis square; <span class="fn">grid</span></pre>
+          <div class="ex-ans">✅ 5-sakarainen tähti syntyy. Muuta 5→6 tai 5→8 eri tähtikuviota varten.</div>
+        </div>
+      </div>
+
     </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG17</div>
+          <div class="ex-question">Bilineaarinen interpolointi</div>
+          <div class="ex-given">Lämpötila mitataan ruudukon kulmissa: (0,0)→10°, (4,0)→18°, (0,3)→14°, (4,3)→22°.<br>Laske lämpötila pisteessä (2, 1).</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+x1=<span class="nm">0</span>; x2=<span class="nm">4</span>; y1=<span class="nm">0</span>; y2=<span class="nm">3</span>;
+f11=<span class="nm">10</span>; f21=<span class="nm">18</span>; f12=<span class="nm">14</span>; f22=<span class="nm">22</span>;
+x0=<span class="nm">2</span>; y0=<span class="nm">1</span>;
+fa = f11 + (f21-f11)/(x2-x1)*(x0-x1);
+fb = f12 + (f22-f12)/(x2-x1)*(x0-x1);
+f0 = fa + (fb-fa)/(y2-y1)*(y0-y1)
+<span class="cm">% → f0 = 14.667°C</span></pre>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG18</div>
+          <div class="ex-question">Tangentit pisteestä paraabelille</div>
+          <div class="ex-given">Paraabeli y = x² ja ulkopiste P = (2, −1).<br>Laske molempien tangenttien kulmakertoimen.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">1</span>; b=<span class="nm">0</span>; c=<span class="nm">0</span>;
+x0=<span class="nm">2</span>; y0=-<span class="nm">1</span>;
+<span class="cm">% Suora y=kx+p kulkee P:n kautta: p = y0 - k*x0</span>
+<span class="cm">% Sijoitetaan paraabeliin: D = (b-k)^2 - 4a*(c - y0 + k*x0) = 0</span>
+syms k
+p_sym = y0 - k*x0;
+eq = (b-k)^<span class="nm">2</span> - <span class="nm">4</span>*a*(c - p_sym);
+k_vals = <span class="fn">solve</span>(eq == <span class="nm">0</span>, k)
+<span class="cm">% → k_vals = [-2; 6]</span>
+p1 = y0 - k_vals(<span class="nm">1</span>)*x0  <span class="cm">% → p1 = 3</span>
+p2 = y0 - k_vals(<span class="nm">2</span>)*x0  <span class="cm">% → p2 = -13</span>
+<span class="cm">% Tangentit: y = -2x + 3  ja  y = 6x - 13</span></pre>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG19</div>
+          <div class="ex-question">Ellipsin ja suoran leikkauspisteet</div>
+          <div class="ex-given">Ellipsi a=4, b=2 ja suora y = 0.5x + 1.<br>Laske leikkauspisteet.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">4</span>; b=<span class="nm">2</span>;
+k=<span class="nm">0.5</span>; p=<span class="nm">1</span>;
+A = b^<span class="nm">2</span> + a^<span class="nm">2</span>*k^<span class="nm">2</span>;
+B = <span class="nm">2</span>*a^<span class="nm">2</span>*k*p;
+C = a^<span class="nm">2</span>*p^<span class="nm">2</span> - a^<span class="nm">2</span>*b^<span class="nm">2</span>;
+D = B^<span class="nm">2</span> - <span class="nm">4</span>*A*C
+<span class="kw">if</span> D >= <span class="nm">0</span>
+  x1 = (-B - <span class="fn">sqrt</span>(D))/(2*A); y1 = k*x1+p;
+  x2 = (-B + <span class="fn">sqrt</span>(D))/(2*A); y2 = k*x2+p;
+  fprintf(<span class="st">'P1 = (%.3f, %.3f)\n'</span>, x1, y1)
+  fprintf(<span class="st">'P2 = (%.3f, %.3f)\n'</span>, x2, y2)
+<span class="kw">end</span></pre>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus AG20</div>
+          <div class="ex-question">Ellipsin tangentti pisteessä</div>
+          <div class="ex-given">Ellipsi a=3, b=2. Parametri t=50°, joten piste P = (3cos50°, 2sin50°).<br>Laske tangentin kulmakerroin ja piirrä kuva.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+a=<span class="nm">3</span>; b=<span class="nm">2</span>;
+t0=<span class="nm">50</span>;
+x0=a*<span class="fn">cosd</span>(t0); y0=b*<span class="fn">sind</span>(t0);
+<span class="cm">% Tangentin kulmakerroin</span>
+k = -b^<span class="nm">2</span>*x0/(a^<span class="nm">2</span>*y0)
+<span class="cm">% Ellipsin polttopisteet</span>
+F1x=-<span class="fn">sqrt</span>(a^<span class="nm">2</span>-b^<span class="nm">2</span>); F2x=<span class="fn">sqrt</span>(a^<span class="nm">2</span>-b^<span class="nm">2</span>);
+t=<span class="nm">0</span>:<span class="nm">360</span>;
+<span class="fn">plot</span>(a*<span class="fn">cosd</span>(t),b*<span class="fn">sind</span>(t),<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">2</span>); <span class="kw">hold on</span>
+L=<span class="nm">2</span>;
+<span class="fn">plot</span>([x0-L, x0+L],[y0-k*L, y0+k*L],<span class="st">'k'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">plot</span>([F1x,x0,F2x],[<span class="nm">0</span>,y0,<span class="nm">0</span>],<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.3</span>)
+<span class="fn">plot</span>([F1x,F2x],[<span class="nm">0</span>,<span class="nm">0</span>],<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+<span class="fn">plot</span>(x0,y0,<span class="st">'b.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+<span class="kw">hold off</span>; <span class="fn">axis</span> <span class="st">equal</span>; <span class="fn">grid</span>
+<span class="fn">title</span>([<span class="st">'k = '</span>,<span class="fn">num2str</span>(k)])</pre>
+        </div>
+      </div>
+
+    </div><!-- /ex-grid -->
   </section>
 
   <!-- ═══════════════════════════════════════ -->
