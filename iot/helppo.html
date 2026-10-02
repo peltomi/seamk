@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IoT-opas – helppo versio</title>
+<style>
+:root{--bg:#fffdf8;--fg:#232733;--mute:#626b7a;--card:#fff;--line:#e6e2d8;--code:#f1efe8}
+@media (prefers-color-scheme:dark){:root{--bg:#15171d;--fg:#eceef3;--mute:#a0a8b6;--card:#1d2028;--line:#2e333f;--code:#262a34}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.7 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#ff6b6b,#ffb347 35%,#4cd964 65%,#3aa0ff);color:#fff;padding:48px 20px 40px;text-align:center}
+header h1{margin:0 0 8px;font-size:2.4rem;text-shadow:0 2px 6px rgba(0,0,0,.25)}
+header p{margin:0;font-size:1.15rem;text-shadow:0 1px 4px rgba(0,0,0,.25)}
+.menu{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:900px;margin:-20px auto 0;padding:0 12px}
+.menu a{background:var(--card);border:2px solid var(--c);color:var(--fg);padding:6px 14px;border-radius:999px;text-decoration:none;font-size:.9rem;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.menu a:hover{background:var(--c);color:#fff}
+main{max-width:820px;margin:0 auto;padding:12px 18px 80px}
+section{--c:#3aa0ff;--t:#e6f2ff;margin:44px 0;border-radius:18px;background:var(--card);border:2px solid var(--c);overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.07)}
+@media (prefers-color-scheme:dark){section{--t:#1f2a3a}}
+section>h2{margin:0;padding:14px 20px;background:var(--c);color:#fff;font-size:1.5rem}
+section>div{padding:6px 22px 22px}
+h3{color:var(--c);margin:1.6em 0 .2em}
+.s1{--c:#ff6b6b;--t:#ffecec}.s2{--c:#ff9f1c;--t:#fff3e0}.s3{--c:#2fb344;--t:#e6f8ea}.s4{--c:#14a8a8;--t:#e0f6f6}.s5{--c:#8e5cf0;--t:#f0e9fe}.s6{--c:#e8489b;--t:#fde8f3}.s7{--c:#3a7bd5;--t:#e6eefb}.s8{--c:#6b7280;--t:#eceef1}.s9{--c:#e8590c;--t:#fdeadd}.s10{--c:#d6a100;--t:#fff7d6}
+@media (prefers-color-scheme:dark){.s1{--t:#3a2124}.s2{--t:#3a2e1c}.s3{--t:#1d3324}.s4{--t:#1a3333}.s5{--t:#2b2342}.s6{--t:#3a2030}.s7{--t:#1f2a40}.s8{--t:#2a2d33}.s9{--t:#3a2618}.s10{--t:#38310f}}
+.tip,.warn,.try{border-radius:12px;padding:10px 16px;margin:1em 0}
+.tip{background:var(--t);border-left:6px solid var(--c)}
+.warn{background:#ffe3e3;border-left:6px solid #e03131;color:#3a1010}
+.try{background:#fff7bf;border-left:6px solid #f2b705;color:#3a3000}
+.tip::before{content:"💡 Muista: ";font-weight:700}
+.warn::before{content:"⚠️ Varo: ";font-weight:700}
+.try::before{content:"🧪 Kokeile: ";font-weight:700}
+table{border-collapse:collapse;margin:1em 0;display:block;overflow-x:auto;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 12px;text-align:left}
+th{background:var(--c);color:#fff}
+code{background:var(--code);padding:1px 6px;border-radius:5px;font-size:.9em}
+pre{background:var(--code);padding:12px 14px;border-radius:10px;overflow-x:auto;font-size:.88rem;line-height:1.45}
+pre code{padding:0;background:none}
+.f{background:var(--t);border:2px dashed var(--c);border-radius:12px;padding:10px 16px;margin:1em 0;font-size:1.15rem;font-weight:700;text-align:center;overflow-x:auto}
+details{margin:.8em 0}
+summary{cursor:pointer;font-weight:700;color:var(--c)}
+.bits{display:flex;gap:8px;justify-content:center;margin:12px 0}
+.bit{width:56px;height:70px;border:3px solid var(--c);border-radius:12px;background:var(--card);color:var(--fg);font-size:1.7rem;font-weight:800;cursor:pointer}
+.bit.on{background:var(--c);color:#fff}
+.bits small{display:block;font-size:.7rem;font-weight:600;opacity:.7}
+.out{text-align:center;font-size:1.3rem;font-weight:700}
+.calc input{width:90px;font-size:1rem;padding:4px 8px;border:2px solid var(--c);border-radius:8px;background:var(--card);color:var(--fg)}
+svg text{fill:var(--fg)}
+</style>
+</head>
+<body>
+<header>
+<h1>⚡ IoT-opas ⚡</h1>
+<p>Miten esineet saadaan puhumaan netissä? Helppo versio, jossa selitetään kaikki tavallisin sanoin.</p>
+</header>
+<nav class="menu">
+<a style="--c:#ff6b6b" href="#s1">1 Kartta</a>
+<a style="--c:#ff9f1c" href="#s2">2 Bitit</a>
+<a style="--c:#2fb344" href="#s3">3 Portit</a>
+<a style="--c:#14a8a8" href="#s4">4 Karnaugh</a>
+<a style="--c:#8e5cf0" href="#s5">5 Muisti ja laskuri</a>
+<a style="--c:#e8489b" href="#s6">6 Analoginen</a>
+<a style="--c:#3a7bd5" href="#s7">7 Sähkö</a>
+<a style="--c:#6b7280" href="#s8">8 Linux</a>
+<a style="--c:#e8590c" href="#s9">9 IoT ja ESP32</a>
+<a style="--c:#d6a100" href="#s10">10 Kertaus</a>
+</nav>
+<main>
+
+<section class="s1" id="s1"><h2>1. Mistä tässä on kyse?</h2><div>
+<p><strong>IoT</strong> tulee sanoista <em>Internet of Things</em>, esineiden internet. Se tarkoittaa tavallisia laitteita, jotka osaavat <strong>mitata</strong> jotain, <strong>kertoa</strong> siitä netin kautta ja joskus <strong>tehdä</strong> jotain. Esimerkiksi:</p>
+<ul>
+<li>Lämpömittari kertoo puhelimelle, kuinka kylmä ulkona on.</li>
+<li>Kasvin multaan laitettu anturi huomaa kuivuuden ja käynnistää pienen pumpun.</li>
+<li>Ovihälytin lähettää viestin, kun ovi aukeaa.</li>
+</ul>
+<p>Kurssilla opit ensin sen, miten tietokone ajattelee (nollia ja ykkösiä), sitten sähkön perusteet, Linuxin ja lopuksi rakennat oman pienen IoT-laitteen.</p>
+<table>
+<tr><th>Päivä</th><th>Aihe</th><th>Luku</th></tr>
+<tr><td>24.9.</td><td>Logiikkaportit</td><td>3</td></tr>
+<tr><td>2.10.</td><td>Laskurit ja lukujärjestelmät</td><td>2, 5</td></tr>
+<tr><td>9.10.</td><td>Karnaughin kartta</td><td>4</td></tr>
+<tr><td>22.10. ja 29.10.</td><td>Sähkö, kela ja kondensaattori</td><td>7</td></tr>
+<tr><td>6.11.</td><td>Puolijohteet</td><td>7</td></tr>
+<tr><td>13.11. ja 20.11.</td><td>Linux</td><td>8</td></tr>
+<tr><td>26.11. ja 4.12.</td><td>ESP32, anturit</td><td>9</td></tr>
+<tr><td>11.12.</td><td>Harjoitustyön viimeistely</td><td>9</td></tr>
+</table>
+<div class="tip">Tee aina itse. Kun olet rakentanut kytkennän simulaattorissa ja nähnyt sen toimivan, asia jää mieleen paljon paremmin kuin lukemalla.</div>
+</div></section>
+
+<section class="s2" id="s2"><h2>2. Bitit ja luvut</h2><div>
+<p>Tietokone tuntee vain kaksi asiaa: <strong>pois</strong> (0) ja <strong>päällä</strong> (1), kuten valokatkaisija. Yksi tällainen 0 tai 1 on <strong>bitti</strong>. Kahdeksan bittiä yhdessä on <strong>tavu</strong>. Kaikki tietokoneella, kuvat, musiikki ja pelit, on pelkkiä nollia ja ykkösiä.</p>
+<h3>Binääriluvut</h3>
+<p>Meidän lukumme ovat <strong>kymmenjärjestelmässä</strong>: paikat ovat 1, 10, 100, 1000… Binäärissä paikat ovat <strong>1, 2, 4, 8, 16…</strong> eli aina kaksinkertaisia.</p>
+<div class="try">Paina laatikoita ja katso, mikä luku syntyy. Jokainen päällä oleva laatikko lisää luvun, joka on sen alla.</div>
+<div class="bits" id="bits"></div>
+<div class="out" id="bitout"></div>
+<p>Esimerkki: bitit <strong>1 0 1 1</strong> tarkoittavat 8 + 0 + 2 + 1 = <strong>11</strong>.</p>
+<h3>Miten desimaaliluku muutetaan binääriksi?</h3>
+<p>Jaa luku kahdella, kirjaa jäännös (0 tai 1) ja jatka jaon tuloksella, kunnes tulos on 0. Lue jäännökset <strong>alhaalta ylös</strong>.</p>
+<table>
+<tr><th>Jako</th><th>Tulos</th><th>Jäännös</th></tr>
+<tr><td>37 : 2</td><td>18</td><td>1</td></tr>
+<tr><td>18 : 2</td><td>9</td><td>0</td></tr>
+<tr><td>9 : 2</td><td>4</td><td>1</td></tr>
+<tr><td>4 : 2</td><td>2</td><td>0</td></tr>
+<tr><td>2 : 2</td><td>1</td><td>0</td></tr>
+<tr><td>1 : 2</td><td>0</td><td>1</td></tr>
+</table>
+<p>Alhaalta ylös: <strong>100101</strong>. Tarkistus: 32 + 4 + 1 = 37 ✔</p>
+<h3>Heksadesimaali</h3>
+<p>Pitkät bittijonot ovat vaikeita lukea. Siksi bitit ryhmitellään <strong>neljän ryhmiin</strong> ja jokaiselle ryhmälle annetaan yksi merkki. Tarvitaan 16 merkkiä, joten numeroiden 0–9 jälkeen käytetään kirjaimia A–F (A = 10, B = 11, … F = 15).</p>
+<table>
+<tr><th>Luku</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr>
+<tr><th>Binääri</th><td>0000</td><td>0001</td><td>0010</td><td>0011</td><td>0100</td><td>0101</td><td>0110</td><td>0111</td><td>1000</td><td>1001</td><td>1010</td><td>1011</td><td>1100</td><td>1101</td><td>1110</td><td>1111</td></tr>
+<tr><th>Heksa</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr>
+</table>
+<p>Esimerkki: <code>1010 1111</code> = A ja F = <code>0xAF</code>. Koodissa <code>0x</code> kertoo, että luku on heksa, ja <code>0b</code> kertoo, että luku on binääri.</p>
+<div class="tip">Kuinka suuren luvun mahtuu n bittiin? Suurin luku on 2ⁿ − 1. Neljään bittiin mahtuu 0–15, kahdeksaan 0–255.</div>
+<h3>Negatiiviset luvut</h3>
+<p>Miinusta ei voi kirjoittaa bitteinä, joten käytetään temppua, <strong>kahden komplementtia</strong>: käännä kaikki bitit (0 ↔ 1) ja lisää 1. Esimerkiksi 5 on 00000101. Käännetään: 11111010. Lisätään 1: 11111011 on −5.</p>
+<h3>BCD</h3>
+<p>BCD tarkoittaa, että <strong>jokainen desimaalinumero</strong> kirjoitetaan omana neljän bitin ryhmänään. Luku 59 on 0101 1001. Näin laskurin numerot saadaan helposti näyttöön.</p>
+<h3>Harjoittele</h3>
+<ol>
+<li>Muunna 45 binääriksi ja heksaksi.</li>
+<li>Mikä luku on 11010110?</li>
+<li>Kirjoita 83 BCD:nä.</li>
+</ol>
+<details><summary>Näytä vastaukset</summary><p>1) 101101 ja 0x2D. 2) 214. 3) 1000 0011.</p></details>
+</div></section>
+
+<section class="s3" id="s3"><h2>3. Logiikkaportit</h2><div>
+<p><strong>Portti</strong> on pieni piiri, joka ottaa sisään yhden tai kaksi nollaa/ykköstä ja antaa ulos yhden. Ajattele porttia sääntönä: "jos näin, niin tulos on 1".</p>
+<table>
+<tr><th>Portti</th><th>Arkisana</th><th>Tulos on 1, kun…</th></tr>
+<tr><td><strong>NOT</strong></td><td>"ei"</td><td>tulo on 0 (kääntää päinvastaiseksi)</td></tr>
+<tr><td><strong>AND</strong></td><td>"ja"</td><td>molemmat tulot ovat 1</td></tr>
+<tr><td><strong>OR</strong></td><td>"tai"</td><td>vähintään yksi tulo on 1</td></tr>
+<tr><td><strong>NAND</strong></td><td>"ei molemmat"</td><td>AND-portin tulos käännettynä</td></tr>
+<tr><td><strong>NOR</strong></td><td>"ei kumpikaan"</td><td>molemmat ovat 0</td></tr>
+<tr><td><strong>XOR</strong></td><td>"toinen mutta ei molemmat"</td><td>tulot ovat erilaiset</td></tr>
+</table>
+<p><strong>Totuustaulu</strong> kertoo portin käytöksen kaikissa tapauksissa. AND-portille se on:</p>
+<table>
+<tr><th>A</th><th>B</th><th>A AND B</th></tr>
+<tr><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>0</td><td>1</td><td>0</td></tr>
+<tr><td>1</td><td>0</td><td>0</td></tr>
+<tr><td>1</td><td>1</td><td>1</td></tr>
+</table>
+<div class="tip">Kirjoitusmerkit: A·B tarkoittaa AND, A+B tarkoittaa OR ja viiva A-kirjaimen päällä (Ā) tarkoittaa NOT.</div>
+<h3>De Morganin sääntö</h3>
+<p>Yksi tärkeä temppu: <strong>NOT (A AND B)</strong> on sama kuin <strong>(NOT A) OR (NOT B)</strong>. Jos käännät kaiken, AND muuttuu OR:ksi ja päinvastoin.</p>
+<h3>Näin ratkaiset tehtävän</h3>
+<ol>
+<li><strong>Nimeä</strong> tulot ja lähdöt (esim. kytkimet A, B, C, D ja lamppu Q).</li>
+<li>Tee <strong>totuustaulu</strong>: mitä lampun pitää tehdä jokaisessa tapauksessa?</li>
+<li>Kirjoita <strong>lauseke</strong> taulun perusteella ja yksinkertaista se.</li>
+<li>Rakenna se simulaattorilla ja <strong>testaa jokainen tapaus</strong>.</li>
+</ol>
+<h3>Esimerkki: neljän hengen äänestys</h3>
+<p>Neljällä äänestäjällä on kytkin. Lamppu syttyy, jos vähintään <strong>kolme</strong> kytkintä on päällä. Kolme päällä voi olla neljällä tavalla (yksi kytkin on aina pois), ja lisäksi tapaus "kaikki neljä päällä". Jokainen kolmen kytkimen ryhmä riittää:</p>
+<div class="f">Q = ABC + ABD + ACD + BCD</div>
+<p>Eli: lamppu palaa, jos (A ja B ja C) tai (A ja B ja D) tai (A ja C ja D) tai (B ja C ja D). Kaksi kytkintä ei riitä millekään ryhmälle. Rakennat sen neljällä 3-tuloisella AND-portilla ja yhdellä OR-portilla.</p>
+<div class="try">Testaa simulaattorissa vähintään: kolme päällä (neljä eri tapaa), kaikki neljä päällä ja pari tapausta, joissa vain kaksi on päällä.</div>
+<h3>Harjoittele</h3>
+<ol>
+<li>Tee XOR AND-, OR- ja NOT-porteilla. (Vihje: A·B̄ + Ā·B)</li>
+<li>Entä äänestys kolmelle: lamppu syttyy, kun vähintään kaksi on päällä?</li>
+</ol>
+<details><summary>Näytä vastaus kohtaan 2</summary><p>Q = AB + AC + BC</p></details>
+</div></section>
+
+<section class="s4" id="s4"><h2>4. Karnaughin kartta</h2><div>
+<p>Joskus lauseke on pitkä ja sotkuinen. <strong>Karnaughin kartta</strong> on ruudukko, jolla lausekkeen saa lyhyeksi <strong>katsomalla ja ympyröimällä</strong>, ilman monimutkaista laskemista.</p>
+<h3>Ajatus</h3>
+<p>Jos kaksi vierekkäistä ruutua ovat molemmat 1, niiden välillä muuttuva tieto ei vaikuta tulokseen. Se voidaan jättää pois. Mitä isompi ympyröity ryhmä, sitä lyhyempi lauseke.</p>
+<h3>Säännöt</h3>
+<ol>
+<li>Rivit ja sarakkeet kirjoitetaan järjestyksessä <strong>00, 01, 11, 10</strong> (ei 00, 01, 10, 11). Näin vierekkäiset ruudut eroavat vain yhdellä bitillä.</li>
+<li>Ympyröi ykköset <strong>ryhmiin</strong>, joissa on 1, 2, 4, 8 tai 16 ruutua (ei 3 tai 6).</li>
+<li>Kartta on kuin <strong>pyöreä</strong>: oikea reuna on vasemman vieressä ja yläreuna alareunan vieressä. Kulmatkin ovat naapureita.</li>
+<li>Tee ryhmistä <strong>mahdollisimman isoja</strong>. Ryhmät saavat mennä päällekkäin.</li>
+<li>Jokaisen ryhmän termiin otetaan vain ne muuttujat, jotka <strong>eivät muutu</strong> ryhmän sisällä.</li>
+<li>Ruutu, jossa on <strong>X</strong>, tarkoittaa "tätä tilaa ei koskaan tule". Voit käyttää sitä ykkösenä, jos se auttaa ryhmää kasvamaan.</li>
+<li>Lopuksi laske ryhmien termit yhteen (OR).</li>
+</ol>
+<h3>Pieni esimerkki</h3>
+<p>Kolme muuttujaa A, B, C. Lamppu palaa tapauksissa 1, 3, 5 ja 7.</p>
+<table>
+<tr><th>A \ BC</th><th>00</th><th>01</th><th>11</th><th>10</th></tr>
+<tr><th>0</th><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><th>1</th><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+</table>
+<p>Ykköset ovat kahden sarakkeen ja kahden rivin neljän ruudun neliö. Siinä A ja B vaihtelevat, mutta <strong>C on aina 1</strong>. Tulos on pelkkä <strong>C</strong>. Pitkä lauseke tiivistyi yhteen kirjaimeen!</p>
+<h3>Jouluvalotehtävä</h3>
+<p>Tehtävässä kuusi valoa syttyy tiettyjen jaksojen mukaan. Tee näin:</p>
+<ol>
+<li>Katso kuvasta, <strong>montako eri vaihetta</strong> valoilla on. Numeroi ne 0, 1, 2…</li>
+<li>Kirjoita jokaisen vaiheen numero binäärinä (neljä bittiä A B C D riittää 16 vaiheeseen).</li>
+<li>Tee <strong>jokaiselle valolle oma kartta</strong>: ruutuun 1, jos valo palaa siinä vaiheessa.</li>
+<li>Käyttämättömät vaiheet ovat X.</li>
+<li>Ympyröi ryhmät ja kirjoita lauseke. Tarkista vasta lopuksi verkkoratkaisijalla.</li>
+</ol>
+</div></section>
+
+<section class="s5" id="s5"><h2>5. Muisti, laskuri ja numeronäyttö</h2><div>
+<p>Portit eivät muista mitään: jos tulo muuttuu, tulos muuttuu heti. Jotta laite voi <strong>muistaa</strong> jotain, tarvitaan <strong>kiikku</strong> (flip-flop). Kiikku muistaa yhden bitin, kunnes sille käsketään muuttua.</p>
+<h3>Kiikkutyypit</h3>
+<p><strong>RS-kiikku</strong> on kuin valokatkaisija, jossa on kaksi nappia: <strong>S</strong> (set) sytyttää ja <strong>R</strong> (reset) sammuttaa. Kun et paina kumpaakaan, valo pysyy sellaisena kuin se oli. Älä paina molempia yhtä aikaa: silloin tulos on arvaamaton.</p>
+<table>
+<tr><th>S</th><th>R</th><th>Mitä tapahtuu</th></tr>
+<tr><td>0</td><td>0</td><td>pysyy ennallaan</td></tr>
+<tr><td>1</td><td>0</td><td>menee päälle (1)</td></tr>
+<tr><td>0</td><td>1</td><td>menee pois (0)</td></tr>
+<tr><td>1</td><td>1</td><td>kielletty</td></tr>
+</table>
+<p><strong>JK-kiikku</strong> on parannettu versio. Sillä on myös <strong>kello</strong>-tulo, ja kiikku muuttuu vain, kun kello "naksahtaa". Jos J ja K ovat molemmat 1, kiikku <strong>vaihtaa tilaansa joka kerta</strong>: pois → päälle → pois → päälle. Tätä sanotaan <strong>toggleksi</strong>.</p>
+<table>
+<tr><th>J</th><th>K</th><th>Kellon naksahdus tekee</th></tr>
+<tr><td>0</td><td>0</td><td>ei mitään</td></tr>
+<tr><td>0</td><td>1</td><td>nollaa</td></tr>
+<tr><td>1</td><td>0</td><td>asettaa ykköseksi</td></tr>
+<tr><td>1</td><td>1</td><td>vaihtaa tilan</td></tr>
+</table>
+<h3>Painike, joka jää päälle</h3>
+<p>Painike palaa takaisin, kun päästät irti. Äänestyksessä ääni pitää kuitenkin <strong>jäädä voimaan</strong>. Ratkaisu: kytke painike JK-kiikun kelloon ja aseta J = K = 1. Jokainen painallus vaihtaa tilaa: ensimmäinen painallus laittaa äänen päälle, toinen ottaa pois. Neljä kiikkua antaa neljän äänestäjän tilat, ja ne menevät äänestyslogiikkaan (luku 3).</p>
+<div class="tip">Harjoittele ensin RS-kiikulla ja kahdella napilla (yksi sytyttää, toinen sammuttaa). Kun ymmärrät sen, tee yhden napin versio.</div>
+<h3>Binäärilaskuri</h3>
+<p>Kun kiikku vaihtaa tilaa joka naksahduksella, se laskee naksahdukset <strong>kahden välein</strong>. Ketjuta neljä kiikkua peräkkäin (kunkin kello tulee edellisestä), niin saat neljän bitin laskurin. Jokainen painallus kasvattaa lukua yhdellä:</p>
+<div class="f">0000 → 0001 → 0010 → 0011 → 0100 → … → 1111 → 0000</div>
+<p>LEDit näyttävät bitit. Jos laskuri ei laske oikein, kokeile ketjuttaa edellisen kiikun <strong>Q</strong>:n sijaan <strong>käänteinen Q</strong>. Se riippuu siitä, reagoiko kiikku nousevaan vai laskevaan reunaan.</p>
+<h3>Numeronäyttö (7 segmenttiä)</h3>
+<p>Näytössä on seitsemän pientä valoa, nimeltään <strong>a, b, c, d, e, f, g</strong>. Kun sytytät oikeat, näet numeron. Esimerkiksi 1 tarvitsee vain segmentit b ja c.</p>
+<table>
+<tr><th>Numero</th><th>Päällä olevat segmentit</th></tr>
+<tr><td>0</td><td>a b c d e f</td></tr>
+<tr><td>1</td><td>b c</td></tr>
+<tr><td>2</td><td>a b d e g</td></tr>
+<tr><td>3</td><td>a b c d g</td></tr>
+<tr><td>4</td><td>b c f g</td></tr>
+<tr><td>5</td><td>a c d f g</td></tr>
+<tr><td>6</td><td>a c d e f g</td></tr>
+<tr><td>7</td><td>a b c</td></tr>
+<tr><td>8</td><td>a b c d e f g</td></tr>
+<tr><td>9</td><td>a b c d f g</td></tr>
+</table>
+<p>Tehtävä: laskurin neljä bittiä menevät porttien kautta näytölle niin, että oikeat segmentit syttyvät. Tee <strong>jokaiselle segmentille oma kartta</strong> (kuten luvussa 4). Segmentti e palaa numeroilla 0, 2, 6 ja 8. Luvut 10–15 eivät koskaan tule, joten ne ovat X, ja ne auttavat ryhmien tekemisessä. Rakenna yksi segmentti kerrallaan ja testaa se ennen seuraavaa.</p>
+<div class="warn">Jos näyttö on <strong>common anode</strong> -tyyppiä, segmentti syttyy, kun lähtö on 0. Silloin lisää jokaisen lähdön perään NOT-portti.</div>
+</div></section>
+
+<section class="s6" id="s6"><h2>6. Analoginen ja digitaalinen</h2><div>
+<p>Maailma on <strong>analoginen</strong>: lämpötila nousee tasaisesti, ei portaittain. Mikro-ohjain osaa käsitellä vain lukuja. Siksi tarvitaan kääntäjiä:</p>
+<ul>
+<li><strong>AD-muunnin</strong> (ADC): jännite → luku. Anturi käyttää tätä.</li>
+<li><strong>DA-muunnin</strong> (DAC): luku → jännite. Esimerkiksi äänen tekemiseen.</li>
+</ul>
+<h3>Kolme sanaa</h3>
+<ul>
+<li><strong>Näytteistys:</strong> mittaat jännitteen vaikkapa 100 kertaa sekunnissa.</li>
+<li><strong>Resoluutio:</strong> kuinka monella bitillä luku esitetään. Enemmän bittejä, tarkempi mittaus.</li>
+<li><strong>Kvantisointi:</strong> mittaus pyöristetään lähimpään portaaseen. Se on kuin mittaisit pituuden vain sentin tarkkuudella.</li>
+</ul>
+<div class="f">portaan koko = jänniteväli ÷ 2ⁿ</div>
+<p>ESP32:n ADC on 12-bittinen ja mittaa 0–3,3 V. Porras on 3,3 ÷ 4096 ≈ 0,0008 V (0,8 mV). Luku 0 tarkoittaa 0 V, 2048 tarkoittaa noin 1,65 V ja 4095 tarkoittaa 3,3 V.</p>
+<div class="tip">Nyquistin sääntö: mittaa vähintään <strong>kaksi kertaa niin usein</strong> kuin signaali muuttuu. Jos anturi vaihtelee 100 kertaa sekunnissa, mittaa vähintään 200 kertaa sekunnissa.</div>
+<h3>Harjoittele</h3>
+<ol>
+<li>10-bittinen ADC, alue 5 V. Kuinka suuri on porras?</li>
+<li>Sama ADC lukee 2,5 V. Mikä luku tulee?</li>
+</ol>
+<details><summary>Näytä vastaukset</summary><p>1) 5 ÷ 1024 ≈ 4,9 mV. 2) 512, koska 2,5 V on puolet alueesta.</p></details>
+</div></section>
+
+<section class="s7" id="s7"><h2>7. Sähkön perusteet</h2><div>
+<p>Kuvittele <strong>vesiputki</strong>. Sähkö toimii samalla tavalla:</p>
+<table>
+<tr><th>Sähkö</th><th>Vesiputki-vertaus</th><th>Yksikkö</th></tr>
+<tr><td><strong>Jännite</strong> (U)</td><td>veden paine</td><td>voltti (V)</td></tr>
+<tr><td><strong>Virta</strong> (I)</td><td>virtaavan veden määrä</td><td>ampeeri (A)</td></tr>
+<tr><td><strong>Resistanssi</strong> (R)</td><td>kapea kohta putkessa</td><td>ohmi (Ω)</td></tr>
+</table>
+<h3>Ohmin laki</h3>
+<p>Näiden kolmen suhde on aina sama:</p>
+<div class="f">U = R × I</div>
+<p>Eli: mitä suurempi vastus, sitä pienempi virta. Esimerkki: 3,3 V ja 330 Ω antavat virran 3,3 ÷ 330 = 0,01 A = 10 mA.</p>
+<div class="try">Kokeile laskinta.</div>
+<div class="calc">
+<p>Jännite <input id="u" type="number" value="3.3" step="0.1"> V &nbsp; Vastus <input id="r" type="number" value="330"> Ω → virta on <strong id="iout"></strong></p>
+</div>
+<p><strong>Teho</strong> kertoo, kuinka kuuma komponentti on: P = U × I (watteja). 3,3 V × 0,01 A = 0,033 W, joten tavallinen pieni vastus kestää helposti.</p>
+<p>Etuliitteet: <strong>m</strong> (milli) = tuhannesosa, <strong>k</strong> (kilo) = tuhat, <strong>µ</strong> (mikro) = miljoonasosa.</p>
+<h3>Sarja ja rinnan</h3>
+<ul>
+<li><strong>Sarjassa</strong> (peräkkäin): vastukset lasketaan yhteen, R = R₁ + R₂. Virta on sama kaikkialla, jännite jakautuu.</li>
+<li><strong>Rinnan</strong> (vierekkäin): virralla on useampi reitti, joten yhteisvastus on <strong>pienempi</strong> kuin kumpikaan. Kaksi 100 Ω:n vastusta rinnan on 50 Ω.</li>
+</ul>
+<p>Kaksi vastusta sarjassa toimii <strong>jännitteenjakajana</strong>: jännite jakautuu vastusten suhteessa. 10 kΩ + 20 kΩ vähentää 5 V:n noin 3,3 volttiin: 5 × 20 ÷ 30 = 3,3 V. Tällä sovitetaan 5 V:n anturi 3,3 V:n ESP32:lle.</p>
+<h3>Kondensaattori ja kela</h3>
+<ul>
+<li><strong>Kondensaattori</strong> on kuin pieni vesisäiliö: se varastoi sähköä ja tasaa jännitteen piikit. Se täyttyy vastuksen kautta ajassa τ = R × C. Esimerkiksi 10 kΩ ja 100 µF: 10 000 × 0,0001 = 1 sekunti.</li>
+<li><strong>Kela</strong> on kuin raskas vauhtipyörä: se vastustaa <strong>virran</strong> äkillistä muutosta. Kun sen virta katkaistaan, syntyy jännitepiikki. Siksi releen ja moottorin viereen laitetaan suojadiodi.</li>
+</ul>
+<h3>Yleismittari</h3>
+<ul>
+<li><strong>Jännite:</strong> mittapäät komponentin <strong>kummallekin puolelle</strong>.</li>
+<li><strong>Virta:</strong> mittari laitetaan <strong>osaksi piiriä</strong> (sarjaan).</li>
+<li><strong>Vastus:</strong> mittaa vain <strong>virrattomasta</strong> piiristä.</li>
+</ul>
+<div class="warn">Älä mittaa virtaa kytkemällä virtamittari suoraan pariston napojen väliin. Syntyy oikosulku, ja sulake palaa.</div>
+<h3>Puolijohteet</h3>
+<ul>
+<li><strong>Diodi</strong> on sähkön yksisuuntainen katu: virta kulkee vain yhteen suuntaan.</li>
+<li><strong>LED</strong> on diodi, joka loistaa. Se tarvitsee <strong>aina vastuksen</strong> sarjaan, muuten se palaa loppuun.</li>
+<li><strong>Transistori</strong> on sähköllä ohjattava kytkin: pieni virta ohjaa suurta. Pieni mikro-ohjain ei jaksa ajaa moottoria, mutta se voi ohjata transistoria, joka ajaa moottoria.</li>
+</ul>
+<p><strong>LED-vastus:</strong></p>
+<div class="f">R = (syöttöjännite − LEDin jännite) ÷ virta</div>
+<p>Esimerkki: 3,3 V:n pinni, LED 2 V, virta 10 mA: (3,3 − 2) ÷ 0,01 = 130 Ω. Valitse seuraava suurempi tavallinen arvo, 150 Ω.</p>
+<h3>Harjoittele</h3>
+<ol>
+<li>12 V ja 470 Ω. Kuinka suuri on virta?</li>
+<li>Mitoita vastus LEDille (1,9 V), kun syöttö on 5 V ja virta 12 mA.</li>
+</ol>
+<details><summary>Näytä vastaukset</summary><p>1) 12 ÷ 470 ≈ 25,5 mA. 2) (5 − 1,9) ÷ 0,012 ≈ 258 Ω, eli valitse 270 Ω.</p></details>
+</div></section>
+
+<section class="s8" id="s8"><h2>8. Linux</h2><div>
+<p><strong>Linux</strong> on käyttöjärjestelmä, kuten Windows tai macOS, mutta sitä ohjataan tavallisesti <strong>kirjoittamalla komentoja</strong> hiiren klikkaamisen sijaan. Lähes kaikki palvelimet ja monet IoT-laitteet käyttävät sitä.</p>
+<p>Kurssilla Linux ajetaan <strong>virtuaalikoneessa</strong>. Se on ohjelma, joka esittää oikeaa tietokonetta omassa ikkunassaan. Jos jokin menee rikki, oma tietokoneesi pysyy ehjänä. Voit myös ottaa <strong>tilannekuvan</strong> (snapshot) ennen kokeiluja ja palata siihen.</p>
+<h3>Kansiot</h3>
+<p>Linuxissa kaikki on yhdessä "puussa". Alkukohta on <code>/</code>.</p>
+<table>
+<tr><th>Kansio</th><th>Mitä siellä on</th></tr>
+<tr><td><code>/home</code></td><td>käyttäjien omat tiedostot</td></tr>
+<tr><td><code>/etc</code></td><td>asetukset</td></tr>
+<tr><td><code>/var/log</code></td><td>lokit eli ohjelmien muistiinpanot</td></tr>
+<tr><td><code>/dev</code></td><td>laitteet (esim. USB-portti)</td></tr>
+<tr><td><code>/tmp</code></td><td>väliaikaiset tiedostot</td></tr>
+</table>
+<div class="warn">Linux erottaa isot ja pienet kirjaimet: <code>Kuva.png</code> ja <code>kuva.png</code> ovat eri tiedostoja.</div>
+<h3>Tärkeimmät komennot</h3>
+<table>
+<tr><th>Komento</th><th>Mitä tekee</th><th>Esimerkki</th></tr>
+<tr><td><code>pwd</code></td><td>kertoo missä olet</td><td><code>pwd</code></td></tr>
+<tr><td><code>ls</code></td><td>listaa tiedostot</td><td><code>ls -l</code></td></tr>
+<tr><td><code>cd</code></td><td>vaihtaa kansiota</td><td><code>cd /etc</code>, <code>cd ..</code> (ylös)</td></tr>
+<tr><td><code>mkdir</code></td><td>tekee kansion</td><td><code>mkdir projekti</code></td></tr>
+<tr><td><code>touch</code></td><td>tekee tyhjän tiedoston</td><td><code>touch a.txt</code></td></tr>
+<tr><td><code>cp</code></td><td>kopioi</td><td><code>cp a.txt b.txt</code></td></tr>
+<tr><td><code>mv</code></td><td>siirtää tai nimeää uudelleen</td><td><code>mv a.txt kansio/</code></td></tr>
+<tr><td><code>rm</code></td><td>poistaa (ei palaa!)</td><td><code>rm a.txt</code></td></tr>
+<tr><td><code>cat</code></td><td>näyttää tiedoston sisällön</td><td><code>cat a.txt</code></td></tr>
+<tr><td><code>nano</code></td><td>tekstieditori</td><td><code>nano a.txt</code></td></tr>
+<tr><td><code>man</code></td><td>ohje komennolle</td><td><code>man ls</code></td></tr>
+</table>
+<div class="tip">Paina <strong>Tab</strong>, niin Linux täydentää nimen puolestasi. Nuoli ylös tuo edellisen komennon takaisin.</div>
+<h3>Oikeudet</h3>
+<p>Jokaisella tiedostolla on kolme oikeutta kolmelle taholle. Oikeudet: <strong>r</strong> = lukea, <strong>w</strong> = kirjoittaa, <strong>x</strong> = ajaa. Tahot: <strong>omistaja</strong>, <strong>ryhmä</strong>, <strong>muut</strong>. Komento <code>ls -l</code> näyttää ne:</p>
+<pre><code>-rwxr-xr-- skripti.sh</code></pre>
+<p>Omistaja saa rwx, ryhmä saa r-x ja muut saavat r--. Oikeudet voi kirjoittaa numeroina: <strong>r = 4, w = 2, x = 1</strong>, ja ne lasketaan yhteen. rwx = 7, r-x = 5, r-- = 4, eli <strong>754</strong>.</p>
+<pre><code>chmod 754 skripti.sh     # asettaa oikeudet
+sudo komento             # ajaa komennon ylläpitäjänä</code></pre>
+<div class="warn"><code>sudo</code> antaa kaikki valtuudet. Käytä sitä vain kun on pakko, koska yksi väärä komento voi tuhota järjestelmän.</div>
+<h3>Ohjelmien asennus</h3>
+<p>Ubuntussa ja Debianissa ohjelmat haetaan "ohjelmakaupasta" komennolla <code>apt</code>:</p>
+<pre><code>sudo apt update         # hae uusin ohjelmaluettelo
+sudo apt upgrade        # päivitä asennetut ohjelmat
+sudo apt install tree   # asenna ohjelma nimeltä tree</code></pre>
+<h3>Harjoittele virtuaalikoneessa</h3>
+<ol>
+<li>Tee kansio <code>iot</code> ja siihen tiedosto <code>data.txt</code>, jossa lukee "Lämpötila 21".</li>
+<li>Kopioi tiedosto nimellä <code>varmuus.txt</code>.</li>
+<li>Anna tiedostolle oikeudet 640. Mitä ne tarkoittavat?</li>
+<li>Asenna <code>tree</code> ja käytä sitä.</li>
+</ol>
+<details><summary>Näytä vastaus kohtaan 3</summary><p>Omistaja saa lukea ja kirjoittaa (6), ryhmä saa vain lukea (4), muut eivät saa mitään (0).</p></details>
+</div></section>
+
+<section class="s9" id="s9"><h2>9. IoT-laite ja ESP32</h2><div>
+<p>IoT-järjestelmässä tieto kulkee neljän vaiheen läpi. Ajattele sitä kuin postia:</p>
+<svg viewBox="0 0 760 250" role="img" aria-label="IoT-järjestelmän neljä kerrosta" font-size="14" font-family="system-ui,sans-serif" style="max-width:100%">
+<defs><marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#999"/></marker></defs>
+<g text-anchor="middle">
+<rect x="20" y="30" width="160" height="130" rx="14" fill="#ff6b6b"/><text x="100" y="62" font-weight="700" style="fill:#fff">1. Laite</text><text x="100" y="92" style="fill:#fff">Anturit</text><text x="100" y="114" style="fill:#fff">ESP32</text><text x="100" y="136" style="fill:#fff">Toimilaitteet</text>
+<rect x="210" y="30" width="160" height="130" rx="14" fill="#ffb020"/><text x="290" y="62" font-weight="700" style="fill:#3a2800">2. Yhteys</text><text x="290" y="92" style="fill:#3a2800">Wi-Fi</text><text x="290" y="114" style="fill:#3a2800">Bluetooth</text><text x="290" y="136" style="fill:#3a2800">MQTT-viestit</text>
+<rect x="400" y="30" width="160" height="130" rx="14" fill="#2fb344"/><text x="480" y="62" font-weight="700" style="fill:#fff">3. Palvelin</text><text x="480" y="92" style="fill:#fff">MQTT-broker</text><text x="480" y="114" style="fill:#fff">Tietokanta</text><text x="480" y="136" style="fill:#fff">Linux</text>
+<rect x="590" y="30" width="160" height="130" rx="14" fill="#3a7bd5"/><text x="670" y="62" font-weight="700" style="fill:#fff">4. Sovellus</text><text x="670" y="92" style="fill:#fff">Dashboard</text><text x="670" y="114" style="fill:#fff">Puhelinsovellus</text><text x="670" y="136" style="fill:#fff">Hälytykset</text>
+</g>
+<g stroke="#999" stroke-width="2" fill="none"><path d="M182 95H208" marker-end="url(#m)"/><path d="M372 95H398" marker-end="url(#m)"/><path d="M562 95H588" marker-end="url(#m)"/><path d="M670 162V205H100V164" marker-end="url(#m)"/></g>
+<text x="380" y="232" text-anchor="middle" font-size="12.5" opacity=".75">Komento voi kulkea takaisin laitteelle</text>
+</svg>
+<p><strong>MQTT</strong> toimii kuin ilmoitustaulu. Laite <strong>julkaisee</strong> viestin otsikolla (esim. <code>koti/lampotila</code>), ja kaikki, jotka <strong>tilaavat</strong> sen otsikon, saavat viestin <strong>brokerin</strong> kautta.</p>
+<h3>Näin suunnittelet laitteen</h3>
+<ol>
+<li><strong>Mitä haluan?</strong> Mitä mitataan ja mitä sillä tehdään?</li>
+<li><strong>Valitse osat:</strong> mikro-ohjain, anturit, virtalähde. Tarkista jännitteet.</li>
+<li><strong>Piirrä lohkokaavio</strong> (laatikoita ja nuolia).</li>
+<li><strong>Rakenna koekytkentälevylle.</strong></li>
+<li><strong>Ohjelmoi pienin osa kerrallaan:</strong> ensin yksi anturi.</li>
+<li><strong>Testaa</strong> ja vertaa mittaria oikeaan arvoon.</li>
+</ol>
+<h3>ESP32</h3>
+<p><strong>ESP32</strong> on pieni, halpa tietokone, jossa on valmiina Wi-Fi ja Bluetooth. Se toimii <strong>3,3 voltilla</strong>.</p>
+<div class="warn">Älä syötä sen pinniin 5 V:n signaalia. Se voi rikkoa sen. Pienennä jännite jännitteenjakajalla (luku 7).</div>
+<p>Ohjelmassa on kaksi pääosaa: <code>setup()</code> ajetaan kerran alussa, <code>loop()</code> toistuu ikuisesti. Tämä ohjelma lukee painikkeen, sytyttää LEDin ja tulostaa anturin jännitteen:</p>
+<pre><code>const int LED_PIN = 2;
+const int BTN_PIN = 4;
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BTN_PIN, INPUT_PULLUP);  // pinni pysyy ylhäällä, kunnes painike painetaan
+  Serial.begin(115200);
+}
+
+void loop() {
+  bool painettu = (digitalRead(BTN_PIN) == LOW);
+  digitalWrite(LED_PIN, painettu ? HIGH : LOW);
+
+  int raaka = analogRead(34);          // 0...4095
+  float volttia = raaka * 3.3 / 4095.0;
+  Serial.println(volttia);
+  delay(200);
+}</code></pre>
+<div class="tip">Kun Wi-Fi on päällä, käytä analogisiin mittauksiin pinnejä 32–39. Toiset analogiapinnit eivät toimi luotettavasti Wi-Fin kanssa.</div>
+<h3>Anturit ja toimilaitteet</h3>
+<table>
+<tr><th>Anturi</th><th>Mittaa</th></tr>
+<tr><td>Potentiometri</td><td>kuinka paljon nuppia on käännetty</td></tr>
+<tr><td>LDR</td><td>valon määrä</td></tr>
+<tr><td>DHT22</td><td>lämpötila ja kosteus</td></tr>
+<tr><td>DS18B20</td><td>lämpötila (tarkka)</td></tr>
+<tr><td>BME280</td><td>lämpötila, kosteus, ilmanpaine</td></tr>
+<tr><td>PIR</td><td>liike</td></tr>
+<tr><td>HC-SR04</td><td>etäisyys (käyttää 5 V, varo!)</td></tr>
+</table>
+<table>
+<tr><th>Toimilaite</th><th>Tekee</th><th>Huomaa</th></tr>
+<tr><td>LED</td><td>valo</td><td>tarvitsee vastuksen</td></tr>
+<tr><td>Summeri</td><td>ääni</td><td>–</td></tr>
+<tr><td>Rele</td><td>kytkee suuren laitteen</td><td>transistori ja suojadiodi</td></tr>
+<tr><td>Servo</td><td>liikuttaa varttaa</td><td>oma virtalähde, jos iso</td></tr>
+<tr><td>Moottori</td><td>pyörii</td><td>ohjaa transistorilla</td></tr>
+</table>
+<h3>Harjoitustyö</h3>
+<ol>
+<li>Valitse <strong>selkeä ongelma</strong>, esim. "huoneen kosteus nousee yli 70 % → hälytys" tai "kasvi on kuiva → pumppu käy".</li>
+<li>Piirrä <strong>lohkokaavio</strong>.</li>
+<li>Tee <strong>pienin toimiva versio</strong> (yksi anturi + sarjamonitori).</li>
+<li>Lisää <strong>toimilaite</strong> ja sääntö (jos arvo ylittää rajan → LED).</li>
+<li>Kirjoita <strong>raportti</strong>: kuva, kytkentäkaavio, koodi, mittaukset, ongelmat.</li>
+<li>Viimeistelypäivänä testaa ja dokumentoi, älä keksi uusia ominaisuuksia.</li>
+</ol>
+<div class="tip">Tarkista harjoitustyön tarkat vaatimukset opettajalta.</div>
+<h3>Harjoittele</h3>
+<ol>
+<li>ESP32 lukee luvun 3071. Kuinka monta volttia se on?</li>
+<li>Miksi 5 V:n anturin signaalia ei voi kytkeä suoraan ESP32:iin?</li>
+</ol>
+<details><summary>Näytä vastaukset</summary><p>1) 3071 × 3,3 ÷ 4095 ≈ 2,47 V. 2) ESP32 kestää vain 3,3 V. Käytä jännitteenjakajaa.</p></details>
+</div></section>
+
+<section class="s10" id="s10"><h2>10. Kertaus</h2><div>
+<p>Kurssilla on kaksi tenttiä ja harjoitustyö. Kysy opettajalta, mitä kumpikin tentti kattaa. Tässä tärkeimmät asiat yhdellä silmäyksellä.</p>
+<table>
+<tr><th>Asia</th><th>Muista</th></tr>
+<tr><td>Binääripaikat</td><td>1, 2, 4, 8, 16, 32, 64, 128</td></tr>
+<tr><td>n bittiä</td><td>mahtuu 0 … 2ⁿ − 1</td></tr>
+<tr><td>Ohmin laki</td><td>U = R × I</td></tr>
+<tr><td>Teho</td><td>P = U × I</td></tr>
+<tr><td>Jännitteenjakaja</td><td>U<sub>ulos</sub> = U<sub>sisään</sub> × R₂ ÷ (R₁ + R₂)</td></tr>
+<tr><td>LED-vastus</td><td>(syöttö − LED) ÷ virta</td></tr>
+<tr><td>Aikavakio</td><td>τ = R × C</td></tr>
+<tr><td>ADC:n porras</td><td>jänniteväli ÷ 2ⁿ</td></tr>
+<tr><td>Mittaustaajuus</td><td>vähintään 2 × signaalin taajuus</td></tr>
+<tr><td>Linux-oikeudet</td><td>r = 4, w = 2, x = 1</td></tr>
+</table>
+<h3>Testaa itsesi</h3>
+<ul style="list-style:none;padding-left:0">
+<li><label><input type="checkbox"> Osaan muuttaa luvun 200 binääriksi (11001000) ja heksaksi (C8).</label></li>
+<li><label><input type="checkbox"> Tiedän, mitä AND, OR, NOT ja XOR tekevät.</label></li>
+<li><label><input type="checkbox"> Osaan tehdä Karnaughin kartan ja ympyröidä ryhmät.</label></li>
+<li><label><input type="checkbox"> Tiedän, mitä JK-kiikku tekee, kun J = K = 1.</label></li>
+<li><label><input type="checkbox"> Osaan selittää, miksi LED tarvitsee vastuksen.</label></li>
+<li><label><input type="checkbox"> Osaan laskea virran Ohmin lailla.</label></li>
+<li><label><input type="checkbox"> Tiedän, miten virta ja jännite mitataan yleismittarilla.</label></li>
+<li><label><input type="checkbox"> Osaan tehdä kansion ja tiedoston Linuxissa.</label></li>
+<li><label><input type="checkbox"> Tiedän, mitä <code>chmod 640</code> tarkoittaa.</label></li>
+<li><label><input type="checkbox"> Osaan luetella IoT-järjestelmän neljä vaihetta.</label></li>
+<li><label><input type="checkbox"> Tiedän, miksi ESP32:aan ei saa laittaa 5 V:n signaalia.</label></li>
+</ul>
+<p>🎉 <strong>Hyvä!</strong> Kun osaat nämä, olet valmis tenttiin.</p>
+</div></section>
+
+</main>
+<script>
+(function(){
+  var box=document.getElementById('bits'),out=document.getElementById('bitout');
+  var w=[8,4,2,1],st=[0,0,0,0];
+  function draw(){
+    var sum=0;
+    for(var i=0;i<4;i++){if(st[i])sum+=w[i];}
+    out.textContent=st.join(' ')+'  =  '+sum;
+  }
+  w.forEach(function(v,i){
+    var b=document.createElement('button');
+    b.className='bit';
+    b.innerHTML='0<small>'+v+'</small>';
+    b.onclick=function(){
+      st[i]=st[i]?0:1;
+      b.className='bit'+(st[i]?' on':'');
+      b.innerHTML=st[i]+'<small>'+v+'</small>';
+      draw();
+    };
+    box.appendChild(b);
+  });
+  draw();
+  var u=document.getElementById('u'),r=document.getElementById('r'),o=document.getElementById('iout');
+  function calc(){
+    var a=parseFloat(u.value),b=parseFloat(r.value);
+    if(!(b>0)||isNaN(a)){o.textContent='?';return;}
+    var i=a/b;
+    o.textContent=i<1?(i*1000).toFixed(2)+' mA':i.toFixed(3)+' A';
+  }
+  u.oninput=calc;r.oninput=calc;calc();
+})();
+</script>
+</body>
+</html>
