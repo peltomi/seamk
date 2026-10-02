@@ -110,39 +110,37 @@ body {
   color: var(--text);
   line-height: 1.72;
   min-height: 100vh;
+  height: 100%;
 }
+html { height: 100%; }
 a { color: var(--accent); }
 strong { font-weight: 700; }
 
 /* ═══════════════════════════════════════
-   LAYOUT – sidebar + content
+   LAYOUT – sidebar + content (CSS Grid)
 ═══════════════════════════════════════ */
-:root {
-  --sidebar-w: 248px;
-}
+:root { --sidebar-w: 248px; }
+
 .layout {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  align-items: start;
   min-height: 100vh;
 }
 
-/* ── Sidebar ── */
 .sidebar {
-  width: var(--sidebar-w);
-  flex-shrink: 0;
   position: sticky;
   top: 0;
   height: 100vh;
   overflow-y: auto;
   background: var(--surface);
   border-right: 1px solid var(--border);
-  z-index: 100;
   display: flex;
   flex-direction: column;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
 }
 .sidebar::-webkit-scrollbar { width: 5px; }
-.sidebar::-webkit-scrollbar-track { background: transparent; }
 .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
 .sidebar-header {
@@ -154,7 +152,7 @@ strong { font-weight: 700; }
   background: var(--surface);
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   flex-shrink: 0;
 }
 .sidebar-brand {
@@ -166,7 +164,6 @@ strong { font-weight: 700; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  letter-spacing: -.01em;
 }
 .sidebar-brand em {
   color: var(--text-muted);
@@ -190,10 +187,7 @@ strong { font-weight: 700; }
 }
 .btn-theme:hover { background: var(--border); }
 
-.sidebar-nav {
-  padding: 6px 0 32px;
-  flex: 1;
-}
+.sidebar-nav { padding: 6px 0 32px; flex: 1; }
 .sidebar-section-label {
   font-family: 'Nunito', sans-serif;
   font-size: .62rem;
@@ -221,10 +215,7 @@ strong { font-weight: 700; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.sidebar-link:hover {
-  color: var(--accent);
-  background: var(--accent-dim);
-}
+.sidebar-link:hover { color: var(--accent); background: var(--accent-dim); }
 .sidebar-link.active {
   color: var(--accent);
   background: var(--accent-dim);
@@ -241,13 +232,10 @@ strong { font-weight: 700; }
   text-transform: uppercase;
   flex-shrink: 0;
 }
-.sidebar-hr {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 6px 12px;
-}
+.sidebar-hr { border: none; border-top: 1px solid var(--border); margin: 6px 12px; }
 
-/* Mobile hamburger */
+.main-wrapper { min-width: 0; }
+
 .mobile-bar {
   display: none;
   align-items: center;
@@ -258,7 +246,7 @@ strong { font-weight: 700; }
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  z-index: 190;
+  z-index: 100;
 }
 .hamburger {
   background: none;
@@ -286,27 +274,16 @@ strong { font-weight: 700; }
 }
 .sidebar-overlay.visible { display: block; }
 
-/* ── Main content wrapper ── */
-.main-wrapper {
-  flex: 1;
-  min-width: 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ── Nav link (legacy, keep for compat) ── */
 .nav-link { display: none; }
 
-/* ── Responsive ── */
 @media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
   .sidebar {
     position: fixed;
     top: 0; left: 0; bottom: 0;
     height: 100vh;
     transform: translateX(-100%);
     transition: transform .28s ease;
-    box-shadow: none;
     z-index: 300;
   }
   .sidebar.open {
@@ -841,7 +818,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
 <div class="main-wrapper">
 
 <!-- ═══════ PKG MUISTUTUS ═══════ -->
-<div id="pkg-bar" style="background:#b45309;color:#fff;text-align:center;padding:7px 16px;font-size:.88rem;font-family:monospace;position:sticky;position:relative;z-index:99;letter-spacing:.01em">
+<div id="pkg-bar" style="background:#b45309;color:#fff;text-align:center;padding:7px 16px;font-size:.88rem;font-family:monospace;position:sticky;position:sticky;top:0;z-index:50;letter-spacing:.01em">
   🚨 <strong>KIRJAINLASKUISSA AINA ENSIN:</strong>&nbsp;&nbsp;<code style="background:rgba(0,0,0,.3);padding:2px 10px;border-radius:4px;font-size:.95em">pkg load symbolic</code>&nbsp;&nbsp;→ odota "Python link active" → sitten clear ja syms
 </div>
 
