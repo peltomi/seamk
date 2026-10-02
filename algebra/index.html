@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -115,133 +115,121 @@ a { color: var(--accent); }
 strong { font-weight: 700; }
 
 /* ═══════════════════════════════════════
-   TOPBAR
+   LAYOUT – sidebar + content
 ═══════════════════════════════════════ */
-.topbar {
+:root {
+  --sidebar-w: 248px;
+}
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.sidebar::-webkit-scrollbar { width: 5px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.sidebar-header {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
   position: sticky;
   top: 0;
-  z-index: 200;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  align-items: stretch;
-  padding: 0 20px;
-  gap: 0;
-  height: 48px;
+  z-index: 1;
+  flex-shrink: 0;
 }
-.topbar-brand {
+.sidebar-brand {
   font-family: 'Nunito', sans-serif;
   font-weight: 900;
   font-size: 1rem;
   color: var(--accent);
+  flex: 1;
   white-space: nowrap;
-  display: flex;
-  align-items: center;
-  padding: 0 18px 0 0;
-  margin-right: 8px;
-  border-right: 1px solid var(--border);
-  flex-shrink: 0;
-  gap: 7px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -.01em;
 }
-.topbar-brand em { color: var(--text-muted); font-style: normal; font-weight: 500; font-size: .9rem; }
-
-/* ── dropdown items ── */
-.nav-item {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  flex-shrink: 0;
-}
-.nav-trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 0 13px;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  font-size: .82rem;
+.sidebar-brand em {
   color: var(--text-muted);
-  text-decoration: none;
-  border-bottom: 3px solid transparent;
-  white-space: nowrap;
-  cursor: pointer;
-  background: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  transition: color .15s, border-color .15s;
-  letter-spacing: .01em;
-}
-.nav-trigger:hover, .nav-item:hover .nav-trigger { color: var(--accent); }
-.nav-item.active > .nav-trigger { color: var(--accent); border-bottom-color: var(--accent); }
-.nav-trigger .chev {
-  font-size: .6rem;
-  opacity: .55;
-  transition: transform .2s;
-  display: inline-block;
-}
-.nav-item:hover .chev { transform: rotate(180deg); }
-
-/* direct link (no dropdown) */
-.nav-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 0 13px;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
+  font-style: normal;
+  font-weight: 600;
   font-size: .82rem;
-  color: var(--text-muted);
-  text-decoration: none;
-  border-bottom: 3px solid transparent;
-  white-space: nowrap;
-  transition: color .15s, border-color .15s;
-  flex-shrink: 0;
 }
-.nav-link:hover { color: var(--accent); }
-.nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-/* dropdown panel */
-.nav-dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 1px);
-  left: 0;
-  min-width: 210px;
-  background: var(--surface);
+.btn-theme {
+  background: var(--bg-alt);
   border: 1px solid var(--border);
-  border-radius: 0 0 var(--r-sm) var(--r-sm);
-  box-shadow: 0 8px 24px rgba(74,124,247,.13);
-  padding: 6px 0;
-  z-index: 300;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: .78rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .15s;
 }
-.nav-item:hover .nav-dropdown { display: block; }
-.nav-dropdown a {
+.btn-theme:hover { background: var(--border); }
+
+.sidebar-nav {
+  padding: 6px 0 32px;
+  flex: 1;
+}
+.sidebar-section-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 12px 16px 4px;
+  pointer-events: none;
+  user-select: none;
+}
+.sidebar-link {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 16px;
+  padding: 8px 16px 8px 18px;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
-  font-size: .82rem;
-  color: var(--text);
-  text-decoration: none;
-  transition: background .12s, color .12s;
-}
-.nav-dropdown a:hover { background: var(--accent-dim); color: var(--accent); }
-.nav-dropdown .drop-section {
-  font-size: .68rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  font-size: .83rem;
   color: var(--text-muted);
-  padding: 10px 16px 3px;
-  pointer-events: none;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: color .12s, background .12s, border-color .12s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.nav-dropdown hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
-
-.nav-link .tag-soon, .nav-trigger .tag-soon, .nav-dropdown a .tag-soon {
+.sidebar-link:hover {
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+.sidebar-link.active {
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-left-color: var(--accent);
+}
+.sidebar-link .tag-soon {
   background: var(--tag-coming-bg);
   color: var(--tag-coming);
   font-size: .6rem;
@@ -250,36 +238,87 @@ strong { font-weight: 700; }
   padding: 1px 5px;
   border-radius: 4px;
   text-transform: uppercase;
-}
-.topbar-end {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-left: 12px;
   flex-shrink: 0;
 }
-.btn-theme {
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 5px 13px;
-  font-size: .78rem;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: background .15s;
+.sidebar-hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 6px 12px;
 }
-.btn-theme:hover { background: var(--border); }
+
+/* Mobile hamburger */
+.mobile-bar {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  height: 48px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 190;
+}
+.hamburger {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text);
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+.hamburger:hover { background: var(--bg-alt); }
+.mobile-brand {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: .95rem;
+  color: var(--accent);
+  flex: 1;
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 199;
+}
+.sidebar-overlay.visible { display: block; }
+
+/* ── Main content wrapper ── */
+.main-wrapper {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Nav link (legacy, keep for compat) ── */
+.nav-link { display: none; }
+
+/* ── Responsive ── */
+@media (max-width: 800px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .28s ease;
+    box-shadow: none;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0,0,0,.18);
+  }
+  .main-wrapper { margin-left: 0; }
+  .mobile-bar { display: flex; }
+}
 
 /* ═══════════════════════════════════════
    PAGE SHELL
 ═══════════════════════════════════════ */
 .page {
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 44px 24px 100px;
+  padding: 40px 28px 100px;
 }
 
 /* ═══════════════════════════════════════
@@ -343,7 +382,7 @@ strong { font-weight: 700; }
 ═══════════════════════════════════════ */
 .section {
   margin-bottom: 64px;
-  scroll-margin-top: 58px;
+  scroll-margin-top: 20px;
 }
 .section-label {
   font-family: 'Nunito', sans-serif;
@@ -733,15 +772,10 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
    RESPONSIVE
 ═══════════════════════════════════════ */
 @media (max-width: 600px) {
-  .topbar-brand { display: none; }
-  .topbar { padding: 0 8px; overflow-x: auto; scrollbar-width: none; }
-  .topbar::-webkit-scrollbar { display: none; }
-  .nav-trigger, .nav-link { padding: 0 10px; font-size: .78rem; }
-  .nav-dropdown { min-width: 175px; }
   .hero { padding: 28px 22px; }
   .hero h1 { font-size: 1.65rem; }
   .card { padding: 18px; }
-  .page { padding: 28px 16px 80px; }
+  .page { padding: 24px 14px 80px; }
   .section-title { font-size: 1.5rem; }
   .coming-section { padding: 22px 18px; }
 }
@@ -752,82 +786,58 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
 </head>
 <body>
 
-<!-- ═══════════════════ NAV ═══════════════════ -->
-<nav class="topbar" role="navigation">
-  <div class="topbar-brand">🔢 <em>Matikan opas</em></div>
-
-  <!-- Yleistä -->
-  <div class="nav-item">
-    <button class="nav-trigger">Yleistä <span class="chev">▾</span></button>
-    <div class="nav-dropdown">
-      <div class="drop-section">Aloitus</div>
-      <a href="#tenttiopas">🎯 Tenttiopas</a>
-      <a href="#mallinnus">🔧 Yhtälöt tekstistä</a>
-    </div>
-  </div>
-
-  <!-- Octave -->
-  <div class="nav-item">
-    <button class="nav-trigger">💻 Octave <span class="chev">▾</span></button>
-    <div class="nav-dropdown">
-      <div class="drop-section">Octave-perusteet</div>
-      <a href="#octave">💻 Perusteet</a>
-      <a href="#vektorit">📋 Vektorit</a>
-      <a href="#plottaus">📊 Plottaus</a>
-      <a href="#koukut">🪝 Koukut</a>
-      <a href="#muunnokset">🔄 Muunnokset</a>
-    </div>
-  </div>
-
-  <!-- Algebra -->
-  <div class="nav-item">
-    <button class="nav-trigger">📐 Algebra <span class="chev">▾</span></button>
-    <div class="nav-dropdown">
-      <div class="drop-section">Algebra</div>
-      <a href="#algebra">📐 Teoria</a>
-      <a href="#alg-harj">✏️ Harjoitukset</a>
-    </div>
-  </div>
-
-  <!-- Trigonometria -->
-  <div class="nav-item">
-    <button class="nav-trigger">📏 Trigonometria <span class="chev">▾</span></button>
-    <div class="nav-dropdown">
-      <div class="drop-section">Trigonometria</div>
-      <a href="#trig">📏 Teoria</a>
-      <a href="#trig-harj">✏️ Harjoitukset</a>
-    </div>
-  </div>
-
-  <!-- Analyyttinen geometria -->
-  <div class="nav-item">
-    <button class="nav-trigger">📍 An.geometria <span class="chev">▾</span></button>
-    <div class="nav-dropdown">
-      <div class="drop-section">Teoria</div>
-      <a href="#analyyttinen">📐 Kaikki teoria</a>
-      <hr>
-      <div class="drop-section">Harjoitukset</div>
-      <a href="#analyyttinen">AG1–AG20</a>
-    </div>
-  </div>
-
-  <!-- Tulossa -->
-  <div class="nav-item">
-    <button class="nav-trigger"><span class="tag-soon">Tulossa</span> <span class="chev">▾</span></button>
-    <div class="nav-dropdown">
-      <div class="drop-section">Seuraavaksi</div>
-      <a href="#sinikayrat"><span class="tag-soon">Tulossa</span> Sinikäyrät</a>
-      <a href="#eksponentti"><span class="tag-soon">Tulossa</span> Eksp. &amp; log.</a>
-    </div>
-  </div>
-
-  <div class="topbar-end">
+<div class="layout">
+<!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+<aside class="sidebar" id="sidebar" role="navigation" aria-label="Sivuvalikko">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">🔢 <em>Matikan opas</em></div>
     <button class="btn-theme" onclick="toggleTheme()" aria-label="Vaihda teemaa">🌙</button>
   </div>
-</nav>
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-label">Yleistä</div>
+    <a href="#tenttiopas" class="sidebar-link" data-section="tenttiopas">🎯 Tenttiopas</a>
+    <a href="#mallinnus" class="sidebar-link" data-section="mallinnus">🔧 Yhtälöt tekstistä</a>
+
+    <hr class="sidebar-hr">
+    <div class="sidebar-section-label">💻 Octave</div>
+    <a href="#octave" class="sidebar-link" data-section="octave">💻 Perusteet</a>
+    <a href="#vektorit" class="sidebar-link" data-section="vektorit">📋 Vektorit &amp; matriisit</a>
+    <a href="#plottaus" class="sidebar-link" data-section="plottaus">📊 Plottaus</a>
+    <a href="#koukut" class="sidebar-link" data-section="koukut">🪝 Koukut &amp; silmukat</a>
+    <a href="#muunnokset" class="sidebar-link" data-section="muunnokset">🔄 Muunnokset</a>
+
+    <hr class="sidebar-hr">
+    <div class="sidebar-section-label">📐 Algebra</div>
+    <a href="#algebra" class="sidebar-link" data-section="algebra">📐 Teoria</a>
+    <a href="#alg-harj" class="sidebar-link" data-section="alg-harj">✏️ Harjoitukset</a>
+
+    <hr class="sidebar-hr">
+    <div class="sidebar-section-label">📏 Trigonometria</div>
+    <a href="#trig" class="sidebar-link" data-section="trig">📏 Teoria</a>
+    <a href="#trig-harj" class="sidebar-link" data-section="trig-harj">✏️ Harjoitukset</a>
+
+    <hr class="sidebar-hr">
+    <div class="sidebar-section-label">📍 An.geometria</div>
+    <a href="#analyyttinen" class="sidebar-link" data-section="analyyttinen">📐 Teoria</a>
+    <a href="#ag-harj" class="sidebar-link" data-section="ag-harj">✏️ AG1–AG20</a>
+
+    <hr class="sidebar-hr">
+    <div class="sidebar-section-label">Tulossa</div>
+    <a href="#sinikayrat" class="sidebar-link" data-section="sinikayrat"><span class="tag-soon">Tulossa</span> Sinikäyrät</a>
+    <a href="#eksponentti" class="sidebar-link" data-section="eksponentti"><span class="tag-soon">Tulossa</span> Eksp. &amp; log.</a>
+  </nav>
+</aside>
+<!-- mobile top bar -->
+<div class="mobile-bar">
+  <button class="hamburger" onclick="openSidebar()" aria-label="Avaa valikko">☰</button>
+  <div class="mobile-brand">🔢 Matikan opas</div>
+  <button class="btn-theme" onclick="toggleTheme()" aria-label="Vaihda teemaa">🌙</button>
+</div>
+<div class="main-wrapper">
 
 <!-- ═══════ PKG MUISTUTUS ═══════ -->
-<div id="pkg-bar" style="background:#b45309;color:#fff;text-align:center;padding:7px 16px;font-size:.88rem;font-family:monospace;position:sticky;top:48px;z-index:99;letter-spacing:.01em">
+<div id="pkg-bar" style="background:#b45309;color:#fff;text-align:center;padding:7px 16px;font-size:.88rem;font-family:monospace;position:sticky;top:0;z-index:99;letter-spacing:.01em">
   🚨 <strong>KIRJAINLASKUISSA AINA ENSIN:</strong>&nbsp;&nbsp;<code style="background:rgba(0,0,0,.3);padding:2px 10px;border-radius:4px;font-size:.95em">pkg load symbolic</code>&nbsp;&nbsp;→ odota "Python link active" → sitten clear ja syms
 </div>
 
@@ -1287,6 +1297,254 @@ c = <span class="fn">sqrt</span>(a^<span class="nm">2</span> + b^<span class="nm
 <span class="cm">% c = 5  ← vastaus</span></pre>
       </div>
     </div>
+  </section>
+
+
+    <!-- ─── LISÄÄ OCTAVE TEORIAA ─── -->
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔁</span><div>
+        <div class="card-title">For-silmukka — toistetaan N kertaa</div>
+        <div class="card-sub">Kaikki toistuva laskenta tapahtuu for-silmukassa</div>
+      </div></div>
+      <p>For-silmukka käy läpi vektorin alkiot yksi kerrallaan. Tyypillisin käyttö: laske sama asia eri arvoilla tai rakenna taulukkoa.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">%% Perusmuoto: for muuttuja = alku:loppu</span>
+<span class="kw">for</span> i = <span class="nm">1</span>:<span class="nm">5</span>
+  <span class="fn">disp</span>(i^<span class="nm">2</span>)          <span class="cm">% tulostaa 1, 4, 9, 16, 25</span>
+<span class="kw">end</span>
+
+<span class="cm">%% Kerää tulokset vektoriin</span>
+tulos = <span class="fn">zeros</span>(<span class="nm">1</span>,<span class="nm">5</span>);    <span class="cm">% varaa tila etukäteen</span>
+<span class="kw">for</span> i = <span class="nm">1</span>:<span class="nm">5</span>
+  tulos(i) = i^<span class="nm">2</span>;
+<span class="kw">end</span>
+tulos    <span class="cm">% → [1 4 9 16 25]</span>
+
+<span class="cm">%% Käy läpi valmiin vektorin arvot</span>
+kulmat = [<span class="nm">0</span>, <span class="nm">30</span>, <span class="nm">45</span>, <span class="nm">60</span>, <span class="nm">90</span>];
+<span class="kw">for</span> alfa = kulmat
+  <span class="fn">fprintf</span>(<span class="st">'sin(%3d°) = %.4f\n'</span>, alfa, <span class="fn">sind</span>(alfa))
+<span class="kw">end</span>
+
+<span class="cm">%% Sisäkkäinen for (esim. matriisi)</span>
+<span class="kw">for</span> i = <span class="nm">1</span>:<span class="nm">3</span>
+  <span class="kw">for</span> j = <span class="nm">1</span>:<span class="nm">3</span>
+    A(i,j) = i * j;   <span class="cm">% kertotaulu</span>
+  <span class="kw">end</span>
+<span class="kw">end</span>
+A        <span class="cm">% → 3×3 kertotaululumatriisi</span></pre>
+      </div>
+      <div class="box tip"><span class="box-icon">💡</span><div><strong>Vektorioperaatio vs for:</strong> <code>x.^2</code> on nopeampaa kuin for-silmukka vektoreilla — mutta for on selkeämpi kun logiikka on monimutkaisempi.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔄</span><div>
+        <div class="card-title">While-silmukka — jatketaan kunnes ehto täyttyy</div>
+        <div class="card-sub">Kun ei tiedetä etukäteen montako kierrosta tarvitaan</div>
+      </div></div>
+      <p>While-silmukka pyörii niin kauan kuin ehto on tosi. Käyttökohteita: iteratiiviset laskut (Newton), konvergenssitarkistus, käyttäjän syöte.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">%% Perusmuoto</span>
+x = <span class="nm">100</span>;
+<span class="kw">while</span> x > <span class="nm">1</span>
+  x = x / <span class="nm">2</span>;
+  <span class="fn">fprintf</span>(<span class="st">'x = %.4f\n'</span>, x)
+<span class="kw">end</span>   <span class="cm">% → 50, 25, 12.5, ... 0.78125</span>
+
+<span class="cm">%% Neliöjuuri Newtonin menetelmällä (iteraatio)</span>
+a = <span class="nm">2</span>;         <span class="cm">% haetaan sqrt(2)</span>
+x = <span class="nm">1</span>;         <span class="cm">% alkuarvaus</span>
+<span class="kw">while</span> <span class="fn">abs</span>(x^<span class="nm">2</span> - a) > <span class="nm">1e-10</span>
+  x = (x + a/x) / <span class="nm">2</span>;   <span class="cm">% Newtonin iteraatio</span>
+<span class="kw">end</span>
+x        <span class="cm">% → 1.41421356... ≈ sqrt(2)</span>
+<span class="fn">sqrt</span>(<span class="nm">2</span>)  <span class="cm">% vertaa: sama tulos</span>
+
+<span class="cm">%% break – keskeytä ennenaikaisesti</span>
+<span class="kw">for</span> i = <span class="nm">1</span>:<span class="nm">100</span>
+  <span class="kw">if</span> i^<span class="nm">2</span> > <span class="nm">50</span>
+    <span class="fn">fprintf</span>(<span class="st">'Ensimmäinen i jonka neliö > 50: %d\n'</span>, i)
+    <span class="kw">break</span>
+  <span class="kw">end</span>
+<span class="kw">end</span>   <span class="cm">% → i = 8</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🔀</span><div>
+        <div class="card-title">If-else — ehtolauseet</div>
+        <div class="card-sub">Eri toiminto eri tilanteissa</div>
+      </div></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">%% Perusmuoto if / elseif / else</span>
+D = <span class="nm">5</span>;
+<span class="kw">if</span> D > <span class="nm">0</span>
+  <span class="fn">disp</span>(<span class="st">'Kaksi juurta'</span>)
+<span class="kw">elseif</span> D == <span class="nm">0</span>
+  <span class="fn">disp</span>(<span class="st">'Yksi juuri (kaksinkertainen)'</span>)
+<span class="kw">else</span>
+  <span class="fn">disp</span>(<span class="st">'Ei reaalisia juuria'</span>)
+<span class="kw">end</span>
+
+<span class="cm">%% Vertailuoperaattorit</span>
+<span class="cm">%  ==  yhtä suuri       ~=  eri suuri</span>
+<span class="cm">%   >  suurempi          <  pienempi</span>
+<span class="cm">%  >=  suurempi tai yhtä  <=  pienempi tai yhtä</span>
+<span class="cm">%  &&  JA (skalaari)      ||  TAI (skalaari)</span>
+
+<span class="cm">%% Käytännön esimerkki: diskriminantti</span>
+a=<span class="nm">1</span>; b=<span class="nm">-5</span>; c=<span class="nm">6</span>;
+D = b^<span class="nm">2</span> - <span class="nm">4</span>*a*c;
+<span class="kw">if</span> D > <span class="nm">0</span>
+  x1 = (-b - <span class="fn">sqrt</span>(D))/(2*a)
+  x2 = (-b + <span class="fn">sqrt</span>(D))/(2*a)
+<span class="kw">elseif</span> D == <span class="nm">0</span>
+  x1 = -b/(2*a)
+<span class="kw">else</span>
+  <span class="fn">disp</span>(<span class="st">'Ei reaalisia juuria'</span>)
+<span class="kw">end</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">📢</span><div>
+        <div class="card-title">fprintf ja disp — tulostus</div>
+        <div class="card-sub">Muotoiltu tulostus ja selkeät vastaukset</div>
+      </div></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">%% disp – yksinkertainen tulostus</span>
+<span class="fn">disp</span>(<span class="st">'Terve!'</span>)
+<span class="fn">disp</span>(<span class="nm">42</span>)
+<span class="fn">disp</span>([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>])   <span class="cm">% tulostaa vektorin</span>
+
+<span class="cm">%% fprintf – muotoiltu tulostus (kuten printf C:ssä)</span>
+<span class="cm">% %d = kokonaisluku, %f = desimaaliluku, %s = teksti</span>
+<span class="cm">% \n = rivinvaihto</span>
+x = <span class="nm">3.14159</span>;
+<span class="fn">fprintf</span>(<span class="st">'Pii ≈ %.2f\n'</span>, x)         <span class="cm">% → Pii ≈ 3.14</span>
+<span class="fn">fprintf</span>(<span class="st">'Tarkkana: %.6f\n'</span>, x)     <span class="cm">% → Tarkkana: 3.141590</span>
+<span class="fn">fprintf</span>(<span class="st">'i=%d, arvo=%.3f\n'</span>, <span class="nm">5</span>, x) <span class="cm">% → i=5, arvo=3.142</span>
+
+<span class="cm">%% Muotoiluohjeet yhteenveto</span>
+<span class="cm">%  %d    kokonaisluku (integer)</span>
+<span class="cm">%  %f    desimaaliluku (5.300000)</span>
+<span class="cm">%  %.2f  2 desimaalia (5.30)</span>
+<span class="cm">%  %e    tieteellinen (5.3e+00)</span>
+<span class="cm">%  %g    lyhyt muoto (5.3)</span>
+<span class="cm">%  %s    merkkijono (teksti)</span>
+
+<span class="cm">%% num2str – luku merkkijonoksi (title, legend)</span>
+k = <span class="nm">2.5</span>;
+<span class="fn">title</span>([<span class="st">'Kulmakerroin k = '</span>, <span class="fn">num2str</span>(k)])  <span class="cm">% kuvaajan otsikko</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🧩</span><div>
+        <div class="card-title">Funktiot — omat aliohjelmat</div>
+        <div class="card-sub">Kirjoita kerran, käytä monesti</div>
+      </div></div>
+      <p>Octavessa voi kirjoittaa omia funktioita. Hyödyllinen kun sama laskutoimitus toistuu useasti tai halutaan selkeyttää koodia.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="cm">%% Yksinkertainen funktio (tiedoston lopussa tai omassa .m-tiedostossa)</span>
+<span class="kw">function</span> y = nelio(x)
+  y = x.^<span class="nm">2</span>;        <span class="cm">% piste-operaattori → toimii myös vektoreilla</span>
+<span class="kw">end</span>
+
+nelio(<span class="nm">4</span>)     <span class="cm">% → 16</span>
+nelio([<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>])  <span class="cm">% → [1, 4, 9]</span>
+
+<span class="cm">%% Funktio jolla useita paluuarvoja</span>
+<span class="kw">function</span> [minimi, maksimi] = minmax(v)
+  minimi = <span class="fn">min</span>(v);
+  maksimi = <span class="fn">max</span>(v);
+<span class="kw">end</span>
+
+data = [<span class="nm">3</span>, <span class="nm">1</span>, <span class="nm">4</span>, <span class="nm">1</span>, <span class="nm">5</span>, <span class="nm">9</span>];
+[pienin, suurin] = minmax(data)
+<span class="cm">% → pienin = 1, suurin = 9</span>
+
+<span class="cm">%% Käytännön esimerkki: paraabelin huippu</span>
+<span class="kw">function</span> [x0, y0] = huippu(a, b, c)
+  x0 = -b / (<span class="nm">2</span>*a);
+  y0 = a*x0^<span class="nm">2</span> + b*x0 + c;
+<span class="kw">end</span>
+
+[xh, yh] = huippu(<span class="nm">2</span>, -<span class="nm">8</span>, <span class="nm">3</span>)   <span class="cm">% → xh=2, yh=-5</span></pre>
+      </div>
+      <div class="box info"><span class="box-icon">📝</span><div><strong>Anonyymi funktio (lyhyt muoto):</strong> <code>f = @(x) x.^2 + 3*x - 1;</code> ja kutsu <code>f(2)</code> → 9. Hyödyllinen kun funktio on yksinkertainen.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">🪟</span><div>
+        <div class="card-title">subplot — useita kuvaajia samassa ikkunassa</div>
+        <div class="card-sub">subplot(rivit, sarakkeet, indeksi)</div>
+      </div></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span></div>
+        <pre><span class="kw">clear</span>; close <span class="kw">all</span>
+x = -<span class="nm">3</span>:<span class="nm">0.1</span>:<span class="nm">3</span>;
+
+<span class="cm">% 2 rivi, 2 saraketta → 4 kuvaajaa</span>
+<span class="fn">subplot</span>(<span class="nm">2</span>,<span class="nm">2</span>,<span class="nm">1</span>)
+<span class="fn">plot</span>(x, x.^<span class="nm">2</span>); <span class="fn">title</span>(<span class="st">'x^2'</span>); <span class="fn">grid</span>
+
+<span class="fn">subplot</span>(<span class="nm">2</span>,<span class="nm">2</span>,<span class="nm">2</span>)
+<span class="fn">plot</span>(x, x.^<span class="nm">3</span>); <span class="fn">title</span>(<span class="st">'x^3'</span>); <span class="fn">grid</span>
+
+<span class="fn">subplot</span>(<span class="nm">2</span>,<span class="nm">2</span>,<span class="nm">3</span>)
+<span class="fn">plot</span>(x, <span class="fn">sind</span>(x*<span class="nm">30</span>)); <span class="fn">title</span>(<span class="st">'sin'</span>); <span class="fn">grid</span>
+
+<span class="fn">subplot</span>(<span class="nm">2</span>,<span class="nm">2</span>,<span class="nm">4</span>)
+<span class="fn">plot</span>(x, <span class="fn">exp</span>(x)); <span class="fn">title</span>(<span class="st">'exp'</span>); <span class="fn">grid</span>
+
+<span class="cm">% subplot(1,2,1) → rinnakkaiset (1 rivi, 2 saraketta)</span>
+<span class="cm">% subplot(3,1,2) → pinottuja (3 riviä, 1 sarake, paikka 2)</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-icon">⚙️</span><div>
+        <div class="card-title">Hyödylliset sisäänrakennetut funktiot</div>
+        <div class="card-sub">Octaven standardikirjasto — nämä säästävät aikaa</div>
+      </div></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Funktio</th><th>Mitä tekee</th><th>Esimerkki</th></tr></thead>
+        <tbody>
+          <tr><td><code>abs(x)</code></td><td>Itseisarvo</td><td><code>abs(-5)</code> → 5</td></tr>
+          <tr><td><code>round(x)</code></td><td>Pyöristys lähimpään</td><td><code>round(3.7)</code> → 4</td></tr>
+          <tr><td><code>floor(x)</code></td><td>Pyöristys alas</td><td><code>floor(3.9)</code> → 3</td></tr>
+          <tr><td><code>ceil(x)</code></td><td>Pyöristys ylös</td><td><code>ceil(3.1)</code> → 4</td></tr>
+          <tr><td><code>mod(x,n)</code></td><td>Jakojäännös</td><td><code>mod(10,3)</code> → 1</td></tr>
+          <tr><td><code>max(v)</code></td><td>Suurin arvo</td><td><code>max([1,5,3])</code> → 5</td></tr>
+          <tr><td><code>min(v)</code></td><td>Pienin arvo</td><td><code>min([1,5,3])</code> → 1</td></tr>
+          <tr><td><code>sum(v)</code></td><td>Summa</td><td><code>sum([1,2,3])</code> → 6</td></tr>
+          <tr><td><code>mean(v)</code></td><td>Keskiarvo</td><td><code>mean([1,3,5])</code> → 3</td></tr>
+          <tr><td><code>sort(v)</code></td><td>Järjestä kasvavasti</td><td><code>sort([3,1,2])</code> → [1,2,3]</td></tr>
+          <tr><td><code>length(v)</code></td><td>Vektorin pituus</td><td><code>length([1,2,3])</code> → 3</td></tr>
+          <tr><td><code>size(A)</code></td><td>Matriisin koko</td><td><code>size(A)</code> → [rivit, sarakkeet]</td></tr>
+          <tr><td><code>zeros(m,n)</code></td><td>Nollamatriisi</td><td><code>zeros(2,3)</code> → 2×3 nollia</td></tr>
+          <tr><td><code>ones(m,n)</code></td><td>Ykkösmatriisi</td><td><code>ones(3,1)</code> → sarake</td></tr>
+          <tr><td><code>linspace(a,b,n)</code></td><td>n tasavälein a:sta b:hen</td><td><code>linspace(0,1,5)</code> → [0,.25,.5,.75,1]</td></tr>
+          <tr><td><code>norm(v)</code></td><td>Vektorin pituus (normi)</td><td><code>norm([3,4])</code> → 5</td></tr>
+          <tr><td><code>det(A)</code></td><td>Determinantti</td><td><code>det([1,2;3,4])</code> → -2</td></tr>
+          <tr><td><code>inv(A)</code></td><td>Käänteismatriisi</td><td><code>inv(A)</code></td></tr>
+          <tr><td><code>A\b</code></td><td>Ratkaisu Ax=b</td><td><code>A\b</code> (parempi kuin inv)</td></tr>
+          <tr><td><code>log(x)</code></td><td>Luonnollinen logaritmi</td><td><code>log(exp(1))</code> → 1</td></tr>
+          <tr><td><code>log2(x)</code></td><td>2-kantainen log</td><td><code>log2(8)</code> → 3</td></tr>
+          <tr><td><code>log10(x)</code></td><td>10-kantainen log</td><td><code>log10(1000)</code> → 3</td></tr>
+          <tr><td><code>exp(x)</code></td><td>e potenssiin x</td><td><code>exp(1)</code> → 2.71828</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+
   </section>
 
   <hr>
@@ -4182,6 +4440,7 @@ xo=x0+L; yo=y0+k_tan*L;
     <!-- Harjoitustehtävät AG17-AG20 -->
 
     <!-- ─── HARJOITUSTEHTÄVÄT ─── -->
+    <div id="ag-harj"></div>
     <hr style="margin:36px 0">
     <div class="section-label">Harjoitustehtävät</div>
     <h3 style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.4rem;margin-bottom:8px">Analyyttisen geometrian harjoitukset</h3>
@@ -4722,31 +4981,38 @@ try {
   if (saved && saved !== 'system') document.documentElement.setAttribute('data-theme', saved);
 } catch(e){}
 
-// ── Aktiivinen nav ──
-const sections = document.querySelectorAll('.section[id]');
-const sectionToNavItem = {
-  tenttiopas: 0, mallinnus: 0,
-  octave: 1, vektorit: 1, plottaus: 1, koukut: 1, muunnokset: 1,
-  algebra: 2, 'alg-harj': 2,
-  trig: 3, 'trig-harj': 3,
-  analyyttinen: -1,
-  sinikayrat: 4, eksponentti: 4
-};
-const navItems = document.querySelectorAll('.nav-item');
-const directLink = document.querySelector('.nav-link[href="#analyyttinen"]');
+// ── Sidebar toggle (mobile) ──
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('visible');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('visible');
+}
+// Close sidebar when a link is clicked on mobile
+document.querySelectorAll('.sidebar-link').forEach(a => {
+  a.addEventListener('click', () => {
+    if (window.innerWidth <= 800) closeSidebar();
+  });
+});
+
+// ── Aktiivinen sidebar-linkki (scroll-spy) ──
+const sections = document.querySelectorAll('.section[id], [id="ag-harj"]');
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
     const id = e.target.id;
-    navItems.forEach(n => n.classList.remove('active'));
-    if (directLink) directLink.classList.remove('active');
-    const idx = sectionToNavItem[id];
-    if (idx === -1) { if (directLink) directLink.classList.add('active'); }
-    else if (idx !== undefined && navItems[idx]) navItems[idx].classList.add('active');
+    document.querySelectorAll('.sidebar-link').forEach(a => {
+      a.classList.remove('active');
+      if (a.dataset.section === id) a.classList.add('active');
+    });
   });
-}, { rootMargin: '-10% 0px -65% 0px' });
+}, { rootMargin: '-5% 0px -60% 0px' });
 sections.forEach(s => io.observe(s));
 </script>
+  </div><!-- /main-wrapper -->
+</div><!-- /layout -->
 </body>
 </html>
 
