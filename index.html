@@ -1,1 +1,635 @@
-Materiaalit
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IoT-järjestelmät – oppimateriaali</title>
+<style>
+:root{--bg:#fff;--fg:#1d2430;--mute:#5b6676;--line:#d9dee6;--accent:#2563c9;--tint:#eef3fc;--code:#f3f5f8}
+@media (prefers-color-scheme:dark){:root{--bg:#14181f;--fg:#e6e9ee;--mute:#9aa4b2;--line:#2c3441;--accent:#6ea0f5;--tint:#1c2536;--code:#1d232d}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{display:flex;max-width:1100px;margin:0 auto}
+nav{position:sticky;top:0;align-self:flex-start;width:230px;padding:24px 16px;height:100vh;overflow:auto;font-size:14px;border-right:1px solid var(--line)}
+nav a{display:block;padding:4px 0;color:var(--mute);text-decoration:none}
+nav a:hover{color:var(--accent)}
+main{flex:1;min-width:0;padding:24px 28px 80px}
+h1{font-size:2rem;margin:.2em 0}
+h2{font-size:1.5rem;margin-top:2.6em;padding-top:.6em;border-top:1px solid var(--line)}
+h3{font-size:1.1rem;margin-top:1.8em}
+p.sub{color:var(--mute);margin-top:0}
+table{border-collapse:collapse;margin:1em 0;display:block;overflow-x:auto;font-size:.94rem}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{background:var(--tint)}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.9em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;line-height:1.45}
+pre code{background:none;padding:0}
+.f{background:var(--tint);border-left:3px solid var(--accent);padding:8px 14px;margin:1em 0;font-family:ui-monospace,Menlo,monospace;overflow-x:auto;white-space:pre}
+details{margin:.5em 0 1.2em}
+summary{cursor:pointer;color:var(--accent)}
+svg{max-width:100%;height:auto}
+svg text{fill:var(--fg)}
+.q li{margin:.2em 0}
+@media (max-width:800px){nav{display:none}main{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+<strong>Sisältö</strong>
+<a href="#s1">1. Kurssin kartta</a>
+<a href="#s2">2. Lukujärjestelmät</a>
+<a href="#s3">3. Boolen algebra ja portit</a>
+<a href="#s4">4. Karnaughin kartta</a>
+<a href="#s5">5. Kiikut, laskurit, 7-seg</a>
+<a href="#s6">6. AD- ja DA-muunnokset</a>
+<a href="#s7">7. Elektroniikka</a>
+<a href="#s8">8. Linux</a>
+<a href="#s9">9. IoT ja ESP32</a>
+<a href="#s10">10. Tenttikertaus</a>
+</nav>
+<main>
+<h1>IoT-järjestelmät – oppimateriaali</h1>
+<p class="sub">Digitaalitekniikka, elektroniikka, Linux ja sulautetut järjestelmät.</p>
+
+<h2 id="s1">1. Kurssin kartta</h2>
+<p>Kurssi etenee logiikkaporteista Linuxin kautta ESP32-mikro-ohjaimeen: jokainen vaihe antaa pohjan seuraavalle. Suoritus on kaksi Exam-tenttiä ja IoT-harjoitustyö.</p>
+<table>
+<tr><th>Päivä</th><th>Aihe</th><th>Osio</th></tr>
+<tr><td>24.9.</td><td>Portit, SimulIDE</td><td>3</td></tr>
+<tr><td>2.10.</td><td>Laskurit, lukujärjestelmät</td><td>2, 5</td></tr>
+<tr><td>9.10.</td><td>Karnaughin kartta</td><td>4</td></tr>
+<tr><td>22.10.</td><td>Virta, jännite, resistanssi, Ohmin laki</td><td>7</td></tr>
+<tr><td>29.10.</td><td>Kela, kondensaattori</td><td>7</td></tr>
+<tr><td>6.11.</td><td>Puolijohteet</td><td>7</td></tr>
+<tr><td>13.11. ja 20.11.</td><td>Linux (virtuaalikone, komentorivi)</td><td>8</td></tr>
+<tr><td>26.11. ja 4.12.</td><td>ESP32, anturit ja toimilaitteet</td><td>9</td></tr>
+<tr><td>11.12.</td><td>Harjoitustyön viimeistely</td><td>9</td></tr>
+</table>
+<p>AD- ja DA-muunnokset (osio 6) kuuluvat kurssin tavoitteisiin ja sopivat luontevasti lukujärjestelmien ja ESP32:n anturilukujen väliin.</p>
+<p><strong>Opiskelutapa.</strong> Kunkin osion lopussa on pieni harjoitus. Tee se paperille ennen kuin katsot vastauksen, ja toista sama SimulIDE:ssa. Digitaalitekniikka opitaan rakentamalla.</p>
+<p><strong>Tehtävät.</strong> Neljä palautettavaa tehtävää (äänestysjärjestelmä, painikkeella toimiva äänestys, laskuri + 7-segmentti, jouluvalot) on käyty läpi osioissa 3, 4 ja 5. Tässä on menetelmä ja esimerkit, lopullisen kytkennän rakennat itse.</p>
+
+<h2 id="s2">2. Digitaalinen tieto ja lukujärjestelmät</h2>
+<p>Digitaalinen laite tuntee vain kaksi tilaa, 0 ja 1, koska kaksi jännitetasoa on helppo erottaa toisistaan häiriöissäkin. Yksi tieto on <strong>bitti</strong>, kahdeksan bittiä on <strong>tavu</strong> (byte). Kaikki muu, luvut, teksti, kuvat ja anturiarvot, koodataan bittijonoiksi.</p>
+<h3>Paikkajärjestelmät</h3>
+<p>Luvun arvo on numeroiden ja niiden paikkojen painojen summa. Kantaluku kertoo, mikä luku korotetaan potenssiin.</p>
+<div class="f">1011₂ = 1·2³ + 0·2² + 1·2¹ + 1·2⁰ = 8 + 0 + 2 + 1 = 11₁₀</div>
+<table>
+<tr><th>Järjestelmä</th><th>Kanta</th><th>Numerot</th><th>Käyttö</th></tr>
+<tr><td>Binääri</td><td>2</td><td>0, 1</td><td>laitteiston sisäinen esitys</td></tr>
+<tr><td>Desimaali</td><td>10</td><td>0–9</td><td>ihmisen luvut</td></tr>
+<tr><td>Heksadesimaali</td><td>16</td><td>0–9, A–F</td><td>osoitteet, värikoodit, muistivedokset</td></tr>
+</table>
+<p>Koodissa binääri kirjoitetaan <code>0b1011</code> ja heksa <code>0x2F</code>.</p>
+<h3>Muunnokset</h3>
+<p><strong>Binääri → desimaali:</strong> laske painot yhteen. Muista painot 1, 2, 4, 8, 16, 32, 64, 128.</p>
+<p><strong>Desimaali → binääri:</strong> jaa luku toistuvasti kahdella ja kirjaa jäännökset. Lue alhaalta ylös.</p>
+<table>
+<tr><th>Jako</th><th>Osamäärä</th><th>Jäännös</th></tr>
+<tr><td>37 / 2</td><td>18</td><td>1</td></tr>
+<tr><td>18 / 2</td><td>9</td><td>0</td></tr>
+<tr><td>9 / 2</td><td>4</td><td>1</td></tr>
+<tr><td>4 / 2</td><td>2</td><td>0</td></tr>
+<tr><td>2 / 2</td><td>1</td><td>0</td></tr>
+<tr><td>1 / 2</td><td>0</td><td>1</td></tr>
+</table>
+<p>Luettuna alhaalta ylös: 37 = 100101₂. Tarkistus: 32 + 4 + 1 = 37.</p>
+<p><strong>Binääri ↔ heksa:</strong> ryhmittele bitit neljän ryhmiin oikealta, jokainen ryhmä on yksi heksanumero.</p>
+<div class="f">1010 1111₂ = A F₁₆ = 0xAF = 175₁₀</div>
+<table>
+<tr><th>Des.</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr>
+<tr><th>Bin.</th><td>0000</td><td>0001</td><td>0010</td><td>0011</td><td>0100</td><td>0101</td><td>0110</td><td>0111</td><td>1000</td><td>1001</td><td>1010</td><td>1011</td><td>1100</td><td>1101</td><td>1110</td><td>1111</td></tr>
+<tr><th>Heksa</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr>
+</table>
+<p>Opettele tämä taulukko ulkoa. Se on laskurin, 7-segmenttinäytön ja koko kurssin perusta.</p>
+<h3>Alue ja negatiiviset luvut</h3>
+<p><em>n</em> bitillä voi esittää 2ⁿ eri arvoa, etumerkittömän alue on 0 … 2ⁿ − 1. 4 bitillä se on 0–15, 8 bitillä 0–255, 10 bitillä 0–1023.</p>
+<p>Negatiiviset luvut esitetään <strong>kahden komplementtina</strong>: käännä kaikki bitit ja lisää 1. 8 bitillä +5 = 00000101, joten −5 = 11111010 + 1 = 11111011. Alue on −128 … +127, ja vasemmanpuoleisin bitti kertoo etumerkin.</p>
+<h3>BCD</h3>
+<p>BCD (Binary Coded Decimal) koodaa jokaisen desimaalinumeron omilla neljällä bitillä. Luku 59 on BCD:nä 0101 1001. Koodit 1010–1111 eivät ole kelvollisia BCD-numeroita, mikä on tärkeää 7-segmenttitehtävässä (osio 5).</p>
+<h3>Harjoitus</h3>
+<ol class="q">
+<li>Muunna 45 binääriksi ja heksaksi.</li>
+<li>Muunna 0b11010110 desimaaliksi.</li>
+<li>Mikä on −12 kahden komplementtina 8 bitillä?</li>
+<li>Kirjoita luku 83 BCD:nä.</li>
+</ol>
+<details><summary>Vastaukset</summary>1) 101101₂ = 0x2D, 2) 214, 3) 11110100, 4) 1000 0011.</details>
+
+<h2 id="s3">3. Boolen algebra ja logiikkaportit</h2>
+<p>Boolen algebra on laskentaa kahdella arvolla, 0 ja 1. Logiikkaportti toteuttaa yhden perusoperaation, ja portteja yhdistelemällä rakennetaan mikä tahansa digitaalinen toiminto.</p>
+<h3>Perusportit</h3>
+<table>
+<tr><th>Portti</th><th>Merkintä</th><th>Tulos on 1, kun</th><th>Totuustaulu (A B → Q)</th></tr>
+<tr><td>NOT</td><td>Ā</td><td>tulo on 0</td><td>0→1, 1→0</td></tr>
+<tr><td>AND</td><td>A·B</td><td>molemmat tulot ovat 1</td><td>00→0, 01→0, 10→0, 11→1</td></tr>
+<tr><td>OR</td><td>A+B</td><td>vähintään yksi tulo on 1</td><td>00→0, 01→1, 10→1, 11→1</td></tr>
+<tr><td>NAND</td><td>NOT(A·B)</td><td>ei molemmat 1</td><td>00→1, 01→1, 10→1, 11→0</td></tr>
+<tr><td>NOR</td><td>NOT(A+B)</td><td>molemmat 0</td><td>00→1, 01→0, 10→0, 11→0</td></tr>
+<tr><td>XOR</td><td>A⊕B</td><td>tulot eroavat</td><td>00→0, 01→1, 10→1, 11→0</td></tr>
+</table>
+<p>NAND ja NOR ovat <strong>universaaleja</strong>: pelkällä NAND-portilla voi rakentaa kaikki muut portit.</p>
+<h3>Laskusäännöt</h3>
+<table>
+<tr><th>Sääntö</th><th>AND-muoto</th><th>OR-muoto</th></tr>
+<tr><td>Identiteetti</td><td>A·1 = A</td><td>A+0 = A</td></tr>
+<tr><td>Nollaelementti</td><td>A·0 = 0</td><td>A+1 = 1</td></tr>
+<tr><td>Idempotenssi</td><td>A·A = A</td><td>A+A = A</td></tr>
+<tr><td>Komplementti</td><td>A·Ā = 0</td><td>A+Ā = 1</td></tr>
+<tr><td>Vaihdannaisuus</td><td>A·B = B·A</td><td>A+B = B+A</td></tr>
+<tr><td>Osittelu</td><td>A·(B+C) = A·B + A·C</td><td>A+B·C = (A+B)·(A+C)</td></tr>
+<tr><td>Absorptio</td><td>A+A·B = A</td><td>A·(A+B) = A</td></tr>
+<tr><td>De Morgan</td><td>NOT(A·B) = Ā+B̄</td><td>NOT(A+B) = Ā·B̄</td></tr>
+</table>
+<p>De Morgan on tärkein: se muuttaa AND:n OR:ksi (ja päinvastoin), kun inverttaat tulot ja tuloksen.</p>
+<h3>Suunnittelutyönkulku</h3>
+<ol>
+<li>Nimeä tulot ja lähdöt.</li>
+<li>Kirjoita <strong>totuustaulu</strong>: jokaiselle tulokombinaatiolle haluttu lähtö.</li>
+<li>Muodosta lauseke (summa tuloista tai Karnaughin kartalla yksinkertaistettuna).</li>
+<li>Piirrä portit SimulIDE:ssa ja <strong>testaa kaikki kombinaatiot</strong>.</li>
+</ol>
+<h3>Esimerkki: neljän äänestäjän enemmistö</h3>
+<p>Tulot A, B, C, D ovat kytkimiä (1 = kytkin päällä), lähtö Q syttyy, kun vähintään kolme on päällä. 4 tuloa antaa 16 riviä, mutta Q = 1 vain viidellä:</p>
+<table>
+<tr><th>A B C D</th><th>Kytkimiä päällä</th><th>Q</th></tr>
+<tr><td>0 1 1 1</td><td>3</td><td>1</td></tr>
+<tr><td>1 0 1 1</td><td>3</td><td>1</td></tr>
+<tr><td>1 1 0 1</td><td>3</td><td>1</td></tr>
+<tr><td>1 1 1 0</td><td>3</td><td>1</td></tr>
+<tr><td>1 1 1 1</td><td>4</td><td>1</td></tr>
+<tr><td>kaikki muut (11 riviä)</td><td>0–2</td><td>0</td></tr>
+</table>
+<p>Suoraan taulusta tulisi viisi 4-tuloista AND-termiä. Yksinkertaistus on helppo: kun kolme kytkintä on päällä, neljättä ei tarvitse tuntea, joten jokainen kolmen kytkimen yhdistelmä riittää yksinään:</p>
+<div class="f">Q = ABC + ABD + ACD + BCD</div>
+<p>Tarkistus: jos A, B ja C ovat 1, ensimmäinen termi on 1 riippumatta D:stä, ja sama pätee muille kolmikoille. Kaksi päällä olevaa kytkintä ei riitä mihinkään termiin. Toteutus: neljä 3-tuloista AND-porttia ja yksi 4-tuloinen OR-portti.</p>
+<p><strong>Testaus SimulIDE:ssa:</strong> käy läpi kaikki 5 rajatapausta (3 päällä neljällä tavalla ja 4 päällä) sekä muutama tapaus, jossa on 2 päällä. Jos Q syttyy väärässä kohdassa, korjaa lauseke, älä kytkentää.</p>
+<h3>Harjoitus</h3>
+<ol class="q">
+<li>Johda De Morganilla NOT(A·B·C) pelkäksi OR-lausekkeeksi.</li>
+<li>Rakenna XOR AND-, OR- ja NOT-porteilla. (Vihje: A·B̄ + Ā·B.)</li>
+<li>Muuta enemmistöäänestäjä kolmelle äänestäjälle (vähintään 2/3).</li>
+</ol>
+<details><summary>Vastaus kohtaan 3</summary>AB + AC + BC</details>
+
+<h2 id="s4">4. Karnaughin kartta</h2>
+<p>Karnaughin kartta on totuustaulu piirrettynä ruudukoksi niin, että vierekkäiset ruudut eroavat vain yhden muuttujan arvossa. Tällä yksinkertaistus näkyy silmällä ilman Boolen algebran sääntöjen soveltamista.</p>
+<h3>Perusajatus</h3>
+<p>Jos kaksi vierekkäistä ruutua ovat molemmat 1, niiden välillä muuttuva muuttuja karsiutuu pois: AB̄ + AB = A. Mitä isompi ryhmä, sitä lyhyempi termi.</p>
+<h3>Säännöt</h3>
+<ol>
+<li>Rivit ja sarakkeet järjestetään <strong>Gray-koodilla</strong>: 00, 01, 11, 10 (ei 00, 01, 10, 11). Vain yksi bitti muuttuu kerrallaan.</li>
+<li>Ryhmitellään ykköset suorakulmioihin, joiden koko on 1, 2, 4, 8 tai 16 ruutua. Ei 3 tai 6.</li>
+<li>Kartan reunat jatkuvat toistensa kautta: vasen reuna on oikean vieressä, yläreuna alareunan vieressä. Kulmatkin ovat naapureita.</li>
+<li>Tee ryhmistä mahdollisimman isoja ja käytä mahdollisimman vähän ryhmiä. Jokainen 1 on katettava, ryhmät saavat mennä päällekkäin.</li>
+<li>Ryhmän termissä ovat vain ne muuttujat, jotka eivät muutu ryhmän sisällä. Jos muuttuja on ryhmässä aina 1, se kirjoitetaan sellaisenaan, jos aina 0, se kirjoitetaan inverttoituna.</li>
+<li><strong>Don't care</strong> (X): tilat, joita ei koskaan esiinny. Voit ottaa ne ryhmään, jos se suurentaa ryhmää, mutta et ole pakotettu.</li>
+<li>Lopuksi tulos on ryhmien termien OR-summa.</li>
+</ol>
+<h3>Esimerkki 1: neljän äänestäjän enemmistö</h3>
+<p>Rivit AB, sarakkeet CD.</p>
+<table>
+<tr><th>AB \ CD</th><th>00</th><th>01</th><th>11</th><th>10</th></tr>
+<tr><th>00</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><th>01</th><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><th>11</th><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><th>10</th><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+</table>
+<p>Neljä paria kattaa kaikki ykköset:</p>
+<ul>
+<li>rivin 11 ruudut CD = 11 ja 10 → ABC</li>
+<li>rivin 11 ruudut CD = 01 ja 11 → ABD</li>
+<li>sarakkeen CD = 11 rivit 11 ja 10 → ACD</li>
+<li>sarakkeen CD = 11 rivit 01 ja 11 → BCD</li>
+</ul>
+<p>Tulos Q = ABC + ABD + ACD + BCD täsmää osion 3 johtoon.</p>
+<h3>Esimerkki 2: don't care -tilojen käyttö</h3>
+<p>4-bittinen laskuri, joka käy vain tilat 0–13. Tilat 14 ja 15 (1110, 1111) eivät esiinny, joten ne ovat X. Haluttu lähtö L on 1 tiloissa 0 ja 7–12, muuten 0.</p>
+<table>
+<tr><th>AB \ CD</th><th>00</th><th>01</th><th>11</th><th>10</th></tr>
+<tr><th>00</th><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><th>01</th><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><th>11</th><td>1</td><td>0</td><td>X</td><td>X</td></tr>
+<tr><th>10</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+</table>
+<ul>
+<li>koko alin rivi (AB = 10) → A·B̄</li>
+<li>sarake CD = 00, rivit 00 ja 10 (ylä- ja alareuna naapureita) → B̄·C̄·D̄</li>
+<li>sarake CD = 00, rivit 11 ja 10 → A·C̄·D̄</li>
+<li>tila 7 yhdessä X-ruudun 15 kanssa, sarake CD = 11, rivit 01 ja 11 → B·C·D</li>
+</ul>
+<div class="f">L = A·B̄ + B̄·C̄·D̄ + A·C̄·D̄ + B·C·D</div>
+<p>Ilman X-ruutua tila 7 jäisi yksinään ja termi olisi pidempi (Ā·B·C·D). Tarkista tulos käymällä kaikki 14 tilaa läpi.</p>
+<h3>Jouluvalojen tehtävän lähestymistapa</h3>
+<p>Tämä on menetelmä, ei valmis ratkaisu (tehtävän kuva puuttui).</p>
+<ol>
+<li><strong>Listaa tilat.</strong> Jokainen kuvan rivi on yksi askel (tila). Numeroi ne 0, 1, 2, …. Kuudella valolla ja kahdella kierroksella tiloja on noin 13–14, joten <strong>nelibittinen laskuri (A B C D) riittää</strong>. Laskuri antaa tilanumeron, ja ohjauslogiikka muuttaa sen valoiksi.</li>
+<li><strong>Tee totuustaulu</strong>: tulot A B C D (tilanumero binäärinä), lähdöt L1–L6 (1 = valo päällä). Kopioi arvot suoraan kuvasta.</li>
+<li><strong>Merkitse käyttämättömät tilat X:ksi.</strong> Jos tiloja on 14, tilat 14 ja 15 ovat don't care.</li>
+<li><strong>Piirrä kuusi karttaa</strong> (yksi per valo) ja ryhmittele yllä olevilla säännöillä. Kirjoita lauseke jokaiselle.</li>
+<li><strong>Toteuta</strong> lausekkeet SimulIDE:ssa porteilla. Laskurin tulee askeltaa tiloja 0 → viimeinen ja palata nollaan.</li>
+<li><strong>Tarkista</strong> ratkaisijalla vasta kun oma lausekkeesi on valmis. Jos tulos eroaa, etsi virhe ryhmittelystä.</li>
+</ol>
+<h3>Harjoitus</h3>
+<ol class="q">
+<li>Yksinkertaista Karnaughin kartalla F = Σm(1, 3, 5, 7) (tulot A B C).</li>
+<li>Yksinkertaista F = Σm(0, 2, 8, 10) neljällä muuttujalla. Vihje: kulmat ovat naapureita.</li>
+</ol>
+<details><summary>Vastaukset</summary>1) F = C. 2) F = B̄·D̄.</details>
+
+<h2 id="s5">5. Kiikut, laskurit ja 7-segmenttinäyttö</h2>
+<p>Portit muodostavat <strong>kombinaatiologiikan</strong>: lähtö riippuu vain nykyisistä tuloista. <strong>Kiikku</strong> (flip-flop) on muistielementti: se säilyttää yhden bitin tilan, kunnes sitä käsketään muuttamaan. Laskurit, rekisterit ja tilakoneet rakentuvat kiikuista.</p>
+<h3>Kiikkutyypit</h3>
+<p><strong>RS-kiikku (latch).</strong> Kaksi ristiinkytkettyä NOR-porttia, tulot S (set) ja R (reset). S=1 asettaa Q:n ykköseksi ja R=1 nollaa sen. Kun molemmat ovat 0, tila säilyy. S=R=1 on kielletty.</p>
+<table>
+<tr><th>S</th><th>R</th><th>Q (seuraava)</th></tr>
+<tr><td>0</td><td>0</td><td>ei muutosta</td></tr>
+<tr><td>1</td><td>0</td><td>1</td></tr>
+<tr><td>0</td><td>1</td><td>0</td></tr>
+<tr><td>1</td><td>1</td><td>kielletty</td></tr>
+</table>
+<p><strong>JK-kiikku.</strong> Kuten RS-kiikku, mutta kielletty tila on korvattu hyödyllisellä: J=K=1 <strong>vaihtaa tilan</strong> (toggle). Tila päivittyy kellosignaalin reunalla.</p>
+<table>
+<tr><th>J</th><th>K</th><th>Q (seuraava)</th></tr>
+<tr><td>0</td><td>0</td><td>ei muutosta</td></tr>
+<tr><td>0</td><td>1</td><td>0</td></tr>
+<tr><td>1</td><td>0</td><td>1</td></tr>
+<tr><td>1</td><td>1</td><td>vaihtuu (¬Q)</td></tr>
+</table>
+<p><strong>D-kiikku:</strong> Q ottaa tulon D arvon kellon reunalla. <strong>T-kiikku:</strong> vaihtaa tilan jokaisella kellon reunalla; saat sen JK-kiikusta liittämällä J=K=1.</p>
+<p>Huomaa ero: <strong>tasoherkkä</strong> kiikku seuraa tuloa koko ajan kun kello on ylhäällä, <strong>reunaherkkä</strong> vain kellon nousevalla (↑) tai laskevalla (↓) reunalla. Käytä reunaherkkää JK-kiikkua, jotta J=K=1 ei aiheuta hallitsematonta värähtelyä (tutoriaalin "race around").</p>
+<h3>Painike ja kiikku: äänestys</h3>
+<p>Painike on hetkellinen, mutta äänen pitää jäädä voimaan. Toteutusidea: jokaisen äänestäjän painike kytketään JK-kiikun kellotuloon ja J=K=1. Jokainen painallus tuottaa yhden reunan, joten Q vaihtuu: ääni päälle, seuraavalla painalluksella pois. Neljä kiikkua antavat tilat A, B, C, D, ja ne syötetään osion 3 enemmistölogiikkaan.</p>
+<p>RS-harjoitus: kaksi painiketta (set ja reset) ja yksi RS-kiikku. Ymmärrät sillä ensin, miksi tila säilyy. Sitten korvaat kaksi painiketta yhdellä ja toggle-kiikulla.</p>
+<p>Oikea painike "pomppii" (bounce) ja voisi tuottaa useita reunoja, simulaattorin painike ei. Mainitse tämä, jos pohdit toteutuksen eroa todelliseen laitteeseen.</p>
+<h3>4-bittinen binäärilaskuri</h3>
+<p>T-kiikku jakaa taajuuden kahdella: Q vaihtuu joka toisella kellon reunalla. Kun ketjutat neljä kiikkua niin, että jokaisen kelloksi tulee edellisen Q, saat <strong>asynkronisen (ripple) laskurin</strong>.</p>
+<table>
+<tr><th>Kiikku</th><th>Kello</th><th>Bitti</th><th>Painoarvo</th></tr>
+<tr><td>1</td><td>painike</td><td>A (LSB)</td><td>1</td></tr>
+<tr><td>2</td><td>Q1</td><td>B</td><td>2</td></tr>
+<tr><td>3</td><td>Q2</td><td>C</td><td>4</td></tr>
+<tr><td>4</td><td>Q3</td><td>D</td><td>8</td></tr>
+</table>
+<p>Kun painiketta painetaan, LEDit näyttävät 0000, 0001, 0010, 0011, … Muista kellon polariteetti: jos kiikku reagoi laskevaan reunaan, ketjutus Q:sta toimii sellaisenaan. Jos se reagoi nousevaan reunaan, ketjuta ¬Q:sta. Testaa SimulIDE:ssa, kumpi laskee oikein.</p>
+<p>Bittijärjestys: valitse MSB (suurin painoarvo) ja pidä se samana LEDeissä ja 7-segmenttilogiikassa. Yleisin virhe on käännetty järjestys. Huomaa, että tässä taulukossa LSB on A, kun taas 7-segmenttiosiossa A on MSB: päätä oma nimeämisesi ja pysy siinä.</p>
+<h3>BCD → 7-segmentti omilla porteilla</h3>
+<p>Näytössä on seitsemän erikseen ohjattavaa segmenttiä a–g. Muodostat jokaiselle segmentille oman lausekkeen, jossa tulot ovat laskurin bitit A (MSB), B, C, D (LSB).</p>
+<table>
+<tr><th>Numero</th><th>ABCD</th><th>Päällä olevat segmentit</th></tr>
+<tr><td>0</td><td>0000</td><td>a b c d e f</td></tr>
+<tr><td>1</td><td>0001</td><td>b c</td></tr>
+<tr><td>2</td><td>0010</td><td>a b d e g</td></tr>
+<tr><td>3</td><td>0011</td><td>a b c d g</td></tr>
+<tr><td>4</td><td>0100</td><td>b c f g</td></tr>
+<tr><td>5</td><td>0101</td><td>a c d f g</td></tr>
+<tr><td>6</td><td>0110</td><td>a c d e f g</td></tr>
+<tr><td>7</td><td>0111</td><td>a b c</td></tr>
+<tr><td>8</td><td>1000</td><td>a b c d e f g</td></tr>
+<tr><td>9</td><td>1001</td><td>a b c d f g</td></tr>
+<tr><td>10–15</td><td>1010–1111</td><td>ei käytössä (X)</td></tr>
+</table>
+<p>Tilat 10–15 ovat don't care, joten ne auttavat ryhmittelyssä (osio 4). Kaikki 7 segmenttiä käsitellään samalla tavalla: lue taulusta, missä numeroissa segmentti palaa, ja tee Karnaughin kartta.</p>
+<p><strong>Esimerkki: segmentti e</strong> palaa numeroissa 0, 2, 6 ja 8.</p>
+<table>
+<tr><th>AB \ CD</th><th>00</th><th>01</th><th>11</th><th>10</th></tr>
+<tr><th>00</th><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+<tr><th>01</th><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+<tr><th>11</th><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+<tr><th>10</th><td>1</td><td>0</td><td>X</td><td>X</td></tr>
+</table>
+<p>Kulmat (0, 2, 8 ja X-ruutu 10) muodostavat nelikon, jossa B=0 ja D=0, eli B̄·D̄. Sarake CD = 10 kokonaan (tilat 2, 6, 14 ja 10) on toinen nelikko, jossa C=1 ja D=0, eli C·D̄.</p>
+<div class="f">e = B̄·D̄ + C·D̄</div>
+<p>Segmentti e tarvitsee siis kaksi NOT-porttia (B, D), kaksi AND-porttia ja yhden OR-portin. Tee samoin segmenteille a, b, c, d, f ja g. Segmentti a on hyvä toinen harjoitus: sen lauseke on nelitermiinen summa.</p>
+<p><strong>Kytkentähuomioita:</strong></p>
+<ul>
+<li>Jos näyttö on <strong>common cathode</strong> (yhteinen miinus), segmentti palaa kun lähtö on 1. <strong>Common anode</strong> -näytöllä palaminen vaatii 0:n, joten lisää kunkin lähdön perään NOT.</li>
+<li>Segmentin LEDin kanssa sarjaan tarvitaan vastus (esim. 330 Ω, ks. osio 7), vaikka simulaattori ei aina vaadi sitä.</li>
+<li>Tee ensin portit yhdelle segmentille ja testaa se kaikilla 0–9, sitten seuraava.</li>
+</ul>
+<h3>Harjoitus</h3>
+<ol class="q">
+<li>Miksi JK-kiikulla J=K=1 ilman kelloa ei vaihda tilaa?</li>
+<li>Mitä laskuri näyttää, kun painiketta on painettu 11 kertaa?</li>
+<li>Mitä tapahtuu laskurille 16. painalluksella?</li>
+</ol>
+<details><summary>Vastaukset</summary>1) Kiikku reagoi vain kellon reunaan. 2) 1011. 3) Paluu arvoon 0000 (ylivuoto).</details>
+
+<h2 id="s6">6. AD- ja DA-muunnokset</h2>
+<p>Maailma on analoginen, mutta mikro-ohjain ymmärtää vain lukuja. <strong>AD-muunnin</strong> (ADC) muuttaa jännitteen luvuksi, <strong>DA-muunnin</strong> (DAC) luvun takaisin jännitteeksi. IoT-järjestelmässä ADC lukee antureita ja DAC ohjaa esimerkiksi ääntä tai himmennystä.</p>
+<h3>Kolme käsitettä</h3>
+<ul>
+<li><strong>Näytteistys:</strong> jännite luetaan tasaisin väliajoin. Näytteenottotaajuus f<sub>s</sub> kertoo, montako näytettä sekunnissa.</li>
+<li><strong>Kvantisointi:</strong> jokainen näyte pyöristetään lähimpään sallittuun portaaseen.</li>
+<li><strong>Resoluutio:</strong> bittien määrä <em>n</em>. Mitä enemmän bittejä, sitä pienemmät portaat.</li>
+</ul>
+<h3>Kaavat</h3>
+<div class="f">LSB = Vref / 2ⁿ        N = ⌊ Vin / Vref · 2ⁿ ⌋        Vout = Vref · N / 2ⁿ</div>
+<p>V<sub>ref</sub> on mittausalueen yläraja, <em>N</em> on muuntimen antama luku (0 … 2ⁿ − 1). Kvantisointivirhe on enintään yksi porras (1 LSB).</p>
+<h3>Esimerkki: ESP32:n 12-bittinen ADC</h3>
+<p>Alue noin 0–3,3 V, 12 bittiä: LSB = 3,3 V / 4096 ≈ 0,81 mV.</p>
+<table>
+<tr><th>Syöttöjännite</th><th>Luku N</th></tr>
+<tr><td>0 V</td><td>0</td></tr>
+<tr><td>1,65 V</td><td>2048</td></tr>
+<tr><td>3,3 V</td><td>4095 (maksimi)</td></tr>
+</table>
+<p>Jos ohjelma lukee arvon 1000, jännite on noin 1000 · 0,81 mV ≈ 0,81 V. 8-bittisellä muuntimella sama alue jakautuisi 12,9 mV:n portaisiin. ESP32:n ADC ei ole täysin lineaarinen alueen ylipäässä, joten tarkkoihin mittauksiin tarvitaan kalibrointia.</p>
+<h3>Näytteenottotaajuus</h3>
+<p>Jotta signaalin muoto säilyy, näytteitä pitää ottaa vähintään kaksi kertaa nopeammin kuin signaalin suurin taajuus (<strong>Nyquistin kriteeri</strong>):</p>
+<div class="f">fs ≥ 2 · fmax</div>
+<p>Jos näytteitä on liian vähän, signaali näyttää virheellisesti hitaammalta (aliasing). Äänelle (20 kHz) käytetään siksi 44,1 kHz, kun taas lämpötilaanturille riittää muutama näyte sekunnissa.</p>
+<h3>DA-muunnos</h3>
+<p>DAC tekee päinvastoin: luku → jännite. Yksinkertainen toteutus on <strong>R-2R-vastusverkko</strong>. Alkuperäisessä ESP32:ssa on 8-bittinen DAC (GPIO25 ja GPIO26): luku 128 antaa noin 3,3 V · 128/256 = 1,65 V. Jos DAC:ia ei ole (kuten monissa ESP32-malleissa), käytetään PWM:ää ja alipäästösuodinta.</p>
+<h3>Harjoitus</h3>
+<ol class="q">
+<li>10-bittinen ADC, V<sub>ref</sub> = 5 V. Laske LSB.</li>
+<li>Sama ADC lukee 2,5 V. Mikä on N?</li>
+<li>Anturi muuttuu 100 Hz:n taajuudella. Mikä on pienin näytteenottotaajuus?</li>
+</ol>
+<details><summary>Vastaukset</summary>1) 4,88 mV. 2) 512. 3) 200 Hz, käytännössä mielellään selvästi enemmän.</details>
+
+<h2 id="s7">7. Elektroniikan perusteet ja puolijohteet</h2>
+<p>IoT-laite koostuu anturista, mikro-ohjaimesta ja toimilaitteesta, jotka kaikki tarvitsevat jännitettä, virtaa ja sopivia vastuksia. Perusosaaminen on laskea virtoja ja jännitteitä Ohmin lailla.</p>
+<h3>Perussuureet</h3>
+<table>
+<tr><th>Suure</th><th>Tunnus</th><th>Yksikkö</th><th>Selitys</th></tr>
+<tr><td>Jännite</td><td>U</td><td>voltti, V</td><td>sähköinen "paine" kahden pisteen välillä</td></tr>
+<tr><td>Virta</td><td>I</td><td>ampeeri, A</td><td>varausten virtaus; mitataan <strong>sarjassa</strong></td></tr>
+<tr><td>Resistanssi</td><td>R</td><td>ohmi, Ω</td><td>vastus virran kululle</td></tr>
+<tr><td>Teho</td><td>P</td><td>watti, W</td><td>energiaa sekunnissa</td></tr>
+</table>
+<p>Jännite mitataan <strong>rinnan</strong> komponentin kanssa, virta <strong>sarjaan</strong> kytkettynä mittarina.</p>
+<h3>Ohmin laki ja teho</h3>
+<div class="f">U = R · I        P = U · I = I²R = U²/R</div>
+<p>Esimerkki: 3,3 V ja 330 Ω antavat virran I = 3,3 / 330 = 10 mA. Vastuksen teho on 3,3 · 0,01 = 33 mW, joten tavallinen 0,25 W:n vastus riittää hyvin. Etuliitteet: m (milli) = 10⁻³, k (kilo) = 10³, M (mega) = 10⁶, µ (mikro) = 10⁻⁶.</p>
+<h3>Sarja- ja rinnankytkentä</h3>
+<table>
+<tr><th></th><th>Sarjassa</th><th>Rinnan</th></tr>
+<tr><td>Resistanssi</td><td>R = R1 + R2</td><td>1/R = 1/R1 + 1/R2</td></tr>
+<tr><td>Virta</td><td>sama kaikissa</td><td>jakautuu</td></tr>
+<tr><td>Jännite</td><td>jakautuu</td><td>sama kaikissa</td></tr>
+</table>
+<p>Sarjassa olevat vastukset muodostavat <strong>jännitteenjakajan</strong>:</p>
+<div class="f">Uout = Uin · R2 / (R1 + R2)</div>
+<p>Esimerkiksi 10 kΩ + 20 kΩ muuntaa 5 V:n noin 3,3 V:ksi (5 · 20/30 = 3,33 V). Tuota käytetään, kun 5 V:n anturin signaali pitää sovittaa 3,3 V:n mikro-ohjaimelle. Rinnankytkentä pienentää aina kokonaisresistanssia alle pienimmän vastuksen: 100 Ω ∥ 100 Ω = 50 Ω.</p>
+<h3>Kondensaattori</h3>
+<p>Kondensaattori varastoi sähkövarausta kahden levyn välille. Kapasitanssi <em>C</em> mitataan faradeina (F), käytännössä µF, nF tai pF. Se päästää muuttuvan virran läpi mutta estää tasavirran, kun se on latautunut. Käyttö: jännitteen tasaus (puskuri mikro-ohjaimen vieressä), suodatus, ajastus.</p>
+<div class="f">τ = R · C</div>
+<p>Esimerkki: 10 kΩ ja 100 µF antavat τ = 10 000 · 0,0001 = 1 s. Yhden aikavakion kuluttua jännite on noin 63 % lopullisesta ja viiden aikavakion jälkeen käytännössä täysi. Elektrolyyttikondensaattorilla on napaisuus, väärin päin kytkettynä se voi vaurioitua.</p>
+<h3>Kela</h3>
+<p>Kela (induktori) varastoi energiaa magneettikenttään ja <strong>vastustaa virran muutosta</strong>. Induktanssi <em>L</em> mitataan henreissä (H). Se päästää tasavirran läpi mutta vastustaa nopeaa muutosta, siksi sitä käytetään suodattimissa ja hakkurivirtalähteissä. Aikavakio on τ = L/R. Kun kelan virta katkaistaan, se tuottaa jännitepiikin. Rele ja moottori ovat käytännössä keloja, joten niiden rinnalle kytketään <strong>suojadiodi</strong> (flyback), joka estää piikin rikkomasta ohjaavaa transistoria.</p>
+<p>Vertaa: kondensaattori vastustaa <strong>jännitteen</strong> muutosta, kela <strong>virran</strong> muutosta.</p>
+<h3>Mittarin käyttö (yleismittari)</h3>
+<ul>
+<li><strong>Jännite (V):</strong> mittapäät komponentin kummallekin puolelle, rinnan.</li>
+<li><strong>Virta (A):</strong> katkaise piiri ja kytke mittari <strong>sarjaan</strong>. Rinnan kytketty virtamittari voi oikosulkea virtalähteen ja polttaa sulakkeen.</li>
+<li><strong>Resistanssi (Ω):</strong> mittaa vain <strong>jännitteettömästä</strong> piiristä, mieluiten komponentti irrotettuna.</li>
+<li><strong>Jatkuvuus (äänimerkki):</strong> tarkistaa, onko johto ehjä.</li>
+</ul>
+<p>Vastusten arvot luetaan värikoodista: kaksi ensimmäistä väriä ovat numeroita, kolmas kerroin. Esimerkiksi ruskea-musta-punainen on 1, 0 × 100 = 1 kΩ.</p>
+<h3>Puolijohteet</h3>
+<p>Puolijohde (pii) johtaa sähköä johteen ja eristeen välimaastossa. Seostamalla siihen toista ainetta saadaan <strong>n-tyypin</strong> (ylimääräisiä elektroneja) tai <strong>p-tyypin</strong> (puutteita, "aukkoja") materiaalia. Kun n ja p yhdistetään, syntyy <strong>pn-liitos</strong>, kaikkien puolijohdekomponenttien perusta.</p>
+<ul>
+<li><strong>Diodi</strong> päästää virran yhteen suuntaan (anodilta katodille). Piidiodin johtokynnys on noin 0,7 V. Käyttö: suojaus väärältä napaisuudelta, tasasuuntaus, flyback.</li>
+<li><strong>LED</strong> on valoa tuottava diodi. Johtokynnys noin 1,8–3,3 V väristä riippuen. <strong>Tarvitsee aina virranrajoitusvastuksen.</strong></li>
+<li><strong>Transistori</strong> on ohjattava kytkin tai vahvistin. NPN-bipolaaritransistorissa pieni kantavirta (base) ohjaa paljon suurempaa virtaa kollektorilta emitterille. <strong>MOSFET</strong> toimii samoin, mutta sitä ohjaa jännite hilalla (gate), eikä ohjaus kuluta käytännössä virtaa. Mikro-ohjaimen pinni antaa vain noin 10–20 mA, joten moottori, rele tai pitkä LED-nauha ohjataan transistorilla.</li>
+</ul>
+<p><strong>LED-vastuksen mitoitus:</strong></p>
+<div class="f">R = (U_lähde − U_LED) / I_LED</div>
+<p>Esimerkki: 3,3 V:n pinni, LED 2,0 V, virta 10 mA: R = (3,3 − 2,0)/0,01 = 130 Ω. Valitse lähin vakioarvo ylöspäin (150 Ω). 5 V:n käyttöjännitteellä ja 15 mA:lla: (5 − 2)/0,015 = 200 Ω → 220 Ω.</p>
+<h3>Harjoitus</h3>
+<ol class="q">
+<li>12 V ja 470 Ω: laske virta ja teho.</li>
+<li>Rinnan 1 kΩ ja 1 kΩ, sarjassa 2 kΩ: kokonaisresistanssi?</li>
+<li>Mitoita vastus punaiselle LEDille (1,9 V), kun käyttöjännite on 5 V ja virta 12 mA.</li>
+</ol>
+<details><summary>Vastaukset</summary>1) 25,5 mA, 0,31 W; tarvitset vähintään 0,5 W:n vastuksen. 2) 500 Ω + 2 kΩ = 2,5 kΩ. 3) 258 Ω, valitse 270 Ω.</details>
+
+<h2 id="s8">8. Linux-perusteet</h2>
+<p>Linux pyörii suurimmassa osassa palvelimia, verkkolaitteita ja IoT-yhdyskäytäviä (esim. Raspberry Pi), ja sitä hallitaan lähes aina komentoriviltä. Kurssilla käytät sitä <strong>virtuaalikoneessa</strong> (esim. VirtualBox, VMware tai UTM). Näin voit kokeilla ja rikkoa asioita ilman riskiä omalle koneellesi. Ota virtuaalikoneesta <strong>tilannekuva (snapshot)</strong> ennen isoja kokeiluja.</p>
+<h3>Tiedostojärjestelmä</h3>
+<p>Linuxissa on yksi hakemistopuu, jonka juuri on <code>/</code>. Ei C:-asemia, vaan kaikki liitetään puuhun.</p>
+<table>
+<tr><th>Hakemisto</th><th>Sisältää</th></tr>
+<tr><td><code>/</code></td><td>juurihakemisto, kaiken alku</td></tr>
+<tr><td><code>/home</code></td><td>käyttäjien omat tiedostot (<code>/home/maija</code>)</td></tr>
+<tr><td><code>/etc</code></td><td>järjestelmän asetustiedostot</td></tr>
+<tr><td><code>/var</code></td><td>muuttuva data, esim. lokit (<code>/var/log</code>)</td></tr>
+<tr><td><code>/bin</code>, <code>/usr/bin</code></td><td>ohjelmat ja komennot</td></tr>
+<tr><td><code>/dev</code></td><td>laitteet tiedostoina (esim. <code>/dev/ttyUSB0</code> ESP32:lle)</td></tr>
+<tr><td><code>/tmp</code></td><td>tilapäiset tiedostot</td></tr>
+</table>
+<p><strong>Polut:</strong> <em>absoluuttinen</em> alkaa kauttaviivalla (<code>/home/maija/kuva.png</code>), <em>suhteellinen</em> nykyisestä hakemistosta (<code>kuvat/kuva.png</code>). <code>~</code> on oma kotihakemisto, <code>.</code> tämä hakemisto ja <code>..</code> ylähakemisto. Linux erottaa isot ja pienet kirjaimet: <code>Kuva.png</code> ≠ <code>kuva.png</code>.</p>
+<h3>Keskeiset komennot</h3>
+<table>
+<tr><th>Komento</th><th>Tekee</th><th>Esimerkki</th></tr>
+<tr><td><code>pwd</code></td><td>näyttää nykyisen hakemiston</td><td><code>pwd</code></td></tr>
+<tr><td><code>ls</code></td><td>listaa tiedostot</td><td><code>ls -l</code> (pitkä lista), <code>ls -a</code> (piilotetut)</td></tr>
+<tr><td><code>cd</code></td><td>vaihtaa hakemistoa</td><td><code>cd /etc</code>, <code>cd ..</code>, <code>cd ~</code></td></tr>
+<tr><td><code>mkdir</code></td><td>luo hakemiston</td><td><code>mkdir projekti</code></td></tr>
+<tr><td><code>touch</code></td><td>luo tyhjän tiedoston</td><td><code>touch muistio.txt</code></td></tr>
+<tr><td><code>cp</code></td><td>kopioi</td><td><code>cp a.txt b.txt</code>, <code>cp -r kansio uusi</code></td></tr>
+<tr><td><code>mv</code></td><td>siirtää tai nimeää uudelleen</td><td><code>mv a.txt kansio/</code></td></tr>
+<tr><td><code>rm</code></td><td>poistaa (ei roskakoria!)</td><td><code>rm a.txt</code>, <code>rm -r kansio</code></td></tr>
+<tr><td><code>cat</code></td><td>tulostaa tiedoston</td><td><code>cat a.txt</code></td></tr>
+<tr><td><code>less</code></td><td>selaa pitkää tiedostoa</td><td><code>less /var/log/syslog</code> (poistu: q)</td></tr>
+<tr><td><code>nano</code></td><td>tekstieditori</td><td><code>nano a.txt</code> (tallenna Ctrl+O, poistu Ctrl+X)</td></tr>
+<tr><td><code>grep</code></td><td>hakee tekstiä</td><td><code>grep virhe loki.txt</code></td></tr>
+<tr><td><code>man</code></td><td>käyttöohje</td><td><code>man ls</code></td></tr>
+</table>
+<p>Apua saa myös <code>komento --help</code>. Sarkain (Tab) täydentää nimet, ylös-nuoli tuo edellisen komennon.</p>
+<p><strong>Putket ja ohjaus.</strong> <code>|</code> välittää yhden komennon tulosteen seuraavalle: <code>ls -l | grep txt</code>. <code>&gt;</code> kirjoittaa tulosteen tiedostoon (korvaa), <code>&gt;&gt;</code> lisää loppuun: <code>echo hei &gt; a.txt</code>.</p>
+<h3>Käyttäjät ja käyttöoikeudet</h3>
+<p>Jokaisella tiedostolla on omistaja, ryhmä ja oikeudet. <code>ls -l</code> näyttää ne:</p>
+<pre><code>-rwxr-xr-- 1 maija opiskelijat 220 loka 2 12:00 skripti.sh</code></pre>
+<p>Ensimmäinen merkki on tyyppi (<code>-</code> tiedosto, <code>d</code> hakemisto). Sen jälkeen kolme kolmen merkin ryhmää: <strong>omistaja</strong> (rwx), <strong>ryhmä</strong> (r-x) ja <strong>muut</strong> (r--). <code>r</code> = luku (read), <code>w</code> = kirjoitus (write), <code>x</code> = suoritus (execute).</p>
+<p>Oikeudet voi kirjoittaa myös numeroina: r = 4, w = 2, x = 1, ja ne lasketaan yhteen ryhmä kerrallaan. Yllä olevan tiedoston oikeus on 7 (4+2+1), 5 (4+1) ja 4, eli <strong>754</strong>.</p>
+<table>
+<tr><th>Komento</th><th>Tekee</th></tr>
+<tr><td><code>chmod 755 skripti.sh</code></td><td>asettaa oikeudet numeroilla</td></tr>
+<tr><td><code>chmod +x skripti.sh</code></td><td>lisää suoritusoikeuden kaikille</td></tr>
+<tr><td><code>chown maija tiedosto</code></td><td>vaihtaa omistajan (vaatii sudon)</td></tr>
+<tr><td><code>whoami</code>, <code>id</code></td><td>kertoo, kuka olet ja mihin ryhmiin kuulut</td></tr>
+<tr><td><code>sudo komento</code></td><td>suorittaa komennon ylläpitäjän (root) oikeuksilla</td></tr>
+<tr><td><code>adduser nimi</code></td><td>luo käyttäjän</td></tr>
+</table>
+<p>Periaate: tee arkityöt tavallisena käyttäjänä ja käytä <code>sudo</code>a vain, kun se on pakko. Root voi tuhota koko järjestelmän yhdellä komennolla.</p>
+<h3>Ohjelmien asennus ja järjestelmän hallinta</h3>
+<p>Debian- ja Ubuntu-pohjaisissa järjestelmissä ohjelmat asennetaan <strong>pakettienhallinnalla</strong> <code>apt</code>. Paketit tulevat luotetuista ohjelmavarastoista (repositories).</p>
+<pre><code>sudo apt update          # päivitä pakettiluettelo
+sudo apt upgrade         # päivitä asennetut paketit
+sudo apt install nano    # asenna ohjelma
+sudo apt remove nano     # poista ohjelma
+apt search python3       # hae paketteja</code></pre>
+<ul>
+<li><code>ps aux</code> tai <code>top</code> näyttävät käynnissä olevat prosessit; <code>kill PID</code> lopettaa prosessin.</li>
+<li><code>df -h</code> näyttää levytilan, <code>free -h</code> muistin käytön.</li>
+<li><code>ip a</code> näyttää verkkoliittymät ja IP-osoitteen, <code>ping osoite</code> testaa yhteyttä.</li>
+<li><code>systemctl status palvelu</code> kertoo, pyöriikö palvelu (esim. <code>ssh</code>).</li>
+</ul>
+<p>IoT:ssä Linux-laitetta ohjataan usein etänä <strong>SSH</strong>-yhteydellä: <code>ssh maija@192.168.1.20</code>.</p>
+<h3>Harjoitus</h3>
+<p>Tee virtuaalikoneessa ja kirjaa komennot ylös:</p>
+<ol class="q">
+<li>Luo kotihakemistoon kansio <code>iot</code> ja sen sisälle tiedosto <code>data.txt</code>, jossa on rivi "Lämpötila 21".</li>
+<li>Kopioi tiedosto nimellä <code>varmuus.txt</code> ja poista alkuperäinen.</li>
+<li>Anna tiedostolle oikeudet 640. Mitä ne tarkoittavat?</li>
+<li>Asenna <code>tree</code> ja näytä kansiorakenne.</li>
+</ol>
+<details><summary>Vastaus kohtaan 3</summary>Omistaja luku+kirjoitus, ryhmä luku, muut ei mitään.</details>
+
+<h2 id="s9">9. IoT-arkkitehtuuri, ESP32 ja anturit</h2>
+<p>Esineiden internet (IoT) tarkoittaa fyysisiä laitteita, jotka mittaavat ympäristöään, ovat verkossa ja toimivat saamansa tiedon perusteella. Kaikki aiemmat osiot tulevat tähän yhteen: anturin jännite luetaan AD-muuntimella (osio 6), mikro-ohjain käsittelee bittejä (osio 2), laitetta hallitaan Linuxilla (osio 8) ja ulostulot ohjataan vastusten, diodien ja transistorien avulla (osio 7).</p>
+<svg viewBox="0 0 760 244" role="img" aria-label="Mittaustieto kulkee anturilta käyttäjälle neljän kerroksen läpi" font-size="13" font-family="system-ui,sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8a93a0"/></marker></defs>
+<text x="24" y="28" font-size="15" font-weight="600">Mittaustieto kulkee anturilta käyttäjälle neljän kerroksen läpi</text>
+<text x="24" y="46" font-size="11.5" opacity=".7">Kurssin kohteena on erityisesti laitekerros</text>
+<g fill="none" stroke="#8a93a0" stroke-width="1.25"><path d="M182 118H208" marker-end="url(#a)"/><path d="M366 118H392" marker-end="url(#a)"/><path d="M550 118H576" marker-end="url(#a)"/><path d="M656 176V204H104V178" marker-end="url(#a)"/></g>
+<rect x="26" y="60" width="156" height="116" rx="8" fill="#2563c9" fill-opacity=".12" stroke="#2563c9" stroke-width="2"/>
+<rect x="210" y="60" width="156" height="116" rx="8" fill="none" stroke="#8a93a0" stroke-width="1.25"/>
+<rect x="394" y="60" width="156" height="116" rx="8" fill="none" stroke="#8a93a0" stroke-width="1.25"/>
+<rect x="578" y="60" width="156" height="116" rx="8" fill="none" stroke="#8a93a0" stroke-width="1.25"/>
+<g text-anchor="middle">
+<text x="104" y="84" font-weight="600">Laitekerros</text><text x="104" y="108">Anturit</text><text x="104" y="128">ESP32-ohjain</text><text x="104" y="148">Toimilaitteet</text>
+<text x="288" y="84" font-weight="600">Yhteyskerros</text><text x="288" y="108">Wi-Fi</text><text x="288" y="128">Bluetooth LE</text><text x="288" y="148">MQTT-viestit</text>
+<text x="472" y="84" font-weight="600">Alusta</text><text x="472" y="108">MQTT-broker</text><text x="472" y="128">Tietokanta</text><text x="472" y="148">Linux-palvelin</text>
+<text x="656" y="84" font-weight="600">Sovellus</text><text x="656" y="108">Dashboard</text><text x="656" y="128">Mobiilisovellus</text><text x="656" y="148">Hälytykset</text>
+<text x="380" y="224" font-size="11.5" opacity=".7">Ohjauskomento kulkee takaisin toimilaitteelle</text>
+</g>
+</svg>
+<h3>Neljä kerrosta</h3>
+<table>
+<tr><th>Kerros</th><th>Tehtävä</th><th>Esimerkki</th></tr>
+<tr><td>Laitekerros</td><td>mittaa ja ohjaa fyysistä maailmaa</td><td>anturit, LEDit, releet, ESP32</td></tr>
+<tr><td>Yhteyskerros</td><td>siirtää tiedon eteenpäin</td><td>Wi-Fi, Bluetooth LE, LoRa, Zigbee</td></tr>
+<tr><td>Alusta (palvelin, pilvi)</td><td>vastaanottaa, tallentaa, käsittelee</td><td>MQTT-broker, tietokanta, Linux-palvelin</td></tr>
+<tr><td>Sovellus</td><td>näyttää ja ohjaa käyttäjälle</td><td>dashboard, mobiilisovellus, hälytykset</td></tr>
+</table>
+<p><strong>MQTT</strong> on IoT:n yleisin viestiprotokolla. Laite <strong>julkaisee</strong> (publish) viestin aiheeseen (topic), esimerkiksi <code>koti/olohuone/lampotila</code>, ja kaikki aiheen <strong>tilaajat</strong> (subscribe) saavat sen välittäjän, <strong>brokerin</strong>, kautta. Se on kevyt ja sopii pieniin laitteisiin. Oletusportti on 1883, salattuna 8883.</p>
+<h3>Sulautetun järjestelmän suunnittelu</h3>
+<p>Sulautettu järjestelmä on tietokone, joka on rakennettu yhteen tehtävään. Suunnittele aina tässä järjestyksessä:</p>
+<ol>
+<li><strong>Vaatimukset:</strong> mitä mitataan, kuinka usein, missä ympäristössä, mitä laite tekee tuloksella?</li>
+<li><strong>Osien valinta:</strong> mikro-ohjain, anturit, toimilaitteet, virtalähde. Tarkista jännitetasot (3,3 V vs 5 V) ja virrankulutus.</li>
+<li><strong>Lohkokaavio:</strong> mikä yhdistyy mihinkin.</li>
+<li><strong>Kytkentäkaavio</strong> ja kytkentä koekytkentälevylle (breadboard).</li>
+<li><strong>Ohjelma:</strong> ensin yksi anturi toimimaan, sitten seuraava, lopuksi kokonaisuus.</li>
+<li><strong>Testaus:</strong> vertaa mittauksia mittariin tai tunnettuun arvoon.</li>
+</ol>
+<h3>ESP32 mikro-ohjaimena</h3>
+<p>ESP32 on edullinen, Wi-Fi- ja Bluetooth-ominainen mikro-ohjain (Espressif). Tyypillisesti kaksi 240 MHz:n ydintä, noin 520 kt RAM:ia ja runsaasti GPIO-pinnejä. <strong>Logiikkataso on 3,3 V</strong>: 5 V:n signaali pinniin voi rikkoa sen (käytä jännitteenjakajaa, osio 7). Yksittäinen pinni antaa vain muutaman kymmenen mA, joten isommat kuormat ohjataan transistorilla.</p>
+<p>Ohjelmointi onnistuu Arduino IDE:llä (C/C++), PlatformIO:lla tai MicroPythonilla. Arduino-tyylisessä ohjelmassa on kaksi funktiota: <code>setup()</code> ajetaan kerran alussa ja <code>loop()</code> toistuu loputtomiin.</p>
+<pre><code>const int LED_PIN = 2;     // monissa kehityskorteissa sisäinen LED
+const int BTN_PIN = 4;
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BTN_PIN, INPUT_PULLUP);   // sisäinen vedin: painamaton = HIGH
+  Serial.begin(115200);
+}
+
+void loop() {
+  bool painettu = (digitalRead(BTN_PIN) == LOW);  // painike maahan
+  digitalWrite(LED_PIN, painettu ? HIGH : LOW);
+  int raaka = analogRead(34);        // 12 bittiä: 0..4095
+  float volttia = raaka * 3.3 / 4095.0;
+  Serial.println(volttia);
+  delay(200);
+}</code></pre>
+<ul>
+<li>Painike kytketään pinnin ja maan (GND) välille, ja <code>INPUT_PULLUP</code> pitää pinnin korkeana, kunnes painike painetaan. Ilman vetovastusta kelluva syöttö lukee satunnaisia arvoja.</li>
+<li>Kun Wi-Fi on käytössä, käytä AD-muunnokseen ADC1-pinnejä (GPIO 32–39). ADC2 ei toimi luotettavasti Wi-Fin kanssa.</li>
+<li>Joillakin pinneillä (esim. GPIO 0, 2, 12, 15) on erityistehtävä käynnistyksessä. Tarkista kortin pinout ennen kuin valitset pinnin.</li>
+<li>Sarjamonitori (<code>Serial</code>) on tärkein virheenjäljitystyökalu.</li>
+</ul>
+<h3>Anturit ja toimilaitteet</h3>
+<table>
+<tr><th>Anturi</th><th>Mittaa</th><th>Liitäntä</th><th>Huomio</th></tr>
+<tr><td>Potentiometri, LDR, NTC-termistori</td><td>asento, valo, lämpötila</td><td>analoginen (ADC)</td><td>tarvitsee jännitteenjakajan</td></tr>
+<tr><td>DHT11 / DHT22</td><td>lämpötila ja kosteus</td><td>yksi digitaalipinni</td><td>hidas, lue enintään muutaman sekunnin välein</td></tr>
+<tr><td>DS18B20</td><td>lämpötila</td><td>1-Wire</td><td>tarkka, useita samalle johdolle</td></tr>
+<tr><td>BME280</td><td>lämpötila, kosteus, ilmanpaine</td><td>I²C (SDA, SCL)</td><td>kirjasto helpottaa</td></tr>
+<tr><td>PIR</td><td>liike</td><td>digitaalinen</td><td>lähtö HIGH, kun liikettä</td></tr>
+<tr><td>Etäisyysanturi (HC-SR04)</td><td>etäisyys</td><td>kaksi digitaalipinniä</td><td>5 V, käytä jakajaa echo-pinniin</td></tr>
+</table>
+<table>
+<tr><th>Toimilaite</th><th>Ohjaus</th><th>Huomio</th></tr>
+<tr><td>LED</td><td>digitaalipinni + vastus</td><td>PWM:llä himmennys</td></tr>
+<tr><td>Summeri</td><td>digitaali tai PWM</td><td>aktiivinen summeri tarvitsee vain HIGH:n</td></tr>
+<tr><td>Rele</td><td>transistori + suojadiodi</td><td>eristetty kytkentä suuremmille jännitteille</td></tr>
+<tr><td>Servo</td><td>PWM-signaali</td><td>oma virtalähde isoille servoille</td></tr>
+<tr><td>Moottori</td><td>transistori/MOSFET + suojadiodi</td><td>ei suoraan pinnistä</td></tr>
+</table>
+<p><strong>I²C</strong> on kahden johdon väylä, joka yhdistää monta anturia samoihin pinneihin (SDA data, SCL kello), ja jokaisella laitteella on oma osoite. Se on yleisin tapa liittää digitaalisia antureita.</p>
+<h3>Harjoitustyön suunnittelu</h3>
+<p>Harjoitustyön aiheen tulee olla IoT-järjestelmä, joka kerää mittaustietoa antureilla. Tarkista tarkat vaatimukset kurssin ohjeista ja opettajalta; seuraava on yleinen rakenne.</p>
+<ol>
+<li><strong>Valitse selkeä ongelma</strong>, esim. "seuraan huoneen lämpötilaa ja kosteutta ja hälytän, jos kosteus ylittää 70 %", tai "kastelen kasvin, kun maa on kuiva".</li>
+<li><strong>Piirrä lohkokaavio</strong> neljällä kerroksella: mitä on laitteessa, mikä tieto kulkee ja minne.</li>
+<li><strong>Rakenna pienin toimiva versio</strong> (yksi anturi, sarjamonitori) ennen verkkoa tai muita ominaisuuksia.</li>
+<li><strong>Lisää toimilaite ja päätöksenteko</strong> (esim. kynnysarvo: jos mittaus &gt; raja, sytytä LED).</li>
+<li><strong>Dokumentoi:</strong> kuva kytkennästä, kytkentäkaavio, koodi, mitatut tulokset ja ongelmat, jotka ratkaisit.</li>
+<li>Viimeistelytunnilla (11.12.) pitäisi olla enää vain testausta ja dokumentointia, ei uusia ominaisuuksia.</li>
+</ol>
+<h3>Harjoitus</h3>
+<ol class="q">
+<li>ESP32 lukee analogiarvon 3071. Mikä on jännite, kun alue on 0–3,3 V ja 12 bittiä?</li>
+<li>Piirrä lohkokaavio järjestelmälle, joka mittaa lämpötilaa ja julkaisee sen MQTT:llä. Nimeä jokaisen lohkon kerros.</li>
+<li>Miksi 5 V:n HC-SR04:n echo-signaalia ei saa kytkeä suoraan ESP32:n pinniin ja miten ratkaiset sen?</li>
+</ol>
+<details><summary>Vastaus kohtaan 1</summary>3071 · 3,3 / 4095 ≈ 2,47 V.</details>
+
+<h2 id="s10">10. Tenttikertaus</h2>
+<p>Tenttien tarkkaa sisältöä ei ole kerrottu, joten kertaa tämän listan mukaan ja kysy opettajalta, mitä kumpikin tentti kattaa.</p>
+<h3>Pakolliset kaavat</h3>
+<table>
+<tr><th>Aihe</th><th>Kaava</th></tr>
+<tr><td>Binääri → desimaali</td><td>summa bitti · 2^paikka</td></tr>
+<tr><td>Arvoja <em>n</em> bitillä</td><td>2ⁿ, alue 0 … 2ⁿ − 1</td></tr>
+<tr><td>Kahden komplementti</td><td>käännä bitit + 1; alue −2ⁿ⁻¹ … 2ⁿ⁻¹ − 1</td></tr>
+<tr><td>Ohmin laki</td><td>U = R · I</td></tr>
+<tr><td>Teho</td><td>P = U · I = I²R = U²/R</td></tr>
+<tr><td>Sarjavastus / rinnan</td><td>R1 + R2 / (R1 · R2)/(R1 + R2)</td></tr>
+<tr><td>Jännitteenjakaja</td><td>Uout = Uin · R2/(R1 + R2)</td></tr>
+<tr><td>RC-aikavakio</td><td>τ = R · C</td></tr>
+<tr><td>LED-vastus</td><td>R = (U_lähde − U_LED) / I</td></tr>
+<tr><td>ADC:n portaan koko</td><td>LSB = Vref / 2ⁿ</td></tr>
+<tr><td>Nyquist</td><td>fs ≥ 2 · fmax</td></tr>
+<tr><td>Linux-oikeudet</td><td>r = 4, w = 2, x = 1</td></tr>
+</table>
+<h3>Tyypilliset tehtävätyypit</h3>
+<ol>
+<li><strong>Lukujärjestelmämuunnos</strong> binääri, desimaali, heksa, BCD.</li>
+<li><strong>Totuustaulu → lauseke → kytkentä</strong>, usein Karnaughin kartan kautta.</li>
+<li><strong>Kiikun tai laskurin toiminta</strong>: mikä on Q kellopulssien jälkeen?</li>
+<li><strong>Ohmin laki</strong>: piiri, jossa on sarja- ja rinnankytkentää, ja kysytään virta tai jännite.</li>
+<li><strong>LED-vastuksen mitoitus</strong> ja transistorin käyttökohde.</li>
+<li><strong>ADC:n laskenta</strong>: resoluutio, lukuarvo, jännite.</li>
+<li><strong>Linux-komennot</strong>: millä komennolla teet jonkin, tai mitä komento tekee. Oikeudet numeroina.</li>
+<li><strong>IoT-arkkitehtuuri</strong>: nimeä kerrokset, selitä MQTT, valitse sopiva anturi ja liitäntä.</li>
+</ol>
+<h3>Itsetestauskysymykset</h3>
+<ul class="q" style="list-style:none;padding-left:0">
+<li><label><input type="checkbox"> Muunna 200 binääriksi ja heksaksi. (11001000, 0xC8)</label></li>
+<li><label><input type="checkbox"> Miksi NAND-portti on universaali?</label></li>
+<li><label><input type="checkbox"> Mikä on Gray-koodin merkitys Karnaughin kartassa?</label></li>
+<li><label><input type="checkbox"> Milloin X (don't care) auttaa yksinkertaistuksessa?</label></li>
+<li><label><input type="checkbox"> Mitä JK-kiikku tekee, kun J = K = 1?</label></li>
+<li><label><input type="checkbox"> Millä tavalla T-kiikuista tehdään 4-bittinen laskuri ja mihin laskuri palaa 16. pulssilla?</label></li>
+<li><label><input type="checkbox"> Miksi LED tarvitsee vastuksen?</label></li>
+<li><label><input type="checkbox"> Mihin kondensaattoria ja mihin kelaa käytetään, ja miten ne eroavat?</label></li>
+<li><label><input type="checkbox"> Miten mittaat virran ja miten jännitteen yleismittarilla?</label></li>
+<li><label><input type="checkbox"> Miksi mikro-ohjaimen pinni ei saa ohjata moottoria suoraan?</label></li>
+<li><label><input type="checkbox"> Mitä tarkoittaa <code>chmod 640</code>?</label></li>
+<li><label><input type="checkbox"> Mikä ero on <code>apt update</code> ja <code>apt upgrade</code> -komennoilla?</label></li>
+<li><label><input type="checkbox"> Selitä MQTT:n publish/subscribe yhdellä lauseella.</label></li>
+<li><label><input type="checkbox"> Miksi ESP32:ssa käytetään ADC1:tä, kun Wi-Fi on päällä?</label></li>
+</ul>
+<h3>Opiskeluvinkki</h3>
+<p>Kolme asiaa auttaa eniten: tee jokainen digitaalitehtävä ensin paperilla, tarkista sitten SimulIDE:ssa; käytä Linux-komentoja virtuaalikoneessa itse pelkän lukemisen sijaan; ja piirrä harjoitustyöstä lohkokaavio jo ennen kuin ostat tai kytket mitään.</p>
+</main>
+</div>
+</body>
+</html>
