@@ -799,13 +799,17 @@ hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
     <a href="#trig-harj" class="sidebar-link" data-section="trig-harj">✏️ Harjoitukset</a>
 
     <hr class="sidebar-hr">
-    <div class="sidebar-section-label">📍 Analyyttinen geometria</div>
+    <div class="sidebar-section-label">📍 An.geometria</div>
     <a href="#analyyttinen" class="sidebar-link" data-section="analyyttinen">📐 Teoria</a>
     <a href="#ag-harj" class="sidebar-link" data-section="ag-harj">✏️ AG1–AG20</a>
 
     <hr class="sidebar-hr">
+    <div class="sidebar-section-label">〰️ Sinikäyrät</div>
+    <a href="#sinikayrat" class="sidebar-link" data-section="sinikayrat">〰️ Teoria</a>
+    <a href="#sk-harj" class="sidebar-link" data-section="sk-harj">✏️ SK1–SK10</a>
+
+    <hr class="sidebar-hr">
     <div class="sidebar-section-label">Tulossa</div>
-    <a href="#sinikayrat" class="sidebar-link" data-section="sinikayrat"><span class="tag-soon">Tulossa</span> Sinikäyrät</a>
     <a href="#eksponentti" class="sidebar-link" data-section="eksponentti"><span class="tag-soon">Tulossa</span> Eksp. &amp; log.</a>
   </nav>
 </aside>
@@ -4878,28 +4882,680 @@ L=<span class="nm">2</span>;
   </section>
 
   <!-- ═══════════════════════════════════════ -->
-  <!-- TULOSSA: SINIKÄYRÄT JA KOMPLEKSILUVUT -->
+  <!-- SINIKÄYRÄT -->
   <!-- ═══════════════════════════════════════ -->
   <section class="section" id="sinikayrat">
-    <div class="section-label">Osa 4 · Tulossa</div>
-    <h2 class="section-title">Sinikäyrät ja kompleksiluvut</h2>
-    <p class="section-lead">Aaltoliike, vaihesiirrot ja imaginaariluvut. Erityisen tärkeä sähkötekniikassa.</p>
+    <div class="section-label">Osa 4 · Sinikäyrät</div>
+    <h2 class="section-title">Sinikäyrät</h2>
+    <p class="section-lead">Aaltoliike, vaihesiirrot, RL-piirit ja Fourier-sarja. Kaikki oleelliset kaavat ja Octave-koodit valmiina.</p>
 
-    <div class="coming-section">
-      <div class="coming-badge">📅 Tulossa pian</div>
-      <div class="coming-title">Tämä osio lisätään seuraavalla kerralla</div>
-      <div class="coming-desc">Sinikäyrät kuvaavat aaltoliikettä: amplitudi, taajuus, kulmanopeus ja vaihe. Kompleksiluvut laajentavat lukuakselin tasoksi — välttämätön taito signaalikäsittelyssä.</div>
-      <div class="coming-topics">
-        <span class="coming-topic">〰️ Amplitudi ja taajuus</span>
-        <span class="coming-topic">🔄 Vaihesiirto</span>
-        <span class="coming-topic">📊 Octave: sinikäyrän piirtäminen</span>
-        <span class="coming-topic">𝑖 Imaginaariyksikkö</span>
-        <span class="coming-topic">📍 Kompleksitaso</span>
-        <span class="coming-topic">🔃 Napamuoto</span>
-        <span class="coming-topic">✖️ Kompleksilukujen laskut</span>
-        <span class="coming-topic">💻 Octave: abs(), angle()</span>
+    <!-- SK1: Perussinikäyrä -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">〰️</span>
+        <div>
+          <div class="card-title">SK1 — Sinikäyrä y = A·sin(ωt + φ)</div>
+          <div class="card-sub">sinikayrat.m · s.1-5</div>
+        </div>
+      </div>
+      <p>Sinikäyrä kuvaa pisteen P korkeutta, kun se pyörii A-säteistä ympyrää vastapäivään nopeudella ω radiaania sekunnissa. Vaihekulma φ on pisteen kulma hetkellä t = 0.</p>
+      <div class="formula">
+        <div class="flabel">Kaavat</div>
+        y = A·sin(ωt + φ)<br>
+        ω = 2πf &nbsp;(kulmataajuus, rad/s)<br>
+        T = 2π/ω = 1/f &nbsp;(jakso, s)<br>
+        f = taajuus (kierrosta/s = Hz)
+      </div>
+      <div class="tbl-wrap" style="margin:14px 0"><table>
+        <thead><tr><th>Suure</th><th>Merkitys</th><th>Esimerkki</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A</strong></td><td>amplitudi (huippuarvo)</td><td>A = 2</td></tr>
+          <tr><td><strong>ω</strong></td><td>kulmataajuus rad/s</td><td>ω = 100π (→ f = 50 Hz)</td></tr>
+          <tr><td><strong>f</strong></td><td>taajuus Hz (Hz = 1/s)</td><td>f = 50 Hz</td></tr>
+          <tr><td><strong>T</strong></td><td>jakso (yhden kierroksen aika)</td><td>T = 1/50 = 0.02 s</td></tr>
+          <tr><td><strong>φ</strong></td><td>vaihekulma rad, välillä −π…π</td><td>φ = π/6 = 30°</td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">sinikayrat.m · s.1</span></div>
+        <pre><span class="kw">clear</span>
+A=<span class="nm">2</span>               <span class="cm">% amplitudi</span>
+w=<span class="nm">100</span>*pi          <span class="cm">% kulmataajuus (ω = 2πf, f = 50 Hz)</span>
+phi=<span class="nm">150</span>*pi/<span class="nm">180</span>    <span class="cm">% vaihekulma rad (150°)</span>
+
+T=<span class="nm">2</span>*pi/w          <span class="cm">% jakso → 0.02 s</span>
+t=<span class="nm">0</span>:T/<span class="nm">100</span>:<span class="nm">4</span>*T;    <span class="cm">% aikaväli 0…4T</span>
+y=A*<span class="fn">sin</span>(w*t+phi);
+
+<span class="cm">% Arvo tietyllä hetkellä:</span>
+t0=<span class="nm">0.3</span>*T
+y0=A*<span class="fn">sin</span>(w*t0+phi)   <span class="cm">% y-koordinaatti</span>
+x0=A*<span class="fn">cos</span>(w*t0+phi)   <span class="cm">% x-koordinaatti (ympyrällä)</span>
+
+<span class="fn">plot</span>(t,y,<span class="st">'b'</span>)
+<span class="fn">hold on</span>
+<span class="fn">plot</span>(t0,y0,<span class="st">'r.'</span>,<span class="st">'markersize'</span>,<span class="nm">20</span>)
+<span class="fn">plot</span>([t0,t0],[<span class="nm">0</span>,y0],<span class="st">'r'</span>)
+<span class="fn">hold off</span>; <span class="fn">grid</span>
+<span class="fn">xlabel</span>(<span class="st">'aika t'</span>)</pre>
+      </div>
+      <div class="box tip">
+        <span class="box-icon">💡</span>
+        <div><strong>Huom:</strong> Tässä käytetään <code>sin()</code> radiaanikulmilla — sinikäyrälaskuissa w, phi ja wt ovat radiaaneissa, joten <code>sin()</code> on oikein (ei <code>sind()</code>). Asteita tarvitaan vain yksittäisiä kulma-arvoja laskettaessa.</div>
       </div>
     </div>
+
+    <!-- SK2: RL-piiri -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🔌</span>
+        <div>
+          <div class="card-title">SK2 — RL-piiri: virta jälkee jännitettä</div>
+          <div class="card-sub">sinikayrat.m · s.9-10</div>
+        </div>
+      </div>
+      <p>RL-piirissä (resistanssi R ja induktanssi L sarjassa) sinikäyräjännite aiheuttaa sinikäyrävirran, joka jälkee jännitettä vaihekulmalla φ. Induktanssi "vastustaa" virran muutosta.</p>
+      <div class="formula">
+        <div class="flabel">RL-piirin kaavat</div>
+        u = U·sin(ωt) &nbsp;→&nbsp; i = I·sin(ωt − φ)<br>
+        I = U / √(R² + (ωL)²) &nbsp;(virran amplitudi)<br>
+        φ = atan(ωL / R) &nbsp;(vaihesiirto rad, virta jälkee)
+      </div>
+      <div class="box info">
+        <span class="box-icon">ℹ️</span>
+        <div><strong>Vaihesiirto:</strong> Virta i jälkee jännitettä u ajalla Δt = φ/ω. Mitä suurempi L tai ω, sitä suurempi viive. Kun L → 0, φ → 0 ja piiri käyttäytyy kuin pelkkä resistanssi.</div>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">sinikayrat.m · s.9-10</span></div>
+        <pre><span class="kw">clear</span>
+R=<span class="nm">0.5</span>; L=<span class="nm">0.005</span>; U=<span class="nm">5</span>; w=<span class="nm">100</span>*pi;
+T=<span class="nm">2</span>*pi/w;
+t=<span class="nm">0</span>:T/<span class="nm">100</span>:<span class="nm">4</span>*T;
+u=U*<span class="fn">sin</span>(w*t);
+
+<span class="cm">% Virran amplitudi ja vaihesiirto</span>
+I=U/<span class="fn">sqrt</span>(R^<span class="nm">2</span>+(w*L)^<span class="nm">2</span>)    <span class="cm">% → 3.033 A</span>
+phi=<span class="fn">atan</span>(w*L/R)              <span class="cm">% → 1.263 rad ≈ 72.3°</span>
+i=I*<span class="fn">sin</span>(w*t-phi);
+
+<span class="fn">plot</span>(t,u,<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">hold on</span>
+<span class="fn">plot</span>(t,i,<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">hold off</span>; <span class="fn">grid</span>
+<span class="fn">legend</span>({<span class="st">'jännite u'</span>,<span class="st">'virta i'</span>},<span class="st">'fontsize'</span>,<span class="nm">12</span>)</pre>
+      </div>
+    </div>
+
+    <!-- SK3: Mekaaninen värähtelijä -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🏃</span>
+        <div>
+          <div class="card-title">SK3 — Mekaaninen värähtelijä (jousi-massa)</div>
+          <div class="card-sub">sinikayrat.m · s.11-14</div>
+        </div>
+      </div>
+      <p>Massa m jousessa, jousivakio k. Massa saa alkupainon x₀ ja -nopeuden v₀. Vapaa värähtely on sinikäyrä, jonka kulmataajuus, amplitudi ja vaihekulma riippuvat alkuehdoista.</p>
+      <div class="formula">
+        <div class="flabel">Mekaanisen värähtelijän kaavat</div>
+        x(t) = A·sin(ωt + φ)<br>
+        ω = √(k/m) &nbsp;(luonnollinen kulmataajuus)<br>
+        A = √(x₀² + (v₀/ω)²) &nbsp;(amplitudi)<br>
+        φ = atan2(x₀, v₀/ω) &nbsp;(vaihekulma)
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">sinikayrat.m · s.11</span></div>
+        <pre><span class="kw">clear</span>
+m=<span class="nm">2</span>; k=<span class="nm">10</span>;     <span class="cm">% massa kg, jousivakio N/m</span>
+x0=<span class="nm">2</span>; v0=<span class="nm">3</span>;    <span class="cm">% alkupaikka m, -nopeus m/s</span>
+
+w=<span class="fn">sqrt</span>(k/m)                   <span class="cm">% → 2.236 rad/s</span>
+A=<span class="fn">sqrt</span>(x0^<span class="nm">2</span>+(v0/w)^<span class="nm">2</span>)       <span class="cm">% → 2.408 m</span>
+phi=<span class="fn">atan2</span>(x0,v0/w)            <span class="cm">% → 0.980 rad</span>
+T=<span class="nm">2</span>*pi/w;
+t=<span class="nm">0</span>:T/<span class="nm">100</span>:<span class="nm">3</span>*T;
+x=A*<span class="fn">sin</span>(w*t+phi);
+
+<span class="fn">plot</span>(t,x,<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">grid</span>
+<span class="fn">xlabel</span>(<span class="st">'aika t'</span>); <span class="fn">ylabel</span>(<span class="st">'paikka x'</span>)</pre>
+      </div>
+    </div>
+
+    <!-- SK4: Samantaajuisten summa -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">➕</span>
+        <div>
+          <div class="card-title">SK4 — Samantaajuisten sinikäyrien summa</div>
+          <div class="card-sub">sinikayrat.m · s.17-18</div>
+        </div>
+      </div>
+      <p>Kahden samantaajuisen sinikäyrän summa on myös sinikäyrä samalla taajuudella — vain amplitudi ja vaihe muuttuvat. Amplitudi lasketaan vaihe-eron kautta fasorivektorien summana.</p>
+      <div class="formula">
+        <div class="flabel">Superposition kaavat (sama taajuus ω)</div>
+        y₁ = A₁·sin(ωt),&nbsp; y₂ = A₂·sin(ωt + φ)<br>
+        y₁ + y₂ = A·sin(ωt + θ)<br>
+        A = √((A₁ + A₂·cos φ)² + (A₂·sin φ)²)<br>
+        θ = atan2(A₂·sin φ, A₁ + A₂·cos φ)
+      </div>
+      <div class="box ok">
+        <span class="box-icon">✅</span>
+        <div><strong>Muista:</strong> Vaihe-ero φ = ω·Δt, missä Δt on kahden käyrän huippujen tai nollakohtien aika-ero.</div>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">sinikayrat.m · s.17-18</span></div>
+        <pre><span class="kw">clear</span>
+w=<span class="nm">40</span>*<span class="nm">2</span>*pi; A1=<span class="nm">10</span>; A2=<span class="nm">4</span>; phi=<span class="nm">50</span>*pi/<span class="nm">180</span>;
+
+<span class="cm">% Summan amplitudi ja vaihe</span>
+A=<span class="fn">sqrt</span>((A1+A2*<span class="fn">cos</span>(phi))^<span class="nm">2</span>+(A2*<span class="fn">sin</span>(phi))^<span class="nm">2</span>)   <span class="cm">% → 12.49</span>
+theta=<span class="fn">atan2</span>(A2*<span class="fn">sin</span>(phi),A1+A2*<span class="fn">cos</span>(phi))       <span class="cm">% → 0.281 rad</span>
+
+T=<span class="nm">2</span>*pi/w;
+t=<span class="nm">0</span>:T/<span class="nm">100</span>:<span class="nm">4</span>*T;
+y1=A1*<span class="fn">sin</span>(w*t);
+y2=A2*<span class="fn">sin</span>(w*t+phi);
+y =A*<span class="fn">sin</span>(w*t+theta);  <span class="cm">% summa</span>
+
+<span class="fn">plot</span>(t,y1,<span class="st">'b'</span>,t,y2,<span class="st">'g'</span>,t,y,<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.2</span>)
+<span class="fn">grid</span>
+<span class="fn">legend</span>({<span class="st">'y_1'</span>,<span class="st">'y_2'</span>,<span class="st">'y_1+y_2'</span>},<span class="st">'fontsize'</span>,<span class="nm">12</span>)</pre>
+      </div>
+    </div>
+
+    <!-- SK5: Eritaajuisten summa -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🎵</span>
+        <div>
+          <div class="card-title">SK5 — Eritaajuisten sinikäyrien summa</div>
+          <div class="card-sub">sinikayrat.m · s.27</div>
+        </div>
+      </div>
+      <p>Eri taajuuksilla olevien sinikäyrien summa ei ole enää sinikäyrä. Summan muoto riippuu taajuuksien suhteesta. Tulos voi olla jaksollinen (jos taajuudet ovat kokonaislukujen suhteessa) tai ei-jaksollinen.</p>
+      <div class="formula">
+        <div class="flabel">Eritaajuinen summa</div>
+        y₁ = A₁·sin(ω₁t + φ₁)<br>
+        y₂ = A₂·sin(ω₂t + φ₂)<br>
+        y = y₁ + y₂ &nbsp;(ei enää puhdas sinikäyrä)
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">sinikayrat.m · s.27</span></div>
+        <pre><span class="kw">clear</span>
+A1=<span class="nm">1</span>;  w1=<span class="nm">2</span>*pi;   phi1=<span class="nm">0</span>;
+A2=<span class="nm">0.5</span>; w2=<span class="nm">5</span>*pi; phi2=pi/<span class="nm">3</span>;
+
+T=<span class="fn">max</span>([<span class="nm">2</span>*pi/w1, <span class="nm">2</span>*pi/w2]);
+t=<span class="nm">0</span>:T/<span class="nm">100</span>:<span class="nm">3</span>*T;
+y1=A1*<span class="fn">sin</span>(w1*t+phi1);
+y2=A2*<span class="fn">sin</span>(w2*t+phi2);
+y=y1+y2;
+
+<span class="fn">plot</span>(t,y1,<span class="st">'b'</span>,t,y2,<span class="st">'g'</span>,t,y,<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">grid</span>
+<span class="fn">legend</span>({<span class="st">'y_1'</span>,<span class="st">'y_2'</span>,<span class="st">'y_1+y_2'</span>},<span class="st">'fontsize'</span>,<span class="nm">12</span>)
+<span class="fn">xlabel</span>(<span class="st">'t'</span>)</pre>
+      </div>
+    </div>
+
+    <!-- SK6: Huojunta -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📳</span>
+        <div>
+          <div class="card-title">SK6 — Huojunta (beat)</div>
+          <div class="card-sub">sinikayrat.m · s.29</div>
+        </div>
+      </div>
+      <p>Kun kahden lähes samantaajuisen sinikäyrän taajuudet f₁ ja f₂ eroavat vähän, syntyy huojunta: amplitudi vaihtelee hitaasti huojuntataajuudella |f₁ − f₂|. Tämä kuuluu esimerkiksi kahden hieman epävireisen kielen päällekkäissoinnissa.</p>
+      <div class="formula">
+        <div class="flabel">Huojunta</div>
+        y = y₁ + y₂ = A·sin(2πf₁t) + A·sin(2πf₂t)<br>
+        Amplitudinkehys: yy = 2A·cos(2π·(f₁−f₂)/2 · t)<br>
+        Huojuntataajuus f_beat = |f₁ − f₂|
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">sinikayrat.m · s.29</span></div>
+        <pre><span class="kw">clear</span>
+f1=<span class="nm">110</span>; f2=<span class="nm">100</span>; A=<span class="nm">1</span>;  <span class="cm">% f_beat = 10 Hz</span>
+T=<span class="nm">0.30</span>;
+t=<span class="nm">0</span>:T/<span class="nm">1000</span>:T;
+y1=A*<span class="fn">sin</span>(<span class="nm">2</span>*pi*f1*t);
+y2=A*<span class="fn">sin</span>(<span class="nm">2</span>*pi*f2*t);
+y=y1+y2;
+yy=<span class="nm">2</span>*A*<span class="fn">cos</span>(<span class="nm">2</span>*pi*(f1-f2)/<span class="nm">2</span>*t);  <span class="cm">% amplitudinkehys</span>
+
+<span class="fn">subplot</span>(<span class="nm">211</span>)
+<span class="fn">plot</span>(t,y1,<span class="st">'b'</span>,t,y2,<span class="st">'g'</span>); <span class="fn">grid</span>
+<span class="fn">legend</span>({<span class="st">'y_1 (110 Hz)'</span>,<span class="st">'y_2 (100 Hz)'</span>})
+
+<span class="fn">subplot</span>(<span class="nm">212</span>)
+<span class="fn">plot</span>(t,y,<span class="st">'r'</span>,t,yy,<span class="st">'m'</span>,t,-yy,<span class="st">'m'</span>); <span class="fn">grid</span>
+<span class="fn">xlabel</span>(<span class="st">'aika t'</span>)
+<span class="fn">legend</span>({<span class="st">'summa y'</span>,<span class="st">'kehys ±2A·cos(...)'</span>})</pre>
+      </div>
+      <div class="box tip">
+        <span class="box-icon">💡</span>
+        <div><strong>Käytännössä:</strong> Kitaran viritys perustuu huojuntaan. Kun kaksi kieltä soi lähes samalta, kuuluu huojuntaa. Kun huojunta häviää, kieliä on samassa vireessä.</div>
+      </div>
+    </div>
+
+    <!-- SK7: AM-modulaatio -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📻</span>
+        <div>
+          <div class="card-title">SK7 — AM-modulaatio</div>
+          <div class="card-sub">sinikayrat.m · s.31</div>
+        </div>
+      </div>
+      <p>Amplitudimodulaatiossa (AM) kantoaaltoon c = A·sin(2πfct) sekoitetaan viestiaalto m = cos(2πfmt) siten, että kantoaallon amplitudi muuttuu viestin mukaan. Modulaatioindeksi μ kertoo moduloinnin syvyyden.</p>
+      <div class="formula">
+        <div class="flabel">AM-modulaatiokaavat</div>
+        y = (1 + μ·m) · c<br>
+        Sivukaistat: y₁ = ½μA·sin(2π(fc+fm)t) &nbsp;(ylä)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y₂ = ½μA·sin(2π(fc−fm)t) &nbsp;(ala)<br>
+        Kokonaissignaali = c + y₁ + y₂
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">sinikayrat.m · s.31</span></div>
+        <pre><span class="kw">clear</span>
+A=<span class="nm">5</span>; fc=<span class="nm">50</span>; mu=<span class="nm">0.6</span>; fm=<span class="nm">5</span>;
+T=<span class="nm">1</span>/fc; r=<span class="nm">30</span>;
+t=<span class="nm">0</span>:T/<span class="nm">1000</span>:r*T;
+c=A*<span class="fn">sin</span>(<span class="nm">2</span>*pi*fc*t);      <span class="cm">% kantoaalto (50 Hz)</span>
+m=<span class="fn">cos</span>(<span class="nm">2</span>*pi*fm*t);        <span class="cm">% viestiaalto (5 Hz)</span>
+y=(<span class="nm">1</span>+mu*m).*c;           <span class="cm">% AM-signaali (.* koska vektori)</span>
+
+<span class="cm">% Sivukaistat erikseen:</span>
+y1=<span class="nm">1</span>/<span class="nm">2</span>*mu*A*<span class="fn">sin</span>(<span class="nm">2</span>*pi*(fc+fm)*t); <span class="cm">% fc+fm = 55 Hz</span>
+y2=<span class="nm">1</span>/<span class="nm">2</span>*mu*A*<span class="fn">sin</span>(<span class="nm">2</span>*pi*(fc-fm)*t); <span class="cm">% fc-fm = 45 Hz</span>
+yy=c+y1+y2;               <span class="cm">% kontrolli: pitää = y</span>
+
+<span class="fn">subplot</span>(<span class="nm">3</span>,<span class="nm">1</span>,<span class="nm">1</span>); <span class="fn">plot</span>(t,c); <span class="fn">grid</span>; <span class="fn">ylabel</span>(<span class="st">'kantoaalto c'</span>)
+<span class="fn">subplot</span>(<span class="nm">3</span>,<span class="nm">1</span>,<span class="nm">2</span>); <span class="fn">plot</span>(t,m); <span class="fn">grid</span>; <span class="fn">ylabel</span>(<span class="st">'viestiaalto m'</span>)
+<span class="fn">subplot</span>(<span class="nm">3</span>,<span class="nm">1</span>,<span class="nm">3</span>); <span class="fn">plot</span>(t,y,t,yy,<span class="st">'r:'</span>); <span class="fn">grid</span>; <span class="fn">ylabel</span>(<span class="st">'AM-signaali y'</span>)
+<span class="fn">xlabel</span>(<span class="st">'t'</span>)</pre>
+      </div>
+    </div>
+
+    <!-- SK8: Fourier-sarja -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🔢</span>
+        <div>
+          <div class="card-title">SK8 — Fourier-sarja: sahanterä sinikäyristä</div>
+          <div class="card-sub">sinikayrat.m · s.33</div>
+        </div>
+      </div>
+      <p>Mikä tahansa jaksollinen signaali voidaan esittää sinikäyrien summana (Fourier-sarja). Sahanteräaalto muodostuu perustaajuuden f ja sen kerrannaisten 2f, 3f, … summasta. Mitä enemmän termejä, sitä parempi likiarvo.</p>
+      <div class="formula">
+        <div class="flabel">Sahanterän Fourier-sarja (A = 1, T = 1)</div>
+        y = A/2 + Σ [A/(kπ) · sin(2πkft + π)], k = 1, 2, ..., n<br>
+        f = 1/T (perustaajuus)
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">sinikayrat.m · s.33</span></div>
+        <pre><span class="kw">clear</span>
+A=<span class="nm">1</span>; T=<span class="nm">1</span>;
+f=<span class="nm">1</span>/T;         <span class="cm">% perustaajuus</span>
+t=<span class="nm">0</span>:T/<span class="nm">1000</span>:<span class="nm">5</span>*T;
+
+y=A/<span class="nm">2</span>;         <span class="cm">% DC-taso</span>
+n=<span class="nm">50</span>;          <span class="cm">% sinikäyrien määrä</span>
+<span class="kw">for</span> k=<span class="nm">1</span>:n
+  y=y+A/(k*pi)*<span class="fn">sin</span>(<span class="nm">2</span>*pi*k*f*t+pi);
+<span class="kw">end</span>
+
+<span class="cm">% Alkuperäinen sahanterä (vertailua varten)</span>
+tt=[<span class="nm">0</span>,T,T,<span class="nm">2</span>*T,<span class="nm">2</span>*T,<span class="nm">3</span>*T,<span class="nm">3</span>*T,<span class="nm">4</span>*T,<span class="nm">4</span>*T,<span class="nm">5</span>*T,<span class="nm">5</span>*T];
+yy=[<span class="nm">0</span>,A,<span class="nm">0</span>,A,<span class="nm">0</span>,A,<span class="nm">0</span>,A,<span class="nm">0</span>,A,<span class="nm">0</span>];
+
+<span class="fn">plot</span>(tt,yy,<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">hold on</span>
+<span class="fn">plot</span>(t,y,<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">hold off</span>; <span class="fn">grid</span>
+<span class="fn">legend</span>({<span class="st">'sahanterä'</span>,['Fourier n=',<span class="fn">num2str</span>(n)]})</pre>
+      </div>
+      <div class="box tip">
+        <span class="box-icon">💡</span>
+        <div>Kokeile muuttaa <code>n = 5, 10, 50</code>. Huomaat kuinka enemmän termejä → tarkempi likiarvo, mutta Gibbsin ilmiö pysyy epäjatkuvuuskohdissa.</div>
+      </div>
+    </div>
+
+    <!-- SK9: 1D-aaltoliike -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🌊</span>
+        <div>
+          <div class="card-title">SK9 — 1D-aaltoliike</div>
+          <div class="card-sub">sinikayrat.m · s.37</div>
+        </div>
+      </div>
+      <p>Sinikäyrä voi kuvata myös paikassa etenevää aaltoa. Aallonpituus λ on etäisyys kahden peräkkäisen huipun välillä. Aallon nopeus v = ω/k riippuu väliaineen ominaisuuksista.</p>
+      <div class="formula">
+        <div class="flabel">1D-aaltoliikkeen kaavat</div>
+        y(x, t) = A·sin(kx − ωt + φ) &nbsp;(etenevä aalto +x-suuntaan)<br>
+        y(x, t) = A·sin(kx + ωt + φ) &nbsp;(etenevä aalto −x-suuntaan)<br>
+        λ = 2π/k &nbsp;(aallonpituus)<br>
+        v = ω/k &nbsp;(aallon nopeus)
+      </div>
+      <div class="tbl-wrap" style="margin:14px 0"><table>
+        <thead><tr><th>Suure</th><th>Merkki</th><th>Yhteys</th></tr></thead>
+        <tbody>
+          <tr><td>Aallonpituus</td><td>λ</td><td>λ = 2π/k</td></tr>
+          <tr><td>Aaltoluku</td><td>k</td><td>k = 2π/λ</td></tr>
+          <tr><td>Aallon nopeus</td><td>v</td><td>v = ω/k = λ·f</td></tr>
+          <tr><td>Kulmataajuus</td><td>ω</td><td>ω = v·k = 2πf</td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">sinikayrat.m · s.37</span></div>
+        <pre><span class="kw">clear</span>
+A=<span class="nm">1</span>; w=<span class="nm">2</span>*pi; k=<span class="nm">3</span>; phi=<span class="nm">0</span>;
+T=<span class="nm">2</span>*pi/w;
+la=<span class="nm">2</span>*pi/k       <span class="cm">% aallonpituus → 2.094</span>
+v=w/k            <span class="cm">% aallon nopeus → 2.094</span>
+
+x=<span class="nm">0</span>:la/<span class="nm">100</span>:<span class="nm">3</span>*la;
+t0=<span class="nm">0</span>; t1=<span class="nm">0.3</span>;
+
+<span class="cm">% Aalto kahdella eri hetkellä:</span>
+y0=A*<span class="fn">sin</span>(k*x-w*t0+phi);
+y1=A*<span class="fn">sin</span>(k*x-w*t1+phi);
+
+<span class="fn">plot</span>(x,y0,<span class="st">'b'</span>,x,y1,<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">grid</span>
+<span class="fn">legend</span>({[<span class="st">'t = '</span>,<span class="fn">num2str</span>(t0)],[<span class="st">'t = '</span>,<span class="fn">num2str</span>(t1)]})
+<span class="fn">xlabel</span>(<span class="st">'x'</span>)
+<span class="fn">title</span>([<span class="st">'\lambda = '</span>,<span class="fn">num2str</span>(la),<span class="st">', v = '</span>,<span class="fn">num2str</span>(v)])</pre>
+      </div>
+    </div>
+
+    <!-- SK10: Aaltoliikkeiden superpositio -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">〰️</span>
+        <div>
+          <div class="card-title">SK10 — Aaltoliikkeiden superpositio</div>
+          <div class="card-sub">sinikayrat.m · s.39</div>
+        </div>
+      </div>
+      <p>Kaksi eri aaltoliikettä voidaan laskea yhteen superposition periaatteella. Toisin kuin samantaajuisten sinikäyrien tapauksessa, nyt sekä taajuus k että kulmataajuus ω voivat olla erilaisia.</p>
+      <div class="code-block">
+        <div class="code-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><span class="code-name">octave &gt;&gt;</span><span class="code-file">sinikayrat.m · s.39</span></div>
+        <pre><span class="kw">clear</span>
+A1=<span class="nm">1</span>; k1=<span class="nm">3</span>; w1=<span class="nm">2</span>*pi; phi1=<span class="nm">0</span>;
+A2=<span class="nm">0.5</span>; k2=<span class="nm">5</span>; w2=<span class="nm">5</span>*pi; phi2=pi/<span class="nm">3</span>;
+
+la1=<span class="nm">2</span>*pi/k1; la2=<span class="nm">2</span>*pi/k2;
+xmax=<span class="nm">3</span>*<span class="fn">max</span>([la1,la2]);
+x=<span class="nm">0</span>:xmax/<span class="nm">1000</span>:xmax;
+
+t=<span class="nm">0.2</span>;  <span class="cm">% tarkasteltava hetki</span>
+y1=A1*<span class="fn">sin</span>(k1*x-w1*t+phi1);
+y2=A2*<span class="fn">sin</span>(k2*x-w2*t+phi2);
+y=y1+y2;
+
+<span class="fn">plot</span>(x,y1,<span class="st">'b'</span>,x,y2,<span class="st">'g'</span>,x,y,<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">grid</span>
+<span class="fn">legend</span>({<span class="st">'aalto 1'</span>,<span class="st">'aalto 2'</span>,<span class="st">'summa'</span>},<span class="st">'fontsize'</span>,<span class="nm">12</span>)
+<span class="fn">xlabel</span>(<span class="st">'x'</span>)</pre>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Harjoitustehtävät: Sinikäyrät -->
+  <hr>
+  <div id="sk-harj"></div>
+  <section class="section" id="sk-harj-sec" style="scroll-margin-top:20px">
+    <div class="section-label">Osa 4 · Sinikäyrät</div>
+    <h2 class="section-title">Harjoitustehtävät: SK1–SK10</h2>
+    <p class="section-lead">Yksi tehtävä per teoriakorttiaihe. Ratkaise ensin itse, sitten tarkasta.</p>
+
+    <div class="ex-grid">
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus SK1</div>
+          <div class="ex-question">Sinikäyrän parametrit</div>
+          <div class="ex-given">y = 3·sin(40πt + π/4). Laske A, ω, f, T ja φ asteina.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+A=<span class="nm">3</span>
+w=<span class="nm">40</span>*pi          <span class="cm">% → 125.66 rad/s</span>
+phi=pi/<span class="nm">4</span>         <span class="cm">% rad</span>
+phi_deg=phi*<span class="nm">180</span>/pi  <span class="cm">% → 45°</span>
+f=w/(<span class="nm">2</span>*pi)       <span class="cm">% → 20 Hz</span>
+T=<span class="nm">1</span>/f            <span class="cm">% → 0.05 s</span>
+
+<span class="cm">% Piirretään:</span>
+t=<span class="nm">0</span>:T/<span class="nm">200</span>:<span class="nm">3</span>*T;
+y=A*<span class="fn">sin</span>(w*t+phi);
+<span class="fn">plot</span>(t,y,<span class="st">'b'</span>); <span class="fn">grid</span></pre>
+          <div class="ex-ans">✅ A = 3, ω = 40π rad/s, f = 20 Hz, T = 50 ms, φ = 45°</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus SK2</div>
+          <div class="ex-question">RL-piiri: virta ja vaihesiirto</div>
+          <div class="ex-given">R = 10 Ω, L = 50 mH, U = 230 V, f = 50 Hz. Laske virran amplitudi I ja vaihesiirto φ.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+R=<span class="nm">10</span>; L=<span class="nm">0.05</span>; U=<span class="nm">230</span>; f=<span class="nm">50</span>;
+w=<span class="nm">2</span>*pi*f
+I=U/<span class="fn">sqrt</span>(R^<span class="nm">2</span>+(w*L)^<span class="nm">2</span>)  <span class="cm">% → 20.5 A</span>
+phi=<span class="fn">atan</span>(w*L/R)          <span class="cm">% → 0.996 rad</span>
+phi_deg=phi*<span class="nm">180</span>/pi       <span class="cm">% → 57.1°</span>
+
+<span class="cm">% Tarkistus: induktanssin reaktanssi</span>
+XL=w*L                    <span class="cm">% → 15.7 Ω</span>
+Z=<span class="fn">sqrt</span>(R^<span class="nm">2</span>+XL^<span class="nm">2</span>)         <span class="cm">% → 18.7 Ω (impedanssi)</span></pre>
+          <div class="ex-ans">✅ I ≈ 20.5 A, φ ≈ 57.1° (virta jälkee jännitettä)</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus SK3</div>
+          <div class="ex-question">Jousi-massa-värähtelijä</div>
+          <div class="ex-given">m = 0.5 kg, k = 8 N/m. Alkuehdot: x₀ = 0.3 m, v₀ = 0 m/s. Laske ω, A ja T.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+m=<span class="nm">0.5</span>; k=<span class="nm">8</span>; x0=<span class="nm">0.3</span>; v0=<span class="nm">0</span>;
+w=<span class="fn">sqrt</span>(k/m)                 <span class="cm">% → 4.0 rad/s</span>
+A=<span class="fn">sqrt</span>(x0^<span class="nm">2</span>+(v0/w)^<span class="nm">2</span>)    <span class="cm">% → 0.3 m (= x0 kun v0=0)</span>
+phi=<span class="fn">atan2</span>(x0,v0/w)         <span class="cm">% → 1.571 rad = π/2</span>
+T=<span class="nm">2</span>*pi/w                    <span class="cm">% → 1.571 s</span>
+t=<span class="nm">0</span>:T/<span class="nm">200</span>:<span class="nm">3</span>*T;
+x=A*<span class="fn">sin</span>(w*t+phi);
+<span class="fn">plot</span>(t,x); <span class="fn">grid</span>
+<span class="fn">ylabel</span>(<span class="st">'paikka x (m)'</span>); <span class="fn">xlabel</span>(<span class="st">'aika t (s)'</span>)</pre>
+          <div class="ex-ans">✅ ω = 4 rad/s, A = 0.3 m, T ≈ 1.57 s</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus SK4</div>
+          <div class="ex-question">Samantaajuisten sinikäyrien summa</div>
+          <div class="ex-given">y₁ = 6·sin(100πt), y₂ = 4·sin(100πt + π/3). Laske summan A ja θ.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+A1=<span class="nm">6</span>; A2=<span class="nm">4</span>; w=<span class="nm">100</span>*pi; phi=pi/<span class="nm">3</span>;
+A=<span class="fn">sqrt</span>((A1+A2*<span class="fn">cos</span>(phi))^<span class="nm">2</span>+(A2*<span class="fn">sin</span>(phi))^<span class="nm">2</span>)  <span class="cm">% → 8.72</span>
+theta=<span class="fn">atan2</span>(A2*<span class="fn">sin</span>(phi),A1+A2*<span class="fn">cos</span>(phi))       <span class="cm">% → 0.445 rad</span>
+theta_deg=theta*<span class="nm">180</span>/pi                            <span class="cm">% → 25.5°</span>
+
+T=<span class="nm">2</span>*pi/w;
+t=<span class="nm">0</span>:T/<span class="nm">200</span>:<span class="nm">3</span>*T;
+y1=A1*<span class="fn">sin</span>(w*t);
+y2=A2*<span class="fn">sin</span>(w*t+phi);
+y=A*<span class="fn">sin</span>(w*t+theta);
+<span class="fn">plot</span>(t,y1,<span class="st">'b'</span>,t,y2,<span class="st">'g'</span>,t,y,<span class="st">'r'</span>); <span class="fn">grid</span>
+<span class="fn">legend</span>({<span class="st">'y_1'</span>,<span class="st">'y_2'</span>,<span class="st">'summa'</span>})</pre>
+          <div class="ex-ans">✅ A ≈ 8.72, θ ≈ 25.5°. Summa: 8.72·sin(100πt + 0.445)</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus SK5</div>
+          <div class="ex-question">Eritaajuinen summa</div>
+          <div class="ex-given">y₁ = sin(2πt), y₂ = 0.5·sin(6πt + π/4). Piirrä y₁, y₂ ja niiden summa t = 0…3 s.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+w1=<span class="nm">2</span>*pi; w2=<span class="nm">6</span>*pi;
+A1=<span class="nm">1</span>; phi1=<span class="nm">0</span>;
+A2=<span class="nm">0.5</span>; phi2=pi/<span class="nm">4</span>;
+t=<span class="nm">0</span>:<span class="nm">0.001</span>:<span class="nm">3</span>;
+y1=A1*<span class="fn">sin</span>(w1*t+phi1);
+y2=A2*<span class="fn">sin</span>(w2*t+phi2);
+y=y1+y2;
+<span class="fn">plot</span>(t,y1,<span class="st">'b'</span>,t,y2,<span class="st">'g'</span>,t,y,<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.2</span>)
+<span class="fn">grid</span>
+<span class="fn">legend</span>({<span class="st">'y_1 (1 Hz)'</span>,<span class="st">'y_2 (3 Hz)'</span>,<span class="st">'summa'</span>})
+<span class="fn">xlabel</span>(<span class="st">'t (s)'</span>)</pre>
+          <div class="ex-ans">✅ Summa ei ole sinikäyrä — se värähtelee kahden eri taajuuden "päälle".</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus SK6</div>
+          <div class="ex-question">Huojuntataajuus</div>
+          <div class="ex-given">f₁ = 440 Hz (kielisoitin vire A4), f₂ = 443 Hz (hieman ylävireinen). Laske huojuntataajuus. Piirrä summa 0.5 s ajalta.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+f1=<span class="nm">440</span>; f2=<span class="nm">443</span>; A=<span class="nm">1</span>;
+f_beat=<span class="fn">abs</span>(f1-f2)   <span class="cm">% → 3 Hz (3 huojuntaa sekunnissa)</span>
+T=<span class="nm">0.5</span>;
+t=<span class="nm">0</span>:T/<span class="nm">10000</span>:T;
+y1=A*<span class="fn">sin</span>(<span class="nm">2</span>*pi*f1*t);
+y2=A*<span class="fn">sin</span>(<span class="nm">2</span>*pi*f2*t);
+y=y1+y2;
+yy=<span class="nm">2</span>*A*<span class="fn">cos</span>(<span class="nm">2</span>*pi*(f1-f2)/<span class="nm">2</span>*t);
+<span class="fn">plot</span>(t,y,<span class="st">'b'</span>,t,yy,<span class="st">'r'</span>,t,-yy,<span class="st">'r'</span>); <span class="fn">grid</span>
+<span class="fn">xlabel</span>(<span class="st">'aika t (s)'</span>)
+<span class="fn">legend</span>({<span class="st">'summa'</span>,<span class="st">'amplitudikehys'</span>})</pre>
+          <div class="ex-ans">✅ f_beat = 3 Hz. Näet 3 huojuntajaksoa puolessa sekunnissa.</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus SK7</div>
+          <div class="ex-question">AM-modulaatioindeksi</div>
+          <div class="ex-given">fc = 1000 Hz, fm = 100 Hz, A = 10, μ = 0.4. Laske sivukaistataajuudet ja niiden amplitudit.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+fc=<span class="nm">1000</span>; fm=<span class="nm">100</span>; A=<span class="nm">10</span>; mu=<span class="nm">0.4</span>;
+f_upper = fc+fm     <span class="cm">% → 1100 Hz</span>
+f_lower = fc-fm     <span class="cm">% → 900 Hz</span>
+A_side = <span class="nm">0.5</span>*mu*A   <span class="cm">% → 2.0 (sivukaistan amplitudi)</span>
+
+T=<span class="nm">1</span>/fc; r=<span class="nm">20</span>;
+t=<span class="nm">0</span>:T/<span class="nm">1000</span>:r*T;
+c=A*<span class="fn">sin</span>(<span class="nm">2</span>*pi*fc*t);
+m=<span class="fn">cos</span>(<span class="nm">2</span>*pi*fm*t);
+y=(<span class="nm">1</span>+mu*m).*c;
+<span class="fn">plot</span>(t,y); <span class="fn">grid</span>
+<span class="fn">xlabel</span>(<span class="st">'t'</span>); <span class="fn">title</span>(<span class="st">'AM-signaali'</span>)</pre>
+          <div class="ex-ans">✅ Sivukaistat: 900 Hz ja 1100 Hz, kumpikin amplitudilla 2.0</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus SK8</div>
+          <div class="ex-question">Fourier-sarja: kanttiaaltoa</div>
+          <div class="ex-given">Kanttiaaltoa approximoidaan: y = (4/π)·Σ sin(2π(2k-1)ft)/(2k-1), k=1,2,...,n. T=1s, n=10. Piirrä tulos.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+T=<span class="nm">1</span>; f=<span class="nm">1</span>/T; n=<span class="nm">10</span>;
+t=<span class="nm">0</span>:T/<span class="nm">1000</span>:<span class="nm">4</span>*T;
+y=<span class="nm">0</span>;
+<span class="kw">for</span> k=<span class="nm">1</span>:n
+  y = y + (<span class="nm">4</span>/pi) * <span class="fn">sin</span>(<span class="nm">2</span>*pi*(<span class="nm">2</span>*k-<span class="nm">1</span>)*f*t) / (<span class="nm">2</span>*k-<span class="nm">1</span>);
+<span class="kw">end</span>
+<span class="fn">plot</span>(t,y,<span class="st">'b'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>); <span class="fn">grid</span>
+<span class="fn">xlabel</span>(<span class="st">'t'</span>)
+<span class="fn">title</span>([<span class="st">'Kanttiaalto Fourier n='</span>,<span class="fn">num2str</span>(n)])
+<span class="fn">ylim</span>([-<span class="nm">1.5</span>,<span class="nm">1.5</span>])</pre>
+          <div class="ex-ans">✅ n=10 → tunnistettava kanttiaalto, Gibbsin piikki epäjatkuvuuskohdissa.</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus SK9</div>
+          <div class="ex-question">Aallon nopeus ja aallonpituus</div>
+          <div class="ex-given">Aalto y = sin(5x − 10t). Laske aallonpituus λ, kulmataajuus ω, taajuus f ja aallon nopeus v.</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+k_wave=<span class="nm">5</span>; w=<span class="nm">10</span>;  <span class="cm">% y = sin(k*x - w*t)</span>
+la=<span class="nm">2</span>*pi/k_wave    <span class="cm">% aallonpituus → 1.257</span>
+f=w/(<span class="nm">2</span>*pi)         <span class="cm">% taajuus → 1.592 Hz</span>
+T_wave=<span class="nm">1</span>/f          <span class="cm">% jakso → 0.628 s</span>
+v=w/k_wave          <span class="cm">% aallon nopeus → 2.0 m/s</span>
+
+x=<span class="nm">0</span>:<span class="nm">0.01</span>:<span class="nm">3</span>*la;
+t0=<span class="nm">0</span>; t1=<span class="nm">0.5</span>;
+<span class="fn">plot</span>(x,<span class="fn">sin</span>(k_wave*x-w*t0),<span class="st">'b'</span>,x,<span class="fn">sin</span>(k_wave*x-w*t1),<span class="st">'r'</span>)
+<span class="fn">grid</span>; <span class="fn">legend</span>({<span class="st">'t=0'</span>,<span class="st">'t=0.5'</span>})</pre>
+          <div class="ex-ans">✅ λ ≈ 1.257, f ≈ 1.59 Hz, T ≈ 0.63 s, v = 2 m/s</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-head">
+          <div class="ex-number">Harjoitus SK10</div>
+          <div class="ex-question">Aaltojen superpositio</div>
+          <div class="ex-given">y₁ = sin(2x − 4t), y₂ = 0.6·sin(4x − 8t). Piirrä y₁, y₂ ja summa hetkellä t = 0.1 s (x = 0…5).</div>
+        </div>
+        <button class="ex-btn" onclick="toggleEx(this)">💡 Näytä <span class="arrow">▼</span></button>
+        <div class="ex-solution">
+          <pre><span class="kw">clear</span>
+k1=<span class="nm">2</span>; w1=<span class="nm">4</span>; A1=<span class="nm">1</span>;
+k2=<span class="nm">4</span>; w2=<span class="nm">8</span>; A2=<span class="nm">0.6</span>;
+v1=w1/k1   <span class="cm">% → 2 m/s</span>
+v2=w2/k2   <span class="cm">% → 2 m/s (sama nopeus!)</span>
+t=<span class="nm">0.1</span>;
+x=<span class="nm">0</span>:<span class="nm">0.01</span>:<span class="nm">5</span>;
+y1=A1*<span class="fn">sin</span>(k1*x-w1*t);
+y2=A2*<span class="fn">sin</span>(k2*x-w2*t);
+y=y1+y2;
+<span class="fn">plot</span>(x,y1,<span class="st">'b'</span>,x,y2,<span class="st">'g'</span>,x,y,<span class="st">'r'</span>,<span class="st">'linewidth'</span>,<span class="nm">1.5</span>)
+<span class="fn">grid</span>
+<span class="fn">legend</span>({<span class="st">'aalto 1'</span>,<span class="st">'aalto 2'</span>,<span class="st">'summa'</span>})
+<span class="fn">xlabel</span>(<span class="st">'x'</span>)</pre>
+          <div class="ex-ans">✅ Molemmat aallot liikkuvat nopeudella v = 2 m/s. Summa on epäsäännöllinen mutta jaksollinen.</div>
+        </div>
+      </div>
+
+    </div><!-- /ex-grid -->
   </section>
 
   <!-- ═══════════════════════════════════════ -->
@@ -4979,7 +5635,7 @@ document.querySelectorAll('.sidebar-link').forEach(a => {
 });
 
 // ── Aktiivinen sidebar-linkki (scroll-spy) ──
-const sections = document.querySelectorAll('.section[id], [id="ag-harj"]');
+const sections = document.querySelectorAll('.section[id], [id="ag-harj"], [id="sk-harj"]');
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
