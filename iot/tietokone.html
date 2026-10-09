@@ -44,12 +44,78 @@ svg text{fill:var(--fg)}
 footer{max-width:820px;margin:0 auto;padding:0 18px 60px;color:var(--mute);font-size:.95rem;text-align:center}
 footer a{color:inherit;margin:0 8px}
 @media print{.menu,footer{display:none}details>*{display:block}section{box-shadow:none}}
+/*deep*/
+.n{text-decoration:overline;text-decoration-thickness:2px;text-underline-offset:2px}
+h4{margin:1.3em 0 .2em;color:var(--c);font-size:1.02rem}
+table.tt{font-size:.92rem}
+.fig{display:inline-block;vertical-align:top;margin:8px 10px;text-align:center}
+.figrow{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;margin:6px 0}
+.cap{font-size:.85rem;color:var(--mute);max-width:280px;margin:4px auto 0;line-height:1.35}
+.km{border-collapse:separate;border-spacing:3px;margin:6px auto;display:table;overflow:visible}
+.km td,.km th{padding:0;text-align:center}
+.km th{background:transparent;color:var(--mute);border:none;font-size:.8rem;font-weight:600;padding:2px 6px}
+.km td{width:46px;height:46px;border:2px solid var(--line);border-radius:8px;font-weight:800;font-size:1.1rem;position:relative;background:var(--card);color:var(--fg)}
+.km td.zero{color:var(--mute);font-weight:500}
+.km td.xx{color:var(--mute)}
+.km .mi{position:absolute;left:4px;top:1px;font-size:.58rem;font-weight:500;color:var(--mute)}
+.km.ref td{font-size:1.05rem}
+.km.kt-km td{cursor:pointer;width:56px;height:56px;font-size:1.3rem}
+.tool{background:var(--t);border:2px dashed var(--c);border-radius:14px;padding:12px 16px;margin:1em 0}
+.tool input,.tool select{font-size:1rem;padding:3px 8px;border:2px solid var(--c);border-radius:8px;background:var(--card);color:var(--fg);max-width:100%}
+.tool button{font-size:.95rem;padding:3px 12px;border:2px solid var(--c);border-radius:8px;background:var(--card);color:var(--fg);cursor:pointer;font-weight:600}
+.tool button.on{background:var(--c);color:#fff}
+.kt-bar{margin:8px 0}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+.glist li{margin:.6em 0}
+.glist .hint{color:var(--mute);font-size:.9rem}
+.bits{display:flex;gap:8px;justify-content:center;margin:12px 0;flex-wrap:wrap}
+.bit{width:50px;height:68px;border:3px solid var(--c);border-radius:12px;background:var(--card);color:var(--fg);font-size:1.6rem;font-weight:800;cursor:pointer}
+.bit.on{background:var(--c);color:#fff}
+.bits small{display:block;font-size:.7rem;font-weight:600;opacity:.7}
+.out{text-align:center;font-size:1.15rem;font-weight:700}
+details.more{border:2px solid var(--c);border-radius:12px;padding:6px 14px;background:var(--t);margin:1em 0}
+details.more>summary{font-size:1.05rem}
+/*deep2*/
+.gate{color:var(--fg);display:inline-block}
+.gates td{vertical-align:middle}
+.alg{list-style:none;padding-left:0;margin:.6em 0}
+.alg li{padding:5px 12px;margin:4px 0;border-left:4px solid var(--c);background:var(--t);border-radius:0 8px 8px 0;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline}
+.alg .e{font-weight:700;font-size:1.05rem}
+.alg .why{color:var(--mute);font-size:.88rem}
+.wavebox{overflow-x:auto;margin:10px 0}
+.wave{max-width:none}
+.wave text{fill:var(--fg)}
+.symrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0}
+.sym{text-align:center;font-size:.8rem;color:var(--mute)}
+.sym svg{display:block;margin:0 auto}
+.segs table{margin:0 auto}
+#term-box{background:#14181f;color:#e6e9ee;border-radius:10px;padding:10px 12px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem}
+#term-out{white-space:pre-wrap;max-height:300px;overflow-y:auto;line-height:1.4}
+.term-line{display:flex;gap:6px;align-items:center}
+#term-prompt{color:#7ee787;white-space:nowrap}
+#term-in{flex:1;min-width:80px;background:transparent!important;color:#e6e9ee!important;border:none!important;outline:none;font-family:inherit;font-size:inherit}
+.pmt td,.pmt th{text-align:center}
+.chart{max-width:100%;height:auto}
+.chart text{fill:var(--fg)}
+.chart .ax{stroke:var(--line)}
+.sgrow{display:grid;grid-template-columns:auto 1fr;gap:4px 8px;align-items:center;margin:6px 0}
+.sgdig{display:inline-block;margin:2px 4px;text-align:center;font-size:.75rem}
+.ok{color:#2f9e44;font-weight:700}.bad{color:#d9363e;font-weight:700}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;border:3px solid var(--c);margin:3px;line-height:28px;text-align:center;font-weight:800;font-size:.8rem}
+.led.on{background:var(--c);color:#fff}
+/*deep3*/
+.cpulog{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;max-height:210px;overflow:auto;background:var(--code);padding:8px 10px;border-radius:8px;margin-top:8px;white-space:pre-wrap}
+.cpumem{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin:8px 0}
+.cpumem div{border:2px solid var(--line);border-radius:8px;padding:3px 4px;text-align:center;font-size:.78rem;background:var(--card)}
+.cpumem div b{display:block;font-size:.95rem}
+.cpumem div.pc{border-color:var(--c);background:var(--t)}
+.cpumem div small{color:var(--mute)}
 </style>
 </head>
 <body id="top">
 <header>
 <h1>Tietokonetekniikka</h1>
-<p>Täydentää IoT-oppaita: tietokoneen rakenne, kokoaminen, käyttöjärjestelmän asennus sekä käyttöönotto ja ylläpito.</p>
+<p>Tietokoneen rakenne ja toiminta, osat, kokoaminen, käynnistys, käyttöjärjestelmän asennus, verkko, ylläpito ja vianetsintä. Mukana mini-prosessorisimulaattori ja laskurit.</p>
 </header>
 <nav class="menu">
 <a style="--c:#111827" href="index.html">← Etusivu</a>
@@ -57,255 +123,836 @@ footer a{color:inherit;margin:0 8px}
 <a style="--c:#ff9f1c" href="#s1">1. Tietokoneen rakenne ja toimintaperiaate</a>
 <a style="--c:#2fb344" href="#s2">2. Prosessori</a>
 <a style="--c:#14a8a8" href="#s3">3. Muistit ja tallennus</a>
-<a style="--c:#8e5cf0" href="#s4">4. Emolevy, väylät, näytönohjaus ja oheislaitteet</a>
+<a style="--c:#8e5cf0" href="#s4">4. Emolevy, väylät, näytönohjaus ja virtalähde</a>
 <a style="--c:#e8489b" href="#s5">5. Tietokoneen kokoaminen</a>
-<a style="--c:#3a7bd5" href="#s6">6. Käyttöjärjestelmän ja sovellusten asennus</a>
-<a style="--c:#6b7280" href="#s7">7. Käyttöönotto ja ylläpito</a>
-<a style="--c:#e8590c" href="#s8">8. Vianetsintä</a>
-<a style="--c:#d6a100" href="#s9">9. Tehtäviä</a>
+<a style="--c:#3a7bd5" href="#s6">6. Käynnistys: firmware, käynnistyslataaja ja ydin</a>
+<a style="--c:#6b7280" href="#s7">7. Käyttöjärjestelmän asennus</a>
+<a style="--c:#e8590c" href="#s8">8. Sovellusten asennus ja hallinta</a>
+<a style="--c:#d6a100" href="#s9">9. Verkko: IP, DNS ja perusasetukset</a>
+<a style="--c:#ff6b6b" href="#s10">10. Käyttöönotto ja ylläpito</a>
+<a style="--c:#ff9f1c" href="#s11">11. Vianetsintä</a>
+<a style="--c:#2fb344" href="#s12">12. Tehtäviä</a>
 </nav>
 <main>
 
-<section class="s1" id="s0"><h2>0. Arviointi ja kokonaiskuva</h2><div><p>Opintosuunnitelman mukaan kurssiin kuuluu myös tietokoneen rakenne ja toimintaperiaate (prosessori, muistit, näytönohjaus, oheislaitteet) sekä tietokoneen kokoaminen, käyttöjärjestelmän ja sovellusten asennus sekä käyttöönotto ja ylläpito. Arviointikriteerit voi tiivistää näin:</p>
-<table>
+<section class="s1" id="s0"><h2>0. Arviointi ja kokonaiskuva</h2><div><p>Opintosuunnitelman mukaan kurssiin kuuluu tietokoneen rakenne ja toimintaperiaate (prosessori, muistit, näytönohjaus, oheislaitteet), tietokoneen kokoaminen osista, käyttöjärjestelmän ja sovellusten asennus sekä käyttöönotto- ja ylläpitotehtävät. Tämä sivu käy ne läpi periaatteista käytäntöön. Käytä 🧰-työkaluja omilla luvuillasi.</p><table class="tt">
 <tr><th>Arvosana</th><th>Digitaalitekniikka, elektroniikka</th><th>Tietokone</th><th>IoT ja sulautetut</th></tr>
 <tr><td><strong>1</strong></td><td>Boolen algebra, lukujärjestelmämuunnokset, perusasiat, mittalaitteiden käyttö</td><td>osaa koota tietokoneen osista ja asentaa käyttöjärjestelmän ja sovellukset</td><td>tietää IoT-järjestelmän osat, toteuttaa ohjatusti yksinkertaisen sulautetun järjestelmän</td></tr>
 <tr><td><strong>3</strong></td><td>lisäksi yksinkertaiset elektroniikan kytkennät</td><td>lisäksi käyttöönotto- ja ylläpitotehtävät</td><td>sulautettu järjestelmä mittaa erilaisilla antureilla</td></tr>
-<tr><td><strong>5</strong></td><td>asiat hyvin, mittalaitteiden käyttö hallussa</td><td>käyttöönotto ja ylläpito erinomaisesti</td><td>toteuttaa pienen sulautetun järjestelmän, joka mittaa erilaisilla antureilla</td></tr></table>
-<p>Arvosanoissa 1 ja 3 sulautettu järjestelmä toteutetaan <em>ohjatusti</em>, arvosanassa 5 pienenä kokonaisuutena. Kokeessa tai harjoitustyössä erottava tekijä on siis, tekeekö asioita ohjeen mukaan vai ymmärtääkö ne ja osaa soveltaa niitä.</p>
-<div class="warn"><strong>Huomio aikataulusta:</strong> annetussa kurssiaikataulussa ei ole erillistä tietokoneen kokoamisen päivää. Kysy opettajalta, miten tämä osa-alue arvioidaan (esim. etätehtävä, Linux-virtuaalikoneen asennus tai erillinen harjoitus).</div></div></section>
+<tr><td><strong>5</strong></td><td>asiat hyvin, mittalaitteiden käyttö hallussa</td><td>käyttöönotto ja ylläpito erinomaisesti</td><td>toteuttaa pienen sulautetun järjestelmän, joka mittaa erilaisilla antureilla</td></tr>
+</table><p>Arvosanoissa 1 ja 3 sulautettu järjestelmä toteutetaan <em>ohjatusti</em>, arvosanassa 5 pienenä kokonaisuutena. Tietokoneosassa erottava tekijä on <strong>käyttöönotto ja ylläpito</strong>: kokoaminen ja asennus riittävät arvosanaan 1, mutta arvosanaan 3 ja 5 pitää hallita myös ylläpito.</p><div class="warn"><strong>Huomio aikataulusta:</strong> annetussa kurssiaikataulussa ei ole erillistä tietokoneen kokoamisen päivää. Kysy opettajalta, miten tämä osa-alue arvioidaan (esim. etätehtävä, Linux-virtuaalikoneen asennus tai erillinen harjoitus).</div><h3>Oppimispolku</h3><ol><li><strong>Rakenne:</strong> mistä osista tietokone koostuu ja miten ne toimivat yhdessä.</li><li><strong>Osat:</strong> prosessori, muisti, tallennus, emolevy, näytönohjain, virtalähde.</li><li><strong>Kokoaminen:</strong> yhteensopivuus, työvaiheet, ensimmäinen käynnistys.</li><li><strong>Käynnistys ja asennus:</strong> BIOS/UEFI, käyttöjärjestelmä, ohjelmat.</li><li><strong>Verkko:</strong> IP-osoite, DNS, perusasetukset.</li><li><strong>Ylläpito ja vianetsintä:</strong> päivitykset, varmuuskopiot, ongelmanratkaisu.</li></ol></div></section>
 
-<section class="s2" id="s1"><h2>1. Tietokoneen rakenne ja toimintaperiaate</h2><div><p>Lähes kaikki tietokoneet (PC, älypuhelin, Raspberry Pi) noudattavat <strong>von Neumannin arkkitehtuuria</strong>: ohjelma ja data ovat samassa muistissa, ja prosessori hakee ne sieltä.</p>
-<svg viewBox="0 0 760 270" role="img" aria-label="Tietokoneen perusrakenne" font-size="14" font-family="system-ui,sans-serif">
-<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8a93a0"/></marker></defs>
-<g text-anchor="middle">
-<rect x="30" y="30" width="200" height="140" rx="10" fill="#2563c9" fill-opacity=".14" stroke="#2563c9" stroke-width="2"/><text x="130" y="56" font-weight="700">Prosessori (CPU)</text><text x="130" y="86">Ohjausyksikkö</text><text x="130" y="108">ALU (laskenta)</text><text x="130" y="130">Rekisterit, välimuisti</text>
-<rect x="300" y="30" width="170" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="385" y="66">Keskusmuisti (RAM)</text>
-<rect x="300" y="110" width="170" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="385" y="146">Tallennus (SSD/HDD)</text>
-<rect x="540" y="30" width="190" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="635" y="66">Näytönohjain (GPU)</text>
-<rect x="540" y="110" width="190" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="635" y="146">Oheislaitteet (USB, verkko)</text>
-<rect x="30" y="200" width="700" height="44" rx="10" fill="#8a93a0" fill-opacity=".18" stroke="#8a93a0" stroke-width="1.5"/><text x="380" y="228" font-weight="600">Väylät ja emolevy (data, osoite, ohjaus)</text>
-</g>
-<g stroke="#8a93a0" stroke-width="1.5" fill="none"><path d="M232 60H298" marker-end="url(#ar)" marker-start="url(#ar)"/><path d="M130 172V198"/><path d="M385 92V198"/><path d="M385 172V198"/><path d="M635 92V198"/><path d="M635 172V198"/></g>
-</svg>
-<h3>Suoritussykli</h3>
-<p>Prosessori toistaa loputtomiin kolme vaihetta (<strong>fetch–decode–execute</strong>):</p>
-<ol>
-<li><strong>Nouto (fetch):</strong> ohjelmalaskuri (PC-rekisteri) kertoo seuraavan käskyn osoitteen, ja käsky haetaan muistista.</li>
-<li><strong>Tulkinta (decode):</strong> ohjausyksikkö selvittää, mitä käsky tarkoittaa (esim. "lisää nämä kaksi lukua").</li>
-<li><strong>Suoritus (execute):</strong> ALU laskee tai data siirretään, tulos tallennetaan, ohjelmalaskuri etenee.</li>
-</ol>
-<h3>Binääri kohtaa laitteiston</h3>
-<p>Muistin osoite, käsky ja data ovat kaikki bittejä. 32-bittinen osoite voi osoittaa 2³² tavua = 4 GiB muistia; 64-bittinen osoite käytännössä rajoittamattomasti. Yksiköt: 1 kB = 1000 B (SI), 1 KiB = 1024 B; 1 GiB = 1024 MiB. Valmistajat ilmoittavat levyn koon 1000-potensseina (1 TB = 10¹² B), joten Windows näyttää 1 TB:n levyn noin 931 GiB:nä.</p></div></section>
+<section class="s2" id="s1"><h2>1. Tietokoneen rakenne ja toimintaperiaate</h2><div><p>Lähes kaikki tietokoneet (PC, älypuhelin, Raspberry Pi) noudattavat <strong>von Neumannin arkkitehtuuria</strong>: ohjelma ja data ovat samassa muistissa, ja prosessori hakee ne sieltä. Tietokone on <strong>laitteisto</strong> (hardware) ja <strong>ohjelmisto</strong> (software). Ohjelmisto jaetaan kerroksiin:</p><table class="tt">
+<tr><th>Kerros</th><th>Esimerkki</th><th>Tehtävä</th></tr>
+<tr><td>Sovellukset</td><td>selain, tekstinkäsittely, Arduino IDE</td><td>käyttäjän tehtävät</td></tr>
+<tr><td>Käyttöjärjestelmä</td><td>Windows, Linux, macOS</td><td>hallitsee laitteistoa ja ohjelmia</td></tr>
+<tr><td>Laiteajurit</td><td>näytönohjaimen ajuri</td><td>käyttöjärjestelmä puhuu laitteelle</td></tr>
+<tr><td>Laiteohjelmisto (firmware)</td><td>UEFI/BIOS</td><td>käynnistää laitteiston</td></tr>
+<tr><td>Laitteisto</td><td>CPU, RAM, levy</td><td>tekee varsinaisen työn</td></tr>
+</table><svg viewBox="0 0 760 270" role="img" aria-label="Tietokoneen perusrakenne" font-size="14" font-family="system-ui,sans-serif" class="chart"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8a93a0"/></marker></defs><g text-anchor="middle"><rect x="30" y="30" width="200" height="140" rx="10" fill="#2563c9" fill-opacity=".14" stroke="#2563c9" stroke-width="2"/><text x="130" y="56" font-weight="700">Prosessori (CPU)</text><text x="130" y="86">Ohjausyksikkö</text><text x="130" y="108">ALU (laskenta)</text><text x="130" y="130">Rekisterit, välimuisti</text><rect x="300" y="30" width="170" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="385" y="66">Keskusmuisti (RAM)</text><rect x="300" y="110" width="170" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="385" y="146">Tallennus (SSD/HDD)</text><rect x="540" y="30" width="190" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="635" y="66">Näytönohjain (GPU)</text><rect x="540" y="110" width="190" height="60" rx="10" fill="none" stroke="#8a93a0" stroke-width="1.5"/><text x="635" y="146">Oheislaitteet (USB, verkko)</text><rect x="30" y="200" width="700" height="44" rx="10" fill="#8a93a0" fill-opacity=".18" stroke="#8a93a0" stroke-width="1.5"/><text x="380" y="228" font-weight="600">Väylät ja emolevy (data, osoite, ohjaus)</text></g><g stroke="#8a93a0" stroke-width="1.5" fill="none"><path d="M232 60H298" marker-end="url(#ar)" marker-start="url(#ar)"/><path d="M130 172V198"/><path d="M385 92V198"/><path d="M385 172V198"/><path d="M635 92V198"/><path d="M635 172V198"/></g></svg><h3>Väylät: osoite, data, ohjaus</h3><p>Prosessori ja muisti keskustelevat kolmella väylällä: <strong>osoiteväylä</strong> kertoo, mihin muistipaikkaan viitataan; <strong>dataväylä</strong> kuljettaa datan; <strong>ohjausväylä</strong> kertoo, luetaanko vai kirjoitetaan. 32-bittinen osoiteväylä voi osoittaa 2³² = 4 294 967 296 tavua (4 GiB) muistia, 64-bittinen käytännössä rajattomasti.</p><h3>Suoritussykli</h3><p>Prosessori toistaa loputtomiin kolme vaihetta (<strong>fetch–decode–execute</strong>):</p><ol><li><strong>Nouto (fetch):</strong> ohjelmalaskuri (PC-rekisteri) kertoo seuraavan käskyn osoitteen, ja käsky haetaan muistista käskyrekisteriin (IR).</li><li><strong>Tulkinta (decode):</strong> ohjausyksikkö selvittää, mitä käsky tarkoittaa (esim. "lisää nämä kaksi lukua").</li><li><strong>Suoritus (execute):</strong> ALU laskee tai data siirretään, tulos tallennetaan, ohjelmalaskuri etenee.</li></ol><p>Tämän näet käytännössä alla olevassa <strong>mini-prosessorisimulaattorissa</strong> (osio 2).</p><h3>Binääri kohtaa laitteiston</h3><p>Muistin osoite, käsky ja data ovat kaikki bittejä. Yksiköt: 1 kB = 1 000 B (SI), 1 KiB = 1 024 B; 1 GiB = 1 024 MiB. Valmistajat ilmoittavat levyn koon 1000-potensseina (1 TB = 10¹² B), joten Windows näyttää 1 TB:n levyn noin 931 GiB:nä.</p><div class="tool" id="gib"><strong>🧰 Yksikkömuunnin: GB ja GiB</strong><p>Arvo: <input id="gib-v" type="number" value="1" step="any" style="width:90px"> <select id="gib-u"><option value="1e12">TB</option><option value="1e9">GB</option><option value="1e6">MB</option><option value="1099511627776">TiB</option><option value="1073741824">GiB</option><option value="1048576">MiB</option></select></p><div id="gib-out"></div></div></div></section>
 
-<section class="s3" id="s2"><h2>2. Prosessori</h2><div><table>
-<tr><th>Osa</th><th>Tehtävä</th></tr>
-<tr><td><strong>ALU</strong></td><td>aritmetiikka ja logiikka (yhteen- ja vähennyslasku, AND, OR, vertailu) eli osion 3 portit isossa mittakaavassa</td></tr>
-<tr><td><strong>Ohjausyksikkö</strong></td><td>ohjaa käskyjen kulkua</td></tr>
-<tr><td><strong>Rekisterit</strong></td><td>erittäin nopeat muistipaikat prosessorin sisällä</td></tr>
-<tr><td><strong>Välimuisti</strong> (L1, L2, L3)</td><td>nopea muisti, jossa on usein tarvittavaa dataa; L1 on pienin ja nopein</td></tr>
-<tr><td><strong>Ytimet</strong></td><td>jokainen ydin on oma prosessori; useampi ydin tekee useita asioita yhtä aikaa</td></tr>
-<tr><td><strong>Kellotaajuus</strong></td><td>kuinka monta kellojaksoa sekunnissa, esim. 4 GHz = 4 miljardia</td></tr></table>
-<ul>
-<li><strong>Suorituskyky</strong> ei riipu vain GHz:stä: ytimien määrä, välimuisti, arkkitehtuuri ja käskyjä kellojaksoa kohti vaikuttavat yhtä paljon.</li>
-<li><strong>Säikeet (hyper-threading, SMT):</strong> yksi fyysinen ydin esiintyy kahtena loogisena ytimenä.</li>
-<li><strong>Käskykanta:</strong> x86-64 (Intel, AMD, PC) ja ARM (puhelimet, Raspberry Pi, Apple Silicon). ARM kuluttaa vähemmän virtaa. ESP32 käyttää omaa Xtensa-arkkitehtuuriaan.</li>
-<li><strong>TDP</strong> kertoo suoritinta jäähdytettäessä tarvittavan lämpötehon (W).</li>
-<li><strong>Liitäntä (socket):</strong> prosessorin ja emolevyn on sovittava yhteen (esim. LGA1700, AM5).</li>
-<li><strong>Integroitu grafiikka:</strong> osassa prosessoreita on grafiikkaohjain valmiina.</li>
-</ul>
-<h3>Mikro-ohjain vs prosessori</h3>
-<table>
+<section class="s3" id="s2"><h2>2. Prosessori</h2><div><table><tr><th>Osa</th><th>Tehtävä</th></tr><tr><td><strong>ALU</strong></td><td>aritmetiikka ja logiikka (yhteen- ja vähennyslasku, AND, OR, vertailu), eli luvun 3 portit isossa mittakaavassa</td></tr><tr><td><strong>Ohjausyksikkö</strong></td><td>ohjaa käskyjen kulkua</td></tr><tr><td><strong>Rekisterit</strong></td><td>erittäin nopeat muistipaikat prosessorin sisällä</td></tr><tr><td><strong>Välimuisti</strong> (L1, L2, L3)</td><td>nopea muisti, jossa on usein tarvittavaa dataa; L1 on pienin ja nopein</td></tr><tr><td><strong>Ytimet</strong></td><td>jokainen ydin on oma prosessori; useampi ydin tekee useita asioita yhtä aikaa</td></tr><tr><td><strong>Kellotaajuus</strong></td><td>kuinka monta kellojaksoa sekunnissa, esim. 4 GHz = 4 miljardia</td></tr></table><h3>Suorituskyky: ei vain GHz</h3><div class="f">suoritusaika = käskyjen määrä × CPI / kellotaajuus</div><p>CPI (cycles per instruction) kertoo, montako kellojaksoa yksi käsky keskimäärin vie. Esimerkki: ohjelmassa 2 · 10⁹ käskyä, CPI = 1,5, kellotaajuus 3 GHz: aika = 2·10⁹ · 1,5 / 3·10⁹ = <strong>1 s</strong>. Suorittimella, jonka kello on 4 GHz mutta CPI = 2, aika on sama 1 s. Siksi GHz-luku yksin ei kerro nopeudesta: ratkaisevat myös ytimet, välimuisti ja arkkitehtuuri.</p><h3>Liukuhihna (pipeline)</h3><p>Käsky jaetaan vaiheisiin (IF haku, ID tulkinta, EX suoritus, MEM muisti, WB tulos). Kun yksi käsky on suorituksessa, seuraava on jo tulkinnassa ja sitä seuraava haussa. Liukuhihna on kuin <em>tehdaslinja</em>: jokainen vaihe on aina työssä, ja yksi käsky valmistuu joka kellojaksolla, vaikka yhden käskyn kokonaisaika on viisi jaksoa.</p><div class="wavebox"><svg viewBox="0 0 460 170" width="460" role="img" aria-label="liukuhihna" font-size="12" class="chart"><text x="4" y="45" style="fill:var(--fg)" font-weight="700">käsky 1</text><rect x="70" y="30" width="56" height="26" rx="5" fill="#ff6b6b" fill-opacity=".35" stroke="#ff6b6b"/><text x="98" y="47" text-anchor="middle" style="fill:var(--fg)">IF</text><rect x="130" y="30" width="56" height="26" rx="5" fill="#ff9f1c" fill-opacity=".35" stroke="#ff9f1c"/><text x="158" y="47" text-anchor="middle" style="fill:var(--fg)">ID</text><rect x="190" y="30" width="56" height="26" rx="5" fill="#2fb344" fill-opacity=".35" stroke="#2fb344"/><text x="218" y="47" text-anchor="middle" style="fill:var(--fg)">EX</text><rect x="250" y="30" width="56" height="26" rx="5" fill="#3a7bd5" fill-opacity=".35" stroke="#3a7bd5"/><text x="278" y="47" text-anchor="middle" style="fill:var(--fg)">MEM</text><rect x="310" y="30" width="56" height="26" rx="5" fill="#8e5cf0" fill-opacity=".35" stroke="#8e5cf0"/><text x="338" y="47" text-anchor="middle" style="fill:var(--fg)">WB</text><text x="4" y="77" style="fill:var(--fg)" font-weight="700">käsky 2</text><rect x="130" y="62" width="56" height="26" rx="5" fill="#ff6b6b" fill-opacity=".35" stroke="#ff6b6b"/><text x="158" y="79" text-anchor="middle" style="fill:var(--fg)">IF</text><rect x="190" y="62" width="56" height="26" rx="5" fill="#ff9f1c" fill-opacity=".35" stroke="#ff9f1c"/><text x="218" y="79" text-anchor="middle" style="fill:var(--fg)">ID</text><rect x="250" y="62" width="56" height="26" rx="5" fill="#2fb344" fill-opacity=".35" stroke="#2fb344"/><text x="278" y="79" text-anchor="middle" style="fill:var(--fg)">EX</text><rect x="310" y="62" width="56" height="26" rx="5" fill="#3a7bd5" fill-opacity=".35" stroke="#3a7bd5"/><text x="338" y="79" text-anchor="middle" style="fill:var(--fg)">MEM</text><rect x="370" y="62" width="56" height="26" rx="5" fill="#8e5cf0" fill-opacity=".35" stroke="#8e5cf0"/><text x="398" y="79" text-anchor="middle" style="fill:var(--fg)">WB</text><text x="4" y="109" style="fill:var(--fg)" font-weight="700">käsky 3</text><rect x="190" y="94" width="56" height="26" rx="5" fill="#ff6b6b" fill-opacity=".35" stroke="#ff6b6b"/><text x="218" y="111" text-anchor="middle" style="fill:var(--fg)">IF</text><rect x="250" y="94" width="56" height="26" rx="5" fill="#ff9f1c" fill-opacity=".35" stroke="#ff9f1c"/><text x="278" y="111" text-anchor="middle" style="fill:var(--fg)">ID</text><rect x="310" y="94" width="56" height="26" rx="5" fill="#2fb344" fill-opacity=".35" stroke="#2fb344"/><text x="338" y="111" text-anchor="middle" style="fill:var(--fg)">EX</text><rect x="370" y="94" width="56" height="26" rx="5" fill="#3a7bd5" fill-opacity=".35" stroke="#3a7bd5"/><text x="398" y="111" text-anchor="middle" style="fill:var(--fg)">MEM</text><rect x="430" y="94" width="56" height="26" rx="5" fill="#8e5cf0" fill-opacity=".35" stroke="#8e5cf0"/><text x="458" y="111" text-anchor="middle" style="fill:var(--fg)">WB</text><text x="4" y="141" style="fill:var(--fg)" font-weight="700">käsky 4</text><rect x="250" y="126" width="56" height="26" rx="5" fill="#ff6b6b" fill-opacity=".35" stroke="#ff6b6b"/><text x="278" y="143" text-anchor="middle" style="fill:var(--fg)">IF</text><rect x="310" y="126" width="56" height="26" rx="5" fill="#ff9f1c" fill-opacity=".35" stroke="#ff9f1c"/><text x="338" y="143" text-anchor="middle" style="fill:var(--fg)">ID</text><rect x="370" y="126" width="56" height="26" rx="5" fill="#2fb344" fill-opacity=".35" stroke="#2fb344"/><text x="398" y="143" text-anchor="middle" style="fill:var(--fg)">EX</text><rect x="430" y="126" width="56" height="26" rx="5" fill="#3a7bd5" fill-opacity=".35" stroke="#3a7bd5"/><text x="458" y="143" text-anchor="middle" style="fill:var(--fg)">MEM</text><rect x="490" y="126" width="56" height="26" rx="5" fill="#8e5cf0" fill-opacity=".35" stroke="#8e5cf0"/><text x="518" y="143" text-anchor="middle" style="fill:var(--fg)">WB</text><text x="98" y="18" text-anchor="middle" style="fill:var(--mute)">1</text><text x="158" y="18" text-anchor="middle" style="fill:var(--mute)">2</text><text x="218" y="18" text-anchor="middle" style="fill:var(--mute)">3</text><text x="278" y="18" text-anchor="middle" style="fill:var(--mute)">4</text><text x="338" y="18" text-anchor="middle" style="fill:var(--mute)">5</text><text x="398" y="18" text-anchor="middle" style="fill:var(--mute)">6</text><text x="458" y="18" text-anchor="middle" style="fill:var(--mute)">7</text><text x="518" y="18" text-anchor="middle" style="fill:var(--mute)">8</text><text x="4" y="18" style="fill:var(--mute)">kello:</text></svg></div><p>Ongelmia ovat <strong>hypyt</strong> (hihna täyttyy väärillä käskyillä; haaroituksen ennustus) ja <strong>riippuvuudet</strong> (käsky tarvitsee edellisen tuloksen).</p><h3>Muita käsitteitä</h3><ul><li><strong>Ydin ja säie:</strong> yksi fyysinen ydin voi ajaa kahta säiettä (hyper-threading, SMT). 8 ydintä / 16 säiettä.</li><li><strong>Käskykanta (ISA):</strong> x86-64 (Intel, AMD; PC), ARM (puhelimet, Raspberry Pi, Apple Silicon), RISC-V (avoin). ARM kuluttaa vähemmän virtaa. ESP32 käyttää Xtensa-arkkitehtuuria.</li><li><strong>32 vs 64 bittiä:</strong> rekisterien ja osoitteiden leveys.</li><li><strong>TDP</strong>: jäähdytyksen mitoituksessa käytettävä lämpöteho (W).</li><li><strong>Socket</strong>: prosessorin liitäntä emolevyyn (esim. LGA1700, AM5). Yhteensopivuus on tarkistettava.</li><li><strong>Integroitu grafiikka:</strong> grafiikkaohjain prosessorin sisällä.</li><li><strong>SoC (System on a Chip):</strong> prosessori, grafiikka ja muisti yhdessä piirissä (puhelimet, Raspberry Pi).</li></ul><h3>Mikro-ohjain vs prosessori</h3><table class="tt">
 <tr><th></th><th>PC:n prosessori</th><th>Mikro-ohjain (ESP32)</th></tr>
 <tr><td>Muisti, oheislaitteet</td><td>erilliset piirit</td><td>samassa piirissä</td></tr>
 <tr><td>Käyttöjärjestelmä</td><td>Windows, Linux jne.</td><td>ei, tai pieni reaaliaikajärjestelmä</td></tr>
-<tr><td>Teho, virrankulutus</td><td>kymmeniä–satoja wattia</td><td>milliwatteja–alle watti</td></tr>
-<tr><td>Käyttö</td><td>yleiskäyttö</td><td>yksi tehtävä</td></tr></table></div></section>
+<tr><td>Teho</td><td>kymmeniä–satoja wattia</td><td>milliwatteja–alle watti</td></tr>
+<tr><td>Käyttö</td><td>yleiskäyttö</td><td>yksi tehtävä</td></tr>
+</table><h3>🧰 Mini-prosessorisimulaattori: fetch–decode–execute</h3><p>Tämä on yksinkertainen 8-bittinen prosessori: 16 muistipaikkaa, jokainen sisältää käskyn (ylempi 4 bittiä = operaatio, alempi = osoite tai luku) tai dataa. Rekistereitä on <strong>PC</strong> (ohjelmalaskuri), <strong>IR</strong> (käskyrekisteri) ja <strong>ACC</strong> (akku). Paina "Seuraava vaihe" ja seuraa, miten prosessori hakee, tulkitsee ja suorittaa.</p><table class="tt">
+<tr><th>Koodi</th><th>Käsky</th><th>Tekee</th></tr>
+<tr><td>0</td><td>HLT</td><td>pysäytys</td></tr>
+<tr><td>1</td><td>LDA x</td><td>ACC ← muisti[x]</td></tr>
+<tr><td>2</td><td>STA x</td><td>muisti[x] ← ACC</td></tr>
+<tr><td>3</td><td>ADD x</td><td>ACC ← ACC + muisti[x]</td></tr>
+<tr><td>4</td><td>SUB x</td><td>ACC ← ACC − muisti[x]</td></tr>
+<tr><td>5</td><td>JMP x</td><td>PC ← x (hyppy)</td></tr>
+<tr><td>6</td><td>JZ x</td><td>jos ACC = 0, PC ← x</td></tr>
+<tr><td>7</td><td>LDI n</td><td>ACC ← n (vakio 0–15)</td></tr>
+<tr><td>8</td><td>OUT</td><td>tulosta ACC</td></tr>
+</table><div class="tool" id="cpu"><div class="kt-bar">Ohjelma: <select id="cpu-prog"></select> <button id="cpu-step"><strong>▶ Seuraava vaihe</strong></button> <button id="cpu-inst">Koko käsky</button> <button id="cpu-run">Aja loppuun</button> <button id="cpu-reset">Nollaa</button></div><div id="cpu-regs" class="out"></div><div id="cpu-mem"></div><div id="cpu-log" class="cpulog"></div></div></div></section>
 
-<section class="s4" id="s3"><h2>3. Muistit ja tallennus</h2><div><h3>Muistihierarkia</h3>
-<table>
-<tr><th>Taso</th><th>Nopeus</th><th>Koko</th><th>Haihtuva?</th></tr>
-<tr><td>Rekisterit</td><td>nopein</td><td>satoja tavuja</td><td>kyllä</td></tr>
-<tr><td>Välimuisti L1–L3</td><td>erittäin nopea</td><td>kymmeniä kt–kymmeniä Mt</td><td>kyllä</td></tr>
-<tr><td>Keskusmuisti (RAM)</td><td>nopea</td><td>Gt</td><td>kyllä</td></tr>
-<tr><td>SSD</td><td>kohtalainen</td><td>satoja Gt–Tt</td><td>ei</td></tr>
-<tr><td>HDD</td><td>hidas</td><td>Tt</td><td>ei</td></tr></table>
-<p><strong>Haihtuva</strong> muisti menettää sisältönsä, kun virta katkaistaan. Mitä lähempänä prosessoria, sitä nopeampi, pienempi ja kalliimpi muisti on.</p>
-<h3>RAM</h3>
-<ul>
-<li>DRAM: yksi bitti on kondensaattori + transistori, joka pitää virkistää jatkuvasti.</li>
-<li>Sukupolvet DDR4 ja DDR5 eivät ole keskenään yhteensopivia (eri lovi moduulissa).</li>
-<li><strong>Kaksikanavatila (dual channel):</strong> kaksi moduulia oikeissa paikoissa kaksinkertaistaa väylän leveyden ja nopeuttaa.</li>
-<li>Kellotaajuus (MT/s) ja viive (CL) vaikuttavat nopeuteen.</li>
-<li><strong>ROM / flash:</strong> haihtumaton, mikro-ohjaimen ohjelma on flash-muistissa. PC:n BIOS/UEFI on emolevyn flashissa.</li>
-</ul>
-<h3>Tallennus</h3>
-<table>
+<section class="s4" id="s3"><h2>3. Muistit ja tallennus</h2><div><h3>Muistihierarkia</h3><p>Mitä lähempänä prosessoria, sitä nopeampi, pienempi ja kalliimpi muisti on. Hierarkia toimii, koska ohjelmat käyttävät samaa dataa toistuvasti (<strong>paikallisuus</strong>), joten pieni nopea muisti riittää suurelle osalle hakuja.</p><div class="wavebox"><svg viewBox="0 0 480 270" width="480" role="img" aria-label="muistihierarkia" font-size="12" class="chart"><rect x="205" y="6" width="70" height="38" rx="6" fill="#ff6b6b" fill-opacity=".3" stroke="#ff6b6b"/><text x="240" y="22" text-anchor="middle" style="fill:var(--fg)" font-weight="700">Rekisterit</text><text x="240" y="37" text-anchor="middle" style="fill:var(--fg)" font-size="10.5">~ 1 ns, satoja tavuja</text><rect x="175" y="48" width="130" height="38" rx="6" fill="#ff9f1c" fill-opacity=".3" stroke="#ff9f1c"/><text x="240" y="64" text-anchor="middle" style="fill:var(--fg)" font-weight="700">L1-välimuisti</text><text x="240" y="79" text-anchor="middle" style="fill:var(--fg)" font-size="10.5">~ 1–2 ns, 32–64 kt</text><rect x="145" y="90" width="190" height="38" rx="6" fill="#d6a100" fill-opacity=".3" stroke="#d6a100"/><text x="240" y="106" text-anchor="middle" style="fill:var(--fg)" font-weight="700">L2 / L3</text><text x="240" y="121" text-anchor="middle" style="fill:var(--fg)" font-size="10.5">~ 4–40 ns, 256 kt – 64 Mt</text><rect x="115" y="132" width="250" height="38" rx="6" fill="#2fb344" fill-opacity=".3" stroke="#2fb344"/><text x="240" y="148" text-anchor="middle" style="fill:var(--fg)" font-weight="700">RAM</text><text x="240" y="163" text-anchor="middle" style="fill:var(--fg)" font-size="10.5">~ 60–100 ns, 8–64 Gt</text><rect x="85" y="174" width="310" height="38" rx="6" fill="#3a7bd5" fill-opacity=".3" stroke="#3a7bd5"/><text x="240" y="190" text-anchor="middle" style="fill:var(--fg)" font-weight="700">SSD</text><text x="240" y="205" text-anchor="middle" style="fill:var(--fg)" font-size="10.5">~ 20–100 µs, 0,25–4 Tt</text><rect x="55" y="216" width="370" height="38" rx="6" fill="#8e5cf0" fill-opacity=".3" stroke="#8e5cf0"/><text x="240" y="232" text-anchor="middle" style="fill:var(--fg)" font-weight="700">HDD</text><text x="240" y="247" text-anchor="middle" style="fill:var(--fg)" font-size="10.5">~ 5–10 ms, 1–20 Tt</text><text x="4" y="14" style="fill:var(--mute)">nopea, pieni, kallis ↑</text><text x="4" y="260" style="fill:var(--mute)">hidas, suuri, halpa ↓</text></svg></div><h3>RAM</h3><ul><li><strong>DRAM:</strong> yksi bitti on kondensaattori + transistori, joka pitää virkistää jatkuvasti (siksi "dynaaminen"). <strong>SRAM</strong> (välimuisti) käyttää kiikkuja: nopeampi mutta suurempi ja kalliimpi.</li><li>Haihtuva: sisältö katoaa, kun virta katkeaa.</li><li><strong>DDR4 ja DDR5</strong> eivät ole yhteensopivia (eri lovi moduulissa).</li><li><strong>Kaksikanavatila (dual channel):</strong> kaksi moduulia oikeissa paikoissa kaksinkertaistaa väylän leveyden.</li><li><strong>ECC-muisti:</strong> havaitsee ja korjaa bittivirheet (palvelimissa).</li></ul><div class="f">kaistanleveys (GB/s) = MT/s × 8 tavua × kanavat / 1000        latenssi (ns) = CL × 2000 / MT/s</div><p>Esimerkki: DDR4-3200 yksikanavainen: 3200 · 8 / 1000 = <strong>25,6 GB/s</strong>; kaksikanavainen 51,2 GB/s. DDR5-6000 kaksikanavainen: 6000 · 8 · 2 / 1000 = <strong>96 GB/s</strong>. Latenssi: DDR4-3200 CL16: 16 · 2000 / 3200 = <strong>10 ns</strong>; DDR5-6000 CL30: 30 · 2000 / 6000 = <strong>10 ns</strong>. Uusi DDR5 on siis nopeampi kaistanleveydeltään, mutta latenssi pysyy samana.</p><div class="tool" id="mem"><strong>🧰 Muistin laskuri</strong><p>Nopeus (MT/s): <input id="mem-t" type="number" value="3200" style="width:80px"> CL: <input id="mem-cl" type="number" value="16" style="width:60px"> Kanavat: <select id="mem-ch"><option>1</option><option selected>2</option><option>4</option></select></p><div id="mem-out"></div></div><h4>Virtuaalimuisti</h4><p>Jos RAM loppuu, käyttöjärjestelmä siirtää vähän käytettyä dataa levylle (<strong>swap</strong> Linuxissa, <strong>sivutustiedosto</strong> Windowsissa). Levy on moninkertaisesti hitaampi, joten jatkuva swappaus hidastaa konetta. Jokainen prosessi saa lisäksi oman <strong>virtuaalisen osoiteavaruuden</strong>, jonka käyttöjärjestelmä kuvaa fyysiseen muistiin sivuina (tyypillisesti 4 kt).</p><h3>Tallennus</h3><table class="tt">
 <tr><th>Tyyppi</th><th>Liitäntä</th><th>Nopeus (suuntaa antava)</th><th>Huomioita</th></tr>
-<tr><td>HDD</td><td>SATA</td><td>noin 100–200 MB/s</td><td>pyörivät levyt, edullinen, herkkä iskuille</td></tr>
-<tr><td>SATA SSD</td><td>SATA</td><td>noin 550 MB/s</td><td>ei liikkuvia osia</td></tr>
-<tr><td>NVMe SSD</td><td>M.2 (PCIe)</td><td>3000–7000+ MB/s</td><td>nopein, pieni, suoraan emolevyyn</td></tr></table>
-<p><strong>RAID</strong> yhdistää levyjä: RAID 0 (jako, nopeampi, ei suojaa, yksi levy rikki = kaikki menetetty), RAID 1 (peilaus, kaksi samaa kopiota), RAID 5 (jako + pariteetti, kestää yhden levyn vian). RAID ei korvaa varmuuskopiota.</p>
-<h3>Tiedostojärjestelmät</h3>
-<table>
+<tr><td>HDD</td><td>SATA</td><td>100–200 MB/s</td><td>pyörivät levyt, edullinen, herkkä iskuille; hakuaika 5–10 ms</td></tr>
+<tr><td>SATA SSD</td><td>SATA III (6 Gb/s)</td><td>noin 550 MB/s</td><td>ei liikkuvia osia</td></tr>
+<tr><td>NVMe SSD</td><td>M.2 (PCIe)</td><td>3 500–7 500+ MB/s</td><td>nopein, pieni, suoraan emolevyyn</td></tr>
+</table><p>HDD:n keskimääräinen kiertoviive on puoli kierrosta: 7200 rpm → 60/7200/2 = <strong>4,17 ms</strong>. SSD:llä vastaava viive on kymmeniä mikrosekunteja, joten satunnaishaut ovat satoja kertoja nopeampia. <strong>PCIe-kaistat:</strong> PCIe 3,0 x4 ≈ 3,9 GB/s, 4,0 x4 ≈ 7,9 GB/s, 5,0 x4 ≈ 15,8 GB/s.</p><p><strong>SSD:n kulutus:</strong> flash-solu kestää rajallisen määrän kirjoituksia (ilmoitetaan <strong>TBW</strong>-arvona, tavallisesti satoja teratavuja). Tavallisessa käytössä kestää vuosia. <strong>SMART</strong> kertoo levyn kunnon (<code>sudo smartctl -a /dev/nvme0n1</code>).</p><h4>Osiointi ja tiedostojärjestelmät</h4><table class="tt">
+<tr><th>Taulu</th><th>Raja</th><th>Käynnistys</th></tr>
+<tr><td><strong>MBR</strong></td><td>levy enintään 2 TiB, 4 ensisijaista osiota</td><td>BIOS (legacy)</td></tr>
+<tr><td><strong>GPT</strong></td><td>käytännössä rajaton, 128 osiota</td><td>UEFI</td></tr>
+</table><table class="tt">
 <tr><th>Järjestelmä</th><th>Käyttö</th></tr>
 <tr><td>NTFS</td><td>Windows</td></tr>
 <tr><td>ext4</td><td>Linux</td></tr>
-<tr><td>FAT32 / exFAT</td><td>USB-tikut, muistikortit (FAT32 sallii enintään 4 GB tiedoston)</td></tr>
-<tr><td>APFS</td><td>macOS</td></tr></table></div></section>
+<tr><td>FAT32 / exFAT</td><td>USB-tikut, muistikortit (FAT32: tiedosto enintään 4 GiB)</td></tr>
+<tr><td>APFS</td><td>macOS</td></tr>
+</table><h4>RAID</h4><p>RAID yhdistää useita levyjä. <strong>Se ei korvaa varmuuskopiota</strong>: poistettu tai viruksen salaama tiedosto häviää kaikilta levyiltä.</p><table class="tt">
+<tr><th>Taso</th><th>Toiminta</th><th>Käyttökelpoinen tila</th><th>Kestää levyviat</th></tr>
+<tr><td>RAID 0</td><td>jako (striping)</td><td>n × s</td><td>0 (yksi levy rikki = kaikki menetetty)</td></tr>
+<tr><td>RAID 1</td><td>peilaus</td><td>s</td><td>n − 1</td></tr>
+<tr><td>RAID 5</td><td>jako + pariteetti</td><td>(n − 1) × s</td><td>1</td></tr>
+<tr><td>RAID 6</td><td>jako + kaksi pariteettia</td><td>(n − 2) × s</td><td>2</td></tr>
+<tr><td>RAID 10</td><td>peilatut parit jaettuna</td><td>n / 2 × s</td><td>1 per pari</td></tr>
+</table><div class="tool" id="raid"><strong>🧰 RAID-laskuri</strong><p>Levyjä: <input id="raid-n" type="number" value="4" min="2" max="24" style="width:60px"> Koko (TB): <input id="raid-s" type="number" value="2" step="any" style="width:70px"></p><div id="raid-out"></div></div></div></section>
 
-<section class="s5" id="s4"><h2>4. Emolevy, väylät, näytönohjaus ja oheislaitteet</h2><div><h3>Emolevy</h3>
-<p>Emolevy yhdistää kaikki osat. Tärkeimmät osat:</p>
-<ul>
-<li><strong>Prosessorikanta</strong> (socket) ja <strong>piirisarja</strong> (chipset), joka määrää liitäntöjen määrän.</li>
-<li><strong>RAM-paikat</strong> (DIMM), yleensä 2 tai 4.</li>
-<li><strong>PCIe-paikat:</strong> näytönohjain (x16), muut laajennuskortit. <strong>M.2:</strong> NVMe-levyille. <strong>SATA-portit:</strong> HDD ja SSD.</li>
-<li><strong>BIOS/UEFI</strong> -piiri ja CMOS-paristo (CR2032) kellolle ja asetuksille.</li>
-<li><strong>Virtaliittimet:</strong> 24-pin ATX-pääliitin ja 8-pin (4+4) prosessorille.</li>
-<li><strong>Etupaneeliliittimet:</strong> virtapainike, reset, LEDit, USB, ääni.</li>
-<li><strong>Takapaneelin portit:</strong> USB, verkko, ääni, videolähdöt.</li>
-</ul>
-<p><strong>Kokoluokat:</strong> ATX (täysikokoinen), micro-ATX, mini-ITX. Emolevyn on sovittava kotelon tukiin.</p>
-<h3>Väylät</h3>
-<table>
-<tr><th>Väylä</th><th>Käyttö</th></tr>
-<tr><td>PCIe</td><td>näytönohjain, NVMe, laajennuskortit (x1, x4, x16 = kaistat)</td></tr>
-<tr><td>SATA</td><td>HDD ja SSD</td></tr>
-<tr><td>USB</td><td>oheislaitteet; USB 2.0 480 Mb/s, 3.x 5–20 Gb/s</td></tr>
-<tr><td>Ethernet, Wi-Fi</td><td>verkko</td></tr>
-<tr><td>HDMI, DisplayPort</td><td>näyttö</td></tr></table>
-<h3>Näytönohjain (GPU)</h3>
-<p>GPU on rinnakkaislaskentaan erikoistunut prosessori, jossa on tuhansia pieniä ytimiä. Se piirtää kuvan ja nopeuttaa grafiikkaa, videota ja laskentaa (tekoäly). <strong>Erillinen (dedicated)</strong> näytönohjain on oma kortti PCIe-paikassa omalla VRAM-muistillaan ja jäähdytyksellään. <strong>Integroitu</strong> grafiikka on prosessorin sisällä ja käyttää jaettua RAM-muistia. Näyttö kytketään näytönohjaimen, ei emolevyn, porttiin, jos erillinen ohjain on asennettu.</p>
-<h3>Virtalähde (PSU) ja jäähdytys</h3>
-<ul>
-<li><strong>Teho (W)</strong> mitoitetaan osien yhteisvirrankulutuksen mukaan, ja varaa reilusti (noin 20–30 %).</li>
-<li><strong>80 PLUS</strong> -sertifikaatti kertoo hyötysuhteen (Bronze, Gold, Platinum…).</li>
-<li><strong>Liittimet:</strong> 24-pin emolevylle, 8-pin (4+4) prosessorille, PCIe-liittimet näytönohjaimelle, SATA-virrat levyille.</li>
-<li><strong>Jäähdytys:</strong> prosessorijäähdytin ja <strong>lämpötahna</strong> (siirtää lämpöä prosessorin ja jäähdyttimen välillä), kotelotuulettimet ilmavirtaa varten (etu/ala sisään, taka/ylä ulos).</li>
-</ul>
-<h3>Oheislaitteet</h3>
-<p>Syöttö: näppäimistö, hiiri, kamera, mikrofoni. Tulostus: näyttö, kaiuttimet, tulostin. Tallennus ja verkko. Ohjain (<strong>ajuri</strong>, driver) on ohjelma, jonka avulla käyttöjärjestelmä puhuu laitteelle.</p></div></section>
+<section class="s5" id="s4"><h2>4. Emolevy, väylät, näytönohjaus ja virtalähde</h2><div><h3>Emolevy</h3><p>Emolevy yhdistää kaikki osat. Tärkeimmät osat:</p><div class="wavebox"><svg viewBox="0 0 500 330" width="500" role="img" aria-label="emolevyn rakenne" font-size="11.5" class="chart"><rect x="5" y="5" width="490" height="320" rx="12" fill="#2fb344" fill-opacity=".12" stroke="#2fb344" stroke-width="2"/><rect x="130" y="30" width="90" height="90" rx="6" fill="#3a7bd5" fill-opacity=".3" stroke="#3a7bd5"/><text x="175" y="79" text-anchor="middle" style="fill:var(--fg)">CPU-kanta</text><rect x="250" y="30" width="24" height="120" rx="6" fill="#ff9f1c" fill-opacity=".3" stroke="#ff9f1c"/><text x="262" y="94" text-anchor="middle" style="fill:var(--fg)">RAM</text><rect x="280" y="30" width="24" height="120" rx="6" fill="#ff9f1c" fill-opacity=".3" stroke="#ff9f1c"/><text x="292" y="94" text-anchor="middle" style="fill:var(--fg)">RAM</text><rect x="310" y="30" width="24" height="120" rx="6" fill="#ff9f1c" fill-opacity=".3" stroke="#ff9f1c"/><text x="322" y="94" text-anchor="middle" style="fill:var(--fg)">RAM</text><rect x="340" y="30" width="24" height="120" rx="6" fill="#ff9f1c" fill-opacity=".3" stroke="#ff9f1c"/><text x="352" y="94" text-anchor="middle" style="fill:var(--fg)">RAM</text><rect x="20" y="30" width="90" height="90" rx="6" fill="#e8590c" fill-opacity=".3" stroke="#e8590c"/><text x="65" y="79" text-anchor="middle" style="fill:var(--fg)">VRM / virta</text><rect x="130" y="140" width="90" height="50" rx="6" fill="#8e5cf0" fill-opacity=".3" stroke="#8e5cf0"/><text x="175" y="169" text-anchor="middle" style="fill:var(--fg)">M.2 (NVMe)</text><rect x="130" y="205" width="330" height="30" rx="6" fill="#14a8a8" fill-opacity=".3" stroke="#14a8a8"/><text x="295" y="224" text-anchor="middle" style="fill:var(--fg)">PCIe x16 (näytönohjain)</text><rect x="130" y="245" width="330" height="24" rx="6" fill="#14a8a8" fill-opacity=".3" stroke="#14a8a8"/><text x="295" y="261" text-anchor="middle" style="fill:var(--fg)">PCIe x1 / x4</text><rect x="250" y="165" width="100" height="30" rx="6" fill="#d6a100" fill-opacity=".3" stroke="#d6a100"/><text x="300" y="184" text-anchor="middle" style="fill:var(--fg)">Piirisarja</text><rect x="380" y="30" width="100" height="24" rx="6" fill="#e8590c" fill-opacity=".3" stroke="#e8590c"/><text x="430" y="46" text-anchor="middle" style="fill:var(--fg)">24-pin ATX</text><rect x="380" y="62" width="100" height="24" rx="6" fill="#8e5cf0" fill-opacity=".3" stroke="#8e5cf0"/><text x="430" y="78" text-anchor="middle" style="fill:var(--fg)">SATA-portit</text><rect x="20" y="140" width="90" height="130" rx="6" fill="#6b7280" fill-opacity=".3" stroke="#6b7280"/><text x="65" y="209" text-anchor="middle" style="fill:var(--fg)">Takapaneeli: USB, verkko, ääni, video</text><rect x="380" y="94" width="100" height="24" rx="6" fill="#6b7280" fill-opacity=".3" stroke="#6b7280"/><text x="430" y="110" text-anchor="middle" style="fill:var(--fg)">Etupaneeli</text><rect x="380" y="126" width="100" height="24" rx="6" fill="#6b7280" fill-opacity=".3" stroke="#6b7280"/><text x="430" y="142" text-anchor="middle" style="fill:var(--fg)">CMOS-paristo</text><rect x="130" y="284" width="150" height="28" rx="6" fill="#e8489b" fill-opacity=".3" stroke="#e8489b"/><text x="205" y="302" text-anchor="middle" style="fill:var(--fg)">BIOS/UEFI-piiri</text></svg></div><ul><li><strong>Prosessorikanta</strong> (socket) ja <strong>piirisarja</strong> (chipset), joka määrää liitäntöjen määrän.</li><li><strong>RAM-paikat</strong> (DIMM), yleensä 2 tai 4.</li><li><strong>PCIe-paikat:</strong> näytönohjain (x16), muut laajennuskortit. <strong>M.2:</strong> NVMe-levyille. <strong>SATA-portit:</strong> HDD ja SSD.</li><li><strong>BIOS/UEFI</strong> -piiri ja CMOS-paristo (CR2032) kellolle ja asetuksille.</li><li><strong>VRM</strong> (virtamuuntaja): muuntaa 12 V prosessorin vaatimaksi n. 1 V:ksi.</li><li><strong>Virtaliittimet:</strong> 24-pin ATX-pääliitin ja 8-pin (4+4) prosessorille.</li><li><strong>Etupaneeliliittimet:</strong> virtapainike, reset, LEDit, USB, ääni.</li><li><strong>Takapaneelin portit:</strong> USB, verkko, ääni, videolähdöt.</li></ul><p><strong>Kokoluokat:</strong> ATX (täysikokoinen), micro-ATX, mini-ITX. Emolevyn on sovittava kotelon tukiin.</p><h3>Väylät ja liitännät</h3><table class="tt">
+<tr><th>Väylä</th><th>Käyttö</th><th>Nopeus</th></tr>
+<tr><td>PCIe</td><td>näytönohjain, NVMe, laajennuskortit (x1, x4, x16 = kaistoja)</td><td>≈ 1 / 2 / 4 GB/s per kaista (3,0 / 4,0 / 5,0)</td></tr>
+<tr><td>SATA III</td><td>HDD ja SSD</td><td>6 Gb/s ≈ 600 MB/s</td></tr>
+<tr><td>USB 2,0</td><td>oheislaitteet</td><td>480 Mb/s</td></tr>
+<tr><td>USB 3,2 Gen 1 (5 Gb/s)</td><td>oheislaitteet, tikut</td><td>5 Gb/s</td></tr>
+<tr><td>USB 3,2 Gen 2 (10 Gb/s)</td><td>nopeat levyt</td><td>10 Gb/s</td></tr>
+<tr><td>USB4 / Thunderbolt</td><td>telakat, näytöt</td><td>20–40 Gb/s</td></tr>
+<tr><td>Ethernet</td><td>verkko</td><td>1 / 2,5 / 10 Gb/s</td></tr>
+<tr><td>HDMI, DisplayPort</td><td>näyttö</td><td>esim. 4K 60 Hz</td></tr>
+</table><h3>Näytönohjain (GPU)</h3><p>GPU on rinnakkaislaskentaan erikoistunut prosessori, jossa on tuhansia pieniä ytimiä. Se piirtää kuvan ja nopeuttaa grafiikkaa, videota ja laskentaa (tekoäly). <strong>Erillinen (dedicated)</strong> näytönohjain on oma kortti PCIe-paikassa omalla VRAM-muistillaan, virtaliittimellään ja jäähdytyksellään. <strong>Integroitu</strong> grafiikka on prosessorin sisällä ja käyttää jaettua RAM-muistia. <strong>Näyttö kytketään näytönohjaimen, ei emolevyn, porttiin, jos erillinen ohjain on asennettu.</strong></p><h3>Virtalähde (PSU) ja jäähdytys</h3><ul><li><strong>Teho (W)</strong> mitoitetaan osien yhteisvirrankulutuksen mukaan, ja varaa 20–30 %.</li><li><strong>80 PLUS</strong> -sertifikaatti kertoo hyötysuhteen (Bronze 82–85 %, Gold 87–90 %, Platinum 90–92 %).</li><li><strong>Liittimet:</strong> 24-pin emolevylle, 8-pin (4+4) prosessorille, PCIe-liittimet näytönohjaimelle, SATA-virrat levyille.</li><li><strong>Jäähdytys:</strong> prosessorijäähdytin ja <strong>lämpötahna</strong>; kotelotuulettimet ilmavirtaa varten (etu/ala sisään, taka/ylä ulos).</li></ul><p>Esimerkki: prosessori 125 W + näytönohjain 220 W + muut 75 W = 420 W. Varalla 30 %: 420 · 1,3 = 546 W → valitse <strong>550–650 W</strong> virtalähde. 80 PLUS Gold (90 %) 400 W:n kuormalla ottaa seinästä 400 / 0,9 ≈ 444 W.</p><div class="tool" id="psu"><strong>🧰 Virtalähteen mitoitus</strong><p>Prosessori (W): <input id="psu-c" type="number" value="125" style="width:70px"> Näytönohjain (W): <input id="psu-g" type="number" value="220" style="width:70px"> Muut (levyt, tuulettimet, RAM): <input id="psu-o" type="number" value="75" style="width:70px"> Hyötysuhde (%): <input id="psu-e" type="number" value="90" style="width:60px"></p><div id="psu-out"></div></div><h3>Yhteensopivuus</h3><p>Ennen ostoa tarkista aina: <strong>prosessori ↔ emolevyn kanta ja piirisarja</strong>, <strong>RAM-tyyppi</strong>, <strong>näytönohjaimen koko kotelossa</strong>, <strong>virtalähteen teho ja liittimet</strong>, <strong>jäähdyttimen korkeus</strong>, <strong>emolevyn kokoluokka</strong>.</p><div class="tool" id="cmp"><strong>🧰 Yhteensopivuustarkistin</strong><p>Prosessorin kanta: <select id="cmp-cs"><option>LGA1700</option><option>AM5</option><option>AM4</option><option>LGA1200</option></select> Emolevyn kanta: <select id="cmp-ms"><option>LGA1700</option><option>AM5</option><option>AM4</option><option>LGA1200</option></select></p><p>Emolevyn muistityyppi: <select id="cmp-mr"><option>DDR4</option><option selected>DDR5</option></select> Valittu RAM: <select id="cmp-rr"><option>DDR4</option><option selected>DDR5</option></select></p><p>Näytönohjaimen pituus (mm): <input id="cmp-gl" type="number" value="300" style="width:70px"> Kotelon enimmäispituus (mm): <input id="cmp-cl" type="number" value="320" style="width:70px"></p><div id="cmp-out"></div></div></div></section>
 
-<section class="s6" id="s5"><h2>5. Tietokoneen kokoaminen</h2><div><div class="warn"><strong>Turvallisuus:</strong> irrota virtajohto aina ennen työtä. Pura staattinen sähkö koskettamalla maadoitettua metalliosaa (tai käytä ESD-rannehihnaa). Älä pakota osia: oikein päin ne menevät paikalleen kevyellä painalluksella.</div>
-<h3>Valmistelu</h3>
-<ol>
-<li>Tarkista yhteensopivuus: <strong>prosessori ↔ emolevyn kanta ja piirisarja</strong>, <strong>RAM-tyyppi</strong> (DDR4/DDR5), <strong>näytönohjaimen koko kotelossa</strong>, <strong>virtalähteen teho ja liittimet</strong>, <strong>jäähdyttimen korkeus</strong> ja <strong>emolevyn kokoluokka</strong>.</li>
-<li>Työtila: tasainen, valoisa pöytä, ruuvimeisseli (PH2), siteitä johdoille, ohje emolevyn manuaalissa.</li>
-</ol>
-<h3>Vaiheet</h3>
-<ol>
-<li><strong>Prosessori emolevyyn:</strong> avaa kanta, kohdista kolmio (kulmamerkki) ja aseta prosessori paikalleen ilman painamista, sulje salpa.</li>
-<li><strong>RAM:</strong> paina moduulit paikalleen (naksahdus) ohjeen mukaisiin paikkoihin (usein A2 ja B2 kaksikanavatilaa varten).</li>
-<li><strong>M.2-SSD:</strong> aseta kulmassa paikkaan ja kiinnitä ruuvilla.</li>
-<li><strong>Jäähdytin:</strong> ohut tahnakerros (herneen kokoinen) prosessorin päälle, jäähdytin kiinni ristikkäisessä järjestyksessä, ja tuulettimen johto CPU_FAN-liittimeen.</li>
-<li><strong>Emolevy koteloon:</strong> asenna tuet (standoffit) ja ruuvaa emolevy kiinni. Takapaneelin I/O-suojus ensin.</li>
-<li><strong>Virtalähde koteloon</strong> ja johdot: 24-pin emolevylle, 8-pin prosessorille (EPS), SATA-virrat levyille, PCIe-virta näytönohjaimelle.</li>
-<li><strong>Näytönohjain:</strong> PCIe x16 -paikkaan, kiinnitä ruuvilla, kytke PCIe-virtajohto.</li>
-<li><strong>Etupaneeli:</strong> virtapainike, LEDit ja USB-liittimet emolevyn ohjeen mukaan.</li>
-<li><strong>Johdonhallinta:</strong> kiinnitä johdot siteillä, jotta ilmavirta ei tukkeudu.</li>
-<li><strong>Ensimmäinen käynnistys:</strong> kytke näyttö (näytönohjaimeen), näppäimistö ja virta. Katso, että kone käynnistyy ja näyttää BIOS/UEFI-näkymän.</li>
-</ol>
-<h3>POST ja BIOS/UEFI</h3>
-<p><strong>POST (Power-On Self Test)</strong> tarkistaa laitteiston käynnistyksessä. Jos kone ei käynnisty, emolevyn LEDit tai äänimerkit kertovat vikaosan (CPU, RAM, GPU, boot-laite). UEFI-asetuksista (yleensä Del tai F2) tarkistetaan: näkyvätkö prosessori, RAM-määrä ja levyt, ja asetetaan käynnistysjärjestys. <strong>Secure Boot</strong> ja <strong>TPM</strong> vaikuttavat Windows 11:n ja joidenkin Linux-jakeluiden asennukseen.</p>
-<details><summary>Tarkistuslista ensimmäiseen käynnistykseen</summary>
-<ul>
-<li>24-pin ja 8-pin kytketty ja kunnolla kiinni?</li>
-<li>RAM naksahtanut paikalleen?</li>
-<li>Näyttökaapeli näytönohjaimeen (ei emolevyyn)?</li>
-<li>Virtalähteen takana oleva kytkin päällä?</li>
-<li>Etupaneelin virtajohdot oikeissa nastoissa?</li>
-<li>Prosessorin tuulettimen johto kiinni?</li></ul></details></div></section>
+<section class="s6" id="s5"><h2>5. Tietokoneen kokoaminen</h2><div><div class="warn"><strong>Turvallisuus:</strong> irrota virtajohto aina ennen työtä. Pura staattinen sähkö koskettamalla maadoitettua metalliosaa (tai käytä ESD-rannehihnaa). Älä pakota osia: oikein päin ne menevät paikalleen kevyellä painalluksella.</div><h3>Valmistelu</h3><ol><li>Tarkista yhteensopivuus (osio 4).</li><li>Työtila: tasainen, valoisa pöytä, ruuvimeisseli (PH2), siteitä johdoille, emolevyn manuaali.</li><li>Pura osat pakkauksistaan antistaattisiin pusseihin ja pidä ne jokseenkin järjestyksessä.</li><li>Lue emolevyn manuaalista: RAM-paikat kaksikanavatilaa varten, M.2-paikat, etupaneeliliitinten asettelu.</li></ol><h3>Vaiheet</h3><ol><li><strong>Prosessori emolevyyn:</strong> avaa kanta, kohdista kolmio (kulmamerkki) ja aseta prosessori paikalleen ilman painamista, sulje salpa. Älä koske nastoihin/koskettimiin.</li><li><strong>RAM:</strong> paina moduulit paikalleen (naksahdus) ohjeen mukaisiin paikkoihin (usein A2 ja B2 kaksikanavatilaa varten).</li><li><strong>M.2-SSD:</strong> aseta kulmassa paikkaan ja kiinnitä ruuvilla.</li><li><strong>Jäähdytin:</strong> ohut tahnakerros (herneen kokoinen) prosessorin päälle, jäähdytin kiinni ristikkäisessä järjestyksessä, tuulettimen johto CPU_FAN-liittimeen.</li><li><strong>Emolevy koteloon:</strong> asenna tuet (standoffit) ja ruuvaa emolevy kiinni. Takapaneelin I/O-suojus ensin.</li><li><strong>Virtalähde koteloon</strong> ja johdot: 24-pin emolevylle, 8-pin prosessorille (EPS), SATA-virrat levyille, PCIe-virta näytönohjaimelle.</li><li><strong>Näytönohjain:</strong> PCIe x16 -paikkaan, kiinnitä ruuvilla, kytke PCIe-virtajohto.</li><li><strong>Etupaneeli:</strong> virtapainike, LEDit ja USB-liittimet emolevyn ohjeen mukaan.</li><li><strong>Johdonhallinta:</strong> kiinnitä johdot siteillä, jotta ilmavirta ei tukkeudu.</li><li><strong>Ensimmäinen käynnistys:</strong> kytke näyttö (näytönohjaimeen), näppäimistö ja virta. Katso, että kone käynnistyy ja näyttää BIOS/UEFI-näkymän.</li></ol><h3>Tarkistuslista ennen virran kytkemistä</h3><ul style="list-style:none;padding-left:0"><li><label><input type="checkbox"> Prosessori kunnolla paikallaan, jäähdytin kiinni, tahna paikallaan.</label></li><li><label><input type="checkbox"> RAM naksahtanut paikalleen kummassakin päässä.</label></li><li><label><input type="checkbox"> 24-pin ja 8-pin kytketty.</label></li><li><label><input type="checkbox"> Näytönohjaimen virtajohto kytketty.</label></li><li><label><input type="checkbox"> Etupaneelin virtapainikkeen johto oikeissa nastoissa.</label></li><li><label><input type="checkbox"> CPU_FAN-johto kiinni.</label></li><li><label><input type="checkbox"> Virtalähteen takakytkin päällä, virtajohto kiinni.</label></li><li><label><input type="checkbox"> Näyttökaapeli näytönohjaimeen (ei emolevyyn).</label></li><li><label><input type="checkbox"> Ei irtonaisia ruuveja kotelon sisällä.</label></li></ul><h3>POST ja BIOS/UEFI</h3><p><strong>POST (Power-On Self Test)</strong> tarkistaa laitteiston käynnistyksessä. Jos kone ei käynnisty, emolevyn <strong>diagnostiikka-LEDit</strong> (CPU, DRAM, VGA, BOOT) tai äänimerkit kertovat vikaosan. Äänimerkkien merkitys vaihtelee valmistajittain, joten katso emolevyn manuaalista.</p><p>UEFI-asetuksista (yleensä Del tai F2 käynnistyksessä) tarkistetaan: näkyvätkö prosessori, RAM-määrä ja levyt. Asetettavia asioita:</p><table class="tt">
+<tr><th>Asetus</th><th>Merkitys</th></tr>
+<tr><td><strong>Boot order</strong></td><td>mistä käynnistetään (USB-tikku asennusta varten)</td></tr>
+<tr><td><strong>XMP / EXPO</strong></td><td>RAMin ilmoitettu nopeus (oletuksena muisti käy hitaammalla)</td></tr>
+<tr><td><strong>Secure Boot</strong></td><td>sallii vain allekirjoitetut käynnistyslataajat; vaikuttaa joidenkin Linux-jakeluiden asennukseen</td></tr>
+<tr><td><strong>TPM</strong></td><td>turvapiiri; vaaditaan Windows 11:ssä</td></tr>
+<tr><td><strong>Virtualisointi</strong> (VT-x / AMD-V)</td><td>tarvitaan virtuaalikoneisiin</td></tr>
+<tr><td><strong>Päiväys ja aika</strong></td><td>CMOS-paristo ylläpitää</td></tr>
+<tr><td><strong>Fan-käyrät</strong></td><td>tuulettimien nopeus lämpötilan mukaan</td></tr>
+</table></div></section>
 
-<section class="s7" id="s6"><h2>6. Käyttöjärjestelmän ja sovellusten asennus</h2><div><h3>Käyttöjärjestelmän tehtävät</h3>
-<p>Käyttöjärjestelmä (OS) hallinnoi laitteistoa ja ohjelmia: <strong>prosessien ajoitus</strong>, <strong>muistinhallinta</strong>, <strong>tiedostojärjestelmä</strong>, <strong>laiteajurit</strong> ja <strong>käyttöliittymä</strong> sekä käyttäjät ja oikeudet. Ydin (kernel) on käyttöjärjestelmän keskeinen osa.</p>
-<h3>Asennusvaiheet (Linux, esim. Ubuntu)</h3>
-<ol>
-<li><strong>Lataa ISO-kuva</strong> ja tarkista sen tarkistussumma (<code>sha256sum</code>) valmistajan ilmoittamaa vasten.</li>
-<li><strong>Tee asennustikku:</strong> kirjoita ISO USB-tikulle (Rufus, balenaEtcher tai <code>dd</code>). Tikun sisältö poistuu.</li>
-<li><strong>Käynnistä tikulta:</strong> avaa boot-valikko (usein F12, F8 tai Esc) tai muuta käynnistysjärjestys UEFI:ssa.</li>
-<li><strong>Kokeile ja asenna:</strong> valitse kieli, näppäimistö, verkko ja asennustapa.</li>
-<li><strong>Osiointi:</strong> asennusohjelma voi tehdä sen automaattisesti. Manuaalisesti tarvitset UEFI-koneessa: <strong>EFI-osio</strong> (noin 512 MB, FAT32), <strong>juuriosio</strong> <code>/</code> (ext4) ja valinnaisesti <code>/home</code> ja <strong>swap</strong> (vaihtomuisti).</li>
-<li><strong>Käyttäjä ja salasana</strong> luodaan.</li>
-<li><strong>Uudelleenkäynnistys:</strong> poista tikku ja kirjaudu sisään.</li>
-</ol>
-<p><strong>Windows</strong> asennetaan pääosin samoin: ISO tai Media Creation Tool, käynnistys tikulta, osioiden valinta, tuotteen aktivointi ja asennuksen jälkeen ajurit. Virtuaalikoneessa asennus tehdään ISO-kuvasta suoraan (ei USB-tikkua).</p>
-<h3>Asennuksen jälkeen</h3>
-<pre><code>sudo apt update &amp;&amp; sudo apt upgrade     # päivitykset
+<section class="s7" id="s6"><h2>6. Käynnistys: firmware, käynnistyslataaja ja ydin</h2><div><p>Kun painat virtapainiketta, tapahtuu tarkka tapahtumaketju. Sen tunteminen auttaa vianetsinnässä: vika voi olla missä tahansa vaiheessa.</p><div class="wavebox"><svg viewBox="0 0 700 90" width="700" role="img" aria-label="käynnistysprosessi" font-size="12" class="chart"><defs><marker id="bt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8a93a0"/></marker></defs><rect x="4" y="22" width="86" height="44" rx="8" fill="#ff6b6b" fill-opacity=".3" stroke="#ff6b6b"/><text x="47" y="49" text-anchor="middle" style="fill:var(--fg)">Virta päälle</text><path d="M91 44 H104" stroke="#8a93a0" stroke-width="2" marker-end="url(#bt)"/><rect x="104" y="22" width="86" height="44" rx="8" fill="#ff9f1c" fill-opacity=".3" stroke="#ff9f1c"/><text x="147" y="49" text-anchor="middle" style="fill:var(--fg)">POST</text><path d="M191 44 H204" stroke="#8a93a0" stroke-width="2" marker-end="url(#bt)"/><rect x="204" y="22" width="86" height="44" rx="8" fill="#d6a100" fill-opacity=".3" stroke="#d6a100"/><text x="247" y="49" text-anchor="middle" style="fill:var(--fg)">UEFI</text><path d="M291 44 H304" stroke="#8a93a0" stroke-width="2" marker-end="url(#bt)"/><rect x="304" y="22" width="86" height="44" rx="8" fill="#2fb344" fill-opacity=".3" stroke="#2fb344"/><text x="347" y="49" text-anchor="middle" style="fill:var(--fg)">Käynnistyslataaja</text><path d="M391 44 H404" stroke="#8a93a0" stroke-width="2" marker-end="url(#bt)"/><rect x="404" y="22" width="86" height="44" rx="8" fill="#3a7bd5" fill-opacity=".3" stroke="#3a7bd5"/><text x="447" y="49" text-anchor="middle" style="fill:var(--fg)">Ydin</text><path d="M491 44 H504" stroke="#8a93a0" stroke-width="2" marker-end="url(#bt)"/><rect x="504" y="22" width="86" height="44" rx="8" fill="#8e5cf0" fill-opacity=".3" stroke="#8e5cf0"/><text x="547" y="49" text-anchor="middle" style="fill:var(--fg)">Palvelut</text><path d="M591 44 H604" stroke="#8a93a0" stroke-width="2" marker-end="url(#bt)"/><rect x="604" y="22" width="86" height="44" rx="8" fill="#e8489b" fill-opacity=".3" stroke="#e8489b"/><text x="647" y="49" text-anchor="middle" style="fill:var(--fg)">Kirjautuminen</text></svg></div><table class="tt">
+<tr><th>Vaihe</th><th>Mitä tapahtuu</th><th>Jos epäonnistuu</th></tr>
+<tr><td>1. Virta</td><td>virtalähde antaa jännitteet ("power good"), prosessori nollautuu</td><td>ei mitään: virtalähde, johdot, painike</td></tr>
+<tr><td>2. POST</td><td>firmware testaa prosessorin, muistin ja perustuvat laitteet</td><td>äänimerkit/LEDit: RAM, CPU, näytönohjain</td></tr>
+<tr><td>3. UEFI / BIOS</td><td>alustaa laitteet, lukee asetukset, etsii käynnistyslaitteen</td><td>"No boot device"</td></tr>
+<tr><td>4. Käynnistyslataaja</td><td>esim. GRUB tai Windows Boot Manager valitsee ja lataa käyttöjärjestelmän</td><td>"GRUB rescue", "Boot manager missing"</td></tr>
+<tr><td>5. Ydin</td><td>kernel käynnistyy, ajurit latautuvat, juurijärjestelmä liitetään</td><td>kernel panic, sininen ruutu</td></tr>
+<tr><td>6. Palvelut</td><td>init/systemd käynnistää palvelut (verkko, SSH, näyttö)</td><td>palvelu epäonnistuu: lokit</td></tr>
+<tr><td>7. Kirjautuminen</td><td>kirjautumisnäkymä</td><td>tunnus tai oikeudet</td></tr>
+</table><h3>BIOS vs UEFI</h3><table class="tt">
+<tr><th></th><th>BIOS (legacy)</th><th>UEFI</th></tr>
+<tr><td>Osiotaulu</td><td>MBR</td><td>GPT</td></tr>
+<tr><td>Käyttöliittymä</td><td>tekstipohjainen</td><td>graafinen, hiiri</td></tr>
+<tr><td>Käynnistysosio</td><td>levyn ensimmäinen sektori</td><td>EFI-osio (FAT32, ~512 MiB)</td></tr>
+<tr><td>Suuret levyt</td><td>rajoitus 2 TiB</td><td>ei käytännön rajaa</td></tr>
+<tr><td>Secure Boot</td><td>ei</td><td>on</td></tr>
+</table><p>Kaksoiskäynnistys (dual boot) onnistuu, kun kummallekin järjestelmälle on oma osionsa ja käynnistyslataaja tarjoaa valinnan. <strong>Asenna Windows ensin, Linux sen jälkeen</strong>, koska Windows korvaa käynnistyslataajan.</p></div></section>
+
+<section class="s8" id="s7"><h2>7. Käyttöjärjestelmän asennus</h2><div><h3>Käyttöjärjestelmän tehtävät</h3><p>Käyttöjärjestelmä (OS) hallinnoi laitteistoa ja ohjelmia: <strong>prosessien ajoitus</strong>, <strong>muistinhallinta</strong>, <strong>tiedostojärjestelmä</strong>, <strong>laiteajurit</strong>, <strong>käyttöliittymä</strong> sekä käyttäjät ja oikeudet. Ydin (kernel) on käyttöjärjestelmän keskeinen osa.</p><h3>Asennusvaiheet (Linux, esim. Ubuntu)</h3><ol><li><strong>Lataa ISO-kuva</strong> ja tarkista sen tarkistussumma (<code>sha256sum</code>) valmistajan ilmoittamaa vasten.</li><li><strong>Tee asennustikku:</strong> kirjoita ISO USB-tikulle (Rufus, balenaEtcher tai <code>dd</code>). Tikun sisältö poistuu.</li><li><strong>Käynnistä tikulta:</strong> avaa boot-valikko (usein F12, F8 tai Esc) tai muuta käynnistysjärjestys UEFI:ssa.</li><li><strong>Kokeile ja asenna:</strong> valitse kieli, näppäimistö, verkko ja asennustapa.</li><li><strong>Osiointi:</strong> automaattinen tai käsin (alla).</li><li><strong>Käyttäjä ja salasana</strong> luodaan.</li><li><strong>Uudelleenkäynnistys:</strong> poista tikku ja kirjaudu sisään.</li></ol><h4>ISO tikulle komentoriviltä (Linux/macOS)</h4><pre><code>lsblk                          # tunnista tikku, esim. /dev/sdb (TARKISTA!)
+sha256sum ubuntu.iso            # tarkistussumma
+sudo dd if=ubuntu.iso of=/dev/sdb bs=4M status=progress conv=fsync</code></pre><div class="warn"><strong>Väärä laite tuhoaa datan.</strong> <code>dd</code> kirjoittaa kohdelaitteen yli kysymättä. Tarkista laite kahdesti komennolla <code>lsblk</code> (koon ja nimen mukaan) ennen ajoa.</div><h3>Osiointi</h3><p>Asennusohjelma tekee sen automaattisesti, mutta käsin tarvitset UEFI-koneessa:</p><table class="tt">
+<tr><th>Osio</th><th>Koko</th><th>Tiedostojärjestelmä</th><th>Tehtävä</th></tr>
+<tr><td>EFI System Partition</td><td>~512 MiB</td><td>FAT32</td><td>käynnistyslataaja</td></tr>
+<tr><td><code>/</code> (juuri)</td><td>25–50 GB</td><td>ext4</td><td>järjestelmä ja ohjelmat</td></tr>
+<tr><td>swap</td><td>RAM:n koko tai 2–8 GB</td><td>swap</td><td>vaihtomuisti (ja lepotila)</td></tr>
+<tr><td><code>/home</code></td><td>loput</td><td>ext4</td><td>käyttäjien tiedostot, säilyy uudelleenasennuksessa</td></tr>
+</table><div class="tool" id="part"><strong>🧰 Osiointisuunnitelma</strong><p>Levyn koko (GB): <input id="part-d" type="number" value="500" style="width:80px"> RAM (GB): <input id="part-r" type="number" value="16" style="width:70px"></p><div id="part-out"></div></div><p><strong>Windows</strong> asennetaan pääosin samoin: ISO tai Media Creation Tool, käynnistys tikulta, osioiden valinta, tuotteen aktivointi ja asennuksen jälkeen ajurit. <strong>Virtuaalikoneessa</strong> asennus tehdään ISO-kuvasta suoraan ilman USB-tikkua.</p><h3>Asennuksen jälkeen</h3><pre><code>sudo apt update &amp;&amp; sudo apt upgrade     # päivitykset
 sudo apt install build-essential git vim htop
-sudo ubuntu-drivers autoinstall            # laiteajurit (esim. näytönohjain)</code></pre>
-<h3>Sovellusten asennus</h3>
-<table>
+sudo ubuntu-drivers autoinstall            # laiteajurit (esim. näytönohjain)</code></pre><ul><li><strong>Windows:</strong> Windows Update, ajurit valmistajan sivulta, Laitehallinta (näkyykö jokin laite keltaisella huutomerkillä?), BitLocker, tilin hallinta.</li><li><strong>Linux:</strong> <code>lsb_release -a</code> (versio), <code>uname -r</code> (ydin), <code>lspci</code>, <code>lsusb</code>.</li></ul></div></section>
+
+<section class="s9" id="s8"><h2>8. Sovellusten asennus ja hallinta</h2><div><p>Ohjelmat voi asentaa usealla tavalla. Linuxissa ja Windowsissa on <strong>paketinhallinta</strong>, joka hoitaa asennuksen, riippuvuudet ja päivitykset.</p><table class="tt">
 <tr><th>Tapa</th><th>Esimerkki</th><th>Huomioita</th></tr>
-<tr><td>Paketinhallinta</td><td><code>sudo apt install nano</code></td><td>luotettava, päivittyy muun järjestelmän mukana</td></tr>
+<tr><td>Paketinhallinta (Linux)</td><td><code>sudo apt install nano</code></td><td>luotettava, päivittyy muun järjestelmän mukana</td></tr>
 <tr><td>Snap / Flatpak</td><td><code>sudo snap install code --classic</code></td><td>sisältää riippuvuudet mukanaan</td></tr>
 <tr><td>.deb-paketti</td><td><code>sudo dpkg -i paketti.deb</code></td><td>riippuvuudet käsin: <code>sudo apt -f install</code></td></tr>
-<tr><td>Windows</td><td>asennusohjelma (.exe, .msi) tai <code>winget install ohjelma</code></td><td>lataa vain luotetuista lähteistä</td></tr>
-<tr><td>Lähdekoodista</td><td><code>./configure &amp;&amp; make &amp;&amp; sudo make install</code></td><td>viimeinen vaihtoehto</td></tr></table>
-<div class="warn"><strong>Turvallisuus:</strong> lataa ohjelmat virallisesta lähteestä ja tarkista tarkistussumma. Älä aja tuntemattomia skriptejä <code>sudo</code>:lla.</div></div></section>
+<tr><td>Windows: asennusohjelma</td><td>.exe, .msi</td><td>lataa vain luotetuista lähteistä</td></tr>
+<tr><td>Windows: winget</td><td><code>winget install Git.Git</code></td><td>komentoriviasennus ja -päivitys</td></tr>
+<tr><td>Lähdekoodista</td><td><code>./configure &amp;&amp; make &amp;&amp; sudo make install</code></td><td>viimeinen vaihtoehto</td></tr>
+<tr><td>Pythonin pip</td><td><code>pip install paho-mqtt</code></td><td>käytä virtuaaliympäristöä (venv)</td></tr>
+</table><div class="warn"><strong>Turvallisuus:</strong> lataa ohjelmat virallisesta lähteestä ja tarkista tarkistussumma. Älä aja tuntemattomia skriptejä <code>sudo</code>:lla.</div><h3>Tarvittavat sovellukset IoT-kehitykseen</h3><ul><li><strong>Arduino IDE</strong> tai PlatformIO ESP32:n ohjelmointiin.</li><li><strong>SimulIDE</strong> piirisimulointiin.</li><li><strong>Terminaali</strong> (Linux) / PuTTY tai OpenSSH (Windows) SSH-yhteyteen.</li><li><strong>Mosquitto</strong> (MQTT-broker) ja <strong>MQTT Explorer</strong> (selain).</li><li><strong>VirtualBox / UTM</strong> virtuaalikoneisiin.</li><li><strong>Git</strong> versionhallintaan.</li></ul><h3>Lisenssit</h3><p>Ohjelmilla on lisenssi, joka määrää käyttöehdot. <strong>Avoin lähdekoodi</strong> (GPL, MIT) sallii käytön ja muokkauksen; <strong>kaupallinen</strong> vaatii maksun tai tilauksen; <strong>freeware</strong> on ilmainen mutta suljettu. Opiskelijalisenssit ovat usein ilmaisia.</p></div></section>
 
-<section class="s8" id="s7"><h2>7. Käyttöönotto ja ylläpito</h2><div><h3>Käyttöönoton tarkistuslista</h3>
-<ol>
-<li><strong>Päivitykset:</strong> käyttöjärjestelmä ja ajurit ajan tasalle.</li>
-<li><strong>Käyttäjät:</strong> oma tavallinen käyttäjä (ei jatkuvasti ylläpitäjänä), vahva salasana, tarvittaessa muut käyttäjät ja ryhmät.</li>
-<li><strong>Verkko:</strong> kiinteä tai Wi-Fi, IP-osoite (DHCP tai kiinteä), nimi.</li>
-<li><strong>Tietoturva:</strong> palomuuri (<code>sudo ufw enable</code>), tarpeettomat palvelut pois, SSH vain tarvittaessa.</li>
-<li><strong>Varmuuskopio:</strong> sovittu ja testattu.</li>
-<li><strong>Ohjelmat:</strong> tarvittavat sovellukset asennettu ja testattu.</li>
-<li><strong>Dokumentointi:</strong> kirjoita ylös laitetiedot, IP-osoite, käyttäjät, ohjelmat ja asetukset.</li>
-</ol>
-<h3>Ylläpitotehtävät</h3>
-<table>
+<section class="s10" id="s9"><h2>9. Verkko: IP, DNS ja perusasetukset</h2><div><p>Tietokoneen käyttöönotossa tarvitaan aina verkkoasetukset. Perusasiat:</p><table class="tt">
+<tr><th>Käsite</th><th>Selitys</th></tr>
+<tr><td><strong>IP-osoite</strong></td><td>laitteen osoite verkossa, esim. 192,168,1,20 (IPv4, neljä tavua)</td></tr>
+<tr><td><strong>Aliverkon peite</strong></td><td>kertoo, mikä osa osoitteesta on verkko ja mikä laite (esim. 255,255,255,0 = /24)</td></tr>
+<tr><td><strong>Yhdyskäytävä (gateway)</strong></td><td>reititin, jonka kautta pääsee muihin verkkoihin (esim. 192,168,1,1)</td></tr>
+<tr><td><strong>DHCP</strong></td><td>reititin antaa osoitteet automaattisesti</td></tr>
+<tr><td><strong>DNS</strong></td><td>muuntaa nimen (google.com) IP-osoitteeksi</td></tr>
+<tr><td><strong>MAC-osoite</strong></td><td>verkkokortin yksilöllinen tunnus (48 bittiä, heksana)</td></tr>
+<tr><td><strong>Portti</strong></td><td>palvelun numero (SSH 22, HTTP 80, HTTPS 443, MQTT 1883)</td></tr>
+</table><p><strong>Yksityiset osoitealueet</strong> (eivät kulje internetiin suoraan): <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code>.</p><h3>Aliverkon laskenta</h3><p>Peite /<em>p</em> tarkoittaa, että osoitteen <em>p</em> ensimmäistä bittiä on verkko-osa. Laitteita mahtuu 2^(32 − p) − 2 (verkko-osoite ja yleislähetysosoite ovat varattuja).</p><table class="tt">
+<tr><th>Peite</th><th>Desimaalimuoto</th><th>Laitteita</th></tr>
+<tr><td>/24</td><td>255,255,255,0</td><td>254</td></tr>
+<tr><td>/25</td><td>255,255,255,128</td><td>126</td></tr>
+<tr><td>/26</td><td>255,255,255,192</td><td>62</td></tr>
+<tr><td>/27</td><td>255,255,255,224</td><td>30</td></tr>
+<tr><td>/28</td><td>255,255,255,240</td><td>14</td></tr>
+<tr><td>/29</td><td>255,255,255,248</td><td>6</td></tr>
+<tr><td>/30</td><td>255,255,255,252</td><td>2</td></tr>
+</table><p>Esimerkki 192,168,1,20/24: verkko 192,168,1,0, yleislähetys 192,168,1,255, peite 255,255,255,0, laitteita 254 (192,168,1,1 … 192,168,1,254).</p><div class="tool" id="sub"><strong>🧰 Aliverkkolaskuri</strong><p>IP-osoite: <input id="sub-ip" type="text" value="192.168.1.20" size="16"> Peite /<input id="sub-p" type="number" value="24" min="1" max="30" style="width:60px"></p><div id="sub-out"></div></div><h3>Verkkokomennot</h3><table class="tt">
+<tr><th>Tehtävä</th><th>Linux</th><th>Windows</th></tr>
+<tr><td>Oma osoite</td><td><code>ip a</code>, <code>hostname -I</code></td><td><code>ipconfig</code></td></tr>
+<tr><td>Testaa yhteys</td><td><code>ping 8.8.8.8</code></td><td><code>ping 8.8.8.8</code></td></tr>
+<tr><td>Reitti</td><td><code>traceroute google.com</code></td><td><code>tracert google.com</code></td></tr>
+<tr><td>DNS</td><td><code>dig google.com</code>, <code>nslookup</code></td><td><code>nslookup google.com</code></td></tr>
+<tr><td>Avoimet portit</td><td><code>ss -tulpn</code></td><td><code>netstat -ano</code></td></tr>
+<tr><td>Palomuuri</td><td><code>sudo ufw enable</code></td><td>Windows Defender -palomuuri</td></tr>
+</table><h3>Verkkovian etsintä kerros kerrallaan</h3><ol><li><strong>Fyysinen:</strong> johto kiinni? Wi-Fi päällä? (<code>ip a</code>: onko liittymä "UP"?)</li><li><strong>IP-osoite:</strong> onko osoite? (169,254.x.x tarkoittaa, että DHCP ei vastannut)</li><li><strong>Yhdyskäytävä:</strong> <code>ping 192.168.1.1</code></li><li><strong>Internet:</strong> <code>ping 8.8.8.8</code></li><li><strong>DNS:</strong> <code>ping google.com</code>. Jos IP toimii mutta nimi ei, vika on DNS:ssä.</li><li><strong>Palomuuri tai palvelu:</strong> pääseekö kyseiseen porttiin?</li></ol></div></section>
+
+<section class="s1" id="s10"><h2>10. Käyttöönotto ja ylläpito</h2><div><h3>Käyttöönoton tarkistuslista</h3><ol><li><strong>Päivitykset:</strong> käyttöjärjestelmä ja ajurit ajan tasalle.</li><li><strong>Käyttäjät:</strong> oma tavallinen käyttäjä (ei jatkuvasti ylläpitäjänä), vahva salasana, tarvittaessa muut käyttäjät ja ryhmät.</li><li><strong>Verkko:</strong> kiinteä tai Wi-Fi, IP-osoite (DHCP tai kiinteä), nimi.</li><li><strong>Tietoturva:</strong> palomuuri, tarpeettomat palvelut pois, SSH vain tarvittaessa, levyn salaus kannettavissa.</li><li><strong>Varmuuskopio:</strong> sovittu ja testattu.</li><li><strong>Ohjelmat:</strong> tarvittavat sovellukset asennettu ja testattu.</li><li><strong>Dokumentointi:</strong> kirjoita ylös laitetiedot, IP-osoite, käyttäjät, ohjelmat ja asetukset.</li></ol><h3>Laitekortti (dokumentointipohja)</h3><table class="tt">
+<tr><th>Kenttä</th><th>Esimerkki</th></tr>
+<tr><td>Laitteen nimi</td><td>iot-palvelin</td></tr>
+<tr><td>Käyttöjärjestelmä ja versio</td><td>Ubuntu 24,04 LTS</td></tr>
+<tr><td>Prosessori / RAM / levy</td><td>N100 / 8 GB / 256 GB NVMe</td></tr>
+<tr><td>IP-osoite ja verkko</td><td>192,168,1,20 (kiinteä), eth0</td></tr>
+<tr><td>Käyttäjät</td><td>maija (sudo), pekka</td></tr>
+<tr><td>Asennetut palvelut</td><td>mosquitto, ssh</td></tr>
+<tr><td>Varmuuskopiointi</td><td>viikoittain rsync ulkoiselle levylle</td></tr>
+<tr><td>Asennuspäivä / vastuuhenkilö</td><td>9,10,2026 / Maija</td></tr>
+<tr><td>Huomioita</td><td></td></tr>
+</table><h3>Ylläpitotehtävät</h3><table class="tt">
 <tr><th>Tehtävä</th><th>Tapa</th><th>Kuinka usein</th></tr>
-<tr><td>Päivitykset</td><td><code>sudo apt update &amp;&amp; sudo apt upgrade</code></td><td>viikoittain</td></tr>
-<tr><td>Varmuuskopiointi</td><td><code>rsync -av --delete ~/data /media/varmuus/</code> tai Windowsin Tiedostohistoria</td><td>päivittäin tai viikoittain</td></tr>
+<tr><td>Päivitykset</td><td><code>sudo apt update &amp;&amp; sudo apt upgrade</code> / Windows Update</td><td>viikoittain</td></tr>
+<tr><td>Varmuuskopiointi</td><td><code>rsync -av --delete ~/data /media/varmuus/</code> tai Tiedostohistoria</td><td>päivittäin tai viikoittain</td></tr>
 <tr><td>Levytila</td><td><code>df -h</code>, <code>du -sh *</code></td><td>kuukausittain</td></tr>
 <tr><td>Levyn kunto</td><td><code>sudo smartctl -a /dev/sda</code> (SMART)</td><td>kuukausittain</td></tr>
 <tr><td>Lämpötilat ja kuormitus</td><td><code>htop</code>, <code>sensors</code></td><td>ongelmatilanteissa</td></tr>
 <tr><td>Lokit</td><td><code>journalctl -p err -b</code>, <code>/var/log/</code></td><td>virheissä</td></tr>
 <tr><td>Puhdistus</td><td>paineilma, pöly pois jäähdyttimistä ja suodattimista</td><td>puolen vuoden välein</td></tr>
-<tr><td>Käyttäjien hallinta</td><td><code>adduser</code>, <code>usermod</code>, <code>passwd</code></td><td>tarpeen mukaan</td></tr></table>
-<h3>Varmuuskopioinnin 3-2-1-sääntö</h3>
-<p><strong>3</strong> kopiota datasta, <strong>2</strong> eri tallennustyyppiä, <strong>1</strong> kopio eri paikassa (pilvi tai toinen rakennus). RAID ei ole varmuuskopio, koska poistettu tiedosto häviää kaikilta levyiltä. Testaa palautus säännöllisesti, sillä kopio, jota ei ole testattu, ei ole varma.</p>
-<h3>Tietoturvan perusasiat</h3>
-<ul>
-<li>Vahvat ja uniikit salasanat (salasanamanageri), kaksivaiheinen tunnistus.</li>
-<li>Palomuuri päällä, päivitykset käytössä.</li>
-<li>Vähimmäisoikeudet: ei päivittäistä työskentelyä ylläpitäjänä.</li>
-<li>Levyn salaus (LUKS, BitLocker) kannettaville.</li>
-<li>Epäilyttävien liitteiden ja linkkien välttäminen.</li>
-</ul></div></section>
+<tr><td>Käyttäjien hallinta</td><td><code>adduser</code>, <code>usermod</code>, <code>passwd</code></td><td>tarpeen mukaan</td></tr>
+<tr><td>Tietoturvapäivitykset</td><td>automaattiset päivitykset (<code>unattended-upgrades</code>)</td><td>jatkuva</td></tr>
+</table><h3>Varmuuskopioinnin 3-2-1-sääntö</h3><p><strong>3</strong> kopiota datasta, <strong>2</strong> eri tallennustyyppiä, <strong>1</strong> kopio eri paikassa (pilvi tai toinen rakennus). RAID ei ole varmuuskopio. <strong>Testaa palautus</strong> säännöllisesti: kopio, jota ei ole testattu, ei ole varma.</p><h3>Tietoturvan perusasiat</h3><ul><li>Vahvat ja uniikit salasanat (salasanamanageri), kaksivaiheinen tunnistus.</li><li>Palomuuri päällä, päivitykset käytössä.</li><li>Vähimmäisoikeudet: ei päivittäistä työskentelyä ylläpitäjänä.</li><li>Levyn salaus (LUKS, BitLocker) kannettaville.</li><li>Epäilyttävien liitteiden ja linkkien välttäminen.</li><li>Älä jaa salasanoja tai avaimia versionhallintaan.</li></ul><h3>Laitteen elinkaari</h3><p>Hankinta → asennus → käyttö ja ylläpito → päivitys → poisto. Poistettaessa levyn data pitää tuhota turvallisesti (esim. <code>shred</code> / SSD:n turvapyyhintä / fyysinen tuhoaminen), eikä pelkkä poisto riitä.</p></div></section>
 
-<section class="s9" id="s8"><h2>8. Vianetsintä</h2><div><p><strong>Menetelmä:</strong> (1) selvitä, mitä oikeasti tapahtuu (virheilmoitus, äänimerkit, LEDit), (2) muista, mikä muuttui viimeksi, (3) eristä vika vaihtamalla yksi asia kerrallaan, (4) testaa, (5) kirjaa ratkaisu ylös.</p>
-<table>
-<tr><th>Oire</th><th>Tarkista</th></tr>
-<tr><td>Ei mitään tapahdu, kun painaa virtaa</td><td>virtajohto, PSU:n kytkin, 24-pin ja etupaneelin virtakytkimen liittimet</td></tr>
-<tr><td>Tuulettimet pyörivät, ei kuvaa</td><td>RAM kunnolla paikallaan (kokeile yhtä moduulia kerrallaan), näyttökaapeli oikeaan porttiin, näytönohjaimen virta, 8-pin prosessorin virta</td></tr>
+<section class="s2" id="s11"><h2>11. Vianetsintä</h2><div><p><strong>Menetelmä:</strong> (1) selvitä, mitä oikeasti tapahtuu (virheilmoitus, äänimerkit, LEDit), (2) muista, mikä muuttui viimeksi, (3) eristä vika vaihtamalla yksi asia kerrallaan, (4) testaa, (5) kirjaa ratkaisu ylös.</p><table class="tt">
+<tr><th>Oire</th><th>Tarkista (järjestyksessä)</th></tr>
+<tr><td>Ei mitään tapahdu, kun painaa virtaa</td><td>virtajohto ja virtalähteen takakytkin; 24-pin kiinni; etupaneelin virtapainikkeen johto; oikosulku (poista kaikki lisäosat ja kokeile)</td></tr>
+<tr><td>Tuulettimet pyörivät, ei kuvaa</td><td>RAM kunnolla paikallaan (kokeile yhtä moduulia kerrallaan); näyttökaapeli oikeaan porttiin; näytönohjaimen virta; 8-pin prosessorin virta; CMOS-nollaus</td></tr>
 <tr><td>Äänimerkkejä tai virhe-LEDejä</td><td>emolevyn manuaalin virhekoodit (CPU, RAM, VGA, BOOT)</td></tr>
-<tr><td>"No boot device"</td><td>käynnistysjärjestys UEFI:ssa, onko levy näkyvissä, osiot ja EFI-osio</td></tr>
-<tr><td>Kone ylikuumenee ja sammuu</td><td>jäähdytin kiinni ja tahna, tuulettimet pyörivät, pöly, ilmavirtaus kotelossa</td></tr>
-<tr><td>Kone hidas</td><td><code>htop</code> (mikä kuluttaa), levytila, RAM riittääkö, levyn kunto (SMART), haittaohjelmat</td></tr>
-<tr><td>Satunnaiset kaatumiset</td><td>RAM-testi (memtest86+), lämpötilat, ajurit, virtalähde</td></tr>
-<tr><td>Ei verkkoyhteyttä</td><td>johto/Wi-Fi, <code>ip a</code>, <code>ping 8.8.8.8</code> (IP toimii?), <code>ping google.com</code> (DNS toimii?)</td></tr>
-<tr><td>Ohjelma ei asennu</td><td>levytila, <code>sudo apt update</code>, riippuvuudet, oikeudet</td></tr></table></div></section>
+<tr><td>"No boot device"</td><td>käynnistysjärjestys UEFI:ssa; näkyykö levy; osiot ja EFI-osio; kaapelit</td></tr>
+<tr><td>Kone ylikuumenee ja sammuu</td><td>jäähdytin kiinni ja tahna; tuulettimet pyörivät; pöly; ilmavirtaus kotelossa</td></tr>
+<tr><td>Kone hidas</td><td><code>htop</code> (mikä kuluttaa); levytila; RAM riittääkö; levyn kunto (SMART); haittaohjelmat</td></tr>
+<tr><td>Satunnaiset kaatumiset</td><td>RAM-testi (memtest86+); lämpötilat; ajurit; virtalähde</td></tr>
+<tr><td>Sininen ruutu / kernel panic</td><td>virhekoodi; uudet ajurit; viimeisin päivitys; RAM</td></tr>
+<tr><td>Ei verkkoyhteyttä</td><td>katso verkkovian etsintä (osio 9)</td></tr>
+<tr><td>Ohjelma ei asennu</td><td>levytila; <code>sudo apt update</code>; riippuvuudet; oikeudet</td></tr>
+<tr><td>USB-laite ei tunnistu</td><td>toinen portti/johto; <code>dmesg | tail</code>; ajurit; virta</td></tr>
+</table><h3>Työkaluja</h3><ul><li><strong>memtest86+</strong>: RAM-testi USB-tikulta.</li><li><strong>Stressitestit</strong> (<code>stress-ng</code>, Prime95) ja lämpötilan seuranta (<code>sensors</code>, HWMonitor).</li><li><strong>SMART-tarkistus</strong> (<code>smartctl</code>).</li><li><strong>Live-USB</strong> (esim. Ubuntu): käynnistä koneeseen, jossa käyttöjärjestelmä ei käynnisty, ja pelasta tiedostot.</li><li><strong>CMOS-nollaus</strong>: poista paristo minuutiksi tai käytä emolevyn jumpperia.</li></ul><h3>Eristysperiaate "minimiasetelma"</h3><p>Jos kone ei käynnisty, riisu se pienimpään kokoonpanoon: <strong>emolevy, prosessori, yksi RAM-moduuli, virtalähde</strong> (integroitu grafiikka tai näytönohjain). Lisää osa kerrallaan, kunnes vika palaa. Silloin tiedät, mikä osa on syyllinen.</p></div></section>
 
-<section class="s10" id="s9"><h2>9. Tehtäviä</h2><div><div class="box"><strong>1.</strong> Selitä fetch–decode–execute-sykli omin sanoin. Mikä rooli on ohjelmalaskurilla?</div>
-<details><summary>Vastaus</summary><p>Prosessori hakee käskyn muistista osoitteesta, jonka ohjelmalaskuri antaa, ohjausyksikkö tulkitsee sen ja ALU tai datasiirto suorittaa sen. Sitten ohjelmalaskuri päivittyy seuraavan käskyn osoitteeseen (tai hyppykäskyssä uuteen kohtaan).</p></details>
-<div class="box"><strong>2.</strong> Järjestä nopeimmasta hitaimpaan: HDD, rekisteri, RAM, NVMe SSD, L2-välimuisti. Mitkä ovat haihtuvia?</div>
-<details><summary>Vastaus</summary><p>Rekisteri, L2-välimuisti, RAM, NVMe SSD, HDD. Haihtuvia ovat rekisteri, välimuisti ja RAM.</p></details>
-<div class="box"><strong>3.</strong> 1 TB:n levy näkyy Windowsissa 931 GB:nä. Miksi?</div>
-<details><summary>Vastaus</summary><p>Valmistaja laskee 1 TB = 10¹² tavua, Windows ilmoittaa binäärimuunnoksella (GiB): 10¹² / 2³⁰ ≈ 931. Levyssä ei ole puutetta.</p></details>
-<div class="box"><strong>4.</strong> Mitä tarkoittaa kaksikanavatila ja miten se saadaan käyttöön?</div>
-<details><summary>Vastaus</summary><p>Kaksi RAM-moduulia käyttää kahta rinnakkaista väylää, jolloin tiedonsiirtokapasiteetti kaksinkertaistuu. Moduulit asennetaan emolevyn ohjeen mukaisiin vaihtoehtoisiin paikkoihin (usein A2 ja B2) ja samaa tyyppiä.</p></details>
-<div class="box"><strong>5.</strong> Rakennat koneen: Intel LGA1700, DDR5-muisti, näytönohjain, 500 W:n PSU. Mitä pitää tarkistaa ennen ostoa?</div>
-<details><summary>Vastaus</summary><p>Emolevyn kanta LGA1700 ja piirisarja tukee prosessoria, emolevy on DDR5-tyyppinen, näytönohjain mahtuu koteloon, PSU:n teho riittää (prosessori + GPU + varaa) ja siinä on tarvittavat liittimet (24-pin, 8-pin CPU, PCIe), jäähdytin sopii kantaan ja koteloon.</p></details>
-<div class="box"><strong>6.</strong> Tietokone käynnistyy mutta ei näytä kuvaa. Listaa kolme asiaa, jotka tarkistat.</div>
-<details><summary>Vastaus</summary><p>Näyttökaapeli oikeaan porttiin (näytönohjaimen, ei emolevyn), RAM kunnolla paikallaan, näytönohjaimen ja prosessorin lisävirtajohdot, ja kokeile myös toista näyttöä tai kaapelia.</p></details>
-<div class="box"><strong>7.</strong> Mitä eroa on <code>apt update</code> ja <code>apt upgrade</code> -komennoilla? Miksi RAID ei korvaa varmuuskopiota?</div>
-<details><summary>Vastaus</summary><p>Update hakee päivitetyn pakettiluettelon, upgrade asentaa uudet versiot. RAID suojaa levyn rikkoutumiselta, mutta ei suojaa poistamiselta, virukselta tai tulipalolta, koska virheelliset muutokset menevät kaikille levyille.</p></details>
-<div class="box"><strong>8.</strong> Kirjoita työvaiheet, joilla asennat Ubuntun tyhjään koneeseen USB-tikulta.</div>
-<details><summary>Vastaus</summary><p>Lataa ISO ja tarkista tarkistussumma; tee asennustikku (Rufus/Etcher/dd); käynnistä tikulta (F12 tai vastaava); valitse kieli, verkko ja osiointi (EFI + juuri + swap); luo käyttäjä; poista tikku ja käynnistä uudelleen; päivitä (<code>apt update &amp;&amp; apt upgrade</code>) ja asenna ajurit sekä ohjelmat.</p></details></div></section>
+<section class="s3" id="s12"><h2>12. Tehtäviä</h2><div><div class="box"><strong>1.</strong> Selitä fetch–decode–execute-sykli omin sanoin. Mikä rooli on ohjelmalaskurilla?</div><details><summary>Vastaus</summary><p>Prosessori hakee käskyn muistista osoitteesta, jonka ohjelmalaskuri antaa, ohjausyksikkö tulkitsee sen ja ALU tai datasiirto suorittaa sen. Sitten ohjelmalaskuri päivittyy seuraavan käskyn osoitteeseen (tai hyppykäskyssä uuteen kohtaan).</p></details><div class="box"><strong>2.</strong> Ohjelmassa on 4 · 10⁹ käskyä, CPI = 1,25 ja kellotaajuus 5 GHz. Laske suoritusaika.</div><details><summary>Vastaus</summary><p>4·10⁹ · 1,25 / 5·10⁹ = <strong>1 s</strong>.</p></details><div class="box"><strong>3.</strong> Järjestä nopeimmasta hitaimpaan: HDD, rekisteri, RAM, NVMe SSD, L2-välimuisti. Mitkä ovat haihtuvia?</div><details><summary>Vastaus</summary><p>Rekisteri, L2-välimuisti, RAM, NVMe SSD, HDD. Haihtuvia ovat rekisteri, välimuisti ja RAM.</p></details><div class="box"><strong>4.</strong> 1 TB:n levy näkyy Windowsissa 931 GB:nä. Miksi?</div><details><summary>Vastaus</summary><p>Valmistaja laskee 1 TB = 10¹² tavua, Windows ilmoittaa binäärimuunnoksella (GiB): 10¹² / 2³⁰ ≈ 931. Levyssä ei ole puutetta.</p></details><div class="box"><strong>5.</strong> DDR5-6000, kaksikanavainen. Laske kaistanleveys ja latenssi, kun CL = 30.</div><details><summary>Vastaus</summary><p>6000 · 8 · 2 / 1000 = <strong>96 GB/s</strong>. Latenssi = 30 · 2000 / 6000 = <strong>10 ns</strong>.</p></details><div class="box"><strong>6.</strong> 4 levyä, jokainen 2 TB. Laske käyttökelpoinen tila RAID 0, 1, 5, 6, 10.</div><details><summary>Vastaus</summary><p>RAID 0: 8 TB. RAID 1 (peilaus): 2 TB. RAID 5: 6 TB. RAID 6: 4 TB. RAID 10: 4 TB.</p></details><div class="box"><strong>7.</strong> Rakennat koneen: Intel LGA1700, DDR5-muisti, näytönohjain, 500 W:n PSU. Mitä pitää tarkistaa ennen ostoa?</div><details><summary>Vastaus</summary><p>Emolevyn kanta LGA1700 ja piirisarja tukee prosessoria; emolevy on DDR5-tyyppinen (LGA1700-emolevyjä on sekä DDR4- että DDR5-versioina); näytönohjain mahtuu koteloon; PSU:n teho riittää (CPU + GPU + varaus) ja siinä on tarvittavat liittimet (24-pin, 8-pin CPU, PCIe); jäähdytin sopii kantaan ja koteloon.</p></details><div class="box"><strong>8.</strong> Tietokone käynnistyy mutta ei näytä kuvaa. Listaa kolme asiaa, jotka tarkistat.</div><details><summary>Vastaus</summary><p>Näyttökaapeli oikeaan porttiin (näytönohjaimen, ei emolevyn), RAM kunnolla paikallaan, näytönohjaimen ja prosessorin lisävirtajohdot; kokeile toista näyttöä tai kaapelia.</p></details><div class="box"><strong>9.</strong> Kirjoita työvaiheet, joilla asennat Ubuntun tyhjään koneeseen USB-tikulta.</div><details><summary>Vastaus</summary><p>Lataa ISO ja tarkista tarkistussumma; tee asennustikku (Rufus/Etcher/dd, tarkista laite <code>lsblk</code>:lla); käynnistä tikulta (F12 tai vastaava); valitse kieli, verkko ja osiointi (EFI + juuri + swap); luo käyttäjä; poista tikku ja käynnistä uudelleen; päivitä (<code>apt update &amp;&amp; apt upgrade</code>) ja asenna ajurit sekä ohjelmat.</p></details><div class="box"><strong>10.</strong> Mitä eroa on <code>apt update</code> ja <code>apt upgrade</code> -komennoilla? Miksi RAID ei korvaa varmuuskopiota?</div><details><summary>Vastaus</summary><p>Update hakee päivitetyn pakettiluettelon, upgrade asentaa uudet versiot. RAID suojaa levyn rikkoutumiselta, mutta ei poistamiselta, virukselta tai tulipalolta, koska virheelliset muutokset menevät kaikille levyille.</p></details><div class="box"><strong>11.</strong> Laske osoitteen 192,168,10,77/26 verkko-osoite, yleislähetysosoite ja laitteiden määrä.</div><details><summary>Vastaus</summary><p>Peite 255,255,255,192. Verkko <strong>192,168,10,64</strong>, yleislähetys <strong>192,168,10,127</strong>, laitteita <strong>62</strong> (192,168,10,65 … 192,168,10,126).</p></details><div class="box"><strong>12.</strong> Koneella on osoite 169,254,37,5 ja nettiyhteys ei toimi. Mikä on todennäköinen syy?</div><details><summary>Vastaus</summary><p>169,254.x.x on automaattinen linkkiosoite: DHCP-palvelin ei vastannut. Tarkista johto/Wi-Fi, reititin ja DHCP.</p></details><div class="box"><strong>13.</strong> Mitoita virtalähde: prosessori 105 W, näytönohjain 250 W, muut 70 W, varaus 30 %.</div><details><summary>Vastaus</summary><p>(105 + 250 + 70) · 1,3 = 425 · 1,3 = <strong>552,5 W</strong> → 600 W:n virtalähde.</p></details><div class="box"><strong>14.</strong> Suunnittele 500 GB:n levyn osiointi, kun RAM on 16 GB, UEFI-kone.</div><details><summary>Vastaus</summary><p>EFI 512 MiB; swap noin 8–16 GB; <code>/</code> 50 GB; <code>/home</code> loput (noin 430 GB).</p></details><div class="box"><strong>15.</strong> Koneesi ei käynnisty. Kuvaa "minimiasetelma"-vianetsintä.</div><details><summary>Vastaus</summary><p>Riisu kone pienimpään kokoonpanoon (emolevy, prosessori, yksi RAM, virtalähde, näyttö). Jos käynnistyy, lisää osa kerrallaan. Kun vika palaa, juuri lisätty osa on syyllinen tai sen liitäntä.</p></details><div class="box"><strong>16.</strong> Laatisit käyttöönotossa laitekortin. Mitä tietoja siihen kirjataan, ja miksi?</div><details><summary>Vastaus</summary><p>Nimi, käyttöjärjestelmä ja versio, laitteisto, IP, käyttäjät, palvelut, varmuuskopiointi, asennuspäivä ja vastuuhenkilö. Se nopeuttaa ylläpitoa ja vianetsintää, ja helpottaa luovutusta.</p></details></div></section>
 
 </main>
 <footer><a href="index.html">← Etusivu</a><a href="#top">↑ Ylös</a></footer>
+<script>
+/*deep-js*/
+(function(){
+function rgba(h,a){h=h.replace('#','');return 'rgba('+parseInt(h.substr(0,2),16)+','+parseInt(h.substr(2,2),16)+','+parseInt(h.substr(4,2),16)+','+a+')';}
+function g4(s){while(s.length%4)s='0'+s;return s.replace(/(.{4})(?=.)/g,'$1 ');}
+/* bit toggler */
+(function(){
+ var box=document.getElementById('nbits'),out=document.getElementById('nbitout');if(!box)return;
+ var w=[128,64,32,16,8,4,2,1],st=[0,0,0,0,0,0,0,0],btn=[];
+ function draw(){var s=0,parts=[];for(var i=0;i<8;i++){if(st[i]){s+=w[i];parts.push(w[i]);}}
+  out.innerHTML=st.slice(0,4).join('')+' '+st.slice(4).join('')+' = '+(parts.length?parts.join(' + ')+' = ':'')+'<strong>'+s+'</strong> &nbsp;(heksa 0x'+(s<16?'0':'')+s.toString(16).toUpperCase()+')';}
+ w.forEach(function(v,i){var b=document.createElement('button');b.className='bit';b.innerHTML='0<small>'+v+'</small>';
+  b.onclick=function(){st[i]=st[i]?0:1;b.className='bit'+(st[i]?' on':'');b.innerHTML=st[i]+'<small>'+v+'</small>';draw();};
+  box.appendChild(b);});
+ draw();
+})();
+/* decimal -> binary */
+(function(){
+ var inp=document.getElementById('tA-in'),out=document.getElementById('tA-out');if(!inp)return;
+ function run(){var v=parseInt(inp.value,10);
+  if(isNaN(v)||v<0||v>65535){out.innerHTML='Anna kokonaisluku 0–65535.';return;}
+  var bs=v.toString(2),w=Math.max(4,Math.ceil(bs.length/4)*4);
+  var h='<p><strong>Tapa A: painojen vähentäminen</strong></p><table class="tt"><tr><th>Paino</th><th>Mahtuuko?</th><th>Bitti</th><th>Jäljellä</th></tr>';
+  var rem=v;
+  for(var i=w-1;i>=0;i--){var p=Math.pow(2,i);
+   if(rem>=p){h+='<tr><td>'+p+'</td><td>kyllä ('+rem+' ≥ '+p+')</td><td>1</td><td>'+(rem-p)+'</td></tr>';rem-=p;}
+   else{h+='<tr><td>'+p+'</td><td>ei ('+rem+' &lt; '+p+')</td><td>0</td><td>'+rem+'</td></tr>';}}
+  h+='</table><p><strong>Tapa B: jako kahdella</strong></p><table class="tt"><tr><th>Jako</th><th>Osamäärä</th><th>Jäännös</th></tr>';
+  var n=v,rems=[];
+  if(n===0){h+='<tr><td>0 : 2</td><td>0</td><td>0</td></tr>';rems.push(0);}
+  while(n>0){h+='<tr><td>'+n+' : 2</td><td>'+Math.floor(n/2)+'</td><td>'+(n%2)+'</td></tr>';rems.push(n%2);n=Math.floor(n/2);}
+  h+='</table><p>Jäännökset alhaalta ylös: <code>'+g4(rems.reverse().join(''))+'</code> &nbsp; Heksa: <code>0x'+v.toString(16).toUpperCase()+'</code></p>';
+  out.innerHTML=h;}
+ inp.addEventListener('input',run);run();
+})();
+/* binary -> decimal */
+(function(){
+ var inp=document.getElementById('tB-in'),out=document.getElementById('tB-out');if(!inp)return;
+ function run(){var s=inp.value.replace(/\s+/g,'');
+  if(!/^[01]+$/.test(s)||s.length>32){out.innerHTML='Kirjoita vain nollia ja ykkösiä (enintään 32).';return;}
+  var w=s.length,a='<tr><th>Paino</th>',b='<tr><th>Bitti</th>',c='<tr><th>Osuus</th>',parts=[],sum=0;
+  for(var i=0;i<w;i++){var p=Math.pow(2,w-1-i);a+='<td>'+p+'</td>';b+='<td>'+s.charAt(i)+'</td>';c+='<td>'+(s.charAt(i)==='1'?p:0)+'</td>';if(s.charAt(i)==='1'){parts.push(p);sum+=p;}}
+  out.innerHTML='<table class="tt">'+a+'</tr>'+b+'</tr>'+c+'</tr></table><p>= '+(parts.join(' + ')||'0')+' = <strong>'+sum+'</strong> &nbsp;(heksa 0x'+sum.toString(16).toUpperCase()+')</p>';}
+ inp.addEventListener('input',run);run();
+})();
+/* two's complement */
+(function(){
+ var inp=document.getElementById('tC-in'),out=document.getElementById('tC-out');if(!inp)return;
+ function b8(x){var s=(x&255).toString(2);while(s.length<8)s='0'+s;return s;}
+ function g(s){return s.slice(0,4)+' '+s.slice(4);}
+ function run(){var v=parseInt(inp.value,10);
+  if(isNaN(v)||v<-128||v>127){out.innerHTML='Anna kokonaisluku −128 … 127.';return;}
+  var res=b8(v),w=[-128,64,32,16,8,4,2,1],parts=[],sum=0;
+  for(var i=0;i<8;i++){if(res.charAt(i)==='1'){parts.push(w[i]);sum+=w[i];}}
+  var chk='<p>Tarkistus painoilla (−128, 64, 32, … 1): '+parts.join(' + ').replace(/\+ -/g,'− ')+' = <strong>'+sum+'</strong></p>';
+  if(v>=0){out.innerHTML='<p>Positiivinen luku kirjoitetaan tavallisena binäärinä: <code>'+g(res)+'</code> (vasen bitti on 0).</p>'+chk;return;}
+  var ab=b8(-v),inv=ab.split('').map(function(c){return c==='0'?'1':'0';}).join('');
+  out.innerHTML='<table class="tt"><tr><th>Vaihe</th><th>Tulos</th></tr><tr><td>1. Itseisarvo '+(-v)+' binäärinä</td><td><code>'+g(ab)+'</code></td></tr><tr><td>2. Käännä bitit</td><td><code>'+g(inv)+'</code></td></tr><tr><td>3. Lisää 1</td><td><code>'+g(res)+'</code></td></tr></table>'+chk;}
+ inp.addEventListener('input',run);run();
+})();
+/* Karnaugh tool */
+(function(){
+ var root=document.getElementById('kt');if(!root)return;
+ var COL=['#ff6b6b','#2fb344','#3a7bd5','#e8590c','#8e5cf0','#14a8a8','#d6a100','#e8489b','#6b7280'];
+ var LET='ABCD',n=4,cells=[];
+ var map=document.getElementById('kt-map'),outEl=document.getElementById('kt-out'),sel=document.getElementById('kt-pre');
+ function lay(){return n===2?{rows:[0,1],cols:[0,1],rb:1,cb:1}:n===3?{rows:[0,1],cols:[0,1,3,2],rb:1,cb:2}:{rows:[0,1,3,2],cols:[0,1,3,2],rb:2,cb:2};}
+ function bin(v,w){var s=v.toString(2);while(s.length<w)s='0'+s;return s;}
+ function pc(x){var c=0;while(x){c+=x&1;x>>=1;}return c;}
+ function cov(p,m){return (m&~p.mask)===p.val;}
+ function primes(ones,dc){
+  var cur={},res={};
+  ones.concat(dc).forEach(function(m){cur[m+','+0]={val:m,mask:0};});
+  while(Object.keys(cur).length){
+   var list=Object.keys(cur).map(function(k){return cur[k];}),used={},nxt={};
+   for(var i=0;i<list.length;i++){for(var j=i+1;j<list.length;j++){
+    var a=list[i],b=list[j];if(a.mask!==b.mask)continue;
+    var d=a.val^b.val;
+    if(d&&(d&(d-1))===0){var v=a.val&~d,mk=a.mask|d;nxt[v+','+mk]={val:v,mask:mk};used[a.val+','+a.mask]=1;used[b.val+','+b.mask]=1;}
+   }}
+   list.forEach(function(p){if(!used[p.val+','+p.mask])res[p.val+','+p.mask]=p;});
+   cur=nxt;
+  }
+  return Object.keys(res).map(function(k){return res[k];});
+ }
+ function solve(ones,dc){
+  var P=primes(ones,dc),sel=[];
+  ones.forEach(function(m){var c=P.filter(function(p){return cov(p,m);});if(c.length===1&&sel.indexOf(c[0])<0)sel.push(c[0]);});
+  var left=ones.filter(function(m){return !sel.some(function(p){return cov(p,m);});});
+  if(left.length){
+   var rest=P.filter(function(p){return sel.indexOf(p)<0&&left.some(function(m){return cov(p,m);});});
+   var N=rest.length,best=null,bestLit=1e9;
+   for(var k=1;k<=N&&!best;k++){
+    (function rec(start,chosen){
+     if(chosen.length===k){
+      if(left.every(function(m){return chosen.some(function(p){return cov(p,m);});})){
+       var lit=chosen.reduce(function(s,p){return s+(n-pc(p.mask));},0);
+       if(lit<bestLit){bestLit=lit;best=chosen.slice();}
+      }
+      return;
+     }
+     for(var i=start;i<N;i++){chosen.push(rest[i]);rec(i+1,chosen);chosen.pop();}
+    })(0,[]);
+   }
+   sel=sel.concat(best||[]);
+  }
+  return sel;
+ }
+ function termHTML(p){var s='';for(var i=0;i<n;i++){var b=n-1-i;if((p.mask>>b)&1)continue;s+=((p.val>>b)&1)?LET.charAt(i):'<span class="n">'+LET.charAt(i)+'</span>';}return s||'1';}
+ function explain(p){var a=[];for(var i=0;i<n;i++){var b=n-1-i,L=LET.charAt(i);
+  if((p.mask>>b)&1)a.push(L+' vaihtelee → pois');
+  else if((p.val>>b)&1)a.push(L+' aina 1 → '+L);
+  else a.push(L+' aina 0 → <span class="n">'+L+'</span>');}
+  return a.join('; ');}
+ function reset(){cells=[];for(var i=0;i<(1<<n);i++)cells.push(0);}
+ function syncBtns(){var bs=root.querySelectorAll('.kt-bar button[data-n]');for(var i=0;i<bs.length;i++){bs[i].className=(parseInt(bs[i].getAttribute('data-n'),10)===n)?'on':'';}}
+ function render(){
+  var L=lay(),size=1<<n,ones=[],dc=[];
+  for(var m=0;m<size;m++){if(cells[m]===1)ones.push(m);else if(cells[m]===2)dc.push(m);}
+  var sel2=ones.length?solve(ones,dc):[];
+  var groups=sel2.map(function(p){var g=[];for(var m=0;m<size;m++){if(cov(p,m))g.push(m);}return {p:p,cells:g};});
+  groups.sort(function(a,b){return b.cells.length-a.cells.length||a.cells[0]-b.cells[0];});
+  var gm={};groups.forEach(function(g,i){g.cells.forEach(function(m){(gm[m]=gm[m]||[]).push(i);});});
+  var h='<table class="km kt-km"><tr><th>'+LET.slice(0,L.rb)+' \\ '+LET.slice(L.rb,n)+'</th>';
+  L.cols.forEach(function(c){h+='<th>'+bin(c,L.cb)+'</th>';});h+='</tr>';
+  L.rows.forEach(function(r){h+='<tr><th>'+bin(r,L.rb)+'</th>';
+   L.cols.forEach(function(c){var m=(r<<L.cb)|c,v=cells[m]===1?'1':cells[m]===2?'X':'0';
+    var cs=(gm[m]||[]).map(function(i){return COL[i%COL.length];}),st='';
+    if(cs.length===1)st=' style="background:'+rgba(cs[0],.4)+'"';
+    else if(cs.length>1){var k=cs.length,stops=cs.map(function(c2,i){return rgba(c2,.5)+' '+Math.floor(i*100/k)+'% '+Math.floor((i+1)*100/k)+'%';}).join(',');st=' style="background:linear-gradient(135deg,'+stops+')"';}
+    h+='<td data-m="'+m+'" class="'+(cells[m]===1?'one':cells[m]===2?'xx':'zero')+'"'+st+'><span class="mi">'+m+'</span>'+v+'</td>';});
+   h+='</tr>';});
+  h+='</table>';
+  map.innerHTML=h;
+  var o='';
+  if(!ones.length){o='<div class="f">F = 0</div><p>Kartassa ei ole yhtään ykköstä.</p>';}
+  else{
+   o='<div class="f">F = '+groups.map(function(g){return termHTML(g.p);}).join(' + ')+'</div><ol class="glist">';
+   var lit=0;
+   groups.forEach(function(g,i){var t=termHTML(g.p);lit+=(t==='1'?0:n-pc(g.p.mask));
+    o+='<li><span class="sw" style="background:'+COL[i%COL.length]+'"></span>Ryhmä '+(i+1)+': '+g.cells.map(function(m){return 'm'+m;}).join(', ')+' ('+g.cells.length+' ruutua) → <strong>'+t+'</strong><br><span class="hint">'+explain(g.p)+'</span></li>';});
+   o+='</ol><p class="hint">Kirjaimia yhteensä: '+lit+'. Ilman yksinkertaistusta olisi '+ones.length+' minitermiä × '+n+' kirjainta = '+(ones.length*n)+'. Ratkaisu on yksi lyhimmistä, vaihtoehtoisia voi olla.</p>';
+  }
+  outEl.innerHTML=o;
+ }
+ var PRE=[
+  {t:'– valitse esimerkki –',n:4,ones:[],dc:[]},
+  {t:'Enemmistö 3/4: Σm(7,11,13,14,15)',n:4,ones:[7,11,13,14,15]},
+  {t:'Esimerkki B: Σm(0,1,2,5,8,9,10)',n:4,ones:[0,1,2,5,8,9,10]},
+  {t:'Kulmat: Σm(0,2,8,10)',n:4,ones:[0,2,8,10]},
+  {t:'XNOR(B,D): Σm(0,2,5,7,8,10,13,15)',n:4,ones:[0,2,5,7,8,10,13,15]},
+  {t:'X-esimerkki: Σm(1,3,7,11,15) d(0,2,5)',n:4,ones:[1,3,7,11,15],dc:[0,2,5]},
+  {t:'Kolme muuttujaa, kaksi ratkaisua: Σm(0,1,2,5,6,7)',n:3,ones:[0,1,2,5,6,7]},
+  {t:'7-segmentti, segmentti e',n:4,ones:[0,2,6,8],dc:[10,11,12,13,14,15]},
+  {t:'7-segmentti, segmentti a',n:4,ones:[0,2,3,5,6,7,8,9],dc:[10,11,12,13,14,15]},
+  {t:'XOR (ei yksinkertaistu): Σm(1,2)',n:2,ones:[1,2]}
+ ];
+ PRE.forEach(function(p,i){var o=document.createElement('option');o.value=i;o.textContent=p.t;sel.appendChild(o);});
+ function load(p){n=p.n;reset();(p.ones||[]).forEach(function(m){cells[m]=1;});(p.dc||[]).forEach(function(m){cells[m]=2;});syncBtns();render();}
+ sel.addEventListener('change',function(){var p=PRE[parseInt(sel.value,10)];if(p.ones.length||sel.value!=='0')load(p);else{reset();render();}});
+ map.addEventListener('click',function(e){var td=e.target.closest?e.target.closest('td[data-m]'):null;if(!td)return;var m=parseInt(td.getAttribute('data-m'),10);cells[m]=(cells[m]+1)%3;render();});
+ var nb=root.querySelectorAll('.kt-bar button[data-n]');
+ for(var i=0;i<nb.length;i++){nb[i].addEventListener('click',function(){n=parseInt(this.getAttribute('data-n'),10);reset();syncBtns();sel.value='0';render();});}
+ document.getElementById('kt-clear').addEventListener('click',function(){reset();sel.value='0';render();});
+ document.getElementById('kt-apply').addEventListener('click',function(){
+  function parse(id){return (document.getElementById(id).value||'').split(/[^0-9]+/).filter(function(x){return x!=='';}).map(function(x){return parseInt(x,10);}).filter(function(x){return x<(1<<n);});}
+  reset();parse('kt-ones').forEach(function(m){cells[m]=1;});parse('kt-dc').forEach(function(m){if(cells[m]!==1)cells[m]=2;});render();});
+ reset();load({n:4,ones:[0,1,2,5,8,9,10]});sel.value='2';
+})();
+})();
+
+/*deep2-js*/
+(function(){
+function $(i){return document.getElementById(i);}
+function fx(x,d){if(!isFinite(x))return '–';return x.toFixed(d).replace('.',',');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+/* ---------- Boolean expression parser ---------- */
+function bparse(s){
+ var toks=[],i=0,c;
+ while(i<s.length){c=s.charAt(i);
+  if(/\s/.test(c)){i++;continue;}
+  if(/[A-Da-d]/.test(c))toks.push({t:'v',v:c.toUpperCase()});
+  else if(c==='0'||c==='1')toks.push({t:'c',v:+c});
+  else if(c==='!'||c==='~'||c==='¬')toks.push({t:'not'});
+  else if(c==="'")toks.push({t:'post'});
+  else if(c==='&'||c==='*'||c==='·')toks.push({t:'and'});
+  else if(c==='|'||c==='+')toks.push({t:'or'});
+  else if(c==='^'||c==='⊕')toks.push({t:'xor'});
+  else if(c==='(')toks.push({t:'('});
+  else if(c===')')toks.push({t:')'});
+  else throw new Error('Tuntematon merkki: '+c);
+  i++;}
+ var p=0;
+ function peek(){return p<toks.length?toks[p].t:null;}
+ function orx(){var e=xorx();while(peek()==='or'){p++;e={o:'or',a:e,b:xorx()};}return e;}
+ function xorx(){var e=andx();while(peek()==='xor'){p++;e={o:'xor',a:e,b:andx()};}return e;}
+ function andx(){var e=unary();for(;;){var k=peek();if(k==='and'){p++;e={o:'and',a:e,b:unary()};}else if(k==='v'||k==='c'||k==='not'||k==='('){e={o:'and',a:e,b:unary()};}else break;}return e;}
+ function unary(){if(peek()==='not'){p++;return {o:'not',a:unary()};}var e=prim();while(peek()==='post'){p++;e={o:'not',a:e};}return e;}
+ function prim(){var k=peek();if(k==='v')return {o:'v',v:toks[p++].v};if(k==='c')return {o:'c',v:toks[p++].v};if(k==='('){p++;var e=orx();if(peek()!==')')throw new Error('Sulku ) puuttuu');p++;return e;}throw new Error('Odotettiin muuttujaa tai sulkua');}
+ if(!toks.length)throw new Error('tyhjä');
+ var e=orx();if(p!==toks.length)throw new Error('Ylimääräinen merkki lausekkeessa');return e;
+}
+function beval(e,env){switch(e.o){case 'v':return env[e.v];case 'c':return e.v;case 'not':return 1-beval(e.a,env);case 'and':return beval(e.a,env)&beval(e.b,env);case 'or':return beval(e.a,env)|beval(e.b,env);case 'xor':return beval(e.a,env)^beval(e.b,env);}return 0;}
+function bmax(e){switch(e.o){case 'v':return e.v.charCodeAt(0)-64;case 'c':return 0;case 'not':return bmax(e.a);default:return Math.max(bmax(e.a),bmax(e.b));}}
+window.__bparse=bparse;window.__beval=beval;
+/* ---------- Boolean tool ---------- */
+(function(){
+ var a=$('bx-1'),b=$('bx-2'),out=$('bx-out');if(!a)return;
+ function run(){
+  var e1,e2=null,err='';
+  try{e1=bparse(a.value);}catch(x){out.innerHTML='<p class="bad">Lauseke 1: '+esc(x.message)+'</p>';return;}
+  if(b.value.replace(/\s/g,'')!==''){try{e2=bparse(b.value);}catch(x){out.innerHTML='<p class="bad">Lauseke 2: '+esc(x.message)+'</p>';return;}}
+  var n=Math.max(1,bmax(e1),e2?bmax(e2):0),L='ABCD'.slice(0,n);
+  var h='<table class="tt"><tr>'+L.split('').map(function(c){return '<th>'+c+'</th>';}).join('')+'<th>F1</th>'+(e2?'<th>F2</th><th>sama?</th>':'')+'</tr>';
+  var ones=[],diff=[];
+  for(var m=0;m<(1<<n);m++){var env={};for(var i=0;i<n;i++)env[L.charAt(i)]=(m>>(n-1-i))&1;
+   var v1=beval(e1,env),v2=e2?beval(e2,env):0;
+   if(v1)ones.push(m);
+   h+='<tr>'+L.split('').map(function(c){return '<td>'+env[c]+'</td>';}).join('')+'<td><strong>'+v1+'</strong></td>'+(e2?'<td><strong>'+v2+'</strong></td><td>'+(v1===v2?'✔':'<span class="bad">✘</span>')+'</td>':'')+'</tr>';
+   if(e2&&v1!==v2)diff.push(m);}
+  h+='</table><p>F1 = Σm('+(ones.join(', ')||'–')+')</p>';
+  if(e2)h+=diff.length?'<p class="bad">Lausekkeet eivät ole yhtä pitäviä: ne eroavat riveillä '+diff.join(', ')+'.</p>':'<p class="ok">✔ Lausekkeet ovat yhtä pitäviä (samat totuustaulut).</p>';
+  out.innerHTML=h;}
+ a.addEventListener('input',run);b.addEventListener('input',run);run();
+})();
+/* ---------- SR latch ---------- */
+(function(){
+ var bs=$('sr-s'),br=$('sr-r'),bx=$('sr-x'),out=$('sr-out');if(!bs)return;
+ var s=0,r=0,q=0,qb=1,note='';
+ function settle(){for(var i=0;i<8;i++){var nq=1-(r|qb),nqb=1-(s|q);if(nq===q&&nqb===qb)break;q=nq;qb=nqb;}}
+ function draw(){bs.textContent='S (set): '+s;br.textContent='R (reset): '+r;bs.className=s?'on':'';br.className=r?'on':'';
+  var msg=(s===0&&r===0)?'muisti: tila säilyy':(s===1&&r===0)?'asettaa Q = 1':(s===0&&r===1)?'nollaa Q = 0':'<span class="bad">kielletty: S = R = 1</span>';
+  out.innerHTML='<span class="led'+(q?' on':'')+'">Q</span><span class="led'+(qb?' on':'')+'">Q̄</span><br>Q = '+q+', Q̄ = '+qb+' &nbsp;('+msg+')';}
+ bs.onclick=function(){s=1-s;settle();draw();};br.onclick=function(){r=1-r;settle();draw();};
+ bx.onclick=function(){s=0;r=0;q=0;qb=1;draw();};settle();draw();
+})();
+/* ---------- counter simulator ---------- */
+(function(){
+ var root=$('cnt');if(!root)return;
+ var mod=16,dir=1,v=0,out=$('cnt-out');
+ function seg(on){var R={a:[6,2,28,5],b:[33,7,5,28],c:[33,40,5,28],d:[6,68,28,5],e:[2,40,5,28],f:[2,7,5,28],g:[6,35,28,5]},s='<svg viewBox="0 0 40 76" width="34" height="64">';for(var k in R){s+='<rect x="'+R[k][0]+'" y="'+R[k][1]+'" width="'+R[k][2]+'" height="'+R[k][3]+'" rx="2" fill="'+(on.indexOf(k)>=0?'var(--c)':'var(--line)')+'"/>';}return s+'</svg>';}
+ var SEG=['abcdef','bc','abdeg','abcdg','bcfg','acdfg','acdefg','abc','abcdefg','abcdfg'];
+ function draw(){var b=[];for(var i=3;i>=0;i--)b.push((v>>i)&1);
+  var leds=b.map(function(x,k){return '<span class="led'+(x?' on':'')+'">Q'+(3-k)+'</span>';}).join('');
+  out.innerHTML=leds+'<br>Tila: <code>'+b.join('')+'</code> = <strong>'+v+'</strong> (mod '+mod+')<br>'+(v<10?seg(SEG[v]):'<em>(ei numeroa)</em>');}
+ var mb=root.querySelectorAll('button[data-mod]'),db=root.querySelectorAll('button[data-dir]');
+ function setOn(list,attr,val){for(var i=0;i<list.length;i++)list[i].className=(list[i].getAttribute(attr)==val)?'on':'';}
+ for(var i=0;i<mb.length;i++)mb[i].onclick=function(){mod=+this.getAttribute('data-mod');v=0;setOn(mb,'data-mod',mod);draw();};
+ for(var j=0;j<db.length;j++)db[j].onclick=function(){dir=+this.getAttribute('data-dir');setOn(db,'data-dir',dir);draw();};
+ $('cnt-p').onclick=function(){v=((v+dir)%mod+mod)%mod;draw();};
+ $('cnt-r').onclick=function(){v=0;draw();};
+ draw();
+})();
+/* ---------- shift register ---------- */
+(function(){
+ var root=$('sh');if(!root)return;
+ var bits=[0,0,0,0],d=1,mode=0,names=['siirto (D käsin)','rengas (Q3 → D)','Johnson (Q̄3 → D)'],out=$('sh-out');
+ function draw(){out.innerHTML=bits.map(function(x,i){return '<span class="led'+(x?' on':'')+'">Q'+i+'</span>';}).join('')+'<br>Tila: <code>'+bits.join('')+'</code> &nbsp;('+names[mode]+')';$('sh-d').textContent='D (tulo): '+d;$('sh-m').textContent='Tila: '+names[mode];}
+ $('sh-d').onclick=function(){d=1-d;draw();};
+ $('sh-m').onclick=function(){mode=(mode+1)%3;draw();};
+ $('sh-p').onclick=function(){var din=mode===0?d:mode===1?bits[3]:1-bits[3];bits=[din].concat(bits.slice(0,3));draw();};
+ $('sh-r').onclick=function(){bits=[0,0,0,0];draw();};
+ draw();
+})();
+/* ---------- 7-segment checker ---------- */
+(function(){
+ var root=$('sg');if(!root)return;
+ var SEG=['abcdef','bc','abdeg','abcdg','bcfg','acdfg','acdefg','abc','abcdefg','abcdfg'],L='abcdefg';
+ var box=$('sg-in'),out=$('sg-out');
+ box.innerHTML='<div class="sgrow">'+L.split('').map(function(c){return '<label for="sg-'+c+'"><strong>'+c+' =</strong></label><input id="sg-'+c+'" type="text" size="30" placeholder="lauseke segmentille '+c+'">';}).join('')+'</div>';
+ function seg(on){var R={a:[6,2,28,5],b:[33,7,5,28],c:[33,40,5,28],d:[6,68,28,5],e:[2,40,5,28],f:[2,7,5,28],g:[6,35,28,5]},s='<svg viewBox="0 0 40 76" width="30" height="57">';for(var k in R){s+='<rect x="'+R[k][0]+'" y="'+R[k][1]+'" width="'+R[k][2]+'" height="'+R[k][3]+'" rx="2" fill="'+(on.indexOf(k)>=0?'var(--c)':'var(--line)')+'"/>';}return s+'</svg>';}
+ function run(){
+  var ex={};var anyErr=false,res=[],H='';
+  L.split('').forEach(function(c){var t=$('sg-'+c).value;if(t.replace(/\s/g,'')===''){ex[c]=null;return;}try{ex[c]=bparse(t);}catch(e){ex[c]=null;res.push('<li class="bad">'+c+': '+esc(e.message)+'</li>');anyErr=true;}});
+  var digits='',wrong={};
+  for(var d=0;d<10;d++){var env={A:(d>>3)&1,B:(d>>2)&1,C:(d>>1)&1,D:d&1},on='';
+   L.split('').forEach(function(c){if(ex[c]){if(beval(ex[c],env)){on+=c;}var exp=SEG[d].indexOf(c)>=0?1:0;if(beval(ex[c],env)!==exp){(wrong[c]=wrong[c]||[]).push(d);}}else{if(SEG[d].indexOf(c)>=0)on+=c;}});
+   digits+='<span class="sgdig">'+seg(on)+'<br>'+d+'</span>';}
+  H+='<p>Näytön tulokset omilla lausekkeillasi (ne segmentit, joille et ole kirjoittanut lauseketta, näytetään oikeina):</p><div>'+digits+'</div><ul>';
+  L.split('').forEach(function(c){if(ex[c]){H+=wrong[c]?'<li><span class="bad">✘ '+c+'</span>: väärin numeroilla '+wrong[c].join(', ')+'</li>':'<li><span class="ok">✔ '+c+'</span>: oikein kaikilla numeroilla 0–9</li>';}});
+  H+=res.join('')+'</ul>';
+  out.innerHTML=H;}
+ box.addEventListener('input',run);$('sg-run').onclick=run;
+ $('sg-demo').onclick=function(){$('sg-e').value='!B!D + C!D';run();};
+ run();
+})();
+/* ---------- ADC simulator ---------- */
+(function(){
+ var root=$('ad');if(!root)return;
+ var nI=$('ad-n'),nV=$('ad-nv'),ref=$('ad-ref'),vin=$('ad-v'),vv=$('ad-vv'),out=$('ad-out'),ch=$('ad-chart');
+ function run(){
+  var n=+nI.value,r=parseFloat(ref.value)||3.3,V=r*(+vin.value)/1000,N=1<<n,lsb=r/N;
+  nV.textContent=n;vv.textContent=fx(V,3)+' V';
+  var code=Math.min(N-1,Math.floor(V/lsb)),q=code*lsb,bin=code.toString(2);while(bin.length<n)bin='0'+bin;
+  var h='<table class="tt"><tr><th>LSB</th><th>Koodi N</th><th>Binääri</th><th>Portaan alaraja</th><th>Virhe</th></tr><tr><td>'+fx(lsb*1000,3)+' mV</td><td><strong>'+code+'</strong></td><td><code>'+bin+'</code></td><td>'+fx(q,4)+' V</td><td>'+fx((V-q)*1000,2)+' mV</td></tr></table>';
+  // SAR
+  var c=0,rows='';
+  for(var i=n-1;i>=0;i--){var t=c|(1<<i),tv=t*lsb,keep=V>=tv;if(keep)c=t;var tb=t.toString(2);while(tb.length<n)tb='0'+tb;rows+='<tr><td>'+(n-i)+'</td><td><code>'+tb+'</code></td><td>'+fx(tv,4)+' V</td><td>'+(keep?'kyllä':'ei')+'</td><td>'+(keep?1:0)+'</td></tr>';}
+  h+='<details><summary>Näytä SAR-vaiheet ('+n+' vertailua)</summary><table class="tt"><tr><th>Vaihe</th><th>Kokeiltu luku</th><th>Jännite</th><th>Vin ≥ ?</th><th>Bitti</th></tr>'+rows+'</table></details>';
+  out.innerHTML=h;
+  // chart
+  var W=420,Hh=220,pl=40,pb=24,pw=W-pl-10,ph=Hh-pb-10;
+  function X(v){return pl+v/r*pw;}function Y(v){return 10+ph-v/r*ph;}
+  var pts=[],steps=Math.min(N,256);
+  // staircase
+  var path='M'+X(0)+' '+Y(0);
+  for(var k=0;k<steps;k++){var v0=k*(r/steps),cc=Math.min(N-1,Math.floor(v0/lsb)),qq=cc*lsb;path+=' L'+X(v0).toFixed(1)+' '+Y(qq).toFixed(1)+' L'+X(v0+r/steps).toFixed(1)+' '+Y(qq).toFixed(1);}
+  var s='<svg class="chart" viewBox="0 0 '+W+' '+Hh+'" width="'+W+'" font-size="11"><line class="ax" x1="'+pl+'" y1="'+(10+ph)+'" x2="'+(pl+pw)+'" y2="'+(10+ph)+'" stroke-width="1.5"/><line class="ax" x1="'+pl+'" y1="10" x2="'+pl+'" y2="'+(10+ph)+'" stroke-width="1.5"/>';
+  s+='<line x1="'+X(0)+'" y1="'+Y(0)+'" x2="'+X(r)+'" y2="'+Y(r)+'" stroke="var(--mute)" stroke-dasharray="4 3"/>';
+  s+='<path d="'+path+'" fill="none" stroke="var(--c)" stroke-width="2.4"/>';
+  s+='<line x1="'+X(V)+'" y1="'+(10+ph)+'" x2="'+X(V)+'" y2="'+Y(q)+'" stroke="#e03131" stroke-dasharray="3 3"/><circle cx="'+X(V)+'" cy="'+Y(q)+'" r="5" fill="#e03131"/>';
+  s+='<text x="'+(pl+pw/2)+'" y="'+(Hh-4)+'" text-anchor="middle">Sisääntulo Vin (V) →</text><text x="4" y="14">Koodi→V</text><text x="'+(pl-4)+'" y="'+(10+ph)+'" text-anchor="end">0</text><text x="'+(pl-4)+'" y="16" text-anchor="end">'+fx(r,1)+'</text></svg><div class="cap" style="max-width:none">Katkoviiva: ihanteellinen suora. Sininen: ADC:n antama portaikko. Punainen piste: nykyinen Vin.</div>';
+  ch.innerHTML=s;}
+ nI.addEventListener('input',run);ref.addEventListener('input',run);vin.addEventListener('input',run);run();
+})();
+/* ---------- sampling demo ---------- */
+(function(){
+ var root=$('sp');if(!root)return;
+ var fI=$('sp-f'),sI=$('sp-s'),fv=$('sp-fv'),sv=$('sp-sv'),out=$('sp-out'),ch=$('sp-chart');
+ function run(){
+  var f=+fI.value,fs=+sI.value;fv.textContent=f+' kHz';sv.textContent=fs+' kHz';
+  var k=Math.round(f/fs),fa=Math.abs(f-k*fs),ok=fs>=2*f;
+  out.innerHTML=ok?'<p class="ok">✔ Nyquist täyttyy (fs ≥ 2f). Signaali voidaan rekonstruoida.</p>':'<p class="bad">✘ Nyquist ei täyty (fs &lt; 2f). Näytteet näyttävät <strong>'+fa+' kHz</strong>:n signaalilta (aliasing): |'+f+' − '+k+'·'+fs+'| = '+fa+' kHz.</p>';
+  var W=440,H=170,pl=10,pw=W-20,T=1; // 1 ms
+  function X(t){return pl+t/T*pw;}function Y(v){return 85-v*60;}
+  var p='',pa='';
+  for(var i=0;i<=400;i++){var t=i/400*T;p+=(i?' L':'M')+X(t).toFixed(1)+' '+Y(Math.cos(2*Math.PI*f*t)).toFixed(1);pa+=(i?' L':'M')+X(t).toFixed(1)+' '+Y(Math.cos(2*Math.PI*fa*t)).toFixed(1);}
+  var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" width="'+W+'" font-size="11"><line class="ax" x1="'+pl+'" y1="85" x2="'+(pl+pw)+'" y2="85" stroke-width="1"/>';
+  s+='<path d="'+p+'" fill="none" stroke="var(--c)" stroke-width="2"/>';
+  if(!ok)s+='<path d="'+pa+'" fill="none" stroke="#e03131" stroke-width="2" stroke-dasharray="5 3"/>';
+  for(var n=0;n/fs<=T+1e-9;n++){var tt=n/fs;s+='<line x1="'+X(tt)+'" y1="85" x2="'+X(tt)+'" y2="'+Y(Math.cos(2*Math.PI*f*tt))+'" stroke="var(--mute)"/><circle cx="'+X(tt)+'" cy="'+Y(Math.cos(2*Math.PI*f*tt))+'" r="4" fill="var(--fg)"/>';}
+  s+='<text x="'+(pl)+'" y="'+(H-6)+'">Aikaikkuna 1 ms. Sininen: todellinen signaali. Ympyrät: näytteet.'+(ok?'':' Punainen katkoviiva: näytteiden "näkemä" signaali.')+'</text></svg>';
+  ch.innerHTML=s;}
+ fI.addEventListener('input',run);sI.addEventListener('input',run);run();
+})();
+/* ---------- DAC ---------- */
+(function(){
+ var box=$('da-bits'),out=$('da-out'),ref=$('da-ref');if(!box)return;
+ var st=[0,0,0,0,0,0,0,0],w=[128,64,32,16,8,4,2,1];
+ function draw(){var N=0;for(var i=0;i<8;i++)if(st[i])N+=w[i];var r=parseFloat(ref.value)||3.3;out.innerHTML='Luku N = <strong>'+N+'</strong> (<code>'+st.join('')+'</code>) → Vout = '+fx(r,2)+' · '+N+' / 256 = <strong>'+fx(r*N/256,3)+' V</strong>';}
+ w.forEach(function(v,i){var b=document.createElement('button');b.className='bit';b.innerHTML='0<small>'+v+'</small>';b.onclick=function(){st[i]=st[i]?0:1;b.className='bit'+(st[i]?' on':'');b.innerHTML=st[i]+'<small>'+v+'</small>';draw();};box.appendChild(b);});
+ ref.addEventListener('input',draw);draw();
+})();
+/* ---------- Ohm ---------- */
+(function(){
+ var u=$('ohm-u'),i=$('ohm-i'),r=$('ohm-r'),out=$('ohm-out');if(!u)return;
+ function run(){var U=parseFloat(u.value),I=parseFloat(i.value)/1000,R=parseFloat(r.value);var k=[isFinite(U),isFinite(I),isFinite(R)].filter(Boolean).length;
+  if(k<2){out.innerHTML='<p>Täytä kaksi kenttää.</p>';return;}
+  var msg='';
+  if(!isFinite(U)){U=I*R;msg='U = R · I = '+fx(R,3)+' · '+fx(I,5)+' = <strong>'+fx(U,3)+' V</strong>';}
+  else if(!isFinite(I)){I=U/R;msg='I = U / R = '+fx(U,3)+' / '+fx(R,3)+' = <strong>'+fx(I*1000,3)+' mA</strong>';}
+  else if(!isFinite(R)){R=U/I;msg='R = U / I = '+fx(U,3)+' / '+fx(I,5)+' = <strong>'+fx(R,2)+' Ω</strong>';}
+  else msg='Kaikki kolme annettu. Tarkistus: U / I = '+fx(U/I,2)+' Ω.';
+  out.innerHTML='<p>'+msg+'</p><p>Teho P = U · I = <strong>'+fx(U*I*1000,2)+' mW</strong>'+(U*I>0.25?' <span class="bad">(yli ¼ W, tarvitset tehokkaamman vastuksen)</span>':'')+'</p>';}
+ [u,i,r].forEach(function(x){x.addEventListener('input',run);});run();
+})();
+/* ---------- resistor network ---------- */
+(function(){
+ var inp=$('rn-in'),out=$('rn-out');if(!inp)return;
+ function pv(s){s=s.trim().toLowerCase().replace(',','.');var m=s.match(/^([0-9.]+)\s*(k|m)?/);if(!m)return NaN;var v=parseFloat(m[1]);if(m[2]==='k')v*=1e3;if(m[2]==='m')v*=1e6;return v;}
+ function fr(r){return r>=1e6?fx(r/1e6,3)+' MΩ':r>=1e3?fx(r/1e3,3)+' kΩ':fx(r,2)+' Ω';}
+ function run(){var parts=inp.value.split(/[;\s]+|,\s*/).filter(function(x){return x.length;}),v=parts.map(pv);
+  if(!v.length||v.some(function(x){return !(x>0);})){out.innerHTML='<p class="bad">Kirjoita positiivisia arvoja (esim. 220, 4.7k).</p>';return;}
+  var s=v.reduce(function(a,b){return a+b;},0),p=1/v.reduce(function(a,b){return a+1/b;},0);
+  out.innerHTML='<p>Sarjassa: <strong>'+fr(s)+'</strong><br>Rinnan: <strong>'+fr(p)+'</strong></p>';}
+ inp.addEventListener('input',run);run();
+})();
+/* ---------- divider ---------- */
+(function(){
+ var u=$('dv-u'),a=$('dv-1'),b=$('dv-2'),l=$('dv-l'),out=$('dv-out');if(!u)return;
+ function run(){var U=parseFloat(u.value),R1=parseFloat(a.value),R2=parseFloat(b.value),RL=parseFloat(l.value);
+  if(!(R1>0&&R2>0&&isFinite(U))){out.innerHTML='<p class="bad">Anna positiiviset vastukset.</p>';return;}
+  var v0=U*R2/(R1+R2),h='<p>Ilman kuormaa: Uulos = '+fx(U,2)+' · '+R2+' / ('+R1+' + '+R2+') = <strong>'+fx(v0,3)+' V</strong></p>';
+  if(RL>0){var r2=R2*RL/(R2+RL),v1=U*r2/(R1+r2);h+='<p>Kuormalla '+RL+' Ω: alaosa = '+fx(r2,1)+' Ω → Uulos = <strong>'+fx(v1,3)+' V</strong> ('+fx((v1-v0)/v0*100,1)+' %)</p>';}
+  out.innerHTML=h;}
+ [u,a,b,l].forEach(function(x){x.addEventListener('input',run);});run();
+})();
+/* ---------- RC curve ---------- */
+(function(){
+ var r=$('rc-r'),c=$('rc-c'),v=$('rc-v'),out=$('rc-out'),ch=$('rc-chart');if(!r)return;
+ function run(){var R=parseFloat(r.value)*1e3,C=parseFloat(c.value)*1e-6,V=parseFloat(v.value);if(!(R>0&&C>0&&V>0)){out.innerHTML='<p class="bad">Anna positiiviset arvot.</p>';return;}
+  var tau=R*C;out.innerHTML='<p>τ = R · C = <strong>'+fx(tau,4)+' s</strong>. 63 % saavutetaan ajassa '+fx(tau,3)+' s, 90 % ajassa '+fx(tau*Math.log(10),3)+' s ja 99 % ajassa 5τ = '+fx(5*tau,3)+' s.</p>';
+  var W=440,H=210,pl=44,pb=26,pw=W-pl-10,ph=H-pb-14,T=5*tau;
+  function X(t){return pl+t/T*pw;}function Y(u){return 10+ph-u/V*ph;}
+  var p='';for(var i=0;i<=120;i++){var t=i/120*T,u=V*(1-Math.exp(-t/tau));p+=(i?' L':'M')+X(t).toFixed(1)+' '+Y(u).toFixed(1);}
+  var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" width="'+W+'" font-size="11"><line class="ax" x1="'+pl+'" y1="'+(10+ph)+'" x2="'+(pl+pw)+'" y2="'+(10+ph)+'" stroke-width="1.5"/><line class="ax" x1="'+pl+'" y1="10" x2="'+pl+'" y2="'+(10+ph)+'" stroke-width="1.5"/>';
+  [1,2,3,4,5].forEach(function(k){var u=V*(1-Math.exp(-k));s+='<line x1="'+X(k*tau)+'" y1="'+(10+ph)+'" x2="'+X(k*tau)+'" y2="'+Y(u)+'" stroke="var(--mute)" stroke-dasharray="3 3"/><text x="'+X(k*tau)+'" y="'+(H-8)+'" text-anchor="middle">'+k+'τ</text><text x="'+(X(k*tau)+3)+'" y="'+(Y(u)-4)+'">'+fx(100*(1-Math.exp(-k)),0)+' %</text>';});
+  s+='<path d="'+p+'" fill="none" stroke="var(--c)" stroke-width="2.6"/><text x="'+(pl-4)+'" y="16" text-anchor="end">'+fx(V,1)+' V</text><text x="'+(pl-4)+'" y="'+(10+ph)+'" text-anchor="end">0</text></svg>';
+  ch.innerHTML=s;}
+ [r,c,v].forEach(function(x){x.addEventListener('input',run);});run();
+})();
+/* ---------- LED resistor ---------- */
+(function(){
+ var u=$('led-u'),f=$('led-f'),i=$('led-i'),out=$('led-out');if(!u)return;
+ var E12=[10,12,15,18,22,27,33,39,47,56,68,82];
+ function up(r){var d=Math.pow(10,Math.floor(Math.log10(r)));for(var k=0;k<3;k++){for(var j=0;j<E12.length;j++){var v=E12[j]*d*Math.pow(10,k)/10;if(v>=r-1e-9)return v;}}return r;}
+ function run(){var U=parseFloat(u.value),F=parseFloat(f.value),I=parseFloat(i.value)/1000;
+  if(!(U>F&&I>0)){out.innerHTML='<p class="bad">Syöttöjännitteen pitää olla suurempi kuin LEDin jännite.</p>';return;}
+  var R=(U-F)/I,Rs=up(R),Ia=(U-F)/Rs,P=Ia*Ia*Rs;
+  out.innerHTML='<p>R = ('+fx(U,2)+' − '+fx(F,2)+') / '+fx(I,4)+' = <strong>'+fx(R,1)+' Ω</strong><br>Seuraava E12-arvo ylöspäin: <strong>'+fx(Rs,0)+' Ω</strong> → virta '+fx(Ia*1000,1)+' mA, teho vastuksessa '+fx(P*1000,1)+' mW.</p>';}
+ [u,f,i].forEach(function(x){x.addEventListener('input',run);});run();
+})();
+/* ---------- resistor colour decoder ---------- */
+(function(){
+ var s1=$('rcc-1'),s2=$('rcc-2'),s3=$('rcc-3'),s4=$('rcc-4'),out=$('rcc-out');if(!s1)return;
+ var names=['musta','ruskea','punainen','oranssi','keltainen','vihreä','sininen','violetti','harmaa','valkoinen'],css=['#111','#8b5a2b','#e03131','#f08c00','#f2d600','#2f9e44','#1971c2','#7048e8','#868e96','#f8f9fa'];
+ var mult=[['musta',1,'#111'],['ruskea',10,'#8b5a2b'],['punainen',100,'#e03131'],['oranssi',1e3,'#f08c00'],['keltainen',1e4,'#f2d600'],['vihreä',1e5,'#2f9e44'],['sininen',1e6,'#1971c2'],['kulta',0.1,'#d4af37'],['hopea',0.01,'#c0c0c0']];
+ var tol=[['ruskea','±1 %','#8b5a2b'],['punainen','±2 %','#e03131'],['kulta','±5 %','#d4af37'],['hopea','±10 %','#c0c0c0']];
+ function opts(sel,arr){arr.forEach(function(a,i){var o=document.createElement('option');o.value=i;o.textContent=a;sel.appendChild(o);});}
+ opts(s1,names);opts(s2,names);opts(s3,mult.map(function(m){return m[0];}));opts(s4,tol.map(function(t){return t[0];}));
+ s1.value=4;s2.value=7;s3.value=2;s4.value=2;
+ function fr(r){return r>=1e6?fx(r/1e6,2)+' MΩ':r>=1e3?fx(r/1e3,2)+' kΩ':fx(r,2)+' Ω';}
+ function run(){var v=(+s1.value*10+ +s2.value)*mult[+s3.value][1];
+  var sw=[css[+s1.value],css[+s2.value],mult[+s3.value][2],tol[+s4.value][2]].map(function(c){return '<span style="display:inline-block;width:18px;height:44px;background:'+c+';border:1px solid var(--line);margin:0 3px;vertical-align:middle"></span>';}).join('');
+  out.innerHTML=sw+'<br>'+fr(v)+' '+tol[+s4.value][1];}
+ [s1,s2,s3,s4].forEach(function(x){x.addEventListener('change',run);});run();
+})();
+/* ---------- permission calculator ---------- */
+(function(){
+ var n=$('pm-n'),out=$('pm-out');if(!n)return;
+ var cbs=document.querySelectorAll('#pm input[type=checkbox]');
+ function str(v){var s='';[6,3,0].forEach(function(sh){var d=(v>>sh)&7;s+=(d&4?'r':'-')+(d&2?'w':'-')+(d&1?'x':'-');});return s;}
+ function fromBoxes(){var v=0;for(var i=0;i<cbs.length;i++){if(cbs[i].checked)v|=1<<(+cbs[i].getAttribute('data-b'));}return v;}
+ function show(v){n.value=v.toString(8);for(var i=0;i<cbs.length;i++)cbs[i].checked=!!(v&(1<<(+cbs[i].getAttribute('data-b'))));out.innerHTML='<code>'+str(v)+'</code> &nbsp;→ <code>chmod '+v.toString(8)+' tiedosto</code>';}
+ for(var i=0;i<cbs.length;i++)cbs[i].addEventListener('change',function(){show(fromBoxes());});
+ n.addEventListener('input',function(){if(/^[0-7]{3}$/.test(n.value)){var v=parseInt(n.value,8);for(var i=0;i<cbs.length;i++)cbs[i].checked=!!(v&(1<<(+cbs[i].getAttribute('data-b'))));out.innerHTML='<code>'+str(v)+'</code> &nbsp;→ <code>chmod '+n.value+' tiedosto</code>';}});
+ show(parseInt('754',8));
+})();
+/* ---------- MQTT matcher ---------- */
+(function(){
+ var f=$('mq-f'),t=$('mq-t'),out=$('mq-out');if(!f)return;
+ function match(filter,topic){var a=filter.split('/'),b=topic.split('/');for(var i=0;i<a.length;i++){if(a[i]==='#')return i===a.length-1;if(i>=b.length)return false;if(a[i]!=='+'&&a[i]!==b[i])return false;}return a.length===b.length;}
+ function run(){var ok=match(f.value.trim(),t.value.trim());out.innerHTML=ok?'<span class="ok">✔ Viesti osuu tilaukseen</span>':'<span class="bad">✘ Viesti ei osu tilaukseen</span>';}
+ f.addEventListener('input',run);t.addEventListener('input',run);run();
+})();
+/* ---------- PWM ---------- */
+(function(){
+ var d=$('pw-d'),dv=$('pw-dv'),v=$('pw-v'),out=$('pw-out'),ch=$('pw-chart');if(!d)return;
+ function run(){var D=+d.value,V=parseFloat(v.value)||3.3;dv.textContent=D+' %';out.innerHTML='<p>Keskiarvojännite = '+D+' % · '+fx(V,2)+' V = <strong>'+fx(D/100*V,2)+' V</strong></p>';
+  var W=440,H=110,pl=10,pw=W-20,cyc=5,x=pl,p='M'+pl+' 90';
+  for(var i=0;i<cyc;i++){var x0=pl+i*pw/cyc,x1=x0+pw/cyc*D/100,x2=x0+pw/cyc;p+=' L'+x0+' 90 L'+x0+' 20 L'+x1+' 20 L'+x1+' 90 L'+x2+' 90';}
+  ch.innerHTML='<svg class="chart" viewBox="0 0 '+W+' '+H+'" width="'+W+'" font-size="11"><path d="'+p+'" fill="none" stroke="var(--c)" stroke-width="2.4"/><line x1="'+pl+'" y1="'+(90-70*D/100)+'" x2="'+(pl+pw)+'" y2="'+(90-70*D/100)+'" stroke="#e03131" stroke-dasharray="5 3"/><text x="'+pl+'" y="'+(H-4)+'">Sininen: PWM-signaali. Punainen katkoviiva: keskiarvo.</text></svg>';}
+ d.addEventListener('input',run);v.addEventListener('input',run);run();
+})();
+/* ---------- battery ---------- */
+(function(){
+ var c=$('bat-c'),ia=$('bat-ia'),ta=$('bat-ta'),is=$('bat-is'),ts=$('bat-ts'),out=$('bat-out');if(!c)return;
+ function run(){var C=parseFloat(c.value),Ia=parseFloat(ia.value),Ta=parseFloat(ta.value),Is=parseFloat(is.value),Ts=parseFloat(ts.value);
+  if(!(C>0&&Ta>=0&&Ts>=0&&Ta+Ts>0)){out.innerHTML='';return;}
+  var I=(Ia*Ta+Is*Ts)/(Ta+Ts),h=C/I;
+  out.innerHTML='<p>Keskivirta = <strong>'+fx(I,3)+' mA</strong>. Akkukesto = '+fx(C,0)+' / '+fx(I,3)+' = <strong>'+fx(h,0)+' h ≈ '+fx(h/24,1)+' vrk</strong>.</p>';}
+ [c,ia,ta,is,ts].forEach(function(x){x.addEventListener('input',run);});run();
+})();
+/* ---------- practice terminal ---------- */
+(function(){
+ var box=$('term-out');if(!box)return;
+ var inp=$('term-in'),pr=$('term-prompt');
+ function o(s){return parseInt(s,8);}
+ function D(m,c){return {t:'d',m:o(m),c:c||{}};}
+ function F(m,txt){return {t:'f',m:o(m),x:txt||''};}
+ var root=D('755',{home:D('755',{maija:D('755',{iot:D('755',{'data.txt':F('644','Lämpötila 21\n')}),kuvat:D('755'),'muistio.txt':F('644','Muista osta komponentit\n'),'skripti.sh':F('644','#!/bin/bash\necho hei\n')})}),etc:D('755',{hostname:F('644','vm\n')}),tmp:D('1777'),var:D('755',{log:D('755',{'syslog':F('640','Oct  9 12:00 vm kernel: boot\n')})})});
+ var cwd=['home','maija'],prev=cwd.slice(),hist=[],hi=0;
+ function prompt(){var p='/'+cwd.join('/');if(p.indexOf('/home/maija')===0)p='~'+p.slice(11);pr.textContent='maija@vm:'+p+'$ ';}
+ function print(s){box.appendChild(document.createTextNode(s+'\n'));box.scrollTop=box.scrollHeight;}
+ function norm(path){var parts=path.charAt(0)==='/'?[]:cwd.slice();path.split('/').forEach(function(p){if(p===''||p==='.')return;if(p==='..'){parts.pop();}else if(p==='~'){parts=['home','maija'];}else parts.push(p);});return parts;}
+ function get(parts){var n=root;for(var i=0;i<parts.length;i++){if(!n||n.t!=='d'||!n.c.hasOwnProperty(parts[i]))return null;n=n.c[parts[i]];}return n;}
+ function modeStr(n){var s=n.t==='d'?'d':'-',m=n.m;[6,3,0].forEach(function(sh){var d=(m>>sh)&7;s+=(d&4?'r':'-')+(d&2?'w':'-')+(d&1?'x':'-');});return s;}
+ function size(n){return n.t==='d'?4096:(n.x||'').length;}
+ function pad(s,w){s=String(s);while(s.length<w)s=' '+s;return s;}
+ function tokenize(l){var t=[],cur='',q=null;for(var i=0;i<l.length;i++){var c=l.charAt(i);if(q){if(c===q)q=null;else cur+=c;}else if(c==='"'||c==="'")q=c;else if(c===' '){if(cur!==''){t.push(cur);cur='';}}else if(c==='>'){if(cur!==''){t.push(cur);cur='';}if(l.charAt(i+1)==='>'){t.push('>>');i++;}else t.push('>');}else cur+=c;}if(cur!=='')t.push(cur);return t;}
+ function parentOf(path){var p=norm(path);var name=p.pop();return {par:get(p),name:name,parts:p};}
+ function clone(n){if(n.t==='f')return {t:'f',m:n.m,x:n.x};var c={};for(var k in n.c)c[k]=clone(n.c[k]);return {t:'d',m:n.m,c:c};}
+ function tree(n,pre){var keys=Object.keys(n.c).sort(),s='';keys.forEach(function(k,i){var last=i===keys.length-1;s+=pre+(last?'└── ':'├── ')+k+'\n';if(n.c[k].t==='d')s+=tree(n.c[k],pre+(last?'    ':'│   '));});return s;}
+ function chmod(spec,n){if(/^[0-7]{3,4}$/.test(spec)){n.m=parseInt(spec,8);return true;}var m=spec.match(/^([ugoa]*)([+\-=])([rwx]+)$/);if(!m)return false;var who=m[1]||'a',bits=0;m[3].split('').forEach(function(c){bits|=c==='r'?4:c==='w'?2:1;});var mask=0;who.split('').forEach(function(w){if(w==='u'||w==='a')mask|=bits<<6;if(w==='g'||w==='a')mask|=bits<<3;if(w==='o'||w==='a')mask|=bits;});if(m[2]==='+')n.m|=mask;else if(m[2]==='-')n.m&=~mask;else{var all=0;who.split('').forEach(function(w){if(w==='u'||w==='a')all|=7<<6;if(w==='g'||w==='a')all|=7<<3;if(w==='o'||w==='a')all|=7;});n.m=(n.m&~all)|mask;}return true;}
+ var cmds={
+  help:function(){print('Komennot: pwd ls [-l] [-a] cd mkdir [-p] touch echo cat cp [-r] mv rm [-r] rmdir chmod tree whoami clear date\nOhjeita: echo hei > a.txt, cat a.txt, chmod 600 a.txt, ./skripti.sh');},
+  pwd:function(){print('/'+cwd.join('/'));},
+  whoami:function(){print('maija');},
+  date:function(){print('Fri Oct  9 12:00:00 EEST 2026');},
+  clear:function(){box.textContent='';},
+  ls:function(a){var l=false,all=false,paths=[];a.forEach(function(x){if(x.charAt(0)==='-'){if(x.indexOf('l')>=0)l=true;if(x.indexOf('a')>=0)all=true;}else paths.push(x);});
+   var p=paths[0]||'.',parts=norm(p),n=get(parts);if(!n){print("ls: cannot access '"+p+"': No such file or directory");return;}
+   if(n.t==='f'){print(l?modeStr(n)+' 1 maija maija '+pad(size(n),5)+' Oct  9 12:00 '+p:p);return;}
+   if(!(n.m&256)){print("ls: cannot open directory '"+p+"': Permission denied");return;}
+   var names=Object.keys(n.c).sort();if(all)names=['.','..'].concat(names);else names=names.filter(function(k){return k.charAt(0)!=='.';});
+   if(l){names.forEach(function(k){var c=n.c[k]||n;print(modeStr(c)+' 1 maija maija '+pad(size(c),5)+' Oct  9 12:00 '+k);});}else print(names.join('  '));},
+  cd:function(a){var p=a[0]||'~';if(p==='-'){var t=cwd;cwd=prev;prev=t;print('/'+cwd.join('/'));return;}var parts=norm(p),n=get(parts);if(!n){print('bash: cd: '+p+': No such file or directory');return;}if(n.t!=='d'){print('bash: cd: '+p+': Not a directory');return;}if(!(n.m&64)){print('bash: cd: '+p+': Permission denied');return;}prev=cwd;cwd=parts;},
+  mkdir:function(a){var pf=a.indexOf('-p')>=0;a.filter(function(x){return x!=='-p';}).forEach(function(p){var parts=norm(p);if(pf){var n=root;parts.forEach(function(k){if(!n.c[k])n.c[k]=D('755');n=n.c[k];});return;}var q=parentOf(p);if(!q.par||q.par.t!=='d'){print("mkdir: cannot create directory '"+p+"': No such file or directory");return;}if(q.par.c[q.name]){print("mkdir: cannot create directory '"+p+"': File exists");return;}q.par.c[q.name]=D('755');});},
+  touch:function(a){a.forEach(function(p){var q=parentOf(p);if(!q.par||q.par.t!=='d'){print("touch: cannot touch '"+p+"': No such file or directory");return;}if(!q.par.c[q.name])q.par.c[q.name]=F('644','');});},
+  cat:function(a){a.forEach(function(p){var n=get(norm(p));if(!n){print('cat: '+p+': No such file or directory');return;}if(n.t==='d'){print('cat: '+p+': Is a directory');return;}if(!(n.m&256)){print('cat: '+p+': Permission denied');return;}print(n.x.replace(/\n$/,''));});},
+  rm:function(a){var r=a.indexOf('-r')>=0||a.indexOf('-rf')>=0;a.filter(function(x){return x.charAt(0)!=='-';}).forEach(function(p){var q=parentOf(p),n=q.par&&q.par.c[q.name];if(!n){print("rm: cannot remove '"+p+"': No such file or directory");return;}if(n.t==='d'&&!r){print("rm: cannot remove '"+p+"': Is a directory");return;}delete q.par.c[q.name];});},
+  rmdir:function(a){a.forEach(function(p){var q=parentOf(p),n=q.par&&q.par.c[q.name];if(!n){print("rmdir: failed to remove '"+p+"': No such file or directory");return;}if(n.t!=='d'||Object.keys(n.c).length){print("rmdir: failed to remove '"+p+"': Directory not empty");return;}delete q.par.c[q.name];});},
+  cp:function(a){var r=a.indexOf('-r')>=0;a=a.filter(function(x){return x.charAt(0)!=='-';});if(a.length<2){print('cp: missing file operand');return;}var src=get(norm(a[0]));if(!src){print("cp: cannot stat '"+a[0]+"': No such file or directory");return;}if(src.t==='d'&&!r){print("cp: -r not specified; omitting directory '"+a[0]+"'");return;}var dst=get(norm(a[1])),q=parentOf(a[1]);if(dst&&dst.t==='d'){dst.c[a[0].split('/').pop()]=clone(src);}else if(q.par&&q.par.t==='d'){q.par.c[q.name]=clone(src);}else print("cp: cannot create '"+a[1]+"'");},
+  mv:function(a){if(a.length<2){print('mv: missing file operand');return;}var sq=parentOf(a[0]),src=sq.par&&sq.par.c[sq.name];if(!src){print("mv: cannot stat '"+a[0]+"': No such file or directory");return;}var dst=get(norm(a[1])),q=parentOf(a[1]);if(dst&&dst.t==='d'){dst.c[sq.name]=src;}else if(q.par&&q.par.t==='d'){q.par.c[q.name]=src;}else{print("mv: cannot move '"+a[0]+"'");return;}delete sq.par.c[sq.name];},
+  chmod:function(a){if(a.length<2){print('chmod: missing operand');return;}var n=get(norm(a[1]));if(!n){print("chmod: cannot access '"+a[1]+"': No such file or directory");return;}if(!chmod(a[0],n))print("chmod: invalid mode: '"+a[0]+"'");},
+  tree:function(a){var n=get(norm(a[0]||'.'));if(!n||n.t!=='d'){print('tree: error');return;}print((a[0]||'.')+'\n'+tree(n,'').replace(/\n$/,''));}
+ };
+ function run(line){
+  print(pr.textContent+line);line=line.trim();if(!line)return;hist.push(line);hi=hist.length;
+  var t=tokenize(line);if(!t.length)return;
+  if(t[0].indexOf('./')===0){var n=get(norm(t[0]));if(!n){print('bash: '+t[0]+': No such file or directory');}else if(!(n.m&64)){print('bash: '+t[0]+': Permission denied');}else print('(skripti ajettu)');return;}
+  if(t[0]==='echo'){var gi=t.indexOf('>>'),g1=t.indexOf('>');var idx=gi>=0?gi:g1;if(idx>=0){var txt=t.slice(1,idx).join(' ')+'\n',file=t[idx+1];if(!file){print('bash: syntax error near unexpected token `newline\'');return;}var q=parentOf(file);if(!q.par||q.par.t!=='d'){print('bash: '+file+': No such file or directory');return;}var ex=q.par.c[q.name];if(ex&&ex.t==='f'){if(!(ex.m&128)){print('bash: '+file+': Permission denied');return;}ex.x=(idx===gi?ex.x:'')+txt;}else q.par.c[q.name]=F('644',txt);}else print(t.slice(1).join(' '));return;}
+  var c=cmds[t[0]];if(!c){print(t[0]+': command not found');return;}c(t.slice(1));}
+ inp.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){var l=inp.value;inp.value='';run(l);prompt();}
+  else if(e.key==='ArrowUp'){if(hi>0){hi--;inp.value=hist[hi];}e.preventDefault();}
+  else if(e.key==='ArrowDown'){if(hi<hist.length-1){hi++;inp.value=hist[hi];}else{hi=hist.length;inp.value='';}e.preventDefault();}
+ });
+ $('term-box').addEventListener('click',function(){inp.focus();});
+ print('Tervetuloa! Kirjoita help nähdäksesi komennot.');prompt();
+})();
+})();
+
+/*deep3-js*/
+(function(){
+function $(i){return document.getElementById(i);}
+function fx(x,d){if(!isFinite(x))return '–';return x.toFixed(d).replace('.',',');}
+/* unit converter */
+(function(){
+ var v=$('gib-v'),u=$('gib-u'),out=$('gib-out');if(!v)return;
+ function run(){var B=parseFloat(v.value)*parseFloat(u.value);if(!isFinite(B)){out.innerHTML='';return;}
+  var rows=[['TB (10¹²)',B/1e12],['TiB (2⁴⁰)',B/1099511627776],['GB (10⁹)',B/1e9],['GiB (2³⁰)',B/1073741824],['MB (10⁶)',B/1e6],['MiB (2²⁰)',B/1048576]];
+  out.innerHTML='<table class="tt"><tr><th>Yksikkö</th><th>Arvo</th></tr>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+fx(r[1],r[1]<10?3:1)+'</td></tr>';}).join('')+'</table>';}
+ v.addEventListener('input',run);u.addEventListener('change',run);run();
+})();
+/* memory */
+(function(){
+ var t=$('mem-t'),cl=$('mem-cl'),ch=$('mem-ch'),out=$('mem-out');if(!t)return;
+ function run(){var T=parseFloat(t.value),C=parseFloat(cl.value),N=parseFloat(ch.value);
+  out.innerHTML='<p>Kaistanleveys = '+T+' · 8 · '+N+' / 1000 = <strong>'+fx(T*8*N/1000,1)+' GB/s</strong><br>Latenssi = '+C+' · 2000 / '+T+' = <strong>'+fx(C*2000/T,2)+' ns</strong></p>';}
+ [t,cl].forEach(function(x){x.addEventListener('input',run);});ch.addEventListener('change',run);run();
+})();
+/* RAID */
+(function(){
+ var n=$('raid-n'),s=$('raid-s'),out=$('raid-out');if(!n)return;
+ function run(){var N=parseInt(n.value,10),S=parseFloat(s.value);if(!(N>=2&&S>0)){out.innerHTML='';return;}
+  var rows=[['RAID 0',N*S,'0',true],['RAID 1',S,String(N-1),true],['RAID 5',(N-1)*S,'1',N>=3],['RAID 6',(N-2)*S,'2',N>=4],['RAID 10',N/2*S,'1 per pari',N>=4&&N%2===0]];
+  out.innerHTML='<table class="tt"><tr><th>Taso</th><th>Käyttökelpoinen tila</th><th>Kestää levyvikoja</th></tr>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+(r[3]?fx(r[1],2)+' TB':'<em>ei mahdollinen tällä levymäärällä</em>')+'</td><td>'+(r[3]?r[2]:'–')+'</td></tr>';}).join('')+'</table>';}
+ [n,s].forEach(function(x){x.addEventListener('input',run);});run();
+})();
+/* PSU */
+(function(){
+ var c=$('psu-c'),g=$('psu-g'),o=$('psu-o'),e=$('psu-e'),out=$('psu-out');if(!c)return;
+ function run(){var C=parseFloat(c.value)||0,G=parseFloat(g.value)||0,O=parseFloat(o.value)||0,E=(parseFloat(e.value)||90)/100;var tot=C+G+O,rec=tot*1.3;
+  var std=[400,450,500,550,600,650,750,850,1000,1200],pick=std.filter(function(x){return x>=rec;})[0]||'yli 1200';
+  out.innerHTML='<p>Kuorma yhteensä <strong>'+fx(tot,0)+' W</strong>; varalla 30 % → <strong>'+fx(rec,0)+' W</strong>. Valitse vähintään <strong>'+pick+' W</strong> virtalähde.<br>Seinästä otettava teho kuormalla ('+fx(tot,0)+' W) ja hyötysuhteella '+fx(E*100,0)+' %: '+fx(tot/E,0)+' W.</p>';}
+ [c,g,o,e].forEach(function(x){x.addEventListener('input',run);});run();
+})();
+/* subnet */
+(function(){
+ var ip=$('sub-ip'),p=$('sub-p'),out=$('sub-out');if(!ip)return;
+ function s(x){return [24,16,8,0].map(function(k){return (x>>>k)&255;}).join('.');}
+ function run(){var m=ip.value.trim().match(/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/),P=parseInt(p.value,10);
+  if(!m||m.slice(1).some(function(x){return +x>255;})||!(P>=1&&P<=30)){out.innerHTML='<span class="bad">Anna kelvollinen IPv4-osoite ja peite 1–30.</span>';return;}
+  var n=((+m[1])*16777216+(+m[2])*65536+(+m[3])*256+(+m[4]))>>>0,mask=(0xFFFFFFFF<<(32-P))>>>0,net=(n&mask)>>>0,bc=(net|(~mask>>>0))>>>0,hosts=Math.pow(2,32-P)-2;
+  out.innerHTML='<table class="tt"><tr><td>Verkko-osoite</td><td><strong>'+s(net)+'</strong></td></tr><tr><td>Peite</td><td>'+s(mask)+' (/'+P+')</td></tr><tr><td>Yleislähetys</td><td>'+s(bc)+'</td></tr><tr><td>Laitteita</td><td>'+hosts+'</td></tr><tr><td>Käyttökelpoiset osoitteet</td><td>'+s(net+1)+' … '+s(bc-1)+'</td></tr></table>';}
+ ip.addEventListener('input',run);p.addEventListener('input',run);run();
+})();
+/* partition planner */
+(function(){
+ var d=$('part-d'),r=$('part-r'),out=$('part-out');if(!d)return;
+ function run(){var D=parseFloat(d.value),R=parseFloat(r.value);if(!(D>0&&R>0)){out.innerHTML='';return;}
+  var efi=0.5,swap=Math.min(R,8),root=D>=150?50:(D>=60?30:20),home=D-efi-swap-root;
+  if(home<0){out.innerHTML='<span class="bad">Levy on liian pieni tällä jaolla.</span>';return;}
+  out.innerHTML='<table class="tt"><tr><th>Osio</th><th>Koko</th></tr><tr><td>EFI (FAT32)</td><td>'+fx(efi,1)+' GB</td></tr><tr><td>swap</td><td>'+fx(swap,0)+' GB (jos haluat lepotilan, vähintään '+fx(R,0)+' GB)</td></tr><tr><td>/ (ext4)</td><td>'+fx(root,0)+' GB</td></tr><tr><td>/home (ext4)</td><td>'+fx(home,1)+' GB</td></tr></table>';}
+ [d,r].forEach(function(x){x.addEventListener('input',run);});run();
+})();
+/* compatibility */
+(function(){
+ var cs=$('cmp-cs'),ms=$('cmp-ms'),mr=$('cmp-mr'),rr=$('cmp-rr'),gl=$('cmp-gl'),cl=$('cmp-cl'),out=$('cmp-out');if(!cs)return;
+ var only={AM5:'DDR5',AM4:'DDR4',LGA1200:'DDR4'};
+ function run(){var h='';
+  function ok(t){h+='<li class="ok">✔ '+t+'</li>';}function bad(t){h+='<li class="bad">✘ '+t+'</li>';}
+  if(cs.value===ms.value)ok('Prosessorin kanta sopii emolevyyn ('+cs.value+').');else bad('Prosessorin kanta ('+cs.value+') ei sovi emolevyn kantaan ('+ms.value+').');
+  if(only[ms.value]&&only[ms.value]!==mr.value)bad('Kantaa '+ms.value+' käyttävät emolevyt tukevat vain '+only[ms.value]+'-muistia; valitsemasi emolevytyyppi ('+mr.value+') on epätodennäköinen.');
+  if(mr.value===rr.value)ok('RAM-tyyppi ('+rr.value+') sopii emolevyyn.');else bad('RAM-tyyppi ('+rr.value+') ei sovi emolevyyn ('+mr.value+'): DDR4 ja DDR5 eivät ole keskenään yhteensopivia.');
+  var G=parseFloat(gl.value),C=parseFloat(cl.value);
+  if(G<=C)ok('Näytönohjain mahtuu koteloon (varaa '+(C-G)+' mm).');else bad('Näytönohjain ('+G+' mm) on pidempi kuin kotelon enimmäispituus ('+C+' mm).');
+  out.innerHTML='<ul style="list-style:none;padding-left:0">'+h+'</ul>';}
+ [cs,ms,mr,rr,gl,cl].forEach(function(x){x.addEventListener('input',run);x.addEventListener('change',run);});run();
+})();
+/* mini CPU */
+(function(){
+ var root=$('cpu');if(!root)return;
+ var NAMES=['HLT','LDA','STA','ADD','SUB','JMP','JZ','LDI','OUT'];
+ var PROG=[
+  {n:'1. Lasku: 5 + 7',m:[0x1E,0x3F,0x2D,0x80,0x00,0,0,0,0,0,0,0,0,0,5,7]},
+  {n:'2. Lasku alas: 5, 4, 3, 2, 1',m:[0x75,0x80,0x4F,0x65,0x51,0x00,0,0,0,0,0,0,0,0,0,1]},
+  {n:'3. Kertolasku 3 × 4 yhteenlaskulla',m:[0x1D,0x3E,0x2D,0x1F,0x4C,0x2F,0x68,0x50,0x1D,0x80,0x00,0,1,0,4,3]}];
+ var sel=$('cpu-prog'),regs=$('cpu-regs'),memEl=$('cpu-mem'),log=$('cpu-log');
+ PROG.forEach(function(p,i){var o=document.createElement('option');o.value=i;o.textContent=p.n;sel.appendChild(o);});
+ var m,pc,ir,acc,phase,halted,outp,step;
+ function mn(w){var op=w>>4,a=w&15;if(op>8)return '';var nm=NAMES[op];return (op===0||op===8)?nm:nm+' '+a;}
+ function reset(){var p=PROG[+sel.value];m=p.m.slice();pc=0;ir=0;acc=0;phase=0;halted=false;outp=[];step=0;log.textContent='';draw();}
+ function bin8(x){var s=(x&255).toString(2);while(s.length<8)s='0'+s;return s;}
+ function draw(){
+  regs.innerHTML='PC = <strong>'+pc+'</strong> &nbsp; IR = <code>'+bin8(ir)+'</code> ('+mn(ir)+') &nbsp; ACC = <strong>'+acc+'</strong> &nbsp; Vaihe: <strong>'+(halted?'PYSÄHTYNYT':['HAKU (fetch)','TULKINTA (decode)','SUORITUS (execute)'][phase])+'</strong><br>Tulostus (OUT): <strong>'+(outp.join(', ')||'–')+'</strong>';
+  var h='';for(var i=0;i<16;i++){h+='<div'+(i===pc?' class="pc"':'')+'><small>osoite '+i+'</small><b>'+m[i]+'</b><small>'+mn(m[i])+'</small></div>';}
+  memEl.innerHTML='<div class="cpumem">'+h+'</div>';}
+ function say(s){log.textContent+=s+'\n';log.scrollTop=log.scrollHeight;}
+ function one(){if(halted)return;
+  if(phase===0){ir=m[pc];say('HAKU:     IR ← muisti['+pc+'] = '+ir+' ('+bin8(ir)+'); PC ← '+((pc+1)%16));pc=(pc+1)%16;phase=1;}
+  else if(phase===1){var op=ir>>4,a=ir&15;say('TULKINTA: operaatio '+op+' = '+(NAMES[op]||'?')+', operandi '+a);phase=2;}
+  else{var op2=ir>>4,a2=ir&15;
+   switch(op2){
+    case 0:halted=true;say('SUORITUS: HLT, prosessori pysähtyy');break;
+    case 1:acc=m[a2];say('SUORITUS: ACC ← muisti['+a2+'] = '+acc);break;
+    case 2:m[a2]=acc&255;say('SUORITUS: muisti['+a2+'] ← ACC = '+acc);break;
+    case 3:acc=(acc+m[a2])&255;say('SUORITUS: ACC ← ACC + muisti['+a2+'] = '+acc);break;
+    case 4:acc=(acc-m[a2])&255;say('SUORITUS: ACC ← ACC − muisti['+a2+'] = '+acc);break;
+    case 5:pc=a2;say('SUORITUS: hyppy, PC ← '+a2);break;
+    case 6:if(acc===0){pc=a2;say('SUORITUS: ACC = 0, hyppy, PC ← '+a2);}else say('SUORITUS: ACC ≠ 0, ei hyppyä');break;
+    case 7:acc=a2;say('SUORITUS: ACC ← '+a2);break;
+    case 8:outp.push(acc);say('SUORITUS: OUT, tulostetaan '+acc);break;
+    default:halted=true;say('Tuntematon käsky, pysäytys');}
+   phase=0;step++;}
+  draw();}
+ $('cpu-step').onclick=one;
+ $('cpu-inst').onclick=function(){if(halted)return;do{one();}while(phase!==0&&!halted);};
+ $('cpu-run').onclick=function(){var g=0;while(!halted&&g<900){one();g++;}if(!halted)say('(keskeytetty 300 käskyn jälkeen)');};
+ $('cpu-reset').onclick=reset;sel.addEventListener('change',reset);reset();
+})();
+})();
+
+</script>
 </body>
 </html>
