@@ -13,7 +13,7 @@ Avaa PowerShell (Windows-näppäin, kirjoita `PowerShell`, Enter) ja aja nämä 
 
 ```powershell
 cd $env:USERPROFILE\Downloads
-$u = "[[https://raw.githubusercontent.com/KAYTTAJA/vscode-setup/main/vscode-setup.ps1](https://github.com/peltomi/seamk/blob/8b792234d8469768c7c62cb9c2f93dd4e6afb8af/ohjelmointi/vscode-setup.ps1)](https://github.com/peltomi/seamk/blob/8b792234d8469768c7c62cb9c2f93dd4e6afb8af/ohjelmointi/vscode-setup.ps1)"
+$u = "https://github.com/peltomi/seamk/blob/8b792234d8469768c7c62cb9c2f93dd4e6afb8af/ohjelmointi/vscode-setup.ps1"
 Invoke-WebRequest -UseBasicParsing -Uri $u -OutFile vscode-setup.ps1
 notepad vscode-setup.ps1
 powershell -ExecutionPolicy Bypass -File .\vscode-setup.ps1
